@@ -1,0 +1,12 @@
+<configuration>
+<config key="ColorMarkPixels" value="0xFF00FF" />
+<config key="GumpIdx" value="C:\Ultima Online\gumpidx.mul" />
+<config key="GumpMul" value="C:\Ultima Online\gumpart.mul" />
+<config key="Win98" value="0" />
+<config key="AnimIdx" value="C:\Ultima Online\anim.idx" />
+<config key="AnimMul" value="C:\Ultima Online\anim.mul" />
+<config key="ArtIdx" value="C:\Ultima Online\artidx.mul" />
+<config key="ArtMul" value="C:\Ultima Online\art.mul" />
+<config key="Tiledata" value="C:\Ultima Online\tiledata.mul" />
+<config key="Animdata" value="C:\Ultima Online\animdata.mul" />
+</configuration>

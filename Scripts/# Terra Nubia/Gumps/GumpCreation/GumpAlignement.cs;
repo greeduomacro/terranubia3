@@ -1,0 +1,75 @@
+using System;
+using System.Collections;
+using Server;
+using Server.Network;
+using Server.Multis;
+using Server.Nubia;
+using Server.Mobiles;
+
+namespace Server.Gumps
+{
+	public class GumpAlignement : GumpNubia
+	{
+		private NubiaPlayer m_owner;
+		int choix = 0;
+
+
+        public GumpAlignement(NubiaPlayer _owner, int _choix)
+            : base("Choix de votre alignement...", 450,300, 160)
+		{
+			m_owner = _owner;
+			choix = _choix;
+            Closable = false;
+		
+			int y = YBase;
+			int x = XBase;
+			int line = 0;
+			int scale = 30;
+			int decal = 5;
+
+            string desc = null;
+
+            if (choix > -1)
+            {
+                desc = AlignHelper.GetDescription((Alignement)choix);
+            }
+            if (desc == null)
+                desc = AlignHelper.GetDescription(Alignement.None);
+			AddHtml( XCol, y, LargeurColonne2, Hauteur, desc, false, true );
+			
+
+            for (int i = 0; i <= (int)Alignement.ChaotiqueMauvais; ++i)
+            {
+                if (GumpMenuCreation.AlignementValide((Alignement)i, m_owner.Race))
+                {
+                    AddButtonTrueFalse(x, y + (scale * line), i + 50, (i == choix), AlignHelper.GetName((Alignement)i));
+                    line++;
+                }
+            }
+			
+			//line++;
+			if( choix > -1 ){
+				//AddLabel( _x, y, 0, "Continuer");
+				AddButton( x , y+(line*scale), 0x850, 0x851,99, GumpButtonType.Reply, 0 );
+			}
+		}
+
+		public override void OnResponse( NetState sender, RelayInfo info )
+		{
+			Mobile f = sender.Mobile;
+			NubiaPlayer from = f as NubiaPlayer;
+			if( info.ButtonID == 99 )
+			{
+				from.Align = (Alignement)choix;
+
+				//from.CloseGump( typeof( GumpCreation ) );
+                from.SendGump(new GumpMenuCreation(from));
+				return;
+			}
+			int newChoix = info.ButtonID-50;
+		//	from.CloseGump( typeof( GumpCreation ) );
+			from.SendGump( new GumpAlignement( m_owner, newChoix ) );
+		}
+
+	}
+}
