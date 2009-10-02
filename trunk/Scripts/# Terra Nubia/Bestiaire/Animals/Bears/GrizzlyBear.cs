@@ -17,7 +17,7 @@ namespace Server.Mobiles
 
             this.ConfigureCreature(6, ClasseType.Barbare);
             CreatureType = MobileType.Animal;
-
+            this.VirtualArmor = 3;
 
             Tamable = true;
             ControlSlots = 1;

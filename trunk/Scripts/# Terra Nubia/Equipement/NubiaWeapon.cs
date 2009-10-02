@@ -373,7 +373,7 @@ namespace Server.Items
             }
 
 
-            double DD = (DefMob.CA / 10.0) + 10.0;
+            double DD = (DefMob.CA) + 1.0;
             //Bonus avec un jet d'acrobatie réussi
             if (DefMob.getActionCombat() == ActionCombat.Defense 
                 && DefMob.Competences[CompType.Acrobaties].getPureMaitrise() >= 5)
@@ -394,7 +394,7 @@ namespace Server.Items
                 if (AttMob.Competences[CompType.Bluff].check(bluffDD))
                 {
                     AttMob.Emote("*feinte*");
-                    DD -= (DefMob.CA / 10.0);
+                    DD -= (DefMob.CA);
                 }
             }
 
@@ -538,7 +538,7 @@ namespace Server.Items
                 defender.FixedParticles(0x37B9, 1, 4, 0x251D, 0, 0, EffectLayer.Waist);
                 attacker.PlaySound(DefHitSound);
                 defender.PlaySound(DefHitSound);
-                //defender.Animate(20, 7, 1, true, false, 0);
+                defender.Animate(20, 7, 1, true, false, 0);
             }
         }
 
@@ -592,10 +592,27 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
+
+            writer.Write((int)0); //version
+            writer.Write((int)mDe);
+            writer.Write((int)mNbrLance);
+            writer.Write((int)mMiniCritique);
+            writer.Write((int)mCritiqueMulti);
+            writer.Write((int)mMaxRange);
+            writer.Write((int)mArmeCategorie);
+            writer.Write((int)mTemplate);
         }
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
+            int version = reader.ReadInt();
+            mDe = (De)reader.ReadInt();
+            mNbrLance = reader.ReadInt();
+            mMiniCritique = reader.ReadInt();
+            mCritiqueMulti = reader.ReadInt();
+            mMaxRange = reader.ReadInt();
+            mArmeCategorie = (ArmeCategorie)reader.ReadInt();
+            mTemplate = (ArmeTemplate)reader.ReadInt();
         }
     }
 }

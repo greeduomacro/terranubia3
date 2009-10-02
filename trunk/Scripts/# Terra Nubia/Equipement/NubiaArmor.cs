@@ -125,12 +125,12 @@ namespace Server.Items
             {
                 switch (mModelType)
                 {
-                    case ArmorModelType.Matelas: return 10.0;
-                    case ArmorModelType.CuirSimple: return 20.0;
-                    case ArmorModelType.CuirCloute: return 30.0;
-                    case ArmorModelType.Anneaux: return 40.0;
-                    case ArmorModelType.Maille: return 60.0;
-                    case ArmorModelType.Plaque: return 80.0;
+                    case ArmorModelType.Matelas: return 1.0;
+                    case ArmorModelType.CuirSimple: return 2.0;
+                    case ArmorModelType.CuirCloute: return 3.0;
+                    case ArmorModelType.Anneaux: return 4.0;
+                    case ArmorModelType.Maille: return 6.0;
+                    case ArmorModelType.Plaque: return 8.0;
                     default: return 0.0;
                 }
             }

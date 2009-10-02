@@ -14,7 +14,7 @@ namespace Server.Mobiles
 			Body = 211;
             BaseSoundID = 0xA3;
 
-            this.VirtualArmor = 13;
+            this.VirtualArmor = 1;
 
             this.ConfigureCreature(4, ClasseType.Barbare);
             CreatureType = MobileType.Animal;
