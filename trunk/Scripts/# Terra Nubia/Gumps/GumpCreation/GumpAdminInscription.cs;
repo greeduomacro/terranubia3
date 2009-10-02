@@ -1,0 +1,305 @@
+using System;
+using System.Net;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Server;
+using Server.Items;
+using Server.Prompts;
+using Server.Network;
+using Server.Accounting;
+using Server.Commands;
+using Server.Mobiles;
+
+namespace Server.Gumps
+{
+	public class GumpAdminInscription : Gump
+	{
+		private NubiaPlayer m_owner;
+		private ArrayList m_List;
+
+		public GumpAdminInscription( NubiaPlayer _owner ) : base( 50, 50 )
+		{
+			m_owner = _owner;
+			int largeur = 400;
+			int hauteur = 300;
+			int _x = 50;
+			int _y = 50;
+			int colG = _x+40;
+			int colG2 = colG+70;
+			int colorG = 2168;
+			int colorG2 = 2120;
+			int HColor = 2161;
+
+			int colCompetence = 375+_x;
+
+			AddBackground( _x, _y, _x+largeur,_y+hauteur, 0x2422 );
+			AddImageTiled( _x, _y,  _x+largeur,18, 0x280A );
+			
+			
+			
+			//AddAlphaRegion( _x+25, _y+25, _x+largeur-35,_y+hauteur-30 );
+			//AddImage( 0,40, 0x28C8 );
+			//AddImage( largeur+70,40, 0x28C9 );
+
+			AddImage( (largeur/2)-10,_y-3, 0x988 );
+			AddLabel( (largeur/2)+18, _y-2, 2123, "-= Inscriptions =-");
+		
+			int y = _y+40;
+			int x = _x+35;
+			int line = 0;
+			int scale = 35;
+			int decal = 5;
+			
+			/*AddHtml( _x+35, _y+35, largeur-35 , hauteur-50, "<center>Bienvenue sur Terra Nubia</center>"+
+					"<p>Votre account doit être validé pour que vous puissiez jouer.<br>"+
+					"Pour ce faire, vous devrez répondre à quelques petites questions. Vos réponses seront ensuite examiné par les Administrateurs qui validerons ou non votre Account.</p>", true, true );
+			*/
+			//AddBackground( _x, _y, _x+largeur,_y+hauteur, 0x2454 );
+
+			
+			m_List = new ArrayList( (ICollection)Accounts.GetAccounts() );
+				//m_List.Sort( AccountComparer.Instance );
+			
+
+			//AddAccountHeader();
+
+			int width = largeur - 70;
+			int height = 40;
+
+			int LabelHue = 0;
+			int GreenHue = 75;
+			int RedHue = 133;
+			int BlueHue = 5;
+
+			AddLabelCropped( x, 90, 120, 20, LabelHue, "Name" );
+			AddLabelCropped( x+75, 90, 120, 20, LabelHue, "Online?" );
+			AddLabelCropped( x+150, 90, 120, 20, LabelHue, "Ins. Finie?" );
+			AddLabelCropped( x+225, 90, 120, 20, LabelHue, "Nbr Refus" );
+
+
+			int index = 0;
+			for ( int i = 0; i < m_List.Count; i++ )
+			{
+				Account a = m_List[i] as Account;
+				if( a == null )
+					continue;
+				
+						
+				if( a.AllowAccount == false )
+				{
+
+					Console.WriteLine("{0} Allow Account? == {1} ({2})", a.Username, a.AllowAccount, a.AllowAccount.GetType() );
+
+					int offset = y + ( (index+1) * scale);
+					AddAlphaRegion( x-2, offset-2, width, 25 );
+
+					AccessLevel accessLevel;
+					bool online;
+
+					GetAccountInfo( a, out accessLevel, out online );
+
+				
+					AddLabelCropped( x, offset, 120, 20, LabelHue, a.Username );
+
+					if ( online )
+						AddLabelCropped( x+75, offset, 120, 20, GreenHue, "Online" );
+					else if ( a.Banned )
+						AddLabelCropped( x+75, offset, 120, 20, RedHue, "Banned" );
+					else
+						AddLabelCropped( x+75, offset, 120, 20, RedHue, "Offline" );
+					
+					if( a.InscriptionFinish )
+						AddLabelCropped( x+150, offset, 120, 20, GreenHue, "Finie" );
+					else
+						AddLabelCropped( x+150, offset, 120, 20, RedHue, "En cour" );
+
+					AddLabelCropped( x+225, offset, 120, 20, BlueHue, a.NbrRefus.ToString() );
+					
+					AddButton( x+300 , offset, 0xFA5, 0xFA7, 100+i, GumpButtonType.Reply, 0 );
+					AddButton( x+340 , offset, 0xFAB, 0xFAD, 500+i, GumpButtonType.Reply, 0 );
+					index++;
+				}
+
+			}
+			
+			
+		}
+
+		public static void GetAccountInfo( Account a, out AccessLevel accessLevel, out bool online )
+		{
+			accessLevel = a.AccessLevel;
+			online = false;
+
+			for ( int j = 0; j < a.Length; ++j )
+			{
+				Mobile check = a[j];
+
+				if ( check == null )
+					continue;
+
+				if ( check.AccessLevel >= accessLevel )
+					accessLevel = check.AccessLevel;
+
+				if ( check.NetState != null )
+					online = true;
+			}
+		}
+
+		public override void OnResponse( NetState sender, RelayInfo info )
+		{
+			Mobile f = sender.Mobile;
+			NubiaPlayer from = f as NubiaPlayer;
+			if( info.ButtonID >= 100 && info.ButtonID < 500 )
+			{
+				try
+				{
+					Account account = m_List[info.ButtonID-100] as Account;
+					from.SendGump( new ViewInscription( from, account ));
+				}
+				catch (Exception ex)
+				{
+					from.SendMessage("Index de list non valide");
+				}
+				
+
+				return;
+			}
+
+			if( info.ButtonID >= 500 && info.ButtonID < 800 )
+			{
+				try
+				{
+					Account account = m_List[info.ButtonID-500] as Account;
+					from.SendGump( new AdminGump( from, AdminGumpPage.AccountDetails_Information, 0, null, null, account ) );
+				}
+				catch (Exception ex)
+				{
+					from.SendMessage("Index de list non valide");
+				}
+				
+
+				return;
+			}
+
+		}
+
+	}
+
+	public class ViewInscription : Gump
+	{
+		private NubiaPlayer m_owner;
+		private Account m_a;
+
+		public ViewInscription( NubiaPlayer _owner, Account a ) : base( 50, 50 )
+		{
+			m_owner = _owner;
+			m_a = a;
+			int largeur = 400;
+			int hauteur = 550;
+			int _x = 50;
+			int _y = 50;
+			int colG = _x+40;
+			int colG2 = colG+70;
+			int colorG = 2168;
+			int colorG2 = 2120;
+			int HColor = 2161;
+
+			int colCompetence = 375+_x;
+
+			AddBackground( _x, _y, _x+largeur,_y+hauteur, 0x2422 );
+			AddImageTiled( _x, _y,  _x+largeur,18, 0x280A );
+			
+			
+			
+			//AddAlphaRegion( _x+25, _y+25, _x+largeur-35,_y+hauteur-30 );
+			//AddImage( 0,40, 0x28C8 );
+			//AddImage( largeur+70,40, 0x28C9 );
+
+			AddImage( (largeur/2)-10,_y-3, 0x988 );
+			AddLabel( (largeur/2)+18, _y-2, 2123, "-= Inscriptions =-");
+		
+			int y = _y+40;
+			int x = _x+35;
+			int line = 0;
+			int scale = 35;
+			int decal = 5;
+			
+
+			int width = largeur - 70;
+			int height = 40;
+
+			int LabelHue = 0;
+			int GreenHue = 75;
+			int RedHue = 133;
+			int BlueHue = 5;
+
+			//AddLabelCropped( x, 90, 120, 20, LabelHue, "Demande d'inscription de "+a.Username );
+
+			AddHtml( x, y, largeur-35 , 150, "<center>Le Role Play</center><br>"+a.QuestionRP, true, true );
+			AddHtml( x, y+150, largeur-35 , 150, "<center>Le Perso/BG</center><br>"+a.QuestionBG, true, true );
+			AddHtml( x, y+300, largeur-35 , 150, "<center>La vision</center><br>"+a.QuestionAutre, true, true );
+
+			AddLabel( x, y+475, GreenHue, "Validez la demande d'inscription de "+a.Username+ "?" );
+			AddButton( x , y+495, 0x850, 0x851,99, GumpButtonType.Reply, 0 ); //Okay
+			AddButton( x + 200 , y+495, 0x847, 0x848,98, GumpButtonType.Reply, 0 ); //Annuler
+
+			
+			
+		}
+
+
+		public override void OnResponse( NetState sender, RelayInfo info )
+		{
+			Mobile f = sender.Mobile;
+			NubiaPlayer from = f as NubiaPlayer;
+
+			Mobile player = null;
+			for ( int j = 0; j < m_a.Length; ++j )
+			{
+				Mobile check = m_a[j];
+
+				if ( check == null )
+					continue;
+
+				if ( check.NetState != null )
+					player = check;
+			}
+
+			if( info.ButtonID == 99 )
+			{
+				m_a.AllowAccount = true;
+				m_a.InscriptionFinish = true;
+				if( player != null )
+				{
+					player.SendMessage(143,"Votre inscription à été validée, félicitation!");
+				}
+				
+				from.SendMessage("l'account {0} à bien été validé", m_a.Username);
+
+			}
+
+			if( info.ButtonID == 98 )
+			{
+				m_a.QuestionRP = null;
+				m_a.QuestionBG = null;
+				m_a.QuestionAutre = null;
+				m_a.NbrRefus++;
+				m_a.AllowAccount = false;
+				m_a.InscriptionFinish = false;
+
+				if( player != null )
+				{
+					player.SendMessage(143,"Votre inscription à Refusez. Vous pouvez la retenter tout de suite ou plus tard");
+					if( player is NubiaPlayer )
+						player.SendGump( new GumpInscription( player as NubiaPlayer ) );
+				}
+				
+				from.SendMessage(143, "l'account {0} à été refusé", m_a.Username);
+			}
+			from.SendGump( new GumpAdminInscription( from ) );
+		}
+
+	}
+}
