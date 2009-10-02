@@ -11,6 +11,8 @@ namespace Server.Commands
     {
         public static void Initialize()
         {
+            CommandSystem.Register("deguisement", AccessLevel.Player,
+              new CommandEventHandler(deguisement_OnCommand));
             CommandSystem.Register("cache", AccessLevel.Player,
               new CommandEventHandler(cache_OnCommand));
             CommandSystem.Register("acrobatie", AccessLevel.Player,
@@ -23,6 +25,16 @@ namespace Server.Commands
                 new CommandEventHandler(anim_OnCommand));
             CommandSystem.Register("blessure", AccessLevel.Player,
                new CommandEventHandler(blessure_OnCommand));
+        }
+        public static void deguisement_OnCommand(CommandEventArgs e)
+        {
+            NubiaPlayer p = e.Mobile as NubiaPlayer;
+            if (p.Competences[CompType.Deguisement].getPureMaitrise() >= 2)
+            {
+                p.SendGump(new GumpDeguisement(p));
+            }
+            else
+                p.SendMessage("Vous devez avoir au moin 2 en déguisement");
         }
         public static void blessure_OnCommand(CommandEventArgs e)
         {

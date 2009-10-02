@@ -466,8 +466,8 @@ namespace Server.Items
                     damage *= mCritiqueMulti;
 
                     //BLESSURES
-
-                    DefMob.AddBlessure(NubiaBlessure.getRandomBlessure());
+                    if( Utility.RandomDouble() < 0.01 )
+                        DefMob.AddBlessure(NubiaBlessure.getRandomBlessure());
                 }
 
 

@@ -29,7 +29,16 @@ namespace Server.Mobiles
         BonneHumeur = 1,
         SuperHumeur = 2
     }
-   
+
+    public class DeguisementMod
+    {
+        public string Name = "noname";
+        public bool Female = false;
+        public RaceType Race = RaceType.None;
+        public int Reussite = 0;
+        public Dictionary<Serial, DateTime> MobilesChecked = new Dictionary<Serial, DateTime>();
+    }
+
     public class NubiaPlayer : PlayerMobile
     {
         public override int getBonusRoll()
@@ -43,6 +52,40 @@ namespace Server.Mobiles
             }
             return bonus;
         }
+
+        #region Deguisement
+        private DeguisementMod mDeguisementMod = null;
+
+        public void ApplyDeguisement(DeguisementMod deguisement)
+        {
+            if (mDeguisementMod != null)
+            {
+                SendMessage("Vous êtes déjà déguisé !");
+            }
+            else
+            {
+                mDeguisementMod = deguisement;
+                NameMod = mDeguisementMod.Name;
+                if( mDeguisementMod.Female != Female )
+                    BodyMod = (mDeguisementMod.Female ? 401 : 400);
+                if( mDeguisementMod.Race != RaceManager.getRaceType( Race.GetType() ) )
+                    HueMod = RaceManager.getRace(mDeguisementMod.Race).HuePicker.Groups[0].Hues[0];
+                SendMessage("Vous vous déguisez");
+            }
+        }
+        public void RemoveDeguisement()
+        {
+            if (mDeguisementMod != null)
+            {
+                mDeguisementMod = null;
+                NameMod = string.Empty;
+                BodyMod = -1;
+                HueMod = -1;
+                SendMessage("Vous n'êtes plus déguisé");
+            }
+        }
+        #endregion
+
         #region MORAL
         private int moralValue = 0; //-100 à 100
 
@@ -445,6 +488,30 @@ namespace Server.Mobiles
 
         public override void OnTurn()
         {
+            if (Alive)
+            {
+                if (Turn % 15 == 0 && mDeguisementMod != null)
+                {
+                    foreach (PlayerMobile player in GetMobilesInRange(8))
+                    {
+                        if (mDeguisementMod.MobilesChecked.ContainsKey(player.Serial))
+                        {
+                            if (mDeguisementMod.MobilesChecked[player.Serial] + TimeSpan.FromMinutes(30) < DateTime.Now)
+                                mDeguisementMod.MobilesChecked.Remove(player.Serial);
+                        }
+                        if (!mDeguisementMod.MobilesChecked.ContainsKey(player.Serial))
+                        {
+                            mDeguisementMod.MobilesChecked.Add(player.Serial, DateTime.Now);
+                            if (player.Competences[CompType.Detection].check(mDeguisementMod.Reussite))
+                            {
+                                this.PrivateOverheadMessage(Server.Network.MessageType.Regular, 138, false, "*semble déguisé*", player.NetState);
+                                player.SendMessage(136, "Vous repérez que {0} est déguisé", NameMod);
+                            }
+                        }
+                    }
+                }
+            }
+
             if (m_deathTurn > -1)
             {
                 if (Alive)
@@ -541,7 +608,7 @@ namespace Server.Mobiles
         {
             base.OnBeforeDeath();
 
-
+            RemoveDeguisement();
 
             m_itemToEquip = new ArrayList();
             foreach (Item it in Items)
@@ -631,9 +698,18 @@ namespace Server.Mobiles
         public override void GetProperties(ObjectPropertyList list)
         {
             base.GetProperties(list);
+            BaseRace displayRace = Race;
+            if (mDeguisementMod != null)
+            {
+                if( mDeguisementMod.Race != RaceManager.getRaceType(Race.GetType() ) )
+                    displayRace = RaceManager.getRace(mDeguisementMod.Race);
+            }
+
+            string racename = Female ? displayRace.NameF : displayRace.Name;
+
 
             string infos = String.Format("{0}, {1}",
-                ( Female ? Race.NameF : Race.Name ),
+               racename,
                 this.GetBeaute()
                 );
             Console.WriteLine(infos);
