@@ -48,11 +48,11 @@ namespace Server.Items
             {
                 switch (mBType)
                 {
-                    case BouclierType.Targe: return 10.0;
-                    case BouclierType.Ecu: return 20.0;
-                    case BouclierType.GrandEcu: return 30.0;
-                    case BouclierType.Pavois: return 40.0;
-                    case BouclierType.GrandPavois: return 50.0;
+                    case BouclierType.Targe: return 1.0;
+                    case BouclierType.Ecu: return 2.0;
+                    case BouclierType.GrandEcu: return 3.0;
+                    case BouclierType.Pavois: return 4.0;
+                    case BouclierType.GrandPavois: return 5.0;
                 }
                 return 0.0;
             }

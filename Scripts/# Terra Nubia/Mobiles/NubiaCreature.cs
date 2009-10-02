@@ -34,8 +34,8 @@ namespace Server.Mobiles
         {
             get
             {
-                if (mIsElite)
-                    return base.CA + (Niveau / 10);
+               /* if (mIsElite)
+                    return base.CA + (Niveau );*/
                 return VirtualArmor;
             }
         }
@@ -161,10 +161,10 @@ namespace Server.Mobiles
 
             switch (ArmorAllow)
             {
-                case NubiaArmorType.None: VirtualArmor = 10; break;
-                case NubiaArmorType.Legere: VirtualArmor = 30; break;
-                case NubiaArmorType.Intermediaire: VirtualArmor = 60; break;
-                case NubiaArmorType.Lourde: VirtualArmor = 80; break;
+                case NubiaArmorType.None: VirtualArmor = 0; break;
+                case NubiaArmorType.Legere: VirtualArmor = 1; break;
+                case NubiaArmorType.Intermediaire: VirtualArmor = 3; break;
+                case NubiaArmorType.Lourde: VirtualArmor = 4; break;
             }
 
 

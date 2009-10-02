@@ -716,34 +716,34 @@ namespace Server.Mobiles
 
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public virtual double CA // a diviser par dix et rajouté +10 ensuite pour la CA "a nue" qu'on affiche pas ici
+        public virtual double CA 
         {
             get
             {
-                double armureMod = DndHelper.GetArmorCA(this); //Attention, elle est déjà * 10 + Bouclier
+                double armureMod = DndHelper.GetArmorCA(this); //Attention, elle est déjà  + Bouclier
                 
                 double bouclierMod = 0.0; //ToDO
                 if (getBouclier() != null)
                     bouclierMod = getBouclier().CA;
 
-                double dexMod = DndHelper.GetCaracMod(this, DndStat.Dexterite) * 10.0;
-                double TailleMod = ((int)mTaille) * 10.0;
+                double dexMod = DndHelper.GetCaracMod(this, DndStat.Dexterite);
+                double TailleMod = ((int)mTaille);
 
                 //Bouclier Total :
                 if (getBouclier() != null && mActionCombat == ActionCombat.DefenseTotale)
                 {
                     if (getBouclier().BType == BouclierType.Pavois || getBouclier().BType == BouclierType.GrandPavois)
-                        armureMod += 100.0; //Normalement c'est une protection total, mais bon ^^
+                        armureMod += 10.0; //Normalement c'est une protection total, mais bon ^^
                     else
-                        armureMod += 40;
+                        armureMod += 4;
                 }
                 else if (mActionCombat == ActionCombat.DefenseTotale)
                 {
-                    armureMod += 40;
+                    armureMod += 4;
                 }
                 else if (mActionCombat == ActionCombat.Defense) //-4 a tout les jets
                 {
-                    armureMod += 20;
+                    armureMod += 2;
                 }
 
 

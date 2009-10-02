@@ -49,7 +49,7 @@ namespace Server.Mobiles
 
 			Utility.AssignRandomHair( this );
 
-            VirtualArmor = 80;
+            VirtualArmor = 3;
             ConfigureCreature(18, ClasseType.Guerrier);
 		}
 

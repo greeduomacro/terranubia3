@@ -628,6 +628,24 @@ namespace Server.Mobiles
         {
             return NubiaPlayer.GetBeaute(this.Beaute, Female);
         }
+        public override void GetProperties(ObjectPropertyList list)
+        {
+            base.GetProperties(list);
+
+            string infos = String.Format("{0}, {1}",
+                ( Female ? Race.NameF : Race.Name ),
+                this.GetBeaute()
+                );
+            Console.WriteLine(infos);
+            list.Add(infos);
+        }
+        public override void OnSingleClick(Mobile from)
+        {
+//            base.OnSingleClick(from);
+            this.PrivateOverheadMessage(Server.Network.MessageType.Regular, 195, false,
+                this.Name + ", " + (Female ? Race.NameF : Race.Name),
+                from.NetState);
+        }
 
         #region vie & compagnie
 
