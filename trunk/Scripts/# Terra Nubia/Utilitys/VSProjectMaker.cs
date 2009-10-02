@@ -10,7 +10,7 @@ namespace Server.Commands
 		public static void Initialize() 
 		{
             /*2.0 edit*/
-            CommandSystem.Register("ProjectGen", AccessLevel.Administrator, new CommandEventHandler(ProjectGen_OnCommand)); 
+            CommandSystem.Register("ProjectGen", AccessLevel.Owner, new CommandEventHandler(ProjectGen_OnCommand)); 
 		} 
 
 		[Usage( "ProjectGen" )] 
