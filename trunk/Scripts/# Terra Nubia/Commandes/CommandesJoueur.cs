@@ -31,6 +31,8 @@ namespace Server.Commands
             NubiaPlayer p = e.Mobile as NubiaPlayer;
             if (p.Competences[CompType.Deguisement].getPureMaitrise() >= 2)
             {
+                p.RemoveDeguisement();
+                p.CloseGump(typeof(GumpDeguisement) );
                 p.SendGump(new GumpDeguisement(p));
             }
             else
