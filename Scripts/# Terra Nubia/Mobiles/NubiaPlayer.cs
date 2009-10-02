@@ -78,9 +78,9 @@ namespace Server.Mobiles
             if (mDeguisementMod != null)
             {
                 mDeguisementMod = null;
-                NameMod = string.Empty;
-                BodyMod = -1;
-                HueMod = -1;
+                NameMod = "";
+                BodyMod = 0;
+                HueMod = 0;
                 SendMessage("Vous n'êtes plus déguisé");
             }
         }
