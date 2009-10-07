@@ -92,7 +92,7 @@ namespace Server
 
         public static void serverStarted()
         {
-            Server.Engines.CraftableItemScanner.scanItems();
+         //   Server.Engines.CraftableItemScanner.scanItems();
 
             NubiaDiagnostic.doDiagnostic();
 

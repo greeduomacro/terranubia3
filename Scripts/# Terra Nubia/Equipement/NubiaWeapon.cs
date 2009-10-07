@@ -13,6 +13,23 @@ namespace Server.Items
 {
     public class NubiaWeapon : Item, IWeapon
     {
+        public static string getTemplateString(ArmeTemplate t)
+        {
+            switch (t)
+            {
+                case ArmeTemplate.Arbalete: return "Arbalères";
+                case ArmeTemplate.Arc: return "Arcs";
+                case ArmeTemplate.Baton: return "Batons";
+                case ArmeTemplate.Dague: return "Dagues";
+                case ArmeTemplate.Epee: return "Epées";
+                case ArmeTemplate.Hache: return "Haches";
+                case ArmeTemplate.Hast: return "Armes d'Hast";
+                case ArmeTemplate.Lance: return "Lances";
+                case ArmeTemplate.Masse: return "Masses";
+            }
+            return "none";
+        }
+
         private De mDe = De.trois;
         private int mNbrLance = 1;
         private int mMiniCritique = 20; // mMiniCritique ou supérieur sur 1d20 pour un coup critique
@@ -329,6 +346,11 @@ namespace Server.Items
                 bonii += (double)DndHelper.GetCaracMod(AttMob, DndStat.Force);
           //  Console.WriteLine(AttMob.Name + " :: Bonus d'attaque (Classe+Mod Carac): +" + bonii);
 
+            if (AttMob is NubiaPlayer)
+            {
+                int maitrise = ((NubiaPlayer)AttMob).getMaitrise(this.Template);
+                bonii += Math.Min(maitrise - 1, 3);
+            }
             //Malus quand on attaque en courant
             // ???
 
@@ -581,11 +603,18 @@ namespace Server.Items
                 return WorldData.TimeTour();
             NubiaMobile mob = m as NubiaMobile;
             double baseSec = WorldData.TimeTour().Seconds;
+            if (mob is NubiaPlayer)
+            {
+                int maitrise = ((NubiaPlayer)mob).getMaitrise(this.Template);
+                if( maitrise > 3)
+                    baseSec -= 0.1 * (maitrise - 3);
+            }
             if (mOpportunite)
             {
                 baseSec /= 2;
             }
             baseSec /= mob.BonusAttaque.Length + 1;
+
             return TimeSpan.FromSeconds(baseSec);
         }
 

@@ -29,14 +29,15 @@ namespace Server.Gumps
         }
         private bool canUpClasse(NubiaMobile mob, Classe c)
         {
-            if (c.Niveau < 4)
+            int nivClasseMini = 4;
+            if (c.Niveau < nivClasseMini)
                 return true;
             else
             {
                 for (int i = 0; i < classes.Length; i++)
                 {
                     if (classes[i].CType != c.CType)
-                        if (classes[i].Niveau < 5)
+                        if (classes[i].Niveau < nivClasseMini)
                             return false;
                 }
             }
@@ -54,7 +55,9 @@ namespace Server.Gumps
             int line = 0;
             int scale = 22;
             int decal = 5;
+            x += 5;
 
+            //AddBackground(x-5, y, 245, 165, 3000);
             AddLabel(x, y + line * scale, ColorText, "Nom: ");
             AddLabel(x+50, y + line * scale, ColorTextLight, mOwner.Name);
             line++;
@@ -123,7 +126,9 @@ namespace Server.Gumps
 
             line++;
 
-           
+
+
+//            AddBackground(x - 5, y+170, 245, 165, 3000);
             
            
             line++;
@@ -256,6 +261,48 @@ namespace Server.Gumps
             AddLabel(XCol, y + line * scale, ColorText, "Vigueur:");
             AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.BonusVigueur.ToString());
 
+            // MAITRISES d'ARMES
+
+            line++;
+            AddLabel(XCol, y + line * scale, ColorTextYellow, "Maitrises d'armes");
+            int maitrise_depense = mOwner.PtsMaitriseTotal();
+            int maitrise_max = DndHelper.getMaitriseMax(mOwner.Niveau );
+            int maitrise_total = DndHelper.getTotalMaitrise(mOwner.Niveau);
+            int maitrise_restant = maitrise_total - maitrise_depense;
+            if( maitrise_restant > 0 )
+                AddLabel(XCol+150, y + line * scale, ColorTextGreen, "Disponible(s): " + (maitrise_restant).ToString());
+            int maitrise_line = 1;
+            int maitriseX = 0;
+            scale -= 3;
+            for (int i = 0; i < (int)ArmeTemplate.Maximum; i++)
+            {
+                bool canIncrease = false;
+                canIncrease = (maitrise_restant > 0) && mOwner.getMaitrise((ArmeTemplate)i) < maitrise_max;
+                string maitriseName = NubiaWeapon.getTemplateString((ArmeTemplate)i);
+                int mcol = ColorText;
+                int mvalue = mOwner.getMaitrise((ArmeTemplate)i);
+                if (mvalue > 0)
+                    mcol = ColorTextLight;
+                int buttonDecal = 0;
+                if (canIncrease)
+                {
+                    buttonDecal = 15;
+                    AddSimpleButton(XCol + maitriseX, 15+ y + (maitrise_line+line) * scale, 250 + i, maitriseName, mcol);
+                }
+                else
+                    AddLabel(XCol + maitriseX, 15 + y + (maitrise_line + line) * scale, mcol, maitriseName);
+
+                for (int v = 0; v < mvalue; v++)
+                    AddImage(XCol + 60 + maitriseX + buttonDecal + (13 * v), 17 +y + (maitrise_line+line) * scale, 9022);
+
+                maitrise_line++;
+                if (maitrise_line > 5)
+                {
+                    maitrise_line = 1;
+                    maitriseX += 140;
+                }
+            }
+            scale += 3;
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
@@ -300,7 +347,12 @@ namespace Server.Gumps
                 }
                 from.SendGump(new GumpFichePerso(mOwner, mViewer));
             }
-
+            else if (info.ButtonID >= 250 && info.ButtonID < 300) //maitrises
+            {
+                ArmeTemplate t = (ArmeTemplate)(info.ButtonID - 250);
+                mOwner.increaseMaitrise(t);
+                from.SendGump(new GumpFichePerso(mOwner, mViewer));
+            }
         }
 
     }

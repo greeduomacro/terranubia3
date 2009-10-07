@@ -14,6 +14,7 @@ namespace Server.Engines
         protected bool m_isRaffine = false;
         protected NubiaRessource mRessource = NubiaRessource.Fer;
 
+
         [CommandProperty(AccessLevel.GameMaster)]
         public NubiaRessource Ressource
         {

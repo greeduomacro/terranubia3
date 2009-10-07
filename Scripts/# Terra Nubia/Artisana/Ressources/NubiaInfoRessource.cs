@@ -11,14 +11,14 @@ namespace Server.Items
         protected int mHue = 0;
         protected int mDiff = 10;
         //Armures
-        protected double mResistancePhysique = 0.05;
+        protected int mGlobalAR = 0;
         protected double mResistanceFeu = 0.0;
         protected double mResistanceFroid = 0.0;
         protected double mResistanceAcide = 0.0;
         protected double mResistanceEnergie = 0.0;
         //Armes
-        protected double mDegatContact = 0.80;
-        protected double mDegatDistance = 0.80;
+        protected int mBonusAttaque = 0;
+        protected int mBonusDegat = 0;
 
         [CommandProperty(AccessLevel.Developer)]
         public double Durabilite { get { return mDurabilite; } set { mDurabilite = value; } }
@@ -31,7 +31,7 @@ namespace Server.Items
 
 
         [CommandProperty(AccessLevel.Developer)]
-        public double ResistancePhysique { get { return mResistancePhysique; } set { mResistancePhysique = value; } }
+        public int GlobalAR { get { return mGlobalAR; } set { mGlobalAR = value; } }
 
         [CommandProperty(AccessLevel.Developer)]
         public double ResistanceFeu { get { return mResistanceFeu; } set { mResistanceFeu = value; } }
@@ -46,10 +46,10 @@ namespace Server.Items
         public double ResistanceEnergie { get { return mResistanceEnergie; } set { mResistanceEnergie = value; } }
 
         [CommandProperty(AccessLevel.Developer)]
-        public double DegatContact { get { return mDegatContact; } set { mDegatContact = value; } }
-
+        public int BonusAttaque { get { return mBonusAttaque; } set { mBonusAttaque = value; } }
+        
         [CommandProperty(AccessLevel.Developer)]
-        public double DegatDistance { get { return mDegatDistance; } set { mDegatDistance = value; } }
+        public int BonusDegat { get { return mBonusDegat; } set { mBonusDegat = value; } }
 
 
         public NubiaInfoRessource()
@@ -77,14 +77,14 @@ namespace Server.Items
                 case NubiaRessource.Abyssium:
                     infos.Durabilite = 0.75;
                     infos.Hue = 2041;
-                    infos.ResistancePhysique = 0.5;
+                    infos.GlobalAR = 1;
                     infos.ResistanceFeu = 0.5;
                     infos.ResistanceFroid = 0.5;
                     infos.ResistanceAcide = 0.0;
                     infos.ResistanceEnergie = 0.0;
-                    infos.DegatDistance = 0.40;
-                    infos.DegatContact = 0.85;
-                    infos.Diff = 18;
+                    infos.BonusAttaque = 1;
+                    infos.BonusDegat = 2;
+                    infos.Diff = 15;
                     break;
             }
 

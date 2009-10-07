@@ -10,6 +10,14 @@ namespace Server.Mobiles
         private bool mIsElite = false; //Pour les dégat et leur réduction, voir le NubiaWeapon
 
         private Dictionary<OrderType, double> mOrdersLearned = new Dictionary<OrderType, double>();
+        private FactionEnum mFaction = FactionEnum.None;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public FactionEnum Faction
+        {
+            get { return mFaction; }
+            set { mFaction = value; }
+        }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool IsElite

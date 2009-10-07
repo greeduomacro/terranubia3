@@ -34,6 +34,21 @@ namespace Server
                 roll = Utility.RandomMinMax(1, (int)de);
             return roll;
         }
+        public static int getMaitriseMax(int niveau)
+        {
+            if (niveau < 5)
+                return 2;
+            else if (niveau < 10)
+                return 3;
+            else if (niveau < 15)
+                return 4;
+            else
+                return 5;
+        }
+        public static int getTotalMaitrise(int niveau)
+        {
+            return 3 + ( (niveau / 5)*2 );
+        }
 
         public static int getTotalStat(int niveau)
         {
