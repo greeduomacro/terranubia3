@@ -9,13 +9,13 @@ namespace Server.Engines
 {
     public class CraftableItemScanner
     {
-        public static void scanItems()
+        public static void Configure()
         {
             Console.WriteLine(".");
-            Console.WriteLine("Scans des items pour la liste de craft");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("## Scans craftable item ##");
             string space = "Server.Items";
             List<string> classes = NubiaHelper.getAllClasses(space);
-            Console.WriteLine("Début du scan");
             foreach (string clstr in classes)
             {
                // Console.WriteLine(" - "+clstr);
@@ -34,12 +34,11 @@ namespace Server.Engines
                     }*/
                     if (cltype.GetInterface( typeof(INubiaCraftable).ToString() ) != null)
                     {
-                        Console.WriteLine(" Match INubiaCraftable: " + clstr);
+                        Console.WriteLine("- INubiaCraftable: " + clstr);
                     }
                 }
             }
-            
-            Console.WriteLine("Fin de scan");
+            Console.ResetColor();
         }
 
         

@@ -30,6 +30,7 @@ namespace Server.Mobiles
         SuperHumeur = 2
     }
 
+
     public class DeguisementMod
     {
         public string Name = "noname";
@@ -252,7 +253,35 @@ namespace Server.Mobiles
         //Variables
         private Apparence m_beaute = Apparence.Banal;
         private RaceType m_race = RaceType.Humain;
+        #region Maitrise
+        private Dictionary<ArmeTemplate, int> m_maitrises = new Dictionary<ArmeTemplate, int>();
 
+        public void increaseMaitrise(ArmeTemplate t)
+        {
+            if (!m_maitrises.ContainsKey(t))
+                m_maitrises.Add(t, 1);
+            else
+                m_maitrises[t]++;
+        }
+
+        public int PtsMaitriseTotal()
+        {
+            int t = 0;
+            for (int i = 0; i < (int)ArmeTemplate.Maximum; i++)
+                if ( m_maitrises.ContainsKey((ArmeTemplate)i) )
+                    t += m_maitrises[(ArmeTemplate)i];
+            return t;
+        }
+
+        public int getMaitrise(ArmeTemplate t)
+        {
+            if (m_maitrises.ContainsKey(t))
+                return m_maitrises[t];
+            else
+                return -1;
+        }
+
+        #endregion
         //HIDE
         //DECTECT PERSONNE CACHE
         protected override bool OnMove(Direction d)

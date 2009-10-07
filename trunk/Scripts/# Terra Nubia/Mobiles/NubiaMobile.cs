@@ -815,6 +815,9 @@ namespace Server.Mobiles
                 {
                     max = c.GetDV * c.Niveau;
                 }
+                max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
+                if (max < 4)
+                    max = 4;
                // max *= 5;
                 return max;
             }
@@ -832,6 +835,9 @@ namespace Server.Mobiles
             get
             {
                 int max = 20;
+                max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
+                if (max < 4)
+                    max = 4;
                 return max;
             }
         }
