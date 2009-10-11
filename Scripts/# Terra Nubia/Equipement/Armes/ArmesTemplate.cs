@@ -21,7 +21,7 @@ namespace Server.Items
         Dague,
         Arc,
         Arbalete,
-
+        Jet,
         Maximum
     }
     public enum ArmeType
