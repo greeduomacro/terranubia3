@@ -498,6 +498,11 @@ namespace Server.Mobiles
         //Donc il sera important de l'avoir pour les Streums
         #region Classes & Comps
 
+        public void resetCompetences()
+        {
+            mCompetences = new CompetenceStack(this);
+            
+        }
         public int getAchats()
         {
             int achats = 0;
