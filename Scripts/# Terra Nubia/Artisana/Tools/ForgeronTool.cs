@@ -12,16 +12,8 @@ using Server.Items;
 namespace Server.Items
 {
     //[FlipableAttribute( 0x1EBA, 0x1EBB )]
-    public class ForgeronTool : BaseToolNubia, INubiaCraftable
+    public class ForgeronTool : BaseToolNubia
     {
-        public Mobile Artisan { get { return null; } set { return; } }
-
-        public List<NubiaRessource> TRessourceList { get { return null; } }
-
-        public void AddRessource(NubiaRessource res) { }
-
-        public void ComputeRessourceBonus() { }
-
         public override CraftSystemNubia System { get { return CraftForgeSystem.Singleton; } }
         [Constructable]
         public ForgeronTool(): base(0x13E4){}

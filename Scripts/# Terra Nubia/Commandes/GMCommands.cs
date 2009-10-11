@@ -20,8 +20,7 @@ namespace Server.Commands
             CommandSystem.Register("moraltest", AccessLevel.GameMaster, new CommandEventHandler(moraltest_OnCommand));
 
             CommandSystem.Register("gm", AccessLevel.Player, new CommandEventHandler(gm_OnCommand));
-            CommandSystem.Register("race", AccessLevel.Player, new CommandEventHandler(race_OnCommand));
-        }
+               }
 
         public static void ga_OnCommand(CommandEventArgs e)
         {
@@ -65,12 +64,6 @@ namespace Server.Commands
             }
         }
 
-
-        public static void race_OnCommand(CommandEventArgs e)
-        {
-            NubiaPlayer p = e.Mobile as NubiaPlayer;
-            p.SendGump(new GumpChoixRace(p, 0));
-        }
         public static void moraltest_OnCommand(CommandEventArgs e)
         {
             NubiaPlayer p = e.Mobile as NubiaPlayer;

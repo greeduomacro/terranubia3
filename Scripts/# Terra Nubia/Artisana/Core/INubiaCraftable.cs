@@ -3,6 +3,7 @@ using Server.Items;
 using Server.Network;
 using System.Collections;
 using System.Collections.Generic;
+using Server.Engines.Craft;
 
 namespace Server.Items
 {
@@ -12,8 +13,6 @@ namespace Server.Items
 
         List<NubiaRessource> TRessourceList { get;}
 
-        void AddRessource(NubiaRessource res);
-
-        void ComputeRessourceBonus();
+        void AfterCraft(NubiaQualityEnum quality);
     }
 }

@@ -11,16 +11,8 @@ using Server.Items;
 
 namespace Server.Items
 {
-    public class EruditionTool : BaseToolNubia, INubiaCraftable
-    {
-        public Mobile Artisan { get { return null; } set { return; } }
-
-        public List<NubiaRessource> TRessourceList { get { return null; } }
-
-        public void AddRessource(NubiaRessource res) { }
-
-        public void ComputeRessourceBonus() { }
-
+    public class EruditionTool : BaseToolNubia
+    {      
         public override CraftSystemNubia System { get { return CraftEruditionSystem.Singleton; } }
         [Constructable]
         public EruditionTool() : base(0xFBF) { }

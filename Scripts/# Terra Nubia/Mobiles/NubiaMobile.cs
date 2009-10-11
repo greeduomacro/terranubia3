@@ -538,6 +538,18 @@ namespace Server.Mobiles
                 {
                     m_Classes[type].Niveau = niveau;
                     SendMessage(82, "Vous êtes maintenant " + m_Classes[type].CType.ToString() + " niveau " + m_Classes[type].Niveau);
+                    if (m_Classes[type] is ClasseArtisan)
+                    {
+                        ClasseArtisan nca = m_Classes[type] as ClasseArtisan;
+                        for (int cc = 0; cc < nca.ClasseCompetences.Length; cc++)
+                        {
+                            Competences.LearnCompetence(nca.ClasseCompetences[cc]);
+                        }
+                        for (int ctl = 0; ctl < nca.CompToLearn.Length; ctl++)
+                        {
+                            Competences.LearnCompetence(nca.CompToLearn[ctl]);
+                        }
+                    }
                 }
                 ok = true;
             }

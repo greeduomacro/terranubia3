@@ -18,12 +18,30 @@ namespace Server.Gumps
         private int mItemSelect = -1;
         private BaseToolNubia mTool = null;
 
+        private void addCategorie(int x, int y, int buttonid, bool check, string categorie)
+        {
+            //Alternative (parch button): 9792
+            if (check)
+            {
+                AddImage(x+2, y, 2472);
+            }
+            else
+            {
+                AddButton(x, y, 9727, 9728, buttonid, GumpButtonType.Reply, 0);
+            }
+            AddLabel(x + 35, y+5, ColorText, categorie);
+        }
+
+        //Button fleche = 4005
+        //button parch = 4011
+
+
         public GumpArtisan(BaseToolNubia tool, CraftSystemNubia system, NubiaPlayer owner)
             : this(tool, system, owner, 0, -1)
         {
         }
         public GumpArtisan(BaseToolNubia tool, CraftSystemNubia system, NubiaPlayer owner, int Categorie, int itemSelect)
-            : base(system.Name, 400, 450, 180)
+            : base(system.Name, 450, 450, 180)
         {
             Closable = true;
             mOwner = owner;
@@ -35,7 +53,7 @@ namespace Server.Gumps
             int y = YBase;
             int x = XBase;
             int line = 0;
-            int scale = 22;
+            int scale = 24;
             int decal = 5;
 
             if (itemSelect >= 0 && itemSelect < mSystem.List.Entrys.Length)
@@ -45,31 +63,46 @@ namespace Server.Gumps
             }
             /*Menu de gauche*/
 
+            AddBackground(x, y, 180, 435, 3500); //3500 = parch déco ; 3000 = parch; 3600=pierre noire ; 5120 =pierrenoire 2
+            AddBackground(x+190, y, 240, 300, 3500);
+            AddBackground(x + 190, y + 250, 240, 180, 3600);
+            line++;
+            AddLabel(x+20, y + line * scale, ColorTextYellow, "Catégories");
+
+            AddImageTiled(x + 176, y-6, 17, 440, 10150); //Bande verticale
+            AddImageTiled(x+182, y+234, 250, 18, 0x280A); //Bande 2
+        //    AddImage(x + 177, y + 420, 10204); //Fin de bande
+            line++;
+
             for (int c = 0; c < mSystem.List.Categorie.Length; c++) //50+
             {
-                AddButtonTrueFalse(x, y + line * scale, 50 + c, (mCategorie == c ? true : false), mSystem.List.Categorie[c]);
+                addCategorie(x+25, y + line * scale, 50 + c, (mCategorie == c ? true : false), mSystem.List.Categorie[c]);
                 line++;
             }
 
-            line = 13;
-            AddSimpleButton(x, y + line * scale, 35, ( mTool.Metal == null ? "Choisir Metal" : "Metal: "+mTool.Metal.Ressource.ToString() ));
+            scale = 22;
+
+            line = 15;
+            AddSimpleButton(x+20, y + line * scale, 35, ( mTool.Metal == null ? "Choisir Metal" : "Metal: "+mTool.Metal.Ressource.ToString() ));
             line++;
-            AddSimpleButton(x, y + line * scale, 36, (mTool.Cuir == null ? "Choisir Cuir" : "Cuir: " + mTool.Cuir.Ressource.ToString()));
+            AddSimpleButton(x+20, y + line * scale, 36, (mTool.Cuir == null ? "Choisir Cuir" : "Cuir: " + mTool.Cuir.Ressource.ToString()));
             line++;
-            AddSimpleButton(x, y + line * scale, 37, (mTool.Os == null ? "Choisir Os" : "Os: " + mTool.Os.Ressource.ToString()));
+            AddSimpleButton(x+20, y + line * scale, 37, (mTool.Os == null ? "Choisir Os" : "Os: " + mTool.Os.Ressource.ToString()));
             line++;
-            AddSimpleButton(x, y + line * scale, 38, (mTool.Bois == null ? "Choisir Bois" : "Bois: " + mTool.Bois.Ressource.ToString()));
+            AddSimpleButton(x+20, y + line * scale, 38, (mTool.Bois == null ? "Choisir Bois" : "Bois: " + mTool.Bois.Ressource.ToString()));
 
 
             /*Liste de droite*/
             x = XCol;
-            line = 0;
+            line = 1;
 
             for (int i = 0; i < mSystem.List.Count; i++) //100+
             {
                 if (mSystem.List.Entrys[i].Categorie == mCategorie /*&& cando*/ )
                 {
-                    AddSimpleButton(x, y + line * scale, 100 + i, mSystem.List.Entrys[i].Name);
+                    //AddSimpleButton(x+20, y + line * scale, 100 + i, mSystem.List.Entrys[i].Name);
+                    AddButton(x + 20, y + line * scale, 4011, 4012, 100 + i, GumpButtonType.Reply, 0);
+                    AddLabel(x + 55, y + line * scale, (i == itemSelect ? ColorTextGreen : ColorText), mSystem.List.Entrys[i].Name);
                     line++;
                 }
             }
@@ -78,31 +111,67 @@ namespace Server.Gumps
            
             if (mEntry != null)
             {
-                x = Largeur + 50;
-                line = 14;
-                int fondLargeur = 150;
-                int fondHauteur = 350;
-                int hauteurItem = 100;
+                y = 360;
+                x += 25;
+                line = 2;
+                scale = 20;
+
                 Item item = null;
                 try { item = mEntry.ToCraft.GetConstructor(Type.EmptyTypes).Invoke(null) as Item; }
                 catch { }
-                AddBackground(x, y, fondLargeur, fondHauteur, 0x1400); //Fond Pierre
-                AddAlphaRegion(x + 5, y + 5, fondLargeur - 10, hauteurItem);//Alpha de l'apperçu d'item
-                AddAlphaRegion(x + 5, y + 10 + hauteurItem, fondLargeur - 10, fondHauteur - hauteurItem);//Alpha de la description
+           
                 if (item != null) //Apperçu
-                    AddItem(x + 20, y + 40, item.ItemID);
-                AddLabel(x+8, y+5, ColorTextYellow, mEntry.Name);
+                    AddItem(x + 150, y + 40, item.ItemID);
+                AddLabel(x, y+20, ColorTextYellow, mEntry.Name);
 
-                string infos = "";
+             /*   string infos = "";
 
                 infos += "<i>Mini skill</i>: " + mEntry.MinValue.ToString();
                 infos += "<br><i>Difficulté(Moy.10)</i>: " + mEntry.Diff.ToString();
                 infos += "<br>";
                 for (int r = 0; r < mEntry.Ressource.Length; r++)
                     infos += "<br><i>" + mEntry.Ressource[r].RType.GetType().ToString() + "</i>: " + mEntry.Ressource[r].Number.ToString();
-
-                AddHtml(x + 8, y + 15 + hauteurItem, fondLargeur - 10, fondHauteur - hauteurItem - 65, infos, true, false);
-                AddSimpleButton(x + 8, y + line * scale, 40, "Créer cet objet");
+                */
+                AddLabel(x, y + line * scale, ColorTextGreen, "Comp. Requise: " + mEntry.MinValue.ToString());
+                line++;
+                AddLabel(x, y + line * scale, ColorTextGreen, "Difficulté: " + mEntry.Diff.ToString());
+              //  line++;
+                string res = "";
+                for (int r = 0; r < mEntry.Ressource.Length; r++)
+                {
+                    line++;
+                    string stype = mEntry.Ressource[r].RType.Name;
+                    if (stype == "BaseMetal")
+                        stype = "Métal";
+                    else if (stype == "BaseBois")
+                        stype = "Bois";
+                    else if (stype == "BaseCuir")
+                        stype = "Cuir";
+                    else if (stype == "BaseTissu")
+                        stype = "Tissu";
+                    else
+                    {
+                        try
+                        {
+                            Item ires = mEntry.Ressource[r].RType.GetConstructor(Type.EmptyTypes).Invoke(null) as Item;
+                            if (ires != null)
+                            {
+                                if (ires.Name != null)
+                                    stype = ires.Name;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                    res = mEntry.Ressource[r].Number.ToString() + " " + stype;
+                    AddLabel(x, y + line * scale, ColorText, res);
+                    
+                }
+               // line++;
+               // AddSimpleButton(x + 8, y + line * scale, 40, "Créer cet objet");
+                AddButton(x + 130, y + line * scale, 4005, 4006, 40, GumpButtonType.Reply, 0);
+                AddLabel(x + 165, y+2 + line * scale, ColorTextYellow, "Créer");
                 if (item != null)
                     item.Delete();
             }

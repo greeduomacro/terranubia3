@@ -38,14 +38,41 @@ namespace Server.Mobiles
         public double getCap()
         {
             double max = 0.0;
+            foreach( Classe c in mOwner.GetClasses() )
+            {
+                if (c is ClasseArtisan)
+                {
+                    ClasseArtisan ca = c as ClasseArtisan;
+                    for (int i = 0; i < ca.ClasseCompetences.Length; i++)
+                    {
+                        if ( ca.ClasseCompetences[i] == CType)
+                            return getArtisanCap(ca);
+                    }
+                    for (int s = 0; s < ca.CompToLearn.Length; s++)
+                    {
+                        if (ca.CompToLearn[s] == CType)
+                            return getArtisanCap(ca);
+                    }
+                    break;
+                }
+            }
+
             if (isCompetenceClasse)
                 max = mOwner.Niveau + 3;
             else
-                max = (mOwner.Niveau + 3);
+                max = (mOwner.Niveau + 3)/2;
             return Math.Round(max, 2);
+        }
+        public int getArtisanCap( ClasseArtisan c )
+        {
+            if (isCompetenceClasse)
+                return (c.Niveau * 4) + 3;
+            else
+                return ((c.Niveau * 4) + 3) / 2;
         }
         public bool canRaise()
         {
+           
             if (getMaitrise() + (isCompetenceClasse ? 1 : 0.5) >= getCap()+ 0.4 )
                 return false;
             return true;

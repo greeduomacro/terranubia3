@@ -161,6 +161,15 @@ namespace Server.Items
                 Layer = Layer.OneHanded;
                 mArmeCategorie = ArmeCategorie.Guerre;
             }
+            else if (template == ArmeTemplate.Jet)
+            {
+                mDe = De.huit;
+                mMiniCritique = 19;
+                mCritiqueMulti = 2;
+                mMaxRange = 15;
+                Layer = Layer.OneHanded;
+                mArmeCategorie = ArmeCategorie.Guerre;
+            }
 
             Weight = 10.0;
            // Name = "Nubia Weapon";
