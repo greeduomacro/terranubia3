@@ -119,10 +119,14 @@ namespace Server.Gumps
                 from.RawStr = 8;
                 from.RawDex = 8;
                 from.RawInt = 8;
+                from.RawCha = 8;
+                from.RawCons = 8;
+                from.RawSag = 8;
+                from.resetCompetences();
                 from.GiveXP(50);
                 from.SendMessage(99, "Bienvenue sur Terra Nubia");
-                from.SendMessage("De la teinture pour cheveux à été placée dans votre sac");
-                from.Backpack.AddItem(new HairDye());
+              //  from.SendMessage("De la teinture pour cheveux à été placée dans votre sac");
+              //  from.Backpack.AddItem(new HairDye());
                 from.Frozen = false;
 
                 // ZONE DE DEPART : 
