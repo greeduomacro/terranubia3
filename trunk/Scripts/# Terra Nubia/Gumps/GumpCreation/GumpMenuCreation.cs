@@ -25,7 +25,7 @@ namespace Server.Gumps
             int scale = 30;
             int decal = 5;
 
-            string description = "<center>Création de personnage</center><p>Bienvenue sur Narelia. Vous devez à présent créer votre personnage.<br>Toutes les étapes doivent passer 'verte' afin de valider votre création et de débuter le jeu.";
+            string description = "<center>Création de personnage</center><p>Bienvenue sur Terra Nubia. Vous devez à présent créer votre personnage.<br>Toutes les étapes doivent passer 'verte' afin de valider votre création et de débuter le jeu.";
             AddHtml(x, y, LargeurColonne1, Hauteur, description, false, true);
 
             x = XCol;
@@ -38,6 +38,7 @@ namespace Server.Gumps
             line++;
             AddValidButton(x, y + line * scale, 3, ClasseValide(m_owner), (m_owner.LastClasse == ClasseType.Maximum ? "Votre classe" : "Classe: "+m_owner.LastClasse.ToString() ));
             line++;
+          
            /* AddValidButton(x, y + line * scale, 4, AlignementValide(m_owner), (m_owner.Align == Alignement.None ? "Votre Alignement" : "Alignement: "+AlignHelper.GetName(m_owner.Align)));
             line++;*/
             if (m_owner.Race != null)
@@ -52,6 +53,8 @@ namespace Server.Gumps
                     AddButtonTrueFalse(x, y + line * scale, 9, false, "Pilosité");
                     line++;
                 }
+                AddValidButton(x, y + line * scale, 10, true, "Couleur des cheveux");
+                line++;
             }
 
             if (AllIsValide(m_owner))
@@ -106,6 +109,11 @@ namespace Server.Gumps
                 from.SendGump( new GumpChoixCheveux(from, -1,0));
             else if (id == 9)
                 from.SendGump(new GumpChoixBarbe(from, -1, 0));
+            else if (id == 10)
+            {
+                from.SendGump(new GumpCouleurCheveux());
+               
+            }
             else if (id == 99)
             {
                 from.RawStr = 8;
@@ -118,7 +126,7 @@ namespace Server.Gumps
                 from.Frozen = false;
 
                 // ZONE DE DEPART : 
-                from.Map = Map.Trammel; 
+                from.Map = Map.Trammel;
                 from.MoveToWorld(new Point3D(3508, 2766, 0), Map.Trammel);
             }
 

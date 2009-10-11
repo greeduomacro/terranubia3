@@ -257,7 +257,7 @@ namespace Server.Mobiles
     }
     public class CompPerceptionAuditive : NubiaCompetence
     {
-        public override string Name { get { return "Perseption auditive"; } }
+        public override string Name { get { return "Perception auditive"; } }
         public override CompType CType { get { return CompType.PerceptionAuditive; } }
         public override DndStat SType { get { return DndStat.Sagesse; } }
         public override bool LimitedByArmor { get { return false; } }

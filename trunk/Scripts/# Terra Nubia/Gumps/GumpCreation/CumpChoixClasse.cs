@@ -16,7 +16,7 @@ namespace Server.Gumps
             : this(_owner, _creation, 0)
 		{}
         public GumpChoixClasse(NubiaPlayer _owner, bool _creation, int _choix)
-            : base("Choix de la " + (_creation ? "Première classe" : "classe"), 250, 460)
+            : base("Choix de la " + (_creation ? "Première classe" : "classe"), 250, 485)
 		{
 			Closable = false;
 			m_owner = _owner;
@@ -30,8 +30,17 @@ namespace Server.Gumps
 			int decal = 5;
 
             ClasseType possClasse = ClasseType.Maximum;
+            bool canArtisan = true;
+
             foreach (Classe c in m_owner.GetClasses())
+            {
                 possClasse = c.CType;
+                if (c is ClasseArtisan)
+                    canArtisan = false;
+            }
+           
+
+
 
 			for( int i = 0; i < (int)ClasseType.Maximum; ++i )
 			{
@@ -43,7 +52,8 @@ namespace Server.Gumps
                     ((ClasseType)i == ClasseType.Ensorceleur && possClasse == ClasseType.Magicien))
                     continue;
 
-                AddButtonTrueFalse(x, y + (line * scale), i + 100, (choix == i), ((ClasseType)i).ToString());
+                if(  (ClasseType)i < ClasseType.ArtisanCouturier || canArtisan  )
+                    AddButtonTrueFalse(x, y + (line * scale), i + 100, (choix == i), Classe.GetNameClasse((ClasseType)i));
                 line++;
         	}
 			AddButton( x , y+(line*scale), 0x850, 0x851,99, GumpButtonType.Reply, 0 );

@@ -27,7 +27,8 @@ namespace Server.Items
         Maille = 4,
         Plaque = 5
     }
-    public abstract class NubiaArmor : BaseArmor /*, INubiaCraftable*/
+    
+    public abstract class NubiaArmor : BaseArmor , INubiaCraftable
     {
         
         public NubiaArmor(int itemid) : base(itemid) { }
@@ -37,55 +38,32 @@ namespace Server.Items
         private int mHitsMax = 50;
         private int mHits = 50;
         private Mobile mArtisan = null;
+        private NubiaQualityEnum mNubiaQuality = NubiaQualityEnum.Mauvaise;
 
         #region Craft Variable & Functions
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile Artisan { get { return mArtisan; } set { mArtisan = value; } }
 
-     /*   private List<NubiaRessource> mTRessourceList = new List<NubiaRessource>();
+        [CommandProperty(AccessLevel.GameMaster)]
+        public NubiaQualityEnum NQuality { get { return mNubiaQuality; } set { AfterCraft(value); } }
+
+        private List<NubiaRessource> mTRessourceList = new List<NubiaRessource>();
         public List<NubiaRessource> TRessourceList { get { return TRessourceList; } }
 
-        public void AddRessource(NubiaRessource res)
-        {
-            if (mTRessourceList == null)
-                mTRessourceList = new List<NubiaRessource>();
-            mTRessourceList.Add(res);
-        }
-        */
-        public void ComputeRessourceBonus()
-        {
-            double ResPhy = 0.0;
-            double ResFeu = 0.0;
-            double ResFroid = 0.0;
-            double ResAcid = 0.0;
-            double ResEnergy = 0.0;
-            double durab = 0;
+        private int mArBoost = 0;
 
-           /* foreach (NubiaRessource t in mTRessourceList)
+        public void AfterCraft(NubiaQualityEnum quality)
+        {
+            mNubiaQuality = quality;
+            for (int i = 0; i < mTRessourceList.Count; i++)
             {
-                NubiaInfoRessource info = NubiaInfoRessource.GetInfoRessource(t);
-                ResPhy += info.ResistancePhysique;
-                ResFeu += info.ResistanceFeu;
-                ResFroid += info.ResistanceFroid;
-                ResAcid += info.ResistanceAcide;
-                ResEnergy += info.ResistanceEnergie;
-                durab += info.Durabilite;
+                NubiaRessource res = mTRessourceList[i];
+                NubiaInfoRessource infos = 
+                    NubiaInfoRessource.GetInfoRessource(res);
+                mArBoost = Math.Max(mArBoost, infos.GlobalAR);
+                mHitsMax = Math.Max( (int)(50.0 * infos.Durabilite), mHitsMax );
+                mHits = mHitsMax;
             }
-            ResPhy /= mTRessourceList.Count;
-            ResFeu /= mTRessourceList.Count;
-            ResFroid /= mTRessourceList.Count;
-            ResAcid /= mTRessourceList.Count;
-            ResEnergy /= mTRessourceList.Count;
-            durab /= mTRessourceList.Count;
-
-            PhysicalBonus = (int)ResPhy;
-            FireBonus = (int)ResFeu;
-            ColdBonus = (int)ResFroid;
-            EnergyBonus = (int)ResEnergy;
-            PoisonBonus = (int)ResAcid;*/
-
-            double hm = 100.0 * durab;
-            mHitsMax = (int)hm;
         }
 
         #endregion
@@ -158,7 +136,17 @@ namespace Server.Items
         {
             get
             {
-                return GlobalCA * PercentFromLayer;
+                double bonus = 0;
+                switch (mNubiaQuality)
+                {
+                    case NubiaQualityEnum.Mauvaise: bonus = -1; break;
+                    case NubiaQualityEnum.Bonne: bonus = 0.5; break;
+                    case NubiaQualityEnum.Excellente: bonus = 1; break;
+                    case NubiaQualityEnum.Maitre: bonus = 2; break;
+                        
+                }
+                bonus += mArBoost;
+                return (GlobalCA + bonus) * PercentFromLayer;
             }
         }
 
@@ -231,7 +219,20 @@ namespace Server.Items
         {
             base.GetProperties(list);
             string infos = "";
-
+            if (mNubiaQuality != NubiaQualityEnum.Normale)
+            {
+                infos += NubiaQuality.getQualityName(mNubiaQuality) + "\n";
+            }
+            if (mTRessourceList.Count > 0)
+            {
+                for (int i = 0; i < mTRessourceList.Count; i++)
+                {
+                    infos += NubiaInfoRessource.GetInfoRessource(mTRessourceList[i]).Name;
+                    if (i < mTRessourceList.Count - 1)
+                        infos += ", ";
+                }
+                infos += "\n";
+            }
             infos += String.Format("Catégorie: {0}\nModus dex Maxi: +{1}\nMalus: {2}\nEchec aux sorts: {3}%\nDurabilitée: {4}/{5}", TArmorType,
                 ModDexMaximum,
                 MalusArmure,
@@ -247,12 +248,24 @@ namespace Server.Items
             base.Serialize(writer);
             writer.Write((int)mModelType);
             writer.Write((Mobile)mArtisan);
+
+            writer.Write((int)mTRessourceList.Count);
+            writer.Write((int)mNubiaQuality);
+            for (int i = 0; i < mTRessourceList.Count; i++)
+                writer.Write((int)mTRessourceList[i]);
         }
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
             mModelType = (ArmorModelType)reader.ReadInt();
             mArtisan = reader.ReadMobile();
+
+            int rescount = reader.ReadInt();
+            mNubiaQuality = (NubiaQualityEnum)reader.ReadInt();
+            mTRessourceList = new List<NubiaRessource>();
+            for (int i = 0; i < rescount; i++)
+                mTRessourceList.Add((NubiaRessource)reader.ReadInt());
+
         }
     }
 }

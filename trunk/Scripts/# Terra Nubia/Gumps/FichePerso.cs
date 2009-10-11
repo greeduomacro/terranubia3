@@ -22,7 +22,7 @@ namespace Server.Gumps
             bool ok = true;
             for (int i = 0; i < classes.Length; i++)
             {
-                if (classes[i].Niveau < 4)
+                if (classes[i].Niveau < 4 && !(classes[i] is ClasseArtisan) )
                     ok = false;
             }
             return ok;
@@ -32,6 +32,10 @@ namespace Server.Gumps
             int nivClasseMini = 4;
             if (c.Niveau < nivClasseMini)
                 return true;
+            else if (c is ClasseArtisan && c.Niveau < 5)
+                return true;
+            else if (c is ClasseArtisan && c.Niveau >= 5)
+                return false;
             else
             {
                 for (int i = 0; i < classes.Length; i++)

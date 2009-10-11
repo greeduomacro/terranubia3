@@ -19,6 +19,8 @@ namespace Server.Mobiles
         Chimie,
         Agriculture,
 
+        Minage, Buchage,
+
         Bluff,
         Concentration,
         //Connaissance,
@@ -57,6 +59,8 @@ namespace Server.Mobiles
         Cuisine, Peche, Brassage,
 
         Chirurgie,
+
+       
 	
         Maximum
     }

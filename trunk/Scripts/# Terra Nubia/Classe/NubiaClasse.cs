@@ -20,7 +20,13 @@ namespace Server
         Pretre,
         Rodeur,
         Roublard,
-        Artisan,
+        //Artisana
+        ArtisanCouturier,
+        ArtisanForgeron,
+        ArtisanIngenieur,
+        ArtisanEbeniste,
+        ArtisanAlchimiste,
+        ArtisanPaysan,
 
         Maximum //pour comptage
     }
@@ -29,6 +35,32 @@ namespace Server
         public virtual int GetDV { get { return 4; } }
         public virtual int PtComp { get { return 2; } } //x pts par niveau (d'achat)
         public virtual NubiaArmorType ArmorAllow { get { return NubiaArmorType.None; } }
+
+        public static string GetNameClasse(ClasseType ct)
+        {
+            switch (ct)
+            {
+                case ClasseType.Barbare: return "Barbare";
+                case ClasseType.Barde: return "Barde";
+                case ClasseType.Druide: return "Druide";
+                case ClasseType.Ensorceleur: return "Ensorceleur";
+                case ClasseType.Guerrier: return "Guerrier";
+                case ClasseType.Magicien: return "Magicien";
+                case ClasseType.Moine: return "Moine";
+                case ClasseType.Paladin: return "Paladin";
+                case ClasseType.Pretre: return "Prêtre";
+                case ClasseType.Rodeur: return "Rôdeur";
+                case ClasseType.Roublard: return "Roublard";
+                case ClasseType.ArtisanAlchimiste: return "Artisan: Alchimiste";
+                case ClasseType.ArtisanCouturier: return "Artisan: Couturier";
+                case ClasseType.ArtisanEbeniste: return "Artisan: Ebeniste";
+                case ClasseType.ArtisanForgeron: return "Artisan: Forgeron";
+                case ClasseType.ArtisanIngenieur: return "Artisan: Ingenieur";
+                case ClasseType.ArtisanPaysan: return "Artisan: Paysan";
+            }
+            return "Classe: Inconnu";
+        }
+
         public static Type GetClasse(ClasseType ct)
         {
             //Console.WriteLine("GetClasse dans Classe: "+ct);
@@ -46,6 +78,12 @@ namespace Server
                 case ClasseType.Pretre: type = typeof(ClassePretre); break;
                 case ClasseType.Rodeur: type = typeof(ClasseRodeur); break;
                 case ClasseType.Roublard: type = typeof(ClasseRoublard); break;
+                case ClasseType.ArtisanAlchimiste: type = typeof(ArtisanAlchimiste); break;
+                case ClasseType.ArtisanCouturier: type = typeof(ArtisanCouturier); break;
+                case ClasseType.ArtisanEbeniste: type = typeof(ArtisanEbeniste); break;
+                case ClasseType.ArtisanForgeron: type = typeof(ArtisanForgeron); break;
+                case ClasseType.ArtisanIngenieur: type = typeof(ArtisanIngenieur); break;
+                case ClasseType.ArtisanPaysan: type = typeof(ArtisanPaysan); break;
             }
             return type;
         }

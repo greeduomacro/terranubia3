@@ -10,7 +10,7 @@ using Server.Gumps;
 using Server.Targeting;
 using Server.Engines.Harvest;
 using Server.Misc;
-
+using Server.Engines.Craft;
 namespace Server.Engines
 {
     public class CraftSystemNubia
@@ -189,7 +189,21 @@ namespace Server.Engines
                 if (newitem is INubiaCraftable)
                 {
                     INubiaCraftable nubitem = newitem as INubiaCraftable;
+
+                    NubiaQualityEnum quality = NubiaQualityEnum.Normale;
+
+                    int delta = crafter.Competences[mComp].pureRoll() - entry.Diff;
+                    if (delta < 0)
+                        quality = NubiaQualityEnum.Mauvaise;
+                    else if (delta >= 15)
+                        quality = NubiaQualityEnum.Maitre;
+                    else if (delta >= 10)
+                        quality = NubiaQualityEnum.Excellente;
+                    else if (delta >= 5)
+                        quality = NubiaQualityEnum.Bonne;
+
                     nubitem.Artisan = crafter;
+                    nubitem.TRessourceList.Clear();
                     bool colored = false;
                     for (int i = 0; i < ressourceslist.Count; i++)
                     {
@@ -203,9 +217,11 @@ namespace Server.Engines
                                 colored = true;
                             }
                             Console.WriteLine("Ressource: " + res.Ressource.ToString());
-                            nubitem.AddRessource((NubiaRessource)res.Ressource);                            
+                           // nubitem.AddRessource((NubiaRessource)res.Ressource);                   
+                            nubitem.TRessourceList.Add(res.Ressource);
                         }
                     }
+                    nubitem.AfterCraft(quality);
                  //   nubitem.ComputeRessourceBonus();
                 }
                 if (newitem != null && crafter.Backpack != null)

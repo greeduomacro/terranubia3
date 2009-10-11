@@ -11,6 +11,10 @@ namespace Server.Engines
     {
         public static void Configure()
         {
+            //ScanItems();
+        }
+        public static void ScanItems()
+        {
             Console.WriteLine(".");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("## Scans craftable item ##");
