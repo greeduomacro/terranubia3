@@ -8,7 +8,7 @@ using Server.Items;
 using Server.Gumps;
 namespace Server.Mobiles
 {
-	public class BaseDebuff : BaseBuff
+	public class BaseDebuff : AbstractBaseBuff
 	{
 		public BaseDebuff(Serial serial): base(serial){}
 		public BaseDebuff(NubiaMobile _caster, NubiaMobile _cible, int ico, int _duration, string _name): base( _caster, _cible, ico, true, _duration, _name)
@@ -39,10 +39,10 @@ namespace Server.Mobiles
 		}
 	}
 
-	public class Buff : BaseBuff
+	public class BaseBuff : AbstractBaseBuff
 	{
-		public Buff(Serial serial): base(serial){}
-		public Buff(NubiaMobile _caster, NubiaMobile _cible, int ico, int _duration, string _name): base( _caster, _cible, ico, false, _duration, _name)
+		public BaseBuff(Serial serial): base(serial){}
+		public BaseBuff(NubiaMobile _caster, NubiaMobile _cible, int ico, int _duration, string _name): base( _caster, _cible, ico, false, _duration, _name)
 		{
 		}
 		public override bool OnTurn()
@@ -70,7 +70,7 @@ namespace Server.Mobiles
 		}
 	}
 
-	public abstract class BaseBuff : Item
+	public abstract class AbstractBaseBuff : Item
 	{
 		protected NubiaMobile m_caster;
 		protected NubiaMobile m_cible;
@@ -106,7 +106,7 @@ namespace Server.Mobiles
 		}
 
 		//## CONSTRUCTEUR
-		public BaseBuff(NubiaMobile _caster, NubiaMobile _cible, int ico, bool _isDebuff, int _duration, string _name): base(11)
+		public AbstractBaseBuff(NubiaMobile _caster, NubiaMobile _cible, int ico, bool _isDebuff, int _duration, string _name): base(11)
 		{
 			m_caster = _caster;
 			m_cible = _cible;
@@ -131,14 +131,14 @@ namespace Server.Mobiles
 						m_cible.DebuffList.Add( this as BaseDebuff );
 				}
 				else{
-					foreach(Buff buff in m_cible.BuffList)
+					foreach(BaseBuff buff in m_cible.BuffList)
 					{
 						//Console.WriteLine("Buff : "+buff.Name+" : "+this.Name); 
 						if( buff.Name == this.Name )
 							ok = false;
 					}
 					if(ok)
-						m_cible.BuffList.Add( this as Buff);			
+						m_cible.BuffList.Add( this as BaseBuff);			
 				}					
 				if(ok)
 					OnAdd();
@@ -146,7 +146,7 @@ namespace Server.Mobiles
 					m_caster.SendMessage("{0} est déjà sous un effet similaire", m_cible.Name);
 			}
 		}
-		public BaseBuff(Serial serial): base(serial){}
+		public AbstractBaseBuff(Serial serial): base(serial){}
 
 		public virtual bool OnTurn()
 		{
@@ -198,8 +198,14 @@ namespace Server.Mobiles
 			else if( m_cible != null )
 			{
 				lock(m_cible.BuffList)
-					m_cible.BuffList.Remove(this as Buff);
+					m_cible.BuffList.Remove(this as BaseBuff);
 			}
+            m_cible.CloseGump(typeof(GumpBuff));
+            m_cible.CloseGump(typeof(GumpDebuff));
+            if (m_cible.BuffList.Count > 0 && m_cible is NubiaPlayer)
+                m_cible.SendGump(new GumpBuff(m_cible as NubiaPlayer));
+            if (m_cible.DebuffList.Count > 0 && m_cible is NubiaPlayer)
+                m_cible.SendGump(new GumpDebuff(m_cible as NubiaPlayer));
 			m_turn = -1;
 		}
 		
@@ -245,7 +251,7 @@ namespace Server.Mobiles
 			m_turn = reader.ReadInt();
 
 			if(  m_cible != null && !m_isDebuff && m_turn > 1){
-				m_cible.BuffList.Add( this as Buff );
+				m_cible.BuffList.Add( this as BaseBuff );
 			}
 			else if(  m_cible != null && m_isDebuff && m_turn > 1 ){
 				m_cible.DebuffList.Add( this as BaseDebuff );

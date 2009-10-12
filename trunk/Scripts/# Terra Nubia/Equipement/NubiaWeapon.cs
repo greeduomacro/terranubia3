@@ -11,7 +11,7 @@ using Server.Misc;
 
 namespace Server.Items
 {
-    public class NubiaWeapon : Item, IWeapon
+    public class NubiaWeapon : Item, INubiaCraftable,  IWeapon
     {
         public static string getTemplateString(ArmeTemplate t)
         {
@@ -87,6 +87,48 @@ namespace Server.Items
 
 
         private bool mOpportunite = false; // en cas d'attaque d'opportunité, on divise par deux le délai entre deux attaque
+
+        #region Craft Variable & Functions
+        private int mHitsMax = 50;
+        private int mHits = 50;
+        private int mBonusAttaque = 0;
+        private int mBonusDegat = 0;
+        private Mobile mArtisan = null;
+        private NubiaQualityEnum mNubiaQuality = NubiaQualityEnum.Mauvaise;
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Mobile Artisan { get { return mArtisan; } set { mArtisan = value; } }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public NubiaQualityEnum NQuality { get { return mNubiaQuality; } set { AfterCraft(value); } }
+
+        private List<NubiaRessource> mTRessourceList = new List<NubiaRessource>();
+        public List<NubiaRessource> TRessourceList { get { return mTRessourceList; } }
+
+        public void AfterCraft(NubiaQualityEnum quality)
+        {
+            mNubiaQuality = quality;
+            for (int i = 0; i < mTRessourceList.Count; i++)
+            {
+                NubiaRessource res = mTRessourceList[i];
+                NubiaInfoRessource infos =
+                    NubiaInfoRessource.GetInfoRessource(res);
+                mBonusAttaque = Math.Max(mBonusAttaque, infos.BonusAttaque);
+                mBonusDegat = Math.Max(mBonusDegat, infos.BonusDegat);
+                mHitsMax = Math.Max((int)(50.0 * infos.Durabilite), mHitsMax);
+                mHits = mHitsMax;
+            }
+            switch (mNubiaQuality)
+            {
+                case NubiaQualityEnum.Mauvaise: mBonusAttaque--; break;
+                case NubiaQualityEnum.Bonne: mHitsMax += 10; break;
+                case NubiaQualityEnum.Excellente: mBonusAttaque++; mHitsMax += 20; break;
+                case NubiaQualityEnum.Maitre: mBonusAttaque++; mBonusDegat++; mHitsMax += 30; break;
+                    
+            }
+        }
+
+        #endregion
+
 
         public NubiaWeapon(ArmeTemplate template, int ItemId)
             : base(ItemId)
@@ -387,6 +429,8 @@ namespace Server.Items
              *  ---------------------
             */
 
+            bonii += mBonusAttaque;
+
             //LANCE
             if (mTemplate == ArmeTemplate.Lance)
             {
@@ -485,7 +529,7 @@ namespace Server.Items
                 //Attaque d'opportunité
                 mOpportunite = (opDiff > 0 && AttMob.CanDoOpportuniteAttack);
 
-                int damage = DndHelper.rollDe(this.mDe, this.mNbrLance) + (int)DamageBonus;
+                int damage = DndHelper.rollDe(this.mDe, this.mNbrLance) + (int)DamageBonus + mBonusDegat;
 
                 if (coupCritique) //Critique !
                 {
@@ -591,9 +635,30 @@ namespace Server.Items
             if (Layer == Layer.TwoHanded)
                 infos += "Arme à deux mains\n";
 
+            if (mNubiaQuality != NubiaQualityEnum.Normale)
+            {
+                infos += NubiaQuality.getQualityName(mNubiaQuality) + "\n";
+            }
+            if (mTRessourceList.Count > 0)
+            {
+                for (int i = 0; i < mTRessourceList.Count; i++)
+                {
+                    infos += NubiaInfoRessource.GetInfoRessource(mTRessourceList[i]).Name;
+                    if (i < mTRessourceList.Count - 1)
+                        infos += ", ";
+                }
+                infos += "\n";
+            }
+
+            if (mBonusAttaque != 0)
+                infos += "Attaque +" + mBonusAttaque +"\n";
+
+
+            
+
             infos += String.Format("Catégorie: {0}\nDégats: {1}\nPortée: {2}m\nCritique: {3}",
                 mArmeCategorie,
-                DndHelper.nomDe(De, NbrLance),
+                DndHelper.nomDe(De, NbrLance) + (mBonusDegat>0? "+"+mBonusDegat.ToString(): ""),
                 ((double)mMaxRange*1.5).ToString(),
                 getStringCritique() );
             list.Add(infos);
@@ -627,14 +692,14 @@ namespace Server.Items
             }
             baseSec /= mob.BonusAttaque.Length + 1;
 
-            return TimeSpan.FromSeconds(baseSec);
+            return TimeSpan.FromSeconds(baseSec - (Utility.RandomDouble()*2) );
         }
 
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
 
-            writer.Write((int)0); //version
+            writer.Write((int)1); //version
             writer.Write((int)mDe);
             writer.Write((int)mNbrLance);
             writer.Write((int)mMiniCritique);
@@ -642,6 +707,13 @@ namespace Server.Items
             writer.Write((int)mMaxRange);
             writer.Write((int)mArmeCategorie);
             writer.Write((int)mTemplate);
+
+            writer.Write((Mobile)mArtisan);
+
+            writer.Write((int)mTRessourceList.Count);
+            writer.Write((int)mNubiaQuality);
+            for (int i = 0; i < mTRessourceList.Count; i++)
+                writer.Write((int)mTRessourceList[i]);
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -654,6 +726,18 @@ namespace Server.Items
             mMaxRange = reader.ReadInt();
             mArmeCategorie = (ArmeCategorie)reader.ReadInt();
             mTemplate = (ArmeTemplate)reader.ReadInt();
+
+            if (version >= 1)
+            {
+                mArtisan = reader.ReadMobile();
+
+                int rescount = reader.ReadInt();
+                mNubiaQuality = (NubiaQualityEnum)reader.ReadInt();
+                mTRessourceList = new List<NubiaRessource>();
+                for (int i = 0; i < rescount; i++)
+                    mTRessourceList.Add((NubiaRessource)reader.ReadInt());
+
+            }
         }
     }
 }

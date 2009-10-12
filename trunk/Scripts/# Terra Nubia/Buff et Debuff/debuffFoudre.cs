@@ -10,10 +10,10 @@ using Server.Items;
 namespace Server.Nubia
 {
 
-		public class FoudreDebuff : BaseBuff
+		public class FoudreDebuff : BaseDebuff
 		{
 			//## CONSTRUCTEUR
-			public FoudreDebuff( NubiaMobile _caster ) : base(_caster, _caster, 0x8E9, true, 450 /*Une heure*/,"Foudroyé !")
+			public FoudreDebuff( NubiaMobile _caster ) : base(_caster, _caster, 0x8E9, 450 /*Une heure*/,"Foudroyé !")
 			{
 				//Name = "Crash!";
 			/*	m_diffModus = -10;

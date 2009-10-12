@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Server.Items;
 using System.Collections;
+using Server.Gumps;
 
 namespace Server.Mobiles
 {
@@ -436,7 +437,7 @@ namespace Server.Mobiles
 
         public override bool OnEquip(Item item)
         {
-            if (m_deathTurn >= 0)
+            if (m_deathTurn <= -1)
             {
                 //Attaque d'opportunité a l'équipement
                 ExposeToOpportunite();
@@ -561,7 +562,7 @@ namespace Server.Mobiles
                 }
             }
 
-            if (m_deathTurn > -1)
+            if (m_deathTurn > 0)
             {
                 if (Alive)
                 {
@@ -574,11 +575,22 @@ namespace Server.Mobiles
                 }
                 m_deathTurn--;
             }
-            else if (m_deathTurn < 0 && !Alive)
+            else if (m_deathTurn <= 0 && !Alive)
             {
                 SendMessage("Vous reprennez conscience");
                 Resurrect();
                 //Emote("*reprend conscience*");
+            }
+
+            CloseGump(typeof(GumpDebuff));
+            if (DebuffList.Count > 0 && Alive)
+            {
+                SendGump(new GumpDebuff(this));
+            }
+            CloseGump(typeof(GumpBuff));
+            if (BuffList.Count > 0 && Alive)
+            {
+                SendGump(new GumpBuff(this));
             }
             base.OnTurn();
         }
@@ -638,6 +650,7 @@ namespace Server.Mobiles
 
             changeMoral(-20);
             m_lastDeath = DateTime.Now;
+            m_deathTurn = -1;
 
           //  Console.WriteLine("End Resurect");
 
