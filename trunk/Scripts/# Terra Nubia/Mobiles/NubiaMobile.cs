@@ -295,14 +295,15 @@ namespace Server.Mobiles
             if (!Warmode)
             {
                 SendMessage("Vous devez être en warmod pour effectuer une action de combat");
+                mActionCombat = ActionCombat.None;
                 return;
             }
-            if (act == ActionCombat.Defense)
+            if (act == ActionCombat.Defense && mActionCombat != ActionCombat.Defense)
             {
                 mActionCombat = ActionCombat.Defense;
                 Emote("*Denfense*");
             }
-            else if (act == ActionCombat.DefenseTotale)
+            else if (act == ActionCombat.DefenseTotale && mActionCombat != ActionCombat.DefenseTotale)
             {
                 mActionCombat = ActionCombat.DefenseTotale;
                 if (getBouclier() != null)
@@ -314,6 +315,11 @@ namespace Server.Mobiles
                 }
                 else
                     Emote("*Defense totale*");
+            }
+            else
+            {
+                SendMessage("Vous ne maintenez plus d'action de combat particulière");
+                mActionCombat = ActionCombat.None;
             }
 
         }

@@ -18,7 +18,7 @@ namespace Server.Gumps
         public GumpChoixClasse(NubiaPlayer _owner, bool _creation, int _choix)
             : base("Choix de la " + (_creation ? "Première classe" : "classe"), 250, 485)
 		{
-			Closable = false;
+			//Closable = false;
 			m_owner = _owner;
 			creation = _creation;
             choix = _choix;

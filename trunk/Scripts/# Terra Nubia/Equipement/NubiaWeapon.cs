@@ -588,6 +588,9 @@ namespace Server.Items
             // list.Add(String.Format("Rang: {0}\n",));
             string infos = "";
 
+            if (Layer == Layer.TwoHanded)
+                infos += "Arme à deux mains\n";
+
             infos += String.Format("Catégorie: {0}\nDégats: {1}\nPortée: {2}m\nCritique: {3}",
                 mArmeCategorie,
                 DndHelper.nomDe(De, NbrLance),

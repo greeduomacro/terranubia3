@@ -17,7 +17,7 @@ namespace Server.Gumps
             : base("Menu de création...", 480,290,275)
         {
             m_owner = _owner;
-            Closable = false;
+         //   Closable = false;
             
             int y = YBase;
             int x = XBase;

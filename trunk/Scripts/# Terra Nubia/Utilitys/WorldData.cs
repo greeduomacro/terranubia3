@@ -34,9 +34,11 @@ namespace Server
         public static TimeSpan XpGainInterval = TimeSpan.FromMinutes(10.0); //Gain tout les X Minutes
 
         public static TimeSpan TimeTour() { return TimeSpan.FromSeconds(8.0); }
+        public static TimeSpan SpellDay() { return TimeSpan.FromHours(4); }
 
         //Cheveux
         public static HairDef[] HairDefList = new HairDef[]{
+            new HairDef("Chauve", 0, 0),
             new HairDef("Court", 8251, 10),
             new HairDef("Long", 8252, 10),
             new HairDef("Queue de cheval", 8253, 10),
@@ -62,6 +64,7 @@ namespace Server
         //Barbes
         //Barbes
         public static HairDef[] FacialHairDefList = new HairDef[]{
+            new HairDef("Imberbe / Rasé", 0, 0),
             new HairDef("Barbe courte & Moustache", 8267, 10),
             new HairDef("Barbe longue & Moustace", 8268, 10),
             new HairDef("Bouc", 8269, 10),
