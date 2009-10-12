@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 8;
 			Name = "Necrarmure";
-			//Layer = Layer.Chest;
+            ModelType = ArmorModelType.Anneaux;
 		}
 
 		public NecroChest( Serial serial ) : base( serial )

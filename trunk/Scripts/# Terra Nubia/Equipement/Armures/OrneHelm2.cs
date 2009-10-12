@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 14;
 			Name = "Casque d'Orne";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Plaque;
 		}
 
 		public OrneHelm2( Serial serial ) : base( serial )

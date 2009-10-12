@@ -315,6 +315,29 @@ namespace Server.Engines
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 15 ),
 											new RessourceNeed( typeof(BaseCuir), 5)});
+           AddEntry("Brassard écaillés", 7, typeof(EcailleArms),
+                                           4 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 15 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
+
+           AddEntry("Brassard dragon", 7, typeof(TNDragonArms),
+                                          4 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 15 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
+
+           AddEntry("Torse de maille écaillé", 7, typeof(EcailleChest),
+                                          4 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 15 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
+
+           AddEntry("jambière en maille écaillé", 7, typeof(EcailleLegs),
+                                          3 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 15 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
             // jambière de maille
            AddEntry("jambière en maille", 7, typeof(ChainLegs),
                                             3 /*Min value pour crafter*/, 10 /*Difficulte*/,
@@ -357,6 +380,29 @@ namespace Server.Engines
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 20 ),
 											new RessourceNeed( typeof(BaseCuir), 5)});
+           AddEntry("Casque chaotique", 10, typeof(ChaosHelm),
+                                          9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 20 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
+
+           AddEntry("Casque d'Orne", 10, typeof(OrneHelm),
+                                         9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 20 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
+
+           AddEntry("Casque d'Orne (2)", 10, typeof(OrneHelm2),
+                                       9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                       new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 20 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
+
+           AddEntry("Casque de Tigris", 10, typeof(TigrisHelm),
+                                     9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                     new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 20 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
             // Torse de plaque pour femme
            AddEntry("Torse de plaque pour femme", 8, typeof(FemalePlateChest),
                                             9 /*Min value pour crafter*/, 10 /*Difficulte*/,
@@ -364,9 +410,26 @@ namespace Server.Engines
 											new RessourceNeed( typeof(BaseMetal), 40 ),
 											new RessourceNeed( typeof(BaseCuir), 20)});
             // Brassard de plaque
-           AddEntry("TBrassard de plaque", 8, typeof(PlateArms),
+           AddEntry("Brassard de plaque", 8, typeof(PlateArms),
                                             7 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 20 ),
+											new RessourceNeed( typeof(BaseCuir), 10)});
+           // Brassard de plaque
+           AddEntry("Brassard de plaque chaotiques", 8, typeof(ChaosArms),
+                                            7 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 20 ),
+											new RessourceNeed( typeof(BaseCuir), 10)});
+           AddEntry("Brassard de plaque massive", 8, typeof(MassivArms),
+                                          7 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 20 ),
+											new RessourceNeed( typeof(BaseCuir), 10)});
+
+           AddEntry("Brassard d'Orne", 8, typeof(OrneArms),
+                                         7 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                         new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 20 ),
 											new RessourceNeed( typeof(BaseCuir), 10)});
             // Torse de plaque
@@ -375,22 +438,64 @@ namespace Server.Engines
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 40 ),
 											new RessourceNeed( typeof(BaseCuir), 20)});
+           
+            AddEntry("Torse à Bande", 8, typeof(BandeChest),
+                                           9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 40 ),
+											new RessourceNeed( typeof(BaseCuir), 20)});
+            AddEntry("Torse Draco", 8, typeof(DracoChest),
+                                          9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 40 ),
+											new RessourceNeed( typeof(BaseCuir), 20)});
+
+            AddEntry("Torse Massif", 8, typeof(MassivChest),
+                                          9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 40 ),
+											new RessourceNeed( typeof(BaseCuir), 20)});
+
+            AddEntry("Torse d'Orne", 8, typeof(OrneChest),
+                                         9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 40 ),
+											new RessourceNeed( typeof(BaseCuir), 20)});
+           
             // Gantelet de plaque
            AddEntry("Gantelet de plaque", 8, typeof(PlateGloves),
                                             5 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 15 ),
 											new RessourceNeed( typeof(BaseCuir), 5)});
+           AddEntry("Gantelet d'Orne", 8, typeof(OrneGloves),
+                                           5 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 15 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
+
             // Gorgin de plaque
            AddEntry("Gorgin de plaque", 8, typeof(PlateGorget),
                                             5 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 10 ),
 											new RessourceNeed( typeof(BaseCuir), 5)});
+
+           AddEntry("Gorgin d'Orne", 8, typeof(OrneGorgerin),
+                                           5 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 10 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
             // Jambière de plaque
            AddEntry("jambière de plaque", 8, typeof(PlateLegs),
                                             9 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 35 ),
+											new RessourceNeed( typeof(BaseCuir), 20)});
+
+           AddEntry("jambière d'Orne", 8, typeof(OrneLegs),
+                                           9 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                           new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 35 ),
 											new RessourceNeed( typeof(BaseCuir), 20)});
             // Brassard de broigne
@@ -418,8 +523,22 @@ namespace Server.Engines
 											new RessourceNeed( typeof(BaseMetal), 10 ),
 											new RessourceNeed( typeof(BaseCuir), 10)});
 
+           AddEntry("Brassard de Nécrarmure", 6, typeof(NecroArms),
+                                          0 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 5 ),
+											new RessourceNeed( typeof(BaseCuir), 5)});
 
-
+           AddEntry("Torse de Nécrarmure", 6, typeof(NecroChest),
+                                           1 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 10 ),
+											new RessourceNeed( typeof(BaseCuir), 10)});
+           AddEntry("Jambières de Nécrarmure", 6, typeof(NecroLegs),
+                                           1 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 10 ),
+											new RessourceNeed( typeof(BaseCuir), 10)});
             /// BOUCLIER (3)
 
            AddEntry("Petit bouclier", 9, typeof(Buckler),
@@ -470,6 +589,12 @@ namespace Server.Engines
            AddEntry("Pavois de plate", 9, typeof(HeaterShield),
                                             1 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 12 ),
+											new RessourceNeed( typeof(BaseCuir), 2)});
+
+           AddEntry("Pavois d'Orne", 9, typeof(OrneBouclier),
+                                           1 /*Min value pour crafter*/, 10 /*Difficulte*/,
+                                           new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 12 ),
 											new RessourceNeed( typeof(BaseCuir), 2)});
 

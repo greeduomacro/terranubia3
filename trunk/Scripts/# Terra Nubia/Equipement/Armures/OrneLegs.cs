@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 12;
 			Name = "Jambières d'Orne";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Plaque;
 		}
 
 		public OrneLegs( Serial serial ) : base( serial )

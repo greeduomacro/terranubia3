@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 10;
 			Name = "Plastron Tribal";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.CuirCloute;
 		}
 
 		public TribaChest2( Serial serial ) : base( serial )

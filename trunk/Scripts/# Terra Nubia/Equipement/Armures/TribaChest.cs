@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 8;
 			Name = "Tribarmure";
-			//Layer = Layer.Chest;
+            ModelType = ArmorModelType.CuirCloute;
 		}
 
 		public TribaChest( Serial serial ) : base( serial )

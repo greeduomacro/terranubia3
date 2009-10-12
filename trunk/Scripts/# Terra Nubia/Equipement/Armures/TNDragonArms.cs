@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 13;
 			Name = "Epaulières dragon";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Maille;
 		}
 
 		public TNDragonArms( Serial serial ) : base( serial )

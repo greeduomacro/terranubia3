@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 7;
 			Name = "Pantalons d'écailles";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Maille;
 		}
 
 		public EcailleLegs( Serial serial ) : base( serial )

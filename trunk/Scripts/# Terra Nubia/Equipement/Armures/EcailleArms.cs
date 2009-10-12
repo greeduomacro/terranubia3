@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 9;
 			Name = "Epaulettes d'écailles";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Maille;
 		}
 
 		public EcailleArms( Serial serial ) : base( serial )
