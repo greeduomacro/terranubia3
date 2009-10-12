@@ -18,7 +18,7 @@ namespace Server.Gumps
         {
             m_owner = _owner;
             choix = _choix;
-            Closable = false;
+            //Closable = false;
             page = _page;
 
             int y = YBase;

@@ -54,6 +54,26 @@ namespace Server.Mobiles
             return bonus;
         }
 
+        #region Dons
+        private Dictionary<DonEnum, int> mDons = new Dictionary<DonEnum, int>();
+
+        public int getDonNiveau(DonEnum don)
+        {
+            if (mDons.ContainsKey(don))
+            {
+                return mDons[don];
+            }
+            return 0;
+        }
+
+        public bool hasDon(DonEnum don)
+        {
+            if (mDons.ContainsKey(don))
+                return true;
+            return false;
+        }
+        #endregion
+
         #region Deguisement
         private DeguisementMod mDeguisementMod = null;
 

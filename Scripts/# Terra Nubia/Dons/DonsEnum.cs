@@ -4,9 +4,13 @@ using System.Text;
 
 namespace Server.Mobiles
 {
-    public enum DonsEnum
+    public enum DonEnum
     {
-        AffiniteMagique,
+        //Dons de classe
+        RageBerserker,
+
+        //Dons généraux
+        AffiniteMagique = 1000,
         AmeliorationDesCreaturesConvoquees,
         ArmeDePredilection,
         ArmeDePredilectionSuperieure,
@@ -98,5 +102,7 @@ namespace Server.Mobiles
         VigueurSurhumaine,
         VolonteDeFer,
         Voltigeur,
+
+        Maximum
     }
 }

@@ -18,7 +18,7 @@ namespace Server.Gumps
         {
             m_owner = _owner;
             choix = _choix;
-            Closable = false;
+            //Closable = false;
             page = _page;
 
             int y = YBase;
@@ -34,10 +34,10 @@ namespace Server.Gumps
                 AddButtonTrueFalse(x, y + (line * scale), i + 50, (choix == i), WorldData.FacialHairDefList[i].Name);
                 line++;
                 if (page > 0)
-                    AddButtonPagePrecedante(x + 130, y, 2);
+                    AddButtonPagePrecedante(x + 120, y, 2);
                 if (line > limit)
                 {
-                    AddButtonPageSuivante(x + 155, y, 1);
+                    AddButtonPageSuivante(x + 145, y, 1);
                     break;
                 }
             }

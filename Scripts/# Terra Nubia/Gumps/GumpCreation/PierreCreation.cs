@@ -20,6 +20,13 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            from.CloseGump(typeof(GumpMenuCreation));
+            from.CloseGump(typeof(GumpChoixBarbe));
+            from.CloseGump(typeof(GumpChoixCheveux));
+            from.CloseGump(typeof(GumpChoixClasse));
+            from.CloseGump(typeof(GumpChoixRace));
+            from.CloseGump(typeof(GumpCouleurCheveux));
+            from.CloseGump(typeof(GumpBeaute));
             from.SendGump(new GumpMenuCreation(from as NubiaPlayer));
         }
 
