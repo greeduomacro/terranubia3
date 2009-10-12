@@ -30,7 +30,7 @@ namespace Server.Gumps
 			AddImage( _x+45,_y+2, 0x2C7E, 36 );
 			for( int i = 0 ; i < m_owner.DebuffList.Count; i++)
 			{
-				BaseBuff buff = m_owner.DebuffList[i] as BaseBuff;
+				AbstractBaseBuff buff = m_owner.DebuffList[i] as AbstractBaseBuff;
 				//AddImage( _x-50, y+(colonne*scaley), buff.Icone );
 				AddButton(  _x+55+(colonne*scaley), _y, buff.Icone,  buff.Icone, 50+i, GumpButtonType.Reply, 0 );
 				colonne++;
@@ -44,7 +44,7 @@ namespace Server.Gumps
 			NubiaPlayer from = f as NubiaPlayer;
 			if( info.ButtonID >= 50 && info.ButtonID < 200 )
 			{
-				BaseBuff buff = m_owner.DebuffList[info.ButtonID-50] as BaseBuff;
+				AbstractBaseBuff buff = m_owner.DebuffList[info.ButtonID-50] as AbstractBaseBuff;
 				from.CloseGump( typeof( GumpInfo ) );
 				from.CloseGump( typeof( GumpDebuff ) );
 				from.SendGump( new GumpInfo( buff.Icone, buff.Descrip , buff.Name ) );

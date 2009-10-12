@@ -109,13 +109,13 @@ namespace Server.Engines
                 BaseRessource itAdd = null;
                 foreach (Item ritem in crafter.Backpack.Items)
                 {
-                    //Console.WriteLine("Ritem="+ritem+" :: type="+type);
+                    Console.WriteLine("Ritem="+ritem+" :: type="+type);
                     if (ritem.GetType().IsSubclassOf(type) || ritem.GetType() == type)
                     {
                         ConstructorInfo rtor = ritem.GetType().GetConstructor(Type.EmptyTypes);
                         Object robj = rtor.Invoke(null);
                         //itAdd = robj as Item;
-                        //Console.WriteLine("Same Type");
+                        Console.WriteLine("Same Type");
                         if (ritem is BaseRessource)
                         {
                             Console.WriteLine(((BaseRessource)ritem).isRaffine);
@@ -169,45 +169,62 @@ namespace Server.Engines
                     return;
             }
             
-
-            if ( crafter.Competences[mComp].check(entry.Diff) )
+            int rollResult = crafter.Competences[mComp].pureRoll();
+            if (rollResult > entry.Diff)
             {
                 
                 newitem = null;
 
+                Console.WriteLine("Craft réussi");
+
                 try
                 {
                     ConstructorInfo constructor = entry.ToCraft.GetConstructor(Type.EmptyTypes);
-                    Object obj = constructor.Invoke(null);
-                    newitem = obj as Item;
+                    if (constructor != null)
+                    {
+                        Object obj = constructor.Invoke(null);
+                        newitem = obj as Item;
+                    }
+                    else
+                        Console.WriteLine("constructor null dans trycraft");
                 }
-                catch (Exception ex) { Console.WriteLine("TryCraft: " + ex.Message); }
+                catch (Exception ex) { 
+                    Console.WriteLine("TryCraft: " + ex.Message);
+                    return;
+                }
 
                 if (newitem == null)
+                {
+                    Console.WriteLine("ERROR: newitem == null dans TryCraft");
                     return;
+                }
                 crafter.SendMessage("Vous reussissez votre création!!");
                 if (newitem is INubiaCraftable)
                 {
+                    Console.WriteLine("Attribution de parametre INubiaCraftable");
                     INubiaCraftable nubitem = newitem as INubiaCraftable;
 
                     NubiaQualityEnum quality = NubiaQualityEnum.Normale;
 
-                    int delta = crafter.Competences[mComp].pureRoll() - entry.Diff;
+                    int delta = rollResult - entry.Diff;
                     if (delta < 0)
                         quality = NubiaQualityEnum.Mauvaise;
-                    else if (delta >= 15)
+                    else if (delta >= 30)
                         quality = NubiaQualityEnum.Maitre;
-                    else if (delta >= 10)
+                    else if (delta >= 20)
                         quality = NubiaQualityEnum.Excellente;
-                    else if (delta >= 5)
+                    else if (delta >= 10)
                         quality = NubiaQualityEnum.Bonne;
+
+                    Console.WriteLine("Quality: " + quality);
+                    Console.WriteLine("DELTA = " + delta);
 
                     nubitem.Artisan = crafter;
                     nubitem.TRessourceList.Clear();
                     bool colored = false;
                     for (int i = 0; i < ressourceslist.Count; i++)
                     {
-                        Console.WriteLine("Ressource: " + ressourceslist[i].ToString());
+                     //   Console.WriteLine("Ressources: " + ressourceslist[i].ToString());
                         if (ressourceslist[i] is BaseRessource)
                         {
                             BaseRessource res = ressourceslist[i] as BaseRessource;
@@ -216,11 +233,12 @@ namespace Server.Engines
                                 newitem.Hue = res.Infos.Hue;
                                 colored = true;
                             }
-                            Console.WriteLine("Ressource: " + res.Ressource.ToString());
+                            Console.WriteLine("Ressource enregistrée: " + res.Ressource.ToString());
                            // nubitem.AddRessource((NubiaRessource)res.Ressource);                   
                             nubitem.TRessourceList.Add(res.Ressource);
                         }
                     }
+                    Console.WriteLine("After Craft");
                     nubitem.AfterCraft(quality);
                  //   nubitem.ComputeRessourceBonus();
                 }

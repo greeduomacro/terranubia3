@@ -48,7 +48,7 @@ namespace Server.Items
         public NubiaQualityEnum NQuality { get { return mNubiaQuality; } set { AfterCraft(value); } }
 
         private List<NubiaRessource> mTRessourceList = new List<NubiaRessource>();
-        public List<NubiaRessource> TRessourceList { get { return TRessourceList; } }
+        public List<NubiaRessource> TRessourceList { get { return mTRessourceList; } }
 
         private int mArBoost = 0;
 
@@ -63,6 +63,14 @@ namespace Server.Items
                 mArBoost = Math.Max(mArBoost, infos.GlobalAR);
                 mHitsMax = Math.Max( (int)(50.0 * infos.Durabilite), mHitsMax );
                 mHits = mHitsMax;
+            }
+            switch (mNubiaQuality)
+            {
+                case NubiaQualityEnum.Mauvaise: mArBoost--; break;
+                case NubiaQualityEnum.Bonne: mHitsMax += 20; break;
+                case NubiaQualityEnum.Excellente: mArBoost++; mHitsMax += 40; break;
+                case NubiaQualityEnum.Maitre: mArBoost++; mHitsMax += 60; break;
+
             }
         }
 
@@ -228,7 +236,7 @@ namespace Server.Items
                 for (int i = 0; i < mTRessourceList.Count; i++)
                 {
                     infos += NubiaInfoRessource.GetInfoRessource(mTRessourceList[i]).Name;
-                    if (i < mTRessourceList.Count - 1)
+                    if (i < mTRessourceList.Count - 1 )
                         infos += ", ";
                 }
                 infos += "\n";

@@ -63,10 +63,10 @@ namespace Server.Mobiles
         //BUFF
 
        // private List<Blessure> m_blessureList = new List<Blessure>();
-        private List<BaseBuff> m_buffList = new List<BaseBuff>();
+        private List<AbstractBaseBuff> m_buffList = new List<AbstractBaseBuff>();
         private List<BaseDebuff> m_debuffList = new List<BaseDebuff>();
 
-        public List<BaseBuff> BuffList { get { return m_buffList; } }
+        public List<AbstractBaseBuff> BuffList { get { return m_buffList; } }
         public List<BaseDebuff> DebuffList { get { return m_debuffList; } }
 
         public ArrayList BlessureList { get { return m_blessureList; } }
@@ -94,13 +94,13 @@ namespace Server.Mobiles
             {
                 blessure.StopHemo();
             }
-            foreach (BaseBuff buff in BuffList)
+            foreach (AbstractBaseBuff buff in BuffList)
                 buff.End();
 
-            foreach (BaseBuff debuff in DebuffList)
+            foreach (AbstractBaseBuff debuff in DebuffList)
                 debuff.End();
 
-            m_buffList = new List<BaseBuff>();
+            m_buffList = new List<AbstractBaseBuff>();
             m_debuffList = new List<BaseDebuff>();
 
             return true;
@@ -124,8 +124,8 @@ namespace Server.Mobiles
            }
            BlessureList.Remove(toRemov);
 
-            BaseBuff buffRemove = null;
-            foreach (BaseBuff buff in BuffList)
+            AbstractBaseBuff buffRemove = null;
+            foreach (AbstractBaseBuff buff in BuffList)
             {
                 if (Alive)
                     buff.OnTurn();
@@ -139,7 +139,7 @@ namespace Server.Mobiles
                 buffRemove.Delete();
             }
             buffRemove = null;
-            foreach (BaseBuff debuff in DebuffList)
+            foreach (AbstractBaseBuff debuff in DebuffList)
             {
                 if (debuff == null)
                     continue;
