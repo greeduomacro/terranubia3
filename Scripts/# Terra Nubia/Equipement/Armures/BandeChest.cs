@@ -13,9 +13,8 @@ namespace Server.Items
 		public BandeChest() : base( 13814 )
 		{
 			Weight = 6.0;
-			//m_capaNeed = 15;
 			Name = "Armure à bande";
-			//Layer = Layer.Arms;
+            this.ModelType = ArmorModelType.Plaque;
 		}
 
 		public BandeChest( Serial serial ) : base( serial )

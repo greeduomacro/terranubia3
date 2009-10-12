@@ -4,7 +4,7 @@ using Server.Items;
 namespace Server.Items
 {
 	//[FlipableAttribute( 13803 )]
-	public class OrneBouclier : NubiaArmor
+	public class OrneBouclier : NubiaShield
 	{
 		public override ArmorMaterialType MaterialType{ get{ return ArmorMaterialType.Bone; } }
 		public override CraftResource DefaultResource{ get{ return CraftResource.RegularLeather; } }
@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 10;
 			Name = "Bouclier d'Orne";
-			//Layer = Layer.Arms;
+            this.BType = BouclierType.GrandPavois;
 		}
 
 		public OrneBouclier( Serial serial ) : base( serial )

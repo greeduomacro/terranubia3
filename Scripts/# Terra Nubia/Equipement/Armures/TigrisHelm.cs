@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 7;
 			Name = "Casque de Tigris";
-			//Layer = Layer.Chest;
+            ModelType = ArmorModelType.Maille;
 		}
 
 		public TigrisHelm( Serial serial ) : base( serial )

@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 8;
 			Name = "Plastron d'écailles";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Maille;
 		}
 
 		public EcailleChest( Serial serial ) : base( serial )

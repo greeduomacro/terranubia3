@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 15;
 			Name = "Plastron d'Orne";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Plaque;
 		}
 
 		public OrneChest( Serial serial ) : base( serial )

@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 14;
 			Name = "Casque chaotique";
-			//Layer = Layer.Chest;
+			ModelType = ArmorModelType.Plaque;
 		}
 
 		public ChaosHelm( Serial serial ) : base( serial )

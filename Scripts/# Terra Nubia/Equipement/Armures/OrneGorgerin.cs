@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 10;
 			Name = "Gorgerin d'Orne";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Plaque;
 		}
 
 		public OrneGorgerin( Serial serial ) : base( serial )

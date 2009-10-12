@@ -5,12 +5,13 @@ using Server.Network;
 
 namespace Server.Items
 {
-	public class BaseShield : BaseArmor
+	public class BaseShield : NubiaShield
 	{
 		public override ArmorMaterialType MaterialType{ get{ return ArmorMaterialType.Plate; } }
 
 		public BaseShield( int itemID ) : base( itemID )
 		{
+            BType = BouclierType.Targe;
 		}
 
 		public BaseShield( Serial serial ) : base(serial)

@@ -7,10 +7,14 @@ namespace Server.Items
 {
 	public abstract class BaseSword : NubiaWeapon
 	{
+        public override int DefHitSound { get { return 0x23C; } }
+        public override int DefMissSound { get { return 0x238; } }
+
 		public override WeaponAnimation DefAnimation{ get{ return WeaponAnimation.Slash1H; } }
 
 		public BaseSword( int itemID ) : base(ArmeTemplate.Epee, itemID )
 		{
+            Weight = 2;
 		}
 
 		public BaseSword( Serial serial ) : base( serial )

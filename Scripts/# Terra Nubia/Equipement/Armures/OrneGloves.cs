@@ -15,7 +15,7 @@ namespace Server.Items
 			Weight = 6.0;
 			//m_capaNeed = 11;
 			Name = "Gants d'Orne";
-			//Layer = Layer.Arms;
+            ModelType = ArmorModelType.Plaque;
 		}
 
 		public OrneGloves( Serial serial ) : base( serial )

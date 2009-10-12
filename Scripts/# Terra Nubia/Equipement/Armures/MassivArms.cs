@@ -14,8 +14,8 @@ namespace Server.Items
 		{
 			Weight = 6.0;
 			//m_capaNeed = 13;
-			Name = "Massivarmure";
-			//Layer = Layer.Arms;
+			Name = "Armure massive";
+            ModelType = ArmorModelType.Plaque;
 		}
 
 		public MassivArms( Serial serial ) : base( serial )
