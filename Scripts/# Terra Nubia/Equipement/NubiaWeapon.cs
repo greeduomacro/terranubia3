@@ -26,6 +26,7 @@ namespace Server.Items
                 case ArmeTemplate.Hast: return "Armes d'Hast";
                 case ArmeTemplate.Lance: return "Lances";
                 case ArmeTemplate.Masse: return "Masses";
+                case ArmeTemplate.Poing: return "Poings";
             }
             return "none";
         }
@@ -297,6 +298,7 @@ namespace Server.Items
             NubiaMobile AttMob = attacker as NubiaMobile;
             NubiaMobile DefMob = defender as NubiaMobile;
 
+          
             //Bouclier total
             if (AttMob.GetActionCombat() == ActionCombat.DefenseTotale)
                 canSwing = false;
@@ -447,8 +449,25 @@ namespace Server.Items
                 bonii -= 6;
             }
 
+            //Pris au dépourvu
+            bool prisDepourvu = false;
+            if ((AttMob.Hidden || !DefMob.Warmode) && !DefMob.InCombat)
+            {
+                if (!DefMob.hasDon(DonEnum.EsquiveInstinctive))
+                {
+                    prisDepourvu = true;
+                    DefMob.Emote("*Prit au dépourvu*");
+
+                }
+                else
+                {
+                    DefMob.SendMessage("Votre don Esquive Instinctive vous évite d'être pris au dépourvu");
+                }
+            }
 
             double DD = (DefMob.CA) + 1.0;
+            if (prisDepourvu && DndHelper.GetCaracMod(DefMob, DndStat.Dexterite) > 0 )
+                DD -= DndHelper.GetCaracMod(DefMob, DndStat.Dexterite);
             //Bonus avec un jet d'acrobatie réussi
             if (DefMob.getActionCombat() == ActionCombat.Defense 
                 && DefMob.Competences[CompType.Acrobaties].getPureMaitrise() >= 5)
@@ -472,6 +491,8 @@ namespace Server.Items
                     DD -= (DefMob.CA);
                 }
             }
+
+   
 
             double finalRoll = roll + bonii;
 
@@ -529,7 +550,15 @@ namespace Server.Items
                 //Attaque d'opportunité
                 mOpportunite = (opDiff > 0 && AttMob.CanDoOpportuniteAttack);
 
-                int damage = DndHelper.rollDe(this.mDe, this.mNbrLance) + (int)DamageBonus + mBonusDegat;
+                int damage = 0;
+                if (AttMob.hasClasse(ClasseType.Moine) && Template == ArmeTemplate.Poing)
+                {
+                    damage = ClasseMoine.getDamage(AttMob.getNiveauClasse(ClasseType.Moine));
+                }
+                else
+                    damage = DndHelper.rollDe(this.mDe, this.mNbrLance);
+
+                damage += (int)DamageBonus + mBonusDegat;
 
                 if (coupCritique) //Critique !
                 {
@@ -541,8 +570,11 @@ namespace Server.Items
                     damage *= mCritiqueMulti;
 
                     //BLESSURES
-                    if( Utility.RandomDouble() < 0.01 )
-                        DefMob.AddBlessure(NubiaBlessure.getRandomBlessure());
+                    if ( !(AttMob.Weapon is Fists) ||  AttMob.hasDon(DonEnum.ScienceDuCombatAMainsNues) )
+                    {
+                        if (Utility.RandomDouble() < 0.01)
+                            DefMob.AddBlessure(NubiaBlessure.getRandomBlessure());
+                    }
                 }
 
 
@@ -576,13 +608,7 @@ namespace Server.Items
             if (DefMob.GetActionCombat() == ActionCombat.DefenseTotale)
                 Damage /= 2;
 
-            //Elite defense
-            if (defender is NubiaCreature)
-            {
-                NubiaCreature creat = defender as NubiaCreature;
-                if (creat.IsElite)
-                    Damage *= ((double)Utility.RandomMinMax(25, 75) / 100.0);
-            }
+            
 
             //Elite attaque
             if (attacker is NubiaCreature)

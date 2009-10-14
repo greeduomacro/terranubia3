@@ -84,6 +84,9 @@ namespace Server.Mobiles
 		protected string m_descrip = "Description absente";
 		protected int m_turn = 10; //Nbr de tour avant le delect
 		protected bool m_BodyModif = false;
+        protected int mStr, mInt, mDex, mCons, mSag, mCha;
+        protected int mVigueur, mVolonte, mReflexe, mAttaque;
+        protected int mCA;
 
 		//## GETTER & SETTER
 		public NubiaMobile Caster{get{return m_caster;}}
@@ -97,6 +100,20 @@ namespace Server.Mobiles
 		public int Icone{get{return m_icone;}}
 		public bool BodyModif {get{return m_BodyModif;}	}
 		public int Turn{get{return m_turn;}}
+
+        public int Str { get { return mStr; } }
+        public int Int { get { return mInt; } }
+        public int Dex { get { return mDex; } }
+        public int Cons { get { return mCons; } }
+        public int Sag { get { return mSag; } }
+        public int Cha { get { return mCha; } }
+
+        public int Vigueur { get { return mVigueur; } }
+        public int Volonte { get { return mVolonte; } }
+        public int Reflexe { get { return mReflexe; } }
+        public int Attaque { get { return mAttaque; } }
+        public int CA { get { return mCA; } }
+
 		public string Descrip
 		{
 			get
@@ -230,6 +247,18 @@ namespace Server.Mobiles
 			writer.Write( (string) m_descrip );
 			writer.Write( (int) m_turn );
 
+            writer.Write((int)mStr);
+            writer.Write((int)mDex);
+            writer.Write((int)mInt);
+            writer.Write((int)mSag);
+            writer.Write((int)mCons);
+            writer.Write((int)mCha);
+
+            writer.Write((int)mVolonte);
+            writer.Write((int)mReflexe);
+            writer.Write((int)mVigueur);
+            writer.Write((int)mAttaque);
+            writer.Write((int)mCA);
 		}
 
 		public override void Deserialize( GenericReader reader )
@@ -256,6 +285,19 @@ namespace Server.Mobiles
 			else if(  m_cible != null && m_isDebuff && m_turn > 1 ){
 				m_cible.DebuffList.Add( this as BaseDebuff );
 			}
+
+            mStr = reader.ReadInt();
+            mDex = reader.ReadInt();
+            mInt = reader.ReadInt();
+            mSag = reader.ReadInt();
+            mCons = reader.ReadInt();
+            mCha = reader.ReadInt();
+
+            mVolonte = reader.ReadInt();
+            mReflexe = reader.ReadInt();
+            mVigueur = reader.ReadInt();
+            mAttaque = reader.ReadInt();
+            mCA = reader.ReadInt();
 		}
 	}
 }

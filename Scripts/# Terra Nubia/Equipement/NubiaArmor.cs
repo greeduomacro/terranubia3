@@ -236,7 +236,7 @@ namespace Server.Items
                 for (int i = 0; i < mTRessourceList.Count; i++)
                 {
                     infos += NubiaInfoRessource.GetInfoRessource(mTRessourceList[i]).Name;
-                    if (i < mTRessourceList.Count - 1 )
+                    if (i < mTRessourceList.Count - 1)
                         infos += ", ";
                 }
                 infos += "\n";

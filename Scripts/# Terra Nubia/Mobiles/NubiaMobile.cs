@@ -52,7 +52,33 @@ namespace Server.Mobiles
 
     public class NubiaMobile : Mobile
     {
+        #region Dons
+        protected Dictionary<DonEnum, int> mDons = new Dictionary<DonEnum, int>();
 
+        public ICollection Dons
+        {
+            get
+            {
+                return mDons.Keys;
+            }
+        }
+
+        public int getDonNiveau(DonEnum don)
+        {
+            if (mDons.ContainsKey(don))
+            {
+                return mDons[don];
+            }
+            return 0;
+        }
+
+        public bool hasDon(DonEnum don)
+        {
+            if (mDons.ContainsKey(don))
+                return true;
+            return false;
+        }
+        #endregion
 
         private TailleMob mTaille = TailleMob.Moyen;
         private MobileType m_CreatureType = MobileType.Animal;
@@ -104,6 +130,15 @@ namespace Server.Mobiles
             m_debuffList = new List<BaseDebuff>();
 
             return true;
+        }
+
+        public override void OnDamage(int amount, Mobile from, bool willKill)
+        {
+            if (hasDon(DonEnum.ReductionDegat))
+                amount -= getDonNiveau(DonEnum.ReductionDegat);
+
+            if (amount > 0)
+                base.OnDamage(amount, from, willKill);
         }
 
 
@@ -425,6 +460,13 @@ namespace Server.Mobiles
             {
                 //On compte déjà le nbr de coup bonus.
                 int maxCoup = 1;
+
+                int buffbonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    buffbonus += b.Attaque;
+                foreach (BaseDebuff d in DebuffList)
+                    buffbonus += d.Attaque;
+
                 foreach (Classe c in GetClasses())
                 {
                     if (c.BonusAttaque[c.Niveau].Length > maxCoup)
@@ -433,13 +475,15 @@ namespace Server.Mobiles
                 int[] bonii = new int[maxCoup];
                 //initialisation
                 for (int n = 0; n < bonii.Length; n++)
-                    bonii[n] = 0;
+                    bonii[n] = buffbonus;
                 //Config
                 foreach (Classe c in GetClasses())
                 {
                     for (int i = 0; i < c.BonusAttaque[c.Niveau].Length; i++)
                         bonii[i] += c.BonusAttaque[c.Niveau][i];
                 }
+
+              
 
                 return bonii;
             }
@@ -449,6 +493,13 @@ namespace Server.Mobiles
             get
             {
                 int bonus = 0;
+
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Reflexe;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Reflexe;
+
+
                 foreach (Classe c in GetClasses())
                 {
                     bonus += c.BonusReflexe[c.Niveau];
@@ -461,6 +512,11 @@ namespace Server.Mobiles
             get
             {
                 int bonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Vigueur;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Vigueur;
+
                 foreach (Classe c in GetClasses())
                 {
                     bonus += c.BonusVigueur[c.Niveau];
@@ -473,6 +529,11 @@ namespace Server.Mobiles
             get
             {
                 int bonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Volonte;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Volonte;
+
                 foreach (Classe c in GetClasses())
                 {
                     bonus += c.BonusVolonte[c.Niveau];
@@ -500,14 +561,15 @@ namespace Server.Mobiles
             }
         }
 
+
+
         //Classe sur le Nubia Mobile car elles influance bcp l'attaque, les reflexe, etc...
         //Donc il sera important de l'avoir pour les Streums
         #region Classes & Comps
 
         public void resetCompetences()
         {
-            mCompetences = new CompetenceStack(this);
-            
+            mCompetences = new CompetenceStack(this);            
         }
         public int getAchats()
         {
@@ -543,6 +605,7 @@ namespace Server.Mobiles
                 if (niveau <= 0)
                 {
                     SendMessage(53, "Vous perdez la classe {0}", m_Classes[type].CType.ToString());
+
                     m_Classes.Remove(type);
                 }
                 else
@@ -598,6 +661,16 @@ namespace Server.Mobiles
             m_Classes = new Dictionary<Type, Classe>();
         }
 
+        public bool hasClasse(ClasseType cl)
+        {
+            foreach (Classe c in GetClasses())
+            {
+                if (c.CType == cl)
+                    return true;
+            }
+            return false;
+        }
+
         public Dictionary<Type, Classe> Classes { get { return m_Classes; } }
         public ClasseType LastClasse { get { return m_lastClasse; } set { m_lastClasse = value; } }
 
@@ -631,7 +704,12 @@ namespace Server.Mobiles
         {
             get
             {
-                return mRawCha;
+                int bonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Cha;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Cha;
+                return mRawCha + bonus;
             }
         }
         [CommandProperty(AccessLevel.GameMaster)]
@@ -651,7 +729,12 @@ namespace Server.Mobiles
         {
             get
             {
-                return mRawCons;
+                int bonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Cons;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Cons;
+                return mRawCons + bonus;
             }
         }
         [CommandProperty(AccessLevel.GameMaster)]
@@ -671,7 +754,12 @@ namespace Server.Mobiles
         {
             get
             {
-                return mRawSag;
+                int bonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Sag;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Sag;
+                return mRawSag + bonus;
             }
         }
         [CommandProperty(AccessLevel.GameMaster)]
@@ -684,6 +772,55 @@ namespace Server.Mobiles
             set
             {
                 mRawSag = value;
+            }
+        }
+
+        public override int Str
+        {
+            get
+            {
+                int bonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Str;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Str;
+                return base.Str + bonus;
+            }
+            set
+            {
+                base.Str = value;
+            }
+        }
+        public override int Int
+        {
+            get
+            {
+                int bonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Int;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Int;
+                return base.Int + bonus;
+            }
+            set
+            {
+                base.Int = value;
+            }
+        }
+        public override int Dex
+        {
+            get
+            {
+                int bonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    bonus += b.Dex;
+                foreach (BaseDebuff d in DebuffList)
+                    bonus += d.Dex;
+                return base.Dex + bonus;
+            }
+            set
+            {
+                base.Dex = value;
             }
         }
 
@@ -737,6 +874,20 @@ namespace Server.Mobiles
             }
         }
 
+        public int getNiveauClasse(ClasseType cl)
+        {
+            int niv = 0;
+            foreach (Classe c in GetClasses())
+            {
+                if (c.CType == cl)
+                {
+                    niv = c.Niveau;
+                    break;
+                }
+            }
+            return niv;
+        }
+
 
         [CommandProperty(AccessLevel.GameMaster)]
         public virtual double CA 
@@ -751,6 +902,20 @@ namespace Server.Mobiles
 
                 double dexMod = DndHelper.GetCaracMod(this, DndStat.Dexterite);
                 double TailleMod = ((int)mTaille);
+
+                // CA DU MOINE
+                if (hasClasse(ClasseType.Moine))
+                {
+                    if (armureMod < 1 && bouclierMod <= 0)
+                    {
+                        double sagCA = DndHelper.GetCaracMod(this, DndStat.Sagesse);
+                        if (sagCA > 0)
+                            armureMod += sagCA;
+
+                        armureMod += (int)(getNiveauClasse(ClasseType.Moine) / 5);
+                        
+                    }
+                }
 
                 //Bouclier Total :
                 if (getBouclier() != null && mActionCombat == ActionCombat.DefenseTotale)
@@ -769,8 +934,17 @@ namespace Server.Mobiles
                     armureMod += 2;
                 }
 
+                
 
-                return armureMod + bouclierMod + dexMod + TailleMod;
+
+                int buffBonus = 0;
+                foreach (BaseBuff b in BuffList)
+                    buffBonus += b.CA;
+                foreach (BaseDebuff d in DebuffList)
+                    buffBonus += d.CA;
+
+
+                return armureMod + bouclierMod + dexMod + TailleMod + buffBonus;
             }
 
         }

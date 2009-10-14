@@ -22,6 +22,7 @@ namespace Server.Items
         Arc,
         Arbalete,
         Jet,
+        Poing,
         Maximum
     }
     public enum ArmeType

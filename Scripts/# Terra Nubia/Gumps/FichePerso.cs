@@ -306,7 +306,31 @@ namespace Server.Gumps
                     maitriseX += 140;
                 }
             }
-            scale += 3;
+          //  scale += 3;
+            line += 8;
+            int ddecal = 0;
+            int dcount = 0;
+            foreach(DonEnum don in mOwner.Dons )
+            {
+                int niv = mOwner.getDonNiveau(don);
+                dcount++;
+                if (niv > 0)
+                {
+                      string dname = "";
+                      if (BaseDon.DonBank.ContainsKey(don.ToString().ToLower() ))
+                          dname = BaseDon.DonBank[don.ToString().ToLower() ].Name;
+                      else
+                          dname = don.ToString();
+                     AddLabel(XCol + ddecal, y + line * scale, ColorTextYellow, dname + (niv > 1 ? "(Rang:" + niv.ToString() + ")" : ""));
+                     if (dcount % 5 == 0)
+                     {
+                         ddecal = 150;
+                         line -= 5;
+                     }
+                     else
+                         line++;
+                }
+            }
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)

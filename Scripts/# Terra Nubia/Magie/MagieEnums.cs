@@ -15,4 +15,34 @@ namespace Server.Spells
         Necromancie,
         Transmutation
     }
+    public enum MagieType
+    {
+        Profane,
+        Divine
+    }
+    public enum MagieDomaine
+    {
+        Air, 
+        Bien, 
+        Chance, 
+        Chaos, 
+        Connaissance, 
+        Destruction, 
+        Duperie, 
+        Eau, 
+        Faune, 
+        Feu, 
+        Flore, 
+        Force, 
+        Guerison, 
+        Guerre, 
+        Loi, 
+        Magie, 
+        Mal, 
+        Mort, 
+        Protection, 
+        Soleil, 
+        Terre,
+        Voyage
+    }
 }

@@ -55,25 +55,7 @@ namespace Server.Mobiles
             return bonus;
         }
 
-        #region Dons
-        private Dictionary<DonEnum, int> mDons = new Dictionary<DonEnum, int>();
-
-        public int getDonNiveau(DonEnum don)
-        {
-            if (mDons.ContainsKey(don))
-            {
-                return mDons[don];
-            }
-            return 0;
-        }
-
-        public bool hasDon(DonEnum don)
-        {
-            if (mDons.ContainsKey(don))
-                return true;
-            return false;
-        }
-        #endregion
+        
 
         #region Deguisement
         private DeguisementMod mDeguisementMod = null;
@@ -690,6 +672,57 @@ namespace Server.Mobiles
             Frozen = true;
             m_deathBodySave = BodyValue;
             return true;
+        }
+
+        public override void AfterMakeClasse()
+        {
+            //Vérification des dons
+            
+            //On vire, par sécurité, tout les dons de classe
+            List<DonEnum> toRemove = new List<DonEnum>();
+
+                
+                foreach (DonEnum d in mDons.Keys)
+                {
+                    if ( (int)d < 1000) //Don de classe
+                        toRemove.Add(d);
+                }
+                foreach (DonEnum r in toRemove)
+                {
+                    if (mDons.ContainsKey(r))
+                    {
+                       // SendMessage("Vous perdez le don: ", r.ToString());
+                        mDons.Remove(r);
+                    }
+                }
+            
+
+            foreach ( Classe c in GetClasses() )
+            {
+                for (int i = 0; i < c.DonClasse.Length && i <= c.Niveau; i++)
+                {
+                    for (int d = 0; d < c.DonClasse[i].Length; d++)
+                    {
+                        DonEnum don = c.DonClasse[i][d];
+                        if (mDons.ContainsKey(don))
+                            mDons[don]++;
+                        else
+                            mDons.Add(don, 1);
+
+                        if ( !toRemove.Contains(don) )
+                        {
+                            string dname = "";
+                            if (BaseDon.DonBank.ContainsKey(don.ToString().ToLower() ))
+                                dname = BaseDon.DonBank[don.ToString().ToLower() ].Name;
+                            else
+                                dname = don.ToString();
+                            SendMessage(2049, "Vous gagnez le don: " + dname + " rang " + mDons[don]);
+                        }
+                        
+                    }
+                }
+            }
+
         }
 
         public NubiaPlayer()

@@ -87,7 +87,7 @@ namespace Server.Commands
         {
             NubiaPlayer p = e.Mobile as NubiaPlayer;
             int xp = XPHelper.GetXpForLevel(p.Niveau);
-            p.GiveXP(xp/2);
+            p.GiveXP(xp+1);
             /*   p.CloseGump(typeof(GumpFichePerso));
                p.SendGump(new GumpFichePerso(p, p));*/
         }

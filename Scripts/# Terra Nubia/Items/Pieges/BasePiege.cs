@@ -217,6 +217,10 @@ namespace Server.Items
                 NubiaMobile mob = m as NubiaMobile;
                 int roll = DndHelper.rollDe(De.vingt);
                 roll += mob.BonusReflexe;
+                if (mob.hasDon(DonEnum.SensPieges))
+                {
+                    roll += mob.getDonNiveau(DonEnum.SensPieges);
+                }
                 if (roll >= mDD)
                 {
                     m.Emote("*Evite le piège*");

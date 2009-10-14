@@ -6,6 +6,7 @@ namespace Server.Items
 {
     public enum BouclierType
     {
+        None = -1,
         Targe = 0, //+1CA, +8, -1, 5%
         Ecu,       //+2CA, +6, -2, 15%
         GrandEcu,  //+3CA  +4, -6, 30%
