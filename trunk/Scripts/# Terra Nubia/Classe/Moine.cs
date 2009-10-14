@@ -8,10 +8,60 @@ namespace Server
 {
     public class ClasseMoine : Classe
     {
+        public static int getDamage(int moineNiveau)
+        {
+            if (moineNiveau <= 0)
+                return Utility.RandomMinMax(1, 3);
+            else if (moineNiveau <= 3)
+                return Utility.RandomMinMax(1, 4);
+            else if (moineNiveau <= 7)
+                return Utility.RandomMinMax(1, 6);
+            else if (moineNiveau <= 11)
+                return Utility.RandomMinMax(1, 8);
+            else if (moineNiveau <= 15)
+                return Utility.RandomMinMax(1, 10);
+            else if (moineNiveau <= 19)
+                return 2 * Utility.RandomMinMax(1, 6);
+            else
+                return 2 * Utility.RandomMinMax(1, 8);
+        }
+
         public override NubiaArmorType ArmorAllow { get { return NubiaArmorType.None; } }
         public override int GetDV { get { return 8; } }
         public override int PtComp { get { return 4; } }
         public ClasseMoine() { }
+
+
+        public override DonEnum[][] DonClasse
+        {
+            get
+            {
+                return new DonEnum[][]{
+                    new DonEnum[0], //0
+                    new DonEnum[]{DonEnum.ScienceDuCombatAMainsNues, DonEnum.DonSupClasse}, // 1
+                /*    new DonEnum[]{DonEnum.EsquiveInstinctive}, //2
+                    new DonEnum[]{DonEnum.SensPieges}, //3
+                    new DonEnum[]{DonEnum.RageBerserker}, //4
+                    new DonEnum[]{DonEnum.EsquiveInstinctive}, //5
+                    new DonEnum[]{DonEnum.SensPieges}, //6
+                    new DonEnum[]{DonEnum.ReductionDegat}, //7
+                    new DonEnum[]{DonEnum.RageBerserker}, //8
+                    new DonEnum[]{DonEnum.SensPieges}, //9
+                    new DonEnum[]{DonEnum.ReductionDegat}, //10
+                    new DonEnum[]{DonEnum.RageGrandBerserker}, //11
+                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.SensPieges}, //12
+                    new DonEnum[]{DonEnum.ReductionDegat}, //13
+                    new DonEnum[]{DonEnum.VolonteIndomptable}, //13
+                    new DonEnum[]{DonEnum.SensPieges}, //15
+                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.ReductionDegat}, //16
+                    new DonEnum[]{DonEnum.RageSansFatigue}, //17
+                    new DonEnum[]{DonEnum.SensPieges}, //18
+                    new DonEnum[]{DonEnum.ReductionDegat}, //19
+                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.RageMaitreBerserker}, //20*/
+                };
+            }
+        }
+
 
         public override ClasseType CType { get { return ClasseType.Moine; } }
        

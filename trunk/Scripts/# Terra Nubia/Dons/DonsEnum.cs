@@ -7,10 +7,21 @@ namespace Server.Mobiles
     public enum DonEnum
     {
         //Dons de classe
+
+        //Barbare
+        DonSupClasse = 0,
         RageBerserker,
+        EsquiveInstinctive, //+Esquive instinctive supérieur (rang2)
+        SensPieges,
+        ReductionDegat,
+        RageGrandBerserker,
+        VolonteIndomptable,
+        RageSansFatigue,
+        RageMaitreBerserker,
 
         //Dons généraux
-        AffiniteMagique = 1000,
+        DonSupGeneral = 1000,
+        AffiniteMagique,
         AmeliorationDesCreaturesConvoquees,
         ArmeDePredilection,
         ArmeDePredilectionSuperieure,

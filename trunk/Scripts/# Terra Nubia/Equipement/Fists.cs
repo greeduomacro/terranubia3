@@ -14,7 +14,7 @@ namespace Server.Items
 		public override int DefHitSound{ get{ return -1; } }
 		public override int DefMissSound{ get{ return -1; } }
 
-		public Fists() : base( 0 )
+		public Fists() : base( ArmeTemplate.Poing, 0 )
 		{
 			Visible = false;
 			Movable = false;
@@ -23,6 +23,8 @@ namespace Server.Items
             NbrLance = 1;
             MiniForCritique = 20;
             CritiqueMulti = 2;
+
+            
 
 		}
 

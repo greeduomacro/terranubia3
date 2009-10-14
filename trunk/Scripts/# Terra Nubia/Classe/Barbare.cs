@@ -9,11 +9,47 @@ namespace Server
     public class ClasseBarbare : Classe
     {
         public override NubiaArmorType ArmorAllow { get { return NubiaArmorType.Intermediaire; } }
+        public override ArmeCategorie ArmeAllow {get { return ArmeCategorie.Guerre; } }
+        public override BouclierType BouclierAllow{ get { return  BouclierType.GrandEcu; } }
+
+
         public override int GetDV { get { return 12; } }
         public override int PtComp { get { return 4; } }
         public ClasseBarbare() { }
 
         public override ClasseType CType { get { return ClasseType.Barbare; } }
+
+
+        public override DonEnum[][] DonClasse
+        {
+            get
+            {
+                return new DonEnum[][]{
+                    new DonEnum[0], //0
+                    new DonEnum[]{DonEnum.RageBerserker}, // 1
+                    new DonEnum[]{DonEnum.EsquiveInstinctive}, //2
+                    new DonEnum[]{DonEnum.SensPieges}, //3
+                    new DonEnum[]{DonEnum.RageBerserker}, //4
+                    new DonEnum[]{DonEnum.EsquiveInstinctive}, //5
+                    new DonEnum[]{DonEnum.SensPieges}, //6
+                    new DonEnum[]{DonEnum.ReductionDegat}, //7
+                    new DonEnum[]{DonEnum.RageBerserker}, //8
+                    new DonEnum[]{DonEnum.SensPieges}, //9
+                    new DonEnum[]{DonEnum.ReductionDegat}, //10
+                    new DonEnum[]{DonEnum.RageGrandBerserker}, //11
+                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.SensPieges}, //12
+                    new DonEnum[]{DonEnum.ReductionDegat}, //13
+                    new DonEnum[]{DonEnum.VolonteIndomptable}, //13
+                    new DonEnum[]{DonEnum.SensPieges}, //15
+                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.ReductionDegat}, //16
+                    new DonEnum[]{DonEnum.RageSansFatigue}, //17
+                    new DonEnum[]{DonEnum.SensPieges}, //18
+                    new DonEnum[]{DonEnum.ReductionDegat}, //19
+                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.RageMaitreBerserker}, //20
+                };
+            }
+        }
+        
 
         public override CompType[] ClasseCompetences
         {

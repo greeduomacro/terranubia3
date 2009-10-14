@@ -35,6 +35,16 @@ namespace Server
         public virtual int GetDV { get { return 4; } }
         public virtual int PtComp { get { return 2; } } //x pts par niveau (d'achat)
         public virtual NubiaArmorType ArmorAllow { get { return NubiaArmorType.None; } }
+        public virtual BouclierType BouclierAllow { get { return BouclierType.None; } }
+        public virtual ArmeCategorie ArmeAllow { get { return ArmeCategorie.Courante; } }
+
+        public virtual DonEnum[][] DonClasse
+        {
+            get
+            {
+                return new DonEnum[][]{ new DonEnum[0] };
+            }
+        }
 
         public static string GetNameClasse(ClasseType ct)
         {

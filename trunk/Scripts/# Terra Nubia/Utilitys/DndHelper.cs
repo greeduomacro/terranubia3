@@ -52,7 +52,7 @@ namespace Server
 
         public static int getTotalStat(int niveau)
         {
-            return (8 * 6) /*Charac de départ*/ + 14 /*10 charac création*/ + (niveau / 4);
+            return (10 * 6) /*Charac de départ*/ + 14 /*10 charac création*/ + (niveau / 4);
         }
 
         public static bool CaracModIsLimited(NubiaMobile from, DndStat stat)

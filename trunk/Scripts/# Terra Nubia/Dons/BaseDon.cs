@@ -8,10 +8,11 @@ namespace Server.Mobiles
     public abstract class BaseDon
     {
         public static Dictionary<string, BaseDon> DonBank = new Dictionary<string, BaseDon>();
-        public static void Initialize()
+        public static void Configure()
         {
             string space = "Server.Mobiles.Dons";
             List<string> donsClasses = NubiaHelper.getAllClasses(space);
+            Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (string clstr in donsClasses)
             {
                 Type cltype = Type.GetType(space + "." + clstr);
@@ -34,6 +35,9 @@ namespace Server.Mobiles
                     }
                 }
             }
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        public static void Initialize(){
             CommandSystem.Register("don", AccessLevel.Player,
                 new CommandEventHandler(donUse_OnCommand));
         }
@@ -94,7 +98,7 @@ namespace Server.Mobiles
             }
             return WorldData.TimeTour();
         }
-        public abstract void OnUse(NubiaPlayer p);
+        public virtual void OnUse(NubiaPlayer p) { }
 
       
 
