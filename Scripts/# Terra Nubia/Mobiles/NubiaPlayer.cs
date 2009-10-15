@@ -316,96 +316,18 @@ namespace Server.Mobiles
         #endregion
         //HIDE
         //DECTECT PERSONNE CACHE
+        public bool isRunning = false;
         protected override bool OnMove(Direction d)
         {
             if (AccessLevel != AccessLevel.Player)
                 return true;
 
-            bool running = (d & Direction.Running) != 0;
+            isRunning = (d & Direction.Running) != 0;
 
-            if (running)
+            if (isRunning)
                 Stam -= (int)((double)TotalWeight / 100.0);
 
-            if (Hidden /*&& DesignContext.Find( this ) == null */)	//Hidden & NOT customizing a house
-            {
-                if (!Mounted /*&& Skills.Stealth.Value >= 25.0*/ )
-                {
-                        ScruteAlentour();
-                        foreach (Mobile m in this.GetMobilesInRange(8))
-                        {
-                            if (this != m && Hidden && m.AccessLevel == AccessLevel.Player)
-                            {
-                                NubiaMobile observateur = m as NubiaMobile;
-                                //RollResult ReussiteObservateur = ((NubiaMobile)m).RollCompetence(CompType.Perception,70);
-                                //int difficulte = (60+(10*((int)ReussiteObservateur)));
-                                int NuitModus = 0;
-                                if (LightCycle.ComputeLevelFor(this) > this.LightLevel)
-                                {
-                                    if (LightCycle.ComputeLevelFor(this) > 15)
-                                        NuitModus += 5;
-                                    else if (LightCycle.ComputeLevelFor(this) < 15)
-                                        NuitModus -= 5;
-                                }
-                                else
-                                {
-                                    if (this.LightLevel > 15)
-                                        NuitModus += 5;
-                                    else if (this.LightLevel < 15)
-                                        NuitModus -= 5;
-                                }
-
-                                int hideDD = observateur.Competences[CompType.PerceptionAuditive].pureRoll();
-                                if (running)
-                                    hideDD += 10;
-                                bool reussite = Competences[CompType.DeplacementSilencieux].check(hideDD);
-                                SendMessage("Jet réussi: {0} DD={1}", reussite, hideDD);
-
-                                if (reussite)
-                                {
-                                    if (observateur is NubiaPlayer)
-                                        ((PlayerMobile)this).VisibilityList.Remove(observateur);   
-                                }
-                                else
-                                {
-                                    if (m is NubiaCreature)
-                                    {
-                                        m.Emote("*Révèle {0}", Name);
-                                        ((NubiaMobile)this).ActionRevelation();
-                                    }
-                                    else if (m is NubiaPlayer)
-                                    {
-                                        List<Mobile> list = ((PlayerMobile)this).VisibilityList;
-                                        if ( !(list.Contains(((PlayerMobile)m))))
-                                        {
-                                            list.Add(((PlayerMobile)m));
-                                            m.SendMessage("Vous venez de repérer {0} cacher un peu plus loin.", this.Name);
-                                            if (Utility.InUpdateRange(m, this))
-                                            {
-                                                if (m.CanSee(this))
-                                                {
-                                                    m.Send(new Network.MobileIncoming(m, this));
-
-                                                    if (ObjectPropertyList.Enabled)
-                                                    {
-                                                        m.Send(this.OPLPacket);
-
-                                                        foreach (Item item in this.Items)
-                                                            m.Send(item.OPLPacket);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        
-                    }
-                }
-                else
-                {
-                    ((NubiaMobile)this).ActionRevelation();
-                }
-            }
+           
 
             return true; ;
 
@@ -605,6 +527,90 @@ namespace Server.Mobiles
             {
                 SendGump(new GumpBuff(this));
             }
+
+            if (Hidden /*&& DesignContext.Find( this ) == null */)	//Hidden & NOT customizing a house
+            {
+                
+
+                if (!Mounted /*&& Skills.Stealth.Value >= 25.0*/ )
+                {
+                    ScruteAlentour();
+                    foreach (Mobile m in this.GetMobilesInRange(8))
+                    {
+                        if (this != m && Hidden && m.AccessLevel == AccessLevel.Player)
+                        {
+                            NubiaMobile observateur = m as NubiaMobile;
+                            //RollResult ReussiteObservateur = ((NubiaMobile)m).RollCompetence(CompType.Perception,70);
+                            //int difficulte = (60+(10*((int)ReussiteObservateur)));
+                            int NuitModus = 0;
+                            if (LightCycle.ComputeLevelFor(this) > this.LightLevel)
+                            {
+                                if (LightCycle.ComputeLevelFor(this) > 10)
+                                    NuitModus -= 5;
+                                else if (LightCycle.ComputeLevelFor(this) < 10)
+                                    NuitModus += 5;
+                            }
+                            else
+                            {
+                                if (this.LightLevel > 10)
+                                    NuitModus -= 5;
+                                else if (this.LightLevel < 10)
+                                    NuitModus += 5;
+                            }
+
+                            int hideDD = observateur.Competences[CompType.PerceptionAuditive].pureRoll();
+                            if (isRunning)
+                                hideDD += 10;
+                            bool reussite = Competences[CompType.DeplacementSilencieux].check(hideDD);
+                            SendMessage("Jet réussi: {0} DD={1}", reussite, hideDD);
+
+                            if (reussite)
+                            {
+                                if (observateur is NubiaPlayer)
+                                    ((PlayerMobile)this).VisibilityList.Remove(observateur);
+                            }
+                            else
+                            {
+                                if (m is NubiaCreature)
+                                {
+                                    m.Emote("*Révèle {0}", Name);
+                                    ((NubiaMobile)this).ActionRevelation();
+                                }
+                                else if (m is NubiaPlayer)
+                                {
+                                    List<Mobile> list = ((PlayerMobile)this).VisibilityList;
+                                    if (!(list.Contains(((PlayerMobile)m))))
+                                    {
+                                        list.Add(((PlayerMobile)m));
+                                        m.SendMessage("Vous venez de repérer {0} cacher un peu plus loin.", this.Name);
+                                        if (Utility.InUpdateRange(m, this))
+                                        {
+                                            if (m.CanSee(this))
+                                            {
+                                                m.Send(new Network.MobileIncoming(m, this));
+
+                                                if (ObjectPropertyList.Enabled)
+                                                {
+                                                    m.Send(this.OPLPacket);
+
+                                                    foreach (Item item in this.Items)
+                                                        m.Send(item.OPLPacket);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    ((NubiaMobile)this).ActionRevelation();
+                }
+            }
+
             base.OnTurn();
         }
 
