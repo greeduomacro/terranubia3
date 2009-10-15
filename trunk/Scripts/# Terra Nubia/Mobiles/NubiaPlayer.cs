@@ -4,6 +4,8 @@ using System.Text;
 using Server.Items;
 using System.Collections;
 using Server.Gumps;
+using Server.Spells;
+using System.Reflection;
 
 namespace Server.Mobiles
 {
@@ -55,7 +57,34 @@ namespace Server.Mobiles
             return bonus;
         }
 
-        
+        #region Magie ! 
+
+        private Dictionary<BaseSort, DateTime> mSorts =
+            new Dictionary<BaseSort, DateTime>();
+
+        public void initializeSorts(Classe cl)
+        {
+            if (cl == null)
+                return;
+            mSorts = new Dictionary<BaseSort, DateTime>();
+            for (int c = 0; c < cl.SortAllow.Length; c++)
+            {
+                for (int s = 0; s < cl.SortAllow[c].Length; s++)
+                {
+                    BaseSort sort = null;
+                    Type stype = cl.SortAllow[c][s];
+                    ConstructorInfo ctor = stype.GetConstructor(Type.EmptyTypes);
+                    if (ctor != null)
+                    {
+                        sort = ctor.Invoke(new object[] { null }) as BaseSort;
+                        if (sort != null)
+                            mSorts.Add(sort, DateTime.Now);
+                    }
+                }
+            }
+        }
+
+        #endregion
 
         #region Deguisement
         private DeguisementMod mDeguisementMod = null;
@@ -327,10 +356,16 @@ namespace Server.Mobiles
 
                                 int hideDD = observateur.Competences[CompType.PerceptionAuditive].pureRoll();
                                 if (running)
-                                    hideDD += 20;
+                                    hideDD += 10;
                                 bool reussite = Competences[CompType.DeplacementSilencieux].check(hideDD);
+                                SendMessage("Jet réussi: {0} DD={1}", reussite, hideDD);
 
-                                if ( !reussite )
+                                if (reussite)
+                                {
+                                    if (observateur is NubiaPlayer)
+                                        ((PlayerMobile)this).VisibilityList.Remove(observateur);   
+                                }
+                                else
                                 {
                                     if (m is NubiaCreature)
                                     {
@@ -340,11 +375,7 @@ namespace Server.Mobiles
                                     else if (m is NubiaPlayer)
                                     {
                                         List<Mobile> list = ((PlayerMobile)this).VisibilityList;
-                                        if ((list.Contains(((PlayerMobile)m))))
-                                        {
-
-                                        }
-                                        else
+                                        if ( !(list.Contains(((PlayerMobile)m))))
                                         {
                                             list.Add(((PlayerMobile)m));
                                             m.SendMessage("Vous venez de repérer {0} cacher un peu plus loin.", this.Name);

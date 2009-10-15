@@ -11,6 +11,9 @@ namespace Server.Commands
     {
         public static void Initialize()
         {
+            CommandSystem.Register("magie", AccessLevel.Player,
+              new CommandEventHandler(magie_OnCommand));
+
             CommandSystem.Register("deguisement", AccessLevel.Player,
               new CommandEventHandler(deguisement_OnCommand));
             CommandSystem.Register("cache", AccessLevel.Player,
@@ -25,6 +28,11 @@ namespace Server.Commands
                 new CommandEventHandler(anim_OnCommand));
             CommandSystem.Register("blessure", AccessLevel.Player,
                new CommandEventHandler(blessure_OnCommand));
+        }
+        public static void magie_OnCommand(CommandEventArgs e)
+        {
+            NubiaPlayer p = e.Mobile as NubiaPlayer;
+            p.SendGump(new GumpLivreMagie(p, ClasseType.Barde));
         }
         public static void deguisement_OnCommand(CommandEventArgs e)
         {
@@ -58,6 +66,8 @@ namespace Server.Commands
                     NuitModus += 5;
                 else if (LightCycle.ComputeLevelFor(p) < 15)
                     NuitModus -= 5;
+
+                p.SendMessage("Bonus de nuit: " + NuitModus);
             }
             else
             {
@@ -65,6 +75,7 @@ namespace Server.Commands
                     NuitModus += 5;
                 else if (p.LightLevel < 15)
                     NuitModus -= 5;
+                p.SendMessage("Bonus de nuit: " + NuitModus);
             }
             DD += NuitModus;
             DD += (int)p.Taille * 2;
@@ -75,8 +86,8 @@ namespace Server.Commands
                     continue;
                 if (mob.CanSee(p))
                 {
-                    int mobPsy = mob.Competences[CompType.Psychologie].pureRoll();
-                    int bluff = mob.Competences[CompType.Bluff].pureRoll();
+                    int mobPsy = mob.Competences[CompType.Psychologie].pureRoll() - NuitModus;
+                    int bluff = mob.Competences[CompType.Bluff].pureRoll() + NuitModus;
                     if (mobPsy < bluff)
                     {
                         mob.SendMessage("Quelques choses vous attire l'oeil plus loin");

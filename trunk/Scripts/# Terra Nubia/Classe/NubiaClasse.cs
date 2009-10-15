@@ -38,6 +38,23 @@ namespace Server
         public virtual BouclierType BouclierAllow { get { return BouclierType.None; } }
         public virtual ArmeCategorie ArmeAllow { get { return ArmeCategorie.Courante; } }
 
+        #region Magie !
+        public virtual Type[][] SortAllow
+        {
+            get
+            {
+                return new Type[][]{ new Type[0]};
+            }
+        }
+        public virtual int[][] MagieAllow
+        {
+            get
+            {
+                return new int[][] { new int[0] };
+            }
+        }
+        #endregion
+
         public virtual DonEnum[][] DonClasse
         {
             get

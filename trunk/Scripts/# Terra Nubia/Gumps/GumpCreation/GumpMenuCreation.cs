@@ -116,12 +116,12 @@ namespace Server.Gumps
             }
             else if (id == 99)
             {
-                from.RawStr = 8;
-                from.RawDex = 8;
-                from.RawInt = 8;
-                from.RawCha = 8;
-                from.RawCons = 8;
-                from.RawSag = 8;
+                from.RawStr = 10;
+                from.RawDex = 10;
+                from.RawInt = 10;
+                from.RawCha = 10;
+                from.RawCons = 10;
+                from.RawSag = 10;
                 from.resetCompetences();
                 from.GiveXP(50);
                 from.SendMessage(99, "Bienvenue sur Terra Nubia");

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Reflection;
 using Server.Items;
 using Server.Mobiles;
-
+using Server.Spells;
 namespace Server
 {
     public class ClasseBarde : Classe
@@ -14,6 +14,47 @@ namespace Server
         public ClasseBarde() { }
 
         public override ClasseType CType { get { return ClasseType.Barde; } }
+
+        #region Magie !
+        public override Type[][] SortAllow
+        {
+            get
+            {
+                return new Type[][]{
+                    /* Cercle 0 */ new Type[]{ typeof(SortBerceuse) },
+                };
+            }
+        }
+        public override int[][] MagieAllow
+        {
+            get
+            {
+                return new int[][] { 
+                    new int[0], //0
+                    new int[]{2}, //1
+                    new int[]{3,0},  //2
+                    new int[]{3,1}, //3
+                    new int[]{3,2,0}, //4
+                    new int[]{3,3,1}, //5
+                    new int[]{3,3,2}, //6
+                    new int[]{3,3,2,0}, //7
+                    new int[]{3,3,3,1}, //8
+                    new int[]{3,3,3,2}, //9
+                    new int[]{3,3,3,2,0}, //10
+                    new int[]{3,3,3,2,1}, //11
+                    new int[]{3,3,3,3,2}, //12
+                    new int[]{3,3,3,3,2,0}, //13
+                    new int[]{4,3,3,3,3,1}, //14
+                    new int[]{4,4,4,3,3,2}, //15
+                    new int[]{4,4,4,3,3,2,0}, //16
+                    new int[]{4,4,4,4,3,3,1}, //17
+                    new int[]{4,4,4,4,4,3,2}, //18
+                    new int[]{4,4,4,4,4,4,3}, //19
+                    new int[]{4,4,4,4,4,4,4}, //20
+                };
+            }
+        }
+        #endregion
 
         public override CompType[] ClasseCompetences
         {

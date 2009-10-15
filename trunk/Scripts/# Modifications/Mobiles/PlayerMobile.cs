@@ -3254,8 +3254,8 @@ namespace Server.Mobiles
 
 		public override TimeSpan GetLogoutDelay()
 		{
-			if ( Young || BedrollLogout || TestCenter.Enabled )
-				return TimeSpan.Zero;
+			//if ( Young || BedrollLogout || TestCenter.Enabled )
+				return TimeSpan.FromSeconds(10);
 
 			return base.GetLogoutDelay();
 		}
