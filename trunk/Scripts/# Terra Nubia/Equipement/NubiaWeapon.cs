@@ -27,6 +27,7 @@ namespace Server.Items
                 case ArmeTemplate.Lance: return "Lances";
                 case ArmeTemplate.Masse: return "Masses";
                 case ArmeTemplate.Poing: return "Poings";
+                case ArmeTemplate.Jet: return "Armes de jet";
             }
             return "none";
         }
@@ -393,17 +394,13 @@ namespace Server.Items
             AttMob.DoAttackTurn(); //Hop, un tour d'attaque pour passer au bonus suivant
 
             //Modificateur de charactéristique en fonction de l'arme Distance ou contact
-            if ( this.MaxRange > 3)
+            if ( this.MaxRange > 3 )
                 bonii += (double)DndHelper.GetCaracMod(AttMob, DndStat.Dexterite);
             else
                 bonii += (double)DndHelper.GetCaracMod(AttMob, DndStat.Force);
           //  Console.WriteLine(AttMob.Name + " :: Bonus d'attaque (Classe+Mod Carac): +" + bonii);
 
-            if (AttMob is NubiaPlayer)
-            {
-                int maitrise = ((NubiaPlayer)AttMob).getMaitrise(this.Template);
-                bonii += Math.Min(maitrise - 1, 3);
-            }
+           
             //Malus quand on attaque en courant
             // ???
 
@@ -490,6 +487,12 @@ namespace Server.Items
                     AttMob.Emote("*feinte*");
                     DD -= (DefMob.CA);
                 }
+            }
+
+            if (DefMob is NubiaPlayer && DefMob.Weapon is NubiaWeapon)
+            {
+                int maitrise = ((NubiaPlayer)DefMob).getMaitrise( ((NubiaWeapon)DefMob.Weapon).Template );
+                DD += maitrise;
             }
 
    
@@ -706,19 +709,21 @@ namespace Server.Items
                 return WorldData.TimeTour();
             NubiaMobile mob = m as NubiaMobile;
             double baseSec = WorldData.TimeTour().Seconds;
-            if (mob is NubiaPlayer)
+            /*if (mob is NubiaPlayer)
             {
                 int maitrise = ((NubiaPlayer)mob).getMaitrise(this.Template);
                 if( maitrise > 3)
                     baseSec -= 0.1 * (maitrise - 3);
-            }
+            }*/
             if (mOpportunite)
             {
                 baseSec /= 2;
             }
             baseSec /= mob.BonusAttaque.Length + 1;
 
-            return TimeSpan.FromSeconds(baseSec - (Utility.RandomDouble()*2) );
+
+
+            return TimeSpan.FromSeconds( baseSec - (Utility.RandomDouble())  );
         }
 
         public override void Serialize(GenericWriter writer)
