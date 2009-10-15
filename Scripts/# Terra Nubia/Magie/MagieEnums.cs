@@ -4,6 +4,18 @@ using System.Text;
 
 namespace Server.Spells
 {
+    public enum SortAction
+    {
+        Neutral = 0,
+        Benefic,
+        Malefic
+    }
+    public enum SortTarget
+    {
+        Self,
+        TargetSimple,
+        Zone
+    }
     public enum MagieEcole
     {
         Abjuration,
