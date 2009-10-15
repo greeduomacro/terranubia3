@@ -63,18 +63,18 @@ namespace Server.Commands
             if (LightCycle.ComputeLevelFor(p) > p.LightLevel)
             {
                 if (LightCycle.ComputeLevelFor(p) > 15)
-                    NuitModus += 5;
-                else if (LightCycle.ComputeLevelFor(p) < 15)
                     NuitModus -= 5;
+                else if (LightCycle.ComputeLevelFor(p) < 15)
+                    NuitModus += 5;
 
                 p.SendMessage("Bonus de nuit: " + NuitModus);
             }
             else
             {
                 if (p.LightLevel > 15)
-                    NuitModus += 5;
-                else if (p.LightLevel < 15)
                     NuitModus -= 5;
+                else if (p.LightLevel < 15)
+                    NuitModus += 5;
                 p.SendMessage("Bonus de nuit: " + NuitModus);
             }
             DD += NuitModus;

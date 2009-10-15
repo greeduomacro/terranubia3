@@ -147,7 +147,7 @@ namespace Server.Mobiles
             }
             int roll = Utility.RandomMinMax(1, 20);
             roll += (int)getMaitrise();
-            mOwner.NextSkillTime = DateTime.Now + WorldData.TimeTour();
+            mOwner.NextSkillTime = DateTime.Now + WorldData.TimeTour() - TimeSpan.FromMilliseconds(500);
             //Bonus Malus
             roll += mOwner.getBonusRoll();
             return roll;
