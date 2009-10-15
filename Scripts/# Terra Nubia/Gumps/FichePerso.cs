@@ -280,7 +280,7 @@ namespace Server.Gumps
             scale -= 3;
             for (int i = 0; i < (int)ArmeTemplate.Maximum; i++)
             {
-                if ((int)ArmeTemplate.Maximum == i || (int)ArmeTemplate.Poing == i)
+                if ( (int)ArmeTemplate.Maximum == i )
                     continue;
                 bool canIncrease = false;
                 canIncrease = (maitrise_restant > 0) && mOwner.getMaitrise((ArmeTemplate)i) < maitrise_max;

@@ -12,7 +12,7 @@ namespace Server.Items
         Exotique
     }
     public enum ArmeTemplate{
-        Baton,
+        Baton = 0,
         Masse,
         Epee,
         Hache,
@@ -23,6 +23,7 @@ namespace Server.Items
         Arbalete,
         Jet,
         Poing,
+
         Maximum
     }
     public enum ArmeType
