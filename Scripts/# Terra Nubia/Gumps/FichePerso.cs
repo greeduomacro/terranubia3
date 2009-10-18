@@ -22,7 +22,7 @@ namespace Server.Gumps
             bool ok = true;
             for (int i = 0; i < classes.Length; i++)
             {
-                if (classes[i].Niveau < 4 && !(classes[i] is ClasseArtisan) )
+                if (classes[i].Niveau < 4 && !(classes[i] is ClasseArtisan))
                     ok = false;
             }
             return ok;
@@ -48,7 +48,7 @@ namespace Server.Gumps
             return true;
         }
         public GumpFichePerso(NubiaPlayer _owner, NubiaPlayer _viewer)
-            : base("Fiche de personnage", 520, 400,250)
+            : base("Fiche de personnage", 520, 400, 250)
         {
             Closable = true;
             mOwner = _owner;
@@ -61,15 +61,24 @@ namespace Server.Gumps
             int decal = 5;
             x += 5;
 
-            //AddBackground(x-5, y, 245, 165, 3000);
+            AddBackground(x - 5, y, 240, 150 + (scale * mOwner.GetClasses().Count), 3000);
             AddLabel(x, y + line * scale, ColorText, "Nom: ");
-            AddLabel(x+50, y + line * scale, ColorTextLight, mOwner.Name);
+            AddLabel(x + 50, y + line * scale, ColorTextLight, mOwner.Name);
             line++;
             AddLabel(x, y + line * scale, ColorText, "Race: ");
-            if( mOwner.Race != null )
+            if (mOwner.Race != null)
                 AddLabel(x + 50, y + line * scale, ColorTextLight, mOwner.Race.Name);
             line++;
 
+
+            AddLabel(x, y + line * scale, ColorText, "Moral: ");
+            int colMoral = ColorText;
+            if (mOwner.CurrentMoral > Moral.Normal)
+                colMoral = ColorTextGreen;
+            else if (mOwner.CurrentMoral < Moral.Normal)
+                colMoral = ColorTextRed;
+            AddLabel(x + 50, y + line * scale, colMoral, mOwner.MoralString);
+            line++;
             /* Barre d'XP */
             AddLabel(x, y + (line * scale), ColorText, "Experience: ");
 
@@ -98,27 +107,27 @@ namespace Server.Gumps
             mOwner.GetClasses().CopyTo(classes, 0);
             for (int i = 0; i < classes.Length; i++) //50+i baisser, 75+i augmenter
             {
-               
+
                 //AddButton(x, y + (line * scale), 0x1467, 0x1467, 50 + i, GumpButtonType.Reply, 0);
-                if (canUp && canUpClasse(mOwner, classes[i]) )
+                if (canUp && canUpClasse(mOwner, classes[i]))
                     AddButton(x + 15, y + (line * scale), 0x1468, 0x1468, 75 + i, GumpButtonType.Reply, 0);
                 AddLabel(x + 20 + (canUp ? 15 : 0), y + (line * scale), ColorTextYellow, classes[i].CType.ToString() + " niveau " + classes[i].Niveau.ToString());
                 line++;
             }
-            if (classes.Length < 2 && canUp && canMultiClasse(mOwner) ) //Nouvelle classe 100
-            {                
+            if (classes.Length < 2 && canUp && canMultiClasse(mOwner)) //Nouvelle classe 100
+            {
                 AddButton(x, y + (line * scale), 0x1468, 0x1468, 100, GumpButtonType.Reply, 0);
                 AddLabel(x + 20, y + (line * scale), ColorTextLight, "Choisir une nouvelle classe");
                 line++;
             }
-            
+
 
             //ARMURES
             AddImage(x, y + (line * scale), 0x5200);
-            AddLabel(x+50, y + (line * scale), ColorText, "Classe d'armure: ");
-            AddLabel(x+150, y + (line * scale), (mOwner.CA > 0 ? ColorTextYellow : ColorTextRed), (mOwner.CA > 0 ? "+" : "") + mOwner.CA);
+            AddLabel(x + 50, y + (line * scale), ColorText, "Classe d'armure: ");
+            AddLabel(x + 150, y + (line * scale), (mOwner.CA > 0 ? ColorTextYellow : ColorTextRed), (mOwner.CA > 0 ? "+" : "") + mOwner.CA);
             line++;
-           // AddLabel(XCol + 50, y + (line * scale), ColorText, "Armures: ");
+            // AddLabel(XCol + 50, y + (line * scale), ColorText, "Armures: ");
             string armorList = "Aucune armure";
             if (mOwner.ArmorAllow >= NubiaArmorType.Legere)
                 armorList = "Légères";
@@ -132,9 +141,9 @@ namespace Server.Gumps
 
 
 
-//            AddBackground(x - 5, y+170, 245, 165, 3000);
-            
-           
+            AddBackground(x - 5, y + line * scale + 20, 240, 180, 3000);
+
+
             line++;
             int xCharac = x + 100;
             int xMod = xCharac + 20;
@@ -160,7 +169,7 @@ namespace Server.Gumps
             else
                 AddLabel(x, y + (line * scale), ColorText, "Force: ");
             AddLabel(xCharac, y + (line * scale), ColorText, mOwner.RawStr.ToString());
-            AddLabel(xMod, y + ( line*scale), colorCharac, "/ "+( modCharac >= 0 ? "+": "")+modCharac.ToString());
+            AddLabel(xMod, y + (line * scale), colorCharac, "/ " + (modCharac >= 0 ? "+" : "") + modCharac.ToString());
             line++;
             //Dexterite
             colorCharac = ColorTextGray;
@@ -173,7 +182,7 @@ namespace Server.Gumps
             if (canUpCharac && mOwner.RawDex < mOwner.Niveau + 17)
                 AddSimpleButton(x, y + line * scale, 200 + (int)DndStat.Dexterite, "Dextérité: ");
             else
-                 AddLabel(x, y + (line * scale), ColorText, "Dextérité: ");
+                AddLabel(x, y + (line * scale), ColorText, "Dextérité: ");
             AddLabel(xCharac, y + (line * scale), ColorText, mOwner.RawDex.ToString());
             AddLabel(xMod, y + (line * scale), colorCharac, "/ " + (modCharac >= 0 ? "+" : "") + modCharac.ToString());
             line++;
@@ -238,25 +247,46 @@ namespace Server.Gumps
             AddLabel(xMod, y + (line * scale), colorCharac, "/ " + (modCharac >= 0 ? "+" : "") + modCharac.ToString());
             line++;
 
-    
+
             /**
              * 
              * 2ND COLONNE
              * 
+             * Previous = 2322, 2323
+             * 
+             * PrevFleche = 4014, 4015
+             * NextFleche = 4005, 4006
+             * 
              * */
-            line = 0;
+
+
+            /*
+             * 
+             * */
+
+            int xprev = XCol;
+            int xnext = XCol + 200;
+            int yprevnext = y;
+            line = 1;
+            // PAGE 1
+            AddPage(1);
+            AddButton(xprev, yprevnext, 4014, 4015, 5, GumpButtonType.Page, 1);
+            AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, 2);
+            AddLabel(XCol, y + line * scale, ColorTextYellow, "Bonus & Maitrises d'armes");
+            line++;
+
             AddLabel(XCol, y + line * scale, ColorTextLight, "Bonus aux jets:");
             line++;
             AddLabel(XCol, y + line * scale, ColorText, "Attaque:");
             string attaquebonii = "";
-            for(int i = 0; i < mOwner.BonusAttaque.Length; i++ )
-                attaquebonii += "+"+mOwner.BonusAttaque[i]+( i < mOwner.BonusAttaque.Length - 1 ? " / ":"");
+            for (int i = 0; i < mOwner.BonusAttaque.Length; i++)
+                attaquebonii += "+" + mOwner.BonusAttaque[i] + (i < mOwner.BonusAttaque.Length - 1 ? " / " : "");
             AddLabel(XCol + 60, y + line * scale, ColorTextYellow, attaquebonii);
 
             line++;
             AddLabel(XCol, y + line * scale, ColorText, "Reflexe:");
-            AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+"+mOwner.BonusReflexe.ToString());
-            
+            AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.BonusReflexe.ToString());
+
             line++;
             AddLabel(XCol, y + line * scale, ColorText, "Volonté:");
             AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.BonusVolonte.ToString());
@@ -268,19 +298,19 @@ namespace Server.Gumps
             // MAITRISES d'ARMES
 
             line++;
-            AddLabel(XCol, y + line * scale, ColorTextYellow, "Maitrises d'armes");
+            AddLabel(XCol, y + line * scale, ColorTextLight, "Maitrises d'armes");
             int maitrise_depense = mOwner.PtsMaitriseTotal();
-            int maitrise_max = DndHelper.getMaitriseMax(mOwner.Niveau );
+            int maitrise_max = DndHelper.getMaitriseMax(mOwner.Niveau);
             int maitrise_total = DndHelper.getTotalMaitrise(mOwner.Niveau);
             int maitrise_restant = maitrise_total - maitrise_depense;
-            if( maitrise_restant > 0 )
-                AddLabel(XCol+150, y + line * scale, ColorTextGreen, "Disponible(s): " + (maitrise_restant).ToString());
+            if (maitrise_restant > 0)
+                AddLabel(XCol + 150, y + line * scale, ColorTextGreen, "Disponible(s): " + (maitrise_restant).ToString());
             int maitrise_line = 1;
             int maitriseX = 0;
             scale -= 3;
             for (int i = 0; i < (int)ArmeTemplate.Maximum; i++)
             {
-                if ( (int)ArmeTemplate.Maximum == i )
+                if ((int)ArmeTemplate.Maximum == i)
                     continue;
                 bool canIncrease = false;
                 canIncrease = (maitrise_restant > 0) && mOwner.getMaitrise((ArmeTemplate)i) < maitrise_max;
@@ -293,44 +323,50 @@ namespace Server.Gumps
                 if (canIncrease)
                 {
                     buttonDecal = 15;
-                    AddSimpleButton(XCol + maitriseX, 15+ y + (maitrise_line+line) * scale, 250 + i, maitriseName, mcol);
+                    AddSimpleButton(XCol + maitriseX, 15 + y + 5 + (maitrise_line + line) * scale, 250 + i, maitriseName, mcol);
                 }
                 else
-                    AddLabel(XCol + maitriseX, 15 + y + (maitrise_line + line) * scale, mcol, maitriseName);
+                    AddLabel(XCol + maitriseX, 15 + y + 5 + (maitrise_line + line) * scale, mcol, maitriseName);
 
                 for (int v = 0; v < mvalue; v++)
-                    AddImage(XCol + 60 + maitriseX + buttonDecal + (13 * v), 17 +y + (maitrise_line+line) * scale, 9022);
+                    AddImage(XCol + 90 + maitriseX + buttonDecal + (13 * v), 17 + y + 5 + (maitrise_line + line) * scale, 9022);
 
                 maitrise_line++;
-                if (maitrise_line > 5)
-                {
-                    maitrise_line = 1;
-                    maitriseX += 140;
-                }
+
             }
-          //  scale += 3;
-            line += 8;
-            int ddecal = 0;
-            int dcount = 0;
-            foreach(DonEnum don in mOwner.Dons )
+            scale += 3;
+
+            // DONS
+            // PAGE 2
+            AddPage(2);
+            line = 1;
+            AddButton(xprev, yprevnext, 4014, 4015, 5, GumpButtonType.Page, 1);
+            AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, 2);
+            AddLabel(XCol, y + line * scale, ColorTextYellow, "Dons du personnage");
+            line++;
+
+            foreach (DonEnum don in mOwner.Dons)
             {
                 int niv = mOwner.getDonNiveau(don);
-                dcount++;
                 if (niv > 0)
                 {
-                      string dname = "";
-                      if (BaseDon.DonBank.ContainsKey(don.ToString().ToLower() ))
-                          dname = BaseDon.DonBank[don.ToString().ToLower() ].Name;
-                      else
-                          dname = don.ToString();
-                     AddLabel(XCol + ddecal, y + line * scale, ColorTextYellow, dname + (niv > 1 ? "(Rang:" + niv.ToString() + ")" : ""));
-                     if (dcount % 5 == 0)
-                     {
-                         ddecal = 150;
-                         line -= 5;
-                     }
-                     else
-                         line++;
+                    string dname = "";
+                    if (BaseDon.DonBank.ContainsKey(don.ToString().ToLower()))
+                        dname = BaseDon.DonBank[don.ToString().ToLower()].Name;
+                    else
+                        dname = don.ToString();
+
+                    AddLabel(XCol, y + line * scale, ColorText, dname + (niv > 1 ? " (Rang:" + niv.ToString() + ")" : ""));
+
+                    BaseDon rdon = null;
+                    if( BaseDon.DonBank.ContainsKey( don.ToString().ToLower() )){
+                        rdon = BaseDon.DonBank[don.ToString().ToLower()];
+                        if( rdon.CanUse )
+                            AddLabel(XCol+120, y + line * scale,ColorTextGray, "[.don "+don.ToString()+"]" );
+                    }
+
+
+                    line++;
                 }
             }
         }
@@ -339,8 +375,8 @@ namespace Server.Gumps
         {
             Mobile f = sender.Mobile;
             NubiaPlayer from = f as NubiaPlayer;
-            
-            
+
+
             if (info.ButtonID == 100) //Nouvelle classe
             {
                 from.SendGump(new GumpChoixClasse(from, false));
@@ -349,7 +385,7 @@ namespace Server.Gumps
             {
                 Classe c = null;
                 try { c = classes[info.ButtonID - 50]; }
-                catch(Exception ex) { }
+                catch (Exception ex) { }
                 if (c != null)
                     from.MakeClasse(c.GetType(), c.Niveau - 1);
                 from.SendGump(new GumpFichePerso(mOwner, mViewer));

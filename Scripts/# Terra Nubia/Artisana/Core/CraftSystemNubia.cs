@@ -169,7 +169,7 @@ namespace Server.Engines
                     return;
             }
             
-            int rollResult = crafter.Competences[mComp].pureRoll();
+            int rollResult = crafter.Competences[mComp].pureRoll(2);
             if (rollResult > entry.Diff)
             {
                 

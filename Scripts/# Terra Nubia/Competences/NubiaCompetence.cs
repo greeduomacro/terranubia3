@@ -121,10 +121,10 @@ namespace Server.Mobiles
 
         public abstract CompType[] SynergieTab { get; } // [i]=CompType [i+1]=Value
 
-        public bool check(){
-            return check(10);
+        public bool check(int tourActions){
+            return check(10, tourActions);
         }
-        public bool check(int DD)
+        public bool check(int DD, int tourActions)
         {
           /*  Utilisation des compétences. 
            * Voici la formule pour jouer un test de compétence :
@@ -133,21 +133,25 @@ namespace Server.Mobiles
            * (modificateur de compétence = 
            * degré de maîtrise + modificateur de caractéristique + modificateurs divers).*/
 
-            int roll = pureRoll();
+            int roll = pureRoll(tourActions);
 
             return roll > DD;
         }
        
-        public int pureRoll()
+        public int pureRoll( int tourActions)
         {
-            if (mOwner.NextSkillTime > DateTime.Now)
+            if (mOwner.NextSkillTime > DateTime.Now && tourActions > 0)
             {
-                //mOwner.SendMessage("vous devez attendre pour utiliser une compétence");
-                return -1;
+                mOwner.SendMessage("vous devez attendre pour utiliser une compétence");
+                return 1;
             }
             int roll = Utility.RandomMinMax(1, 20);
             roll += (int)getMaitrise();
-            mOwner.NextSkillTime = DateTime.Now + WorldData.TimeTour() - TimeSpan.FromMilliseconds(500);
+            double msst = WorldData.TimeTour().TotalMilliseconds;
+            msst *= tourActions;
+            msst -= 500;
+            
+            mOwner.NextSkillTime = DateTime.Now + TimeSpan.FromMilliseconds(msst);
             //Bonus Malus
             roll += mOwner.getBonusRoll();
             return roll;

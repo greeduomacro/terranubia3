@@ -158,7 +158,7 @@ namespace Server.Mobiles
 							m_Thief.SendLocalizedMessage( 502723 ); // You fail to steal the item.
 						}
 
-						caught = m_Thief.Competences[CompType.Escamotage].check();
+						caught = m_Thief.Competences[CompType.Escamotage].check(1);
 					}
 				}
 
@@ -291,9 +291,9 @@ namespace Server.Mobiles
                             {
                                 //Detection
                                 NubiaPlayer obs = ns.Mobile as NubiaPlayer;
-                                if (obs.Competences[CompType.Detection].pureRoll()
+                                if (obs.Competences[CompType.Detection].pureRoll(0)
                                     >
-                                    from.Competences[CompType.Discretion].pureRoll() + from.GetDistanceToSqrt(obs))
+                                    from.Competences[CompType.Discretion].pureRoll(0) + from.GetDistanceToSqrt(obs))
                                 {
                                     obs.SendMessage(message);
                                     from.PrivateOverheadMessage(MessageType.Emote, 0, false, "*fouille dans le sac de " + root.Name + "*", ns);

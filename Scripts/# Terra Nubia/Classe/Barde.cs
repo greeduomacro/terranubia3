@@ -9,6 +9,9 @@ namespace Server
     public class ClasseBarde : Classe
     {
         public override NubiaArmorType ArmorAllow { get { return NubiaArmorType.Legere; } }
+        public override ArmeCategorie ArmeAllow { get { return ArmeCategorie.Courante; } }
+        public override BouclierType BouclierAllow { get { return BouclierType.GrandEcu; } }
+
         public override int GetDV { get { return 6; } }
         public override int PtComp { get { return 6; } }
         public ClasseBarde() { }
@@ -16,6 +19,9 @@ namespace Server
         public override ClasseType CType { get { return ClasseType.Barde; } }
 
         #region Magie !
+        public override bool InstinctiveMagie { get { return true; } }
+        public override MageType Mage { get { return MageType.Hybrid; } }
+        public virtual DndStat MagieStat { get { return DndStat.Charisme; } }
         public override Type[][] SortAllow
         {
             get

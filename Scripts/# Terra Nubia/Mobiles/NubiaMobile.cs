@@ -24,7 +24,7 @@ namespace Server.Mobiles
     {
         None = 0,
         Defense = 1, //+2 CA
-        DefenseTotale = 1, //+4 CA. +10 avec pavois. Annulé si on bouge
+        DefenseTotale = 2, //+4 CA. +10 avec pavois. Annulé si on bouge
     }
     /**"Il est possible de se contenter de se déplacer en se défendant, 
      * ce qui constitue une action simple. 
@@ -102,6 +102,13 @@ namespace Server.Mobiles
 
         private int mXP = 0;
         private int mTurn = 0;
+        private int mAttaqueParTour = 1;
+
+        public int AttaqueParTour
+        {
+            get { return mAttaqueParTour; }
+            set { mAttaqueParTour = value; }
+        }
 
         //######### BLESSURES #########
         public void AddBlessure(NubiaBlessure blessure)
@@ -255,14 +262,13 @@ namespace Server.Mobiles
             return true;
 
         }
-        public bool CanDoOpportuniteAttack
+        public bool getCanDoOpportunite()
         {
-            get
-            {
-                if (Weapon is Fists) //Pas d'attaque d'opportunité sans arts martiaux;
+           
+                if (Weapon is Fists && !hasDon(DonEnum.ScienceDuCombatAMainsNues) ) //Pas d'attaque d'opportunité sans arts martiaux;
                     return false;
                 return mLastOpportuniteAction < DateTime.Now - WorldData.TimeTour();
-            }
+            
         }
 
 
@@ -274,6 +280,7 @@ namespace Server.Mobiles
             //Pour d'arme a distance ou combat aux point contre une arme sans arts martiaux
             if (Weapon is BaseRanged || Weapon is Fists)
                 ExposeToOpportunite();
+            
 
             bool CanOpp = mOpportuniteExposeTime > DateTime.Now;
             return CanOpp;
@@ -281,17 +288,19 @@ namespace Server.Mobiles
 
         public int CheckForOpportuniteResult(NubiaMobile agressor) //Attention, agressor peut être null
         {
+            if (!agressor.getCanDoOpportunite())
+                return 0;
+
             //Backstab !
             if (NubiaHelper.LookAt(agressor, this) &&
-                (NubiaHelper.GetDirectionFrom((int)Direction) == NubiaHelper.GetDirectionFrom((int)agressor.Direction) ||
-                agressor.Hidden))
-            {
-                ExposeToOpportunite();
-            }
+                  (NubiaHelper.GetDirectionFrom((int)Direction) == NubiaHelper.GetDirectionFrom((int)agressor.Direction) ||
+                        agressor.Hidden))
+                    {
+                        ExposeToOpportunite();
+                    }
             if (CheckForOpportunite() && agressor != null)
             {
-                if (agressor.CanDoOpportuniteAttack)
-                {
+
                     /*1d20 + Bonus Reflexes + Modificateur dexterité
                         contre
                         1d20 + Bonus Reflexes + Modificateur dexterité - 8 */
@@ -305,13 +314,11 @@ namespace Server.Mobiles
                                     -
                                     (rollDef + BonusReflexe + (int)DndHelper.GetCaracMod(this, DndStat.Dexterite) - 8);
 
-                    if (difference > 0)
-                        mLastOpportuniteAction = DateTime.Now;
+                    agressor.mLastOpportuniteAction = DateTime.Now;
+                    if (difference <= 0)
+                        agressor.SendMessage("Vous ratez une attaque d'opportunité");
 
                     return difference;
-                }
-                else
-                    return 0;
             }
             else
                 return 0;
@@ -449,7 +456,7 @@ namespace Server.Mobiles
         public int GetAttackTurn()
         {
             //On vérifie que le mTourAttaque soit pas plus haut que le tableau
-            if (mTourAttaque >= BonusAttaque.Length)
+            if (mTourAttaque >= mAttaqueParTour)
                 mTourAttaque = 0;
             return mTourAttaque;
         }
@@ -1031,10 +1038,9 @@ namespace Server.Mobiles
         {
             get
             {
-                int max = 20;
+                int max = 10 + Niveau;
+
                 max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
-                if (max < 4)
-                    max = 4;
                 return max;
             }
         }

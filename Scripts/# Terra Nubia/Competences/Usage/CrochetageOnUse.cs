@@ -123,12 +123,12 @@ namespace Server.Items
                     if (!m_From.InRange(item.GetWorldLocation(), 1))
                         return;
 
-                    bool canPsy = m_From.Competences[CompType.Psychologie].check();
+                    bool canPsy = m_From.Competences[CompType.Psychologie].check(0);
                     foreach (NubiaMobile m in m_From.GetMobilesInRange(6))
                     {
                         if (m is NubiaPlayer && m != m_From)
                         {
-                            if (m.Competences[CompType.PerceptionAuditive].pureRoll() >= m_From.Competences[CompType.Discretion].pureRoll())
+                            if (m.Competences[CompType.PerceptionAuditive].pureRoll(0) >= m_From.Competences[CompType.Discretion].pureRoll(0))
                             {
                                 if (canPsy)
                                     m_From.SendMessage("{0} semble vous avoir repérez, vous manquez de discretion !", m.Name);
