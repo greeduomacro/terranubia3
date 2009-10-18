@@ -74,7 +74,7 @@ namespace Server.Items
             if (!(m is NubiaMobile))
                 return false;
             NubiaMobile mob = m as NubiaMobile;
-            bool resultOk = mob.Competences[mComp].check();
+            bool resultOk = mob.Competences[mComp].check(0);
             if (isBloquant)
             {
                 if (resultOk)

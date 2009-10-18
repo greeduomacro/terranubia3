@@ -34,6 +34,22 @@ namespace Server.Spells
         {
             mRange = 10; //FAUX
         }
+        protected override bool Execute(NubiaMobile caster, object[] Args)
+        {
+            if (base.Execute(caster, Args))
+            {
+                caster.Emote("*Chante une berceuse*");
+                for (int a = 0; a < Args.Length; a++)
+                {
+                    if (Args[a] is NubiaMobile)
+                    {
+                        NubiaMobile mob = Args[a] as NubiaMobile;
+                        mob.Emote("*Dodo !*");
+                    }
+                }
+            }
+            return false;
+        }
 
     }
 

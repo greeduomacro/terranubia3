@@ -201,7 +201,7 @@ namespace Server.Items
             if (m is NubiaMobile)
             {
                 NubiaMobile mob = m as NubiaMobile;
-                int roll = mob.Competences[CompType.DeplacementSilencieux].pureRoll();
+                int roll = mob.Competences[CompType.DeplacementSilencieux].pureRoll(0);
                 if ( !mob.Hidden)
                     roll -= 5;
                 if (roll >= mDD)

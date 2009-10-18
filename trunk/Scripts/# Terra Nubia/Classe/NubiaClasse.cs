@@ -30,6 +30,12 @@ namespace Server
 
         Maximum //pour comptage
     }
+    public enum MageType
+    {
+        None,
+        Pur,
+        Hybrid
+    }
     public abstract class Classe
     {
         public virtual int GetDV { get { return 4; } }
@@ -39,6 +45,9 @@ namespace Server
         public virtual ArmeCategorie ArmeAllow { get { return ArmeCategorie.Courante; } }
 
         #region Magie !
+        public virtual bool InstinctiveMagie { get { return false; } }
+        public virtual MageType Mage { get { return MageType.None; } }
+        public virtual DndStat MagieStat { get { return DndStat.Intelligence; } }
         public virtual Type[][] SortAllow
         {
             get

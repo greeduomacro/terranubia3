@@ -96,7 +96,7 @@ namespace Server.Gumps
                         DD += 5;
                     if( mRace != RaceManager.getRaceType( mOwner.Race.GetType() ) )
                         DD += 5;
-                    int result = mOwner.Competences[CompType.Deguisement].pureRoll();
+                    int result = mOwner.Competences[CompType.Deguisement].pureRoll(1);
                     if (result >= DD)
                     {
                         mOwner.SendMessage("Vous réussissez à vous déguiser");

@@ -37,16 +37,10 @@ namespace Server.Gumps
 
 
 
-                Classe cl = null;
-                foreach (Classe c in owner.GetClasses())
-                    if (c.CType == classe)
-                        cl = c;
-                if (cl != null)
+                List<BaseSort> sorts = owner.getSortList(classe);
+                for (int i = 0; i < sorts.Count; i++)
                 {
-                    for (int i = 0; i < cl.SortAllow.Length; i++)
-                    {
-                        AddLabel(x, y + line * scale, GumpNubia.ColorText, cl.SortAllow[i][0].ToString());
-                    }
+                    
                 }
             }
         }

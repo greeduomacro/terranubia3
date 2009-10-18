@@ -86,8 +86,8 @@ namespace Server.Commands
                     continue;
                 if (mob.CanSee(p))
                 {
-                    int mobPsy = mob.Competences[CompType.Psychologie].pureRoll() - NuitModus;
-                    int bluff = mob.Competences[CompType.Bluff].pureRoll() + NuitModus;
+                    int mobPsy = mob.Competences[CompType.Psychologie].pureRoll(0) - NuitModus;
+                    int bluff = mob.Competences[CompType.Bluff].pureRoll(0) + NuitModus;
                     if (mobPsy < bluff)
                     {
                         mob.SendMessage("Quelques choses vous attire l'oeil plus loin");
@@ -131,7 +131,7 @@ namespace Server.Commands
                 return;
             }
 
-            bool can = p.Competences[CompType.Acrobaties].check();
+            bool can = p.Competences[CompType.Acrobaties].check(1);
             if (can)
             {
                 p.Emote("*execute une acrobatie*");

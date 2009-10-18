@@ -393,6 +393,14 @@ namespace Server.Items
             bonii += AttMob.BonusAttaque[AttMob.GetAttackTurn()]; //On chope le bon bonus de classe(s) suivant le tour d'attaque 
             AttMob.DoAttackTurn(); //Hop, un tour d'attaque pour passer au bonus suivant
 
+            if (AttMob.AttaqueParTour > 1 && AttMob.Stam > 5)
+                AttMob.Stam -= 5;
+            else if (AttMob.AttaqueParTour > 1 && AttMob.Stam <= 5)
+            {
+                AttMob.AttaqueParTour = 1;
+                AttMob.SendMessage("Vous êtes trop fatigué pour maintenir l'attaque a outrance");
+            }
+
             //Modificateur de charactéristique en fonction de l'arme Distance ou contact
             if ( this.MaxRange > 3 )
                 bonii += (double)DndHelper.GetCaracMod(AttMob, DndStat.Dexterite);
@@ -472,13 +480,13 @@ namespace Server.Items
             else if (DefMob.getActionCombat() == ActionCombat.DefenseTotale 
                 && DefMob.Competences[CompType.Acrobaties].getPureMaitrise() >= 5)
                 DD += 2;
-            else if (DefMob.Competences[CompType.Acrobaties].check())
+            else if (DefMob.Competences[CompType.Acrobaties].check(0))
                 DD += 1;
 
             //Test de bluff
             if (AttMob.Competences[CompType.Bluff].getPureMaitrise() > 0)
             {
-                int bluffDD = DefMob.Competences[CompType.Psychologie].pureRoll();
+                int bluffDD = DefMob.Competences[CompType.Psychologie].pureRoll(0);
                 bluffDD += DefMob.BonusAttaque[DefMob.GetAttackTurn()];
                 if (DefMob.CreatureType != MobileType.Humanoide)
                     bluffDD += 4;
@@ -536,8 +544,7 @@ namespace Server.Items
                             DefMob.Emote("*Etourdit*");
                     }
                 }
-                //Attaque d'opportunité
-                int opDiff = DefMob.CheckForOpportuniteResult(AttMob);
+                
 
 
 
@@ -551,7 +558,8 @@ namespace Server.Items
             
 
                 //Attaque d'opportunité
-                mOpportunite = (opDiff > 0 && AttMob.CanDoOpportuniteAttack);
+                if(  AttMob.getCanDoOpportunite() )
+                    mOpportunite = DefMob.CheckForOpportuniteResult(AttMob) > 0;
 
                 int damage = 0;
                 if (AttMob.hasClasse(ClasseType.Moine) && Template == ArmeTemplate.Poing)
@@ -719,7 +727,7 @@ namespace Server.Items
             {
                 baseSec /= 2;
             }
-            baseSec /= mob.BonusAttaque.Length + 1;
+            baseSec /= mob.AttaqueParTour;
 
 
 
