@@ -43,32 +43,91 @@ namespace Server.Spells
         private NubiaPlayer mOwner = null;
         private ClasseType mClasse = ClasseType.Barde;
         private DndStat mMagicStat = DndStat.Charisme;
-        private bool mInstinctMagic = true;
+        private bool mInstinctMagic = false;
 
         private List<SortEntry> mSorts = new List<SortEntry>();
         private Dictionary<int, int> mCastNumber = new Dictionary<int, int>(); //sort déjà utilisé par cercle
         private int[] mSortAllow = new int[0];
 
+        public SortEntry[] Sorts
+        {
+            get
+            {
+                return mSorts.ToArray();
+            }
+        }
+        public bool InstinctMagie
+        {
+            get { return mInstinctMagic; }
+        }
+        public int getSortDispo(int cercle)
+        {
+            int utilise = 0;
+            if (mCastNumber.ContainsKey(cercle))
+                utilise = mCastNumber[cercle];
+            int total = 0;
+            if (mSortAllow.Length > cercle)
+            {
+                total = mSortAllow[cercle];
+            }
+            return total - utilise;
+        }
+        public MagieList(NubiaPlayer owner, ClasseType type)
+        {
+            mOwner = owner;
+            mClasse = type;
+            if (mOwner.hasClasse(type))
+            {
+                Classe cl = mOwner.getClasse(type);
+                mMagicStat = cl.MagieStat;
+                mInstinctMagic = cl.InstinctiveMagie;
+            }
+            if (mInstinctMagic)
+                MakeInstinctList();
+        }
+
         public bool Cast(Type sortType)
         {
+            if (mOwner.NextSortCast > DateTime.Now)
+            {
+                mOwner.SendMessage("Vous êtres déjà en train d'incanter");
+                return false;
+            }
+            foreach (SortEntry entry in mSorts)
+            {
+                if (entry.Sort == null)
+                    continue;
+                if( entry.Sort.GetType().Equals(sortType)){
+
+                    entry.Sort.Cast(mOwner, mClasse, entry.Cercle);
+                    if (mCastNumber.ContainsKey(entry.Cercle))
+                        mCastNumber[entry.Cercle] += 1;
+                }
+            }
             return false;
         }
 
         public bool canCast(Type sortType)
         {
+           
             if (mInstinctMagic)
             {
                 SortEntry sort = null;
                 foreach( SortEntry s in mSorts )
                 {
-                    if( s.GetType().Equals(sortType) )
+                    if (s.Sort == null)
+                        continue;
+                    if( s.Sort.GetType().Equals( sortType ) )
                         sort = s;
                 }
+              //  Console.WriteLine("Sort = " + sort);
                 if( sort == null )
                     return false;
                 if (mCastNumber.ContainsKey(sort.Cercle) && mSortAllow.Length > sort.Cercle)
                 {
-                    if (mCastNumber[sort.Cercle] > mSortAllow[sort.Cercle - 1])
+                //  Console.WriteLine("Cercle = " + sort.Cercle);
+               //   Console.WriteLine("Allow = "+ mSortAllow[sort.Cercle]);
+                    if (mCastNumber[sort.Cercle] < mSortAllow[sort.Cercle])
                     {
                         return true;
                     }
@@ -109,7 +168,7 @@ namespace Server.Spells
                             ConstructorInfo ctor = stype.GetConstructor(Type.EmptyTypes);
                             if (ctor != null)
                             {
-                                sort = ctor.Invoke(new object[] { null }) as BaseSort;
+                                sort = ctor.Invoke(new object[0]) as BaseSort;
                                 SortEntry entry = new SortEntry(sort, cl.CType, c);
                                 mSorts.Add(entry);
                             }

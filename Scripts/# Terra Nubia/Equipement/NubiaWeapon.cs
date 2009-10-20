@@ -470,7 +470,7 @@ namespace Server.Items
                 }
             }
 
-            double DD = (DefMob.CA) + 1.0;
+            double DD = (DefMob.CA);
             if (prisDepourvu && DndHelper.GetCaracMod(DefMob, DndStat.Dexterite) > 0 )
                 DD -= DndHelper.GetCaracMod(DefMob, DndStat.Dexterite);
             //Bonus avec un jet d'acrobatie réussi
@@ -500,7 +500,7 @@ namespace Server.Items
             if (DefMob is NubiaPlayer && DefMob.Weapon is NubiaWeapon)
             {
                 int maitrise = ((NubiaPlayer)DefMob).getMaitrise( ((NubiaWeapon)DefMob.Weapon).Template );
-                DD += maitrise;
+                DD += maitrise/2.0;
             }
 
    
@@ -550,7 +550,10 @@ namespace Server.Items
 
                 double DamageBonus = 0.0;
                 DamageBonus += DndHelper.GetCaracMod(AttMob, DndStat.Force); //Bonus du modificateur de Str aux dégats.
-           //     DamageBonus *= 5; // on a multiplié vie & Dégats par 5
+
+                // Bonus de dégat des buffs:
+                DamageBonus += AttMob.getDegatBonus();
+
                 if (Layer.TwoHanded == Layer && DamageBonus > 0)
                     DamageBonus *= 1.5;
 

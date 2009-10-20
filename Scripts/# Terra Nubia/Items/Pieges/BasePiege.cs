@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Server.Mobiles;
 using Server.Network;
-
+using Server.Spells;
 namespace Server.Items
 {
     public enum PiegeDeclencheur
@@ -216,7 +216,7 @@ namespace Server.Items
             {
                 NubiaMobile mob = m as NubiaMobile;
                 int roll = DndHelper.rollDe(De.vingt);
-                roll += mob.BonusReflexe;
+                roll += mob.getBonusReflexe(MagieEcole.Piege);
                 if (mob.hasDon(DonEnum.SensPieges))
                 {
                     roll += mob.getDonNiveau(DonEnum.SensPieges);
@@ -257,12 +257,12 @@ namespace Server.Items
             int degats = DndHelper.rollDe(mDegat, mNbrLancer);
             foreach (NubiaMobile mob in this.GetMobilesInRange(mRange))
             {
-                if (DndHelper.rollDe(De.vingt) + m.BonusReflexe < mDD)
+                if (DndHelper.rollDe(De.vingt) + m.getBonusReflexe(MagieEcole.Piege) < mDD)
                 {
                     mob.ActionRevelation();
                     mob.FixedParticles(mEffectID, 7, 5, 0, EffectLayer.Head);
                     mob.Damage(degats);
-                    if (mPoisonning && DndHelper.rollDe(De.vingt) + m.BonusVigueur < mDD)
+                    if (mPoisonning && DndHelper.rollDe(De.vingt) + m.getBonusVigueur(MagieEcole.Piege) < mDD)
                         mob.Poison = mPoison;
                 }
                 else

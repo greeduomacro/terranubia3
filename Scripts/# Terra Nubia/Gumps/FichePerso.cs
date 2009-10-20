@@ -285,15 +285,15 @@ namespace Server.Gumps
 
             line++;
             AddLabel(XCol, y + line * scale, ColorText, "Reflexe:");
-            AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.BonusReflexe.ToString());
+            AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.getBonusReflexe().ToString());
 
             line++;
             AddLabel(XCol, y + line * scale, ColorText, "Volonté:");
-            AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.BonusVolonte.ToString());
+            AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.getBonusVolonte().ToString());
 
             line++;
             AddLabel(XCol, y + line * scale, ColorText, "Vigueur:");
-            AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.BonusVigueur.ToString());
+            AddLabel(XCol + 60, y + line * scale, ColorTextYellow, "+" + mOwner.getBonusVigueur().ToString());
 
             // MAITRISES d'ARMES
 

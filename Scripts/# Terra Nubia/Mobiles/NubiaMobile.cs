@@ -5,6 +5,7 @@ using Server.Items;
 using Server;
 using Server.Misc;
 using System.Collections;
+using Server.Spells;
 
 namespace Server.Mobiles
 {
@@ -55,6 +56,47 @@ namespace Server.Mobiles
         #region Dons
         protected Dictionary<DonEnum, int> mDons = new Dictionary<DonEnum, int>();
 
+        protected Dictionary<DonEnum, int> mDonsUses = new Dictionary<DonEnum, int>();
+        protected DateTime mNextDonUse = DateTime.Now;
+
+        public bool canUseDon(BaseDon don)
+        {
+            if( mNextDonUse > DateTime.Now ){
+                SendMessage("Il est encore trop tôt pour utiliser un don");
+                return false;
+            }
+            if (hasDon(don.DType))
+            {
+                if (don.LimiteDayUse)
+                {
+                    if (!mDonsUses.ContainsKey(don.DType))
+                    {
+                        mDonsUses.Add(don.DType, 1);
+                        return true;
+                    }
+                    else
+                    {
+                        int uses = mDonsUses[don.DType];
+                        if (uses >= getDonNiveau(don.DType))
+                        {
+                            SendMessage("Vous ne pouvez plus utiliser ce don (Utilisé déjà {0} fois ce jour)", uses);
+                            return false;
+                        }
+                        else
+                        {
+                            uses++;
+                            mDonsUses[don.DType] = uses;
+                            return true;
+                        }
+                            
+                    }
+                }
+                else
+                    return true;
+            }
+            return false;
+        }
+
         public ICollection Dons
         {
             get
@@ -86,6 +128,29 @@ namespace Server.Mobiles
         private CompetenceStack mCompetences = null;
         private ArrayList m_blessureList = new ArrayList();
 
+        #region Magie ! 
+        public DateTime NextSortCast = DateTime.Now;
+        private BaseSort mLastSort = null;
+        private ClasseType mLastSortClasse = ClasseType.Barde;
+
+        public void beginCast(BaseSort sort, ClasseType classe)
+        {
+            mLastSort = sort;
+            mLastSortClasse = classe;
+        }
+
+        public void InterruptCast(NubiaMobile from, ClasseType classe) //ContreSort/Chant
+        {
+            if (mLastSort != null)
+            {
+                if (mLastSortClasse == classe)
+                    mLastSort.Interrupt();
+            }
+        }
+
+        #endregion
+
+
         //BUFF
 
        // private List<Blessure> m_blessureList = new List<Blessure>();
@@ -96,6 +161,18 @@ namespace Server.Mobiles
         public List<BaseDebuff> DebuffList { get { return m_debuffList; } }
 
         public ArrayList BlessureList { get { return m_blessureList; } }
+
+
+        public int getDegatBonus()
+        {
+            int d = 0;
+            foreach (AbstractBaseBuff buff in BuffList)
+                d += buff.DegatBonus;
+
+            foreach (AbstractBaseBuff debuff in DebuffList)
+                d += debuff.DegatBonus;
+            return d;
+        }
 
         //Nouvelles stats:
         private int mRawSag = 8, mRawCha = 8, mRawCons = 8;
@@ -123,15 +200,25 @@ namespace Server.Mobiles
         }
         public override bool OnBeforeDeath()
         {
-            foreach (NubiaBlessure blessure in BlessureList)
+            lock (BlessureList)
             {
-                blessure.StopHemo();
+                foreach (NubiaBlessure blessure in BlessureList)
+                {
+                    blessure.StopHemo();
+                }
             }
-            foreach (AbstractBaseBuff buff in BuffList)
-                buff.End();
 
-            foreach (AbstractBaseBuff debuff in DebuffList)
-                debuff.End();
+            lock (BuffList)
+            {
+                foreach (AbstractBaseBuff buff in BuffList)
+                    buff.End();
+            }
+
+            lock (DebuffList)
+            {
+                foreach (AbstractBaseBuff debuff in DebuffList)
+                    debuff.End();
+            }
 
             m_buffList = new List<AbstractBaseBuff>();
             m_debuffList = new List<BaseDebuff>();
@@ -178,7 +265,7 @@ namespace Server.Mobiles
             {
                 //BuffList.Remove(buffRemove);
                 buffRemove.End();
-                buffRemove.Delete();
+                //buffRemove.Delete();
             }
             buffRemove = null;
             foreach (AbstractBaseBuff debuff in DebuffList)
@@ -194,7 +281,7 @@ namespace Server.Mobiles
             {
                 //DebuffList.Remove(buffRemove);
                 buffRemove.End();
-                buffRemove.Delete();
+                //buffRemove.Delete();
             }
 		}
 		private class TourTimer : Timer
@@ -249,7 +336,7 @@ namespace Server.Mobiles
             {
                 //Jet de force contre jet de vigueur.
                 int agRoll = Utility.RandomMinMax(1, 20) + (int)DndHelper.GetCaracMod(attacker, DndStat.Force);
-                int defRoll = Utility.RandomMinMax(1, 20) + BonusVigueur;
+                int defRoll = Utility.RandomMinMax(1, 20) + getBonusVigueur();
                 if (agRoll > defRoll)
                 {
                     mLastEtourdiTime = DateTime.Now;
@@ -310,9 +397,9 @@ namespace Server.Mobiles
                     if (agressor.Weapon is BaseRanged)
                         rollAgr -= 10;
 
-                    int difference = (rollAgr + agressor.BonusReflexe + (int)DndHelper.GetCaracMod(agressor, DndStat.Dexterite))
+                    int difference = (rollAgr + agressor.getBonusReflexe() + (int)DndHelper.GetCaracMod(agressor, DndStat.Dexterite))
                                     -
-                                    (rollDef + BonusReflexe + (int)DndHelper.GetCaracMod(this, DndStat.Dexterite) - 8);
+                                    (rollDef + getBonusReflexe() + (int)DndHelper.GetCaracMod(this, DndStat.Dexterite) - 8);
 
                     agressor.mLastOpportuniteAction = DateTime.Now;
                     if (difference <= 0)
@@ -470,9 +557,9 @@ namespace Server.Mobiles
 
                 int buffbonus = 0;
                 foreach (BaseBuff b in BuffList)
-                    buffbonus += b.Attaque;
+                    buffbonus += b.getSauvegarde(SauvegardeEnum.Attaque, MagieEcole.None);
                 foreach (BaseDebuff d in DebuffList)
-                    buffbonus += d.Attaque;
+                    buffbonus += d.getSauvegarde(SauvegardeEnum.Attaque, MagieEcole.None);
 
                 foreach (Classe c in GetClasses())
                 {
@@ -495,16 +582,19 @@ namespace Server.Mobiles
                 return bonii;
             }
         }
-        public int BonusReflexe
+        public int getBonusReflexe()
         {
-            get
-            {
+            return getBonusReflexe(MagieEcole.None);
+        }
+        public int getBonusReflexe(MagieEcole ecole)
+        {
+           
                 int bonus = 0;
 
                 foreach (BaseBuff b in BuffList)
-                    bonus += b.Reflexe;
+                    bonus += b.getSauvegarde(SauvegardeEnum.Reflexe, ecole);
                 foreach (BaseDebuff d in DebuffList)
-                    bonus += d.Reflexe;
+                    bonus += d.getSauvegarde(SauvegardeEnum.Reflexe, ecole);
 
 
                 foreach (Classe c in GetClasses())
@@ -512,41 +602,46 @@ namespace Server.Mobiles
                     bonus += c.BonusReflexe[c.Niveau];
                 }
                 return bonus;
-            }
+            
         }
-        public int BonusVigueur
+        public int getBonusVigueur()
         {
-            get
-            {
+            return getBonusVigueur(MagieEcole.None);
+        }
+        public int getBonusVigueur(MagieEcole ecole)
+        {
+            
                 int bonus = 0;
                 foreach (BaseBuff b in BuffList)
-                    bonus += b.Vigueur;
+                    bonus += b.getSauvegarde(SauvegardeEnum.Vigueur, ecole);
                 foreach (BaseDebuff d in DebuffList)
-                    bonus += d.Vigueur;
+                    bonus += d.getSauvegarde(SauvegardeEnum.Vigueur, ecole);
 
                 foreach (Classe c in GetClasses())
                 {
                     bonus += c.BonusVigueur[c.Niveau];
                 }
                 return bonus;
-            }
+            
         }
-        public int BonusVolonte
+        public int getBonusVolonte()
         {
-            get
-            {
+            return getBonusVolonte(MagieEcole.None);
+        }
+        public int getBonusVolonte(MagieEcole ecole)
+        {
                 int bonus = 0;
                 foreach (BaseBuff b in BuffList)
-                    bonus += b.Volonte;
+                    bonus += b.getSauvegarde(SauvegardeEnum.Volonte, ecole);
                 foreach (BaseDebuff d in DebuffList)
-                    bonus += d.Volonte;
+                    bonus += d.getSauvegarde(SauvegardeEnum.Volonte, ecole);
 
                 foreach (Classe c in GetClasses())
                 {
                     bonus += c.BonusVolonte[c.Niveau];
                 }
                 return bonus;
-            }
+            
         }
 
         #endregion
@@ -661,6 +756,18 @@ namespace Server.Mobiles
         public ICollection<Classe> GetClasses()
         {
             return m_Classes.Values;
+        }
+        public Classe getClasse(ClasseType type)
+        {
+            if (hasClasse(type))
+            {
+                foreach (Classe c in GetClasses())
+                {
+                    if (c.CType == type)
+                        return c;
+                }
+            }
+            return null;
         }
         public void ResetClasse()
         {
@@ -951,7 +1058,7 @@ namespace Server.Mobiles
                     buffBonus += d.CA;
 
 
-                return armureMod + bouclierMod + dexMod + TailleMod + buffBonus;
+                return 10+armureMod + bouclierMod + dexMod + TailleMod + buffBonus;
             }
 
         }

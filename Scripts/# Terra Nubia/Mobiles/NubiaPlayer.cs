@@ -59,61 +59,28 @@ namespace Server.Mobiles
 
         #region Magie ! 
 
-        
-        private List<SortEntry> mSortTable = new List<SortEntry>();
-        private Dictionary<int, int> mSortInstinctCast = new Dictionary<int, int>();
+        private Dictionary<ClasseType, MagieList> mMagieLists = new Dictionary<ClasseType, MagieList>();
+        public DateTime LastSortCast = DateTime.Now;
 
-        public List<BaseSort> getSortList(ClasseType ctype)
+
+        public MagieList getMagieOf(ClasseType type)
         {
-            List<BaseSort> list = new List<BaseSort>();
-            foreach (Classe cl in GetClasses())
+            if (hasClasse(type))
             {
-                if (cl == null)
-                    continue;
-                if (cl.CType == ctype)
+                if (mMagieLists.ContainsKey(type))
                 {
-                    foreach (SortEntry entry in mSortTable)
-                    {
-                        if (entry.Classe == ctype)
-                        {
-                            list.Add(entry.Sort);
-                        }
-                    }
-                    break;
+                    return mMagieLists[type];
                 }
-            }
-            return list;
-        }
-        
-        public bool canCast(Type sortType, ClasseType ctype)
-        {
-            List<BaseSort> list = getSortList(ctype);
-            BaseSort sort = null;
-            foreach (BaseSort s in list)
-            {
-                if (s.GetType().Equals(sortType))
+                else
                 {
-                    sort = s;
-                    break;
-                }
-            }
-            if (sort != null)
-            {
-                foreach (Classe cl in GetClasses())
-                {
-                    if (cl == null)
-                        continue;
-                    if (cl.CType == ctype)
+                    Classe cl = getClasse(type);
+                    if (cl.Mage != MageType.None)
                     {
-                        bool allow = false;
-                        if (cl.InstinctiveMagie)
-                        {
-                            return true;
-                        }
+                        mMagieLists.Add(type, new MagieList(this, type));
                     }
                 }
             }
-            return false;
+            return null;
         }
 
         #endregion

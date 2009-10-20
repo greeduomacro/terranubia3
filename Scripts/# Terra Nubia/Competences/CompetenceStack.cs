@@ -8,7 +8,7 @@ namespace Server.Mobiles
     public class NullCompetence : NubiaCompetence
     {
         public override string Name { get { return "Null Competence"; } }
-        public override CompType CType { get { return CompType.Maximum; } }
+        public override CompType CType { get { return CompType.None; } }
         public override DndStat SType { get { return DndStat.Sagesse; } }
         public override bool LimitedByArmor { get { return false; } }
         //public override bool MustLearn { get { return false; } }

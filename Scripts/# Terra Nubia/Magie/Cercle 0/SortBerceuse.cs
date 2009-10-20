@@ -27,29 +27,57 @@ namespace Server.Spells
         public override MagieEcole Ecole { get { return MagieEcole.Enchantement; } }
         public override MagieType Type { get { return MagieType.Profane; } }
         public override SortAction Action { get { return SortAction.Malefic; } }
-        public override SortTarget Target { get { return SortTarget.Zone; } }
+        public override NSortTarget STarget { get { return NSortTarget.Zone; } }
 
         public SortBerceuse()
             : base("Berceuse")
         {
-            mRange = 10; //FAUX
         }
-        protected override bool Execute(NubiaMobile caster, object[] Args)
+        public override int getRange(NubiaMobile caster, ClasseType classe, int cercle)
         {
-            if (base.Execute(caster, Args))
+            return 15 + (int)(1.5 * caster.getNiveauClasse(classe));
+        }
+        public override void doVerbal(Server.Mobiles.NubiaMobile caster)
+        {
+            caster.Emote("*Chante*");
+            caster.Say("Dormez, dormez...");
+        }
+        protected override bool Execute(NubiaMobile caster,ClasseType classe, int cercle, Object[] Args)
+        {
+            if (base.Execute(caster, classe, cercle, Args))
             {
-                caster.Emote("*Chante une berceuse*");
+                //caster.Emote("*Chante une berceuse*");
                 for (int a = 0; a < Args.Length; a++)
                 {
                     if (Args[a] is NubiaMobile)
                     {
                         NubiaMobile mob = Args[a] as NubiaMobile;
-                        mob.Emote("*Dodo !*");
+                        if (mob.CanSee(caster))
+                        {
+                            if (!CheckResiste(mob, classe, cercle))
+                            {
+                                mob.Emote("*Baille*");
+                                new BerceuseDebuff(caster, mob, (int)caster.Competences[CompType.Concentration].getMaitrise() + caster.Niveau);
+                            }
+                        }
                     }
                 }
             }
             return false;
         }
+        public class BerceuseDebuff : BaseDebuff
+        {
+            public BerceuseDebuff(NubiaMobile caster, NubiaMobile cible, int roundDure)
+                : base(caster, cible, 2242, roundDure, "Berceuse")
+            {
+                Sauvegardes.Add( new SauvegardeMod(-2, SauvegardeEnum.Volonte, new MagieEcole[]{ MagieEcole.Enchantement } ) );
+                Competences.Add(new CompetenceMod(-5, CompType.Detection));
+                Competences.Add(new CompetenceMod(-5, CompType.PerceptionAuditive));
+                m_descrip += "Vos paupières sont lourdes. Vous êtes un peu endormi, vous baillez facilement et votre attention est réduite";
+            }
+           
+        }
+       
 
     }
 
