@@ -18,6 +18,36 @@ namespace Server
 
         public override ClasseType CType { get { return ClasseType.Barde; } }
 
+        public override DonEnum[][] DonClasse
+        {
+            get
+            {
+                return new DonEnum[][]{
+                    new DonEnum[0], //0
+                    new DonEnum[]{DonEnum.ContreChant, DonEnum.InspirationVaillante}, // 1
+                    new DonEnum[0], //2
+                    new DonEnum[]{DonEnum.InspirationTalent}, //3
+                    new DonEnum[0], //4
+                    new DonEnum[0], //5
+                    new DonEnum[0], //6
+                    new DonEnum[0], //7
+                    new DonEnum[]{DonEnum.InspirationVaillante}, //8
+                    new DonEnum[]{DonEnum.InspirationHero}, //9
+                    new DonEnum[0], //10
+                    new DonEnum[0], //11
+                    new DonEnum[]{DonEnum.ChantLiberte}, //12
+                    new DonEnum[0], //13
+                    new DonEnum[]{DonEnum.InspirationVaillante}, //14
+                    new DonEnum[0], //15
+                    new DonEnum[0], //16
+                    new DonEnum[0], //17
+                    new DonEnum[0], //18
+                    new DonEnum[0], //19
+                    new DonEnum[0], //20*/
+                };
+            }
+        }
+
         #region Magie !
         public override bool InstinctiveMagie { get { return true; } }
         public override MageType Mage { get { return MageType.Hybrid; } }
@@ -27,7 +57,7 @@ namespace Server
             get
             {
                 return new Type[][]{
-                    /* Cercle 0 */ new Type[]{ typeof(SortBerceuse) },
+                    /* Cercle 0 */ new Type[]{ typeof(SortBerceuse), typeof(SortHebetement) },
                 };
             }
         }

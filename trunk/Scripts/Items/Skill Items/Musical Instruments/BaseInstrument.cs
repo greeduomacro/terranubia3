@@ -514,8 +514,9 @@ namespace Server.Items
 			CheckReplenishUses();
 		}
 
-		public override void OnDoubleClick( Mobile from )
+		public override void OnDoubleClick( Mobile f )
 		{
+            NubiaMobile from = f as NubiaMobile;
 			if ( !from.InRange( GetWorldLocation(), 1 ) )
 			{
 				from.SendLocalizedMessage( 500446 ); // That is too far away.
@@ -527,7 +528,9 @@ namespace Server.Items
 				// Delay of 7 second before beign able to play another instrument again
 				new InternalTimer( from ).Start();
 
-				if ( CheckMusicianship( from ) )
+
+
+				if ( from.Competences[CompType.Representation].check(1) )
 					PlayInstrumentWell( from );
 				else
 					PlayInstrumentBadly( from );
@@ -540,9 +543,8 @@ namespace Server.Items
 
 		public static bool CheckMusicianship( Mobile m )
 		{
-			m.CheckSkill( SkillName.Musicianship, 0.0, 120.0 );
-
-			return ( (m.Skills[SkillName.Musicianship].Value / 100) > Utility.RandomDouble() );
+            NubiaMobile from = m as NubiaMobile;
+            return (from.Competences[CompType.Representation].check(1));
 		}
 
 		public void PlayInstrumentWell( Mobile from )

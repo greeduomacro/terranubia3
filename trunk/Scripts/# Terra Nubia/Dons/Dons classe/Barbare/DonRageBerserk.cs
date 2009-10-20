@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Server.Mobiles;
 using System.Text;
+using Server.Spells;
 
 namespace Server.Mobiles.Dons
 {
@@ -37,18 +38,14 @@ namespace Server.Mobiles.Dons
         {
             mStr = 8;
             mCons = 8;
-            mVolonte = 4;
+            Sauvegardes.Add(new SauvegardeMod(4, SauvegardeEnum.Volonte));
 
             mCA = -2;
 
             if (caster.hasDon(DonEnum.VolonteIndomptable))
-                mVolonte += 2;
+                Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[]{MagieEcole.Enchantement} ) );
 
-            m_descrip = "bonus de +8 en Force et en Constitution ainsi qu’un bonus de moral de +" + mVolonte + " aux jets de Volonté, mais subit dans le même temps un malus de –2 à la classe d’armure.";
-        }
-        public RageMaitreBerserkBuff(Serial s)
-            : base(s)
-        {
+            m_descrip = "Vous entrez dans une rage folle !";
         }
         public override void End()
         {
@@ -59,14 +56,7 @@ namespace Server.Mobiles.Dons
             }
             base.End();
         }
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-        }
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-        }
+   
     }
     public class RageGrandBerserkBuff : BaseBuff
     {
@@ -76,19 +66,16 @@ namespace Server.Mobiles.Dons
         {
             mStr = 6;
             mCons = 6;
-            mVolonte = 3;
+            Sauvegardes.Add(new SauvegardeMod(3, SauvegardeEnum.Volonte));
 
             mCA = -2;
 
-            if (caster.hasDon(DonEnum.VolonteIndomptable))
-                mVolonte += 2;
+          if (caster.hasDon(DonEnum.VolonteIndomptable))
+                Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[]{MagieEcole.Enchantement} ));
 
-            m_descrip = "bonus de +6 en Force et en Constitution ainsi qu’un bonus de moral de +"+mVolonte+" aux jets de Volonté, mais subit dans le même temps un malus de –2 à la classe d’armure.";
+            m_descrip = "Vous entrez dans une rage folle !";
         }
-        public RageGrandBerserkBuff(Serial s)
-            : base(s)
-        {
-        }
+      
         public override void End()
         {
             if (Caster != null && Caster.Alive)
@@ -98,14 +85,7 @@ namespace Server.Mobiles.Dons
             }
             base.End();
         }
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-        }
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-        }
+     
     }
     public class RageBerserkBuff : BaseBuff
     {
@@ -115,15 +95,16 @@ namespace Server.Mobiles.Dons
         {
             mStr = 4;
             mCons = 4;
-            mVolonte = 2;
+            Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte));
+
+            if (caster.hasDon(DonEnum.VolonteIndomptable))
+                Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[] { MagieEcole.Enchantement }));
+
 
             mCA = -2;
-            m_descrip = "bonus de +4 en Force et en Constitution ainsi qu’un bonus de moral de +2 aux jets de Volonté, mais subit dans le même temps un malus de –2 à la classe d’armure.";
+            m_descrip = "Vous entrez dans une rage folle !";
         }
-        public RageBerserkBuff(Serial s)
-            : base(s)
-        {
-        }
+  
         public override void End()
         {
             if (Caster != null && Caster.Alive)
@@ -133,14 +114,7 @@ namespace Server.Mobiles.Dons
             }
             base.End();
         }
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-        }
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-        }
+      
     }
 
     public class RageFatigueDebuff : BaseDebuff
@@ -151,19 +125,8 @@ namespace Server.Mobiles.Dons
             mDex = -2;
             mDex = -2;
 
-            m_descrip = "Votre rage vous à épuisé. Vous subissez -2 en force et dexterité";
+            m_descrip = "Votre rage vous à épuisé.";
         }
-        public RageFatigueDebuff(Serial s)
-            : base(s)
-        {
-        }
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-        }
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-        }
+      
     }
 }

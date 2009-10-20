@@ -10,7 +10,7 @@ namespace Server.Spells
         Benefic,
         Malefic
     }
-    public enum SortTarget
+    public enum NSortTarget
     {
         Self,
         TargetSimple,
@@ -18,6 +18,9 @@ namespace Server.Spells
     }
     public enum MagieEcole
     {
+        None = 0,
+        Piege,
+
         Abjuration,
         Divination,
         Enchantement,

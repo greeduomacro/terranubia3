@@ -61,8 +61,11 @@ namespace Server.Mobiles
                     }
                     if( don.CanUse )
                     {
-                        p.SendMessage("Vous utilisez {0}", don.Name);
-                        don.OnUse(p);
+                        if (p.canUseDon(don))
+                        {
+                            p.SendMessage("Vous utilisez {0}", don.Name);
+                            don.OnUse(p);
+                        }
                     }
                     else
                         p.SendMessage("{0} n'est pas un don actif", don.Name);
@@ -82,6 +85,8 @@ namespace Server.Mobiles
         public string Name { get { return mName; } }
         public DonEnum DType { get { return mDType; } }
         public bool CanUse { get { return mCanUse; } }
+        public bool LimiteDayUse { get { return mLimiteDayUse; } }
+ 
         
 
         public BaseDon(DonEnum type, string name, bool canUse)
@@ -89,14 +94,6 @@ namespace Server.Mobiles
             mDType = type;
             mName = name;
             mCanUse = canUse;
-        }
-        public virtual TimeSpan getDelay(NubiaPlayer p)
-        {
-            if (mLimiteDayUse && p.getDonNiveau(DType) > 0 )
-            {
-                return TimeSpan.FromMinutes(WorldData.SpellDay().TotalMinutes / p.getDonNiveau(DType));
-            }
-            return WorldData.TimeTour();
         }
         public virtual void OnUse(NubiaPlayer p) { }
 

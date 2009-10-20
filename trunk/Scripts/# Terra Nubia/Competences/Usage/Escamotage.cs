@@ -301,7 +301,7 @@ namespace Server.Mobiles
                             }
                         }
 
-                        if (from.Competences[CompType.Escamotage].check(10 + root.BonusReflexe))
+                        if (from.Competences[CompType.Escamotage].check(10 + root.getBonusReflexe()))
                             canSnoop = true;
                       
                     }

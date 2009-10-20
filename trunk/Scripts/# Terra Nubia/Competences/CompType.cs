@@ -8,6 +8,8 @@ namespace Server.Mobiles
     {
         //40 Compétences
         // fait: 21
+        All = -1,
+        None = -1,
  
         Acrobaties,
         ArtMagie,

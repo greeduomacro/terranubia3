@@ -18,6 +18,12 @@ namespace Server.Mobiles
         VolonteIndomptable,
         RageSansFatigue,
         RageMaitreBerserker,
+        //Barde
+        ContreChant,
+        InspirationVaillante,
+        InspirationTalent,
+        InspirationHero,
+        ChantLiberte,
 
         //Dons généraux
         DonSupGeneral = 1000,
