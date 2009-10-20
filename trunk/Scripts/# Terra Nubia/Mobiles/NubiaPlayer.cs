@@ -609,18 +609,22 @@ namespace Server.Mobiles
                 //Emote("*reprend conscience*");
             }
 
-            CloseGump(typeof(GumpDebuff));
-            if (DebuffList.Count > 0 && Alive)
+            lock (DebuffList)
             {
-                SendGump(new GumpDebuff(this));
+                CloseGump(typeof(GumpDebuff));
+                if (DebuffList.Count > 0 && Alive)
+                {
+                    SendGump(new GumpDebuff(this));
+                }
             }
-            CloseGump(typeof(GumpBuff));
-            if (BuffList.Count > 0 && Alive)
+            lock (BuffList)
             {
-                SendGump(new GumpBuff(this));
-            }
-
-            
+                CloseGump(typeof(GumpBuff));
+                if (BuffList.Count > 0 && Alive)
+                {
+                    SendGump(new GumpBuff(this));
+                }
+            }            
 
             base.OnTurn();
         }
