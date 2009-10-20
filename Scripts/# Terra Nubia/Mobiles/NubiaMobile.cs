@@ -249,40 +249,42 @@ namespace Server.Mobiles
                if (blessure.TimeEnd <= DateTime.Now)
                {
                    toRemov = blessure;
+                   break;
                }
            }
-           BlessureList.Remove(toRemov);
+           if( toRemov != null )
+                BlessureList.Remove(toRemov);
 
             AbstractBaseBuff buffRemove = null;
-            foreach (AbstractBaseBuff buff in BuffList)
+
+            lock (BuffList)
             {
-                if (Alive)
-                    buff.OnTurn();
-                if (buff.Turn < 1)
-                    buffRemove = buff;
+                foreach (AbstractBaseBuff buff in BuffList)
+                {
+                    if (Alive)
+                        buff.OnTurn();
+                    if (buff.Turn < 1)
+                        buffRemove = buff;
+                }
             }
             if (buffRemove != null)
-            {
-                //BuffList.Remove(buffRemove);
                 buffRemove.End();
-                //buffRemove.Delete();
-            }
+            
             buffRemove = null;
-            foreach (AbstractBaseBuff debuff in DebuffList)
+            lock (DebuffList)
             {
-                if (debuff == null)
-                    continue;
-                if (Alive)
-                    debuff.OnTurn();
-                if (debuff.Turn < 1)
-                    buffRemove = debuff;
+                foreach (AbstractBaseBuff debuff in DebuffList)
+                {
+                    if (debuff == null)
+                        continue;
+                    if (Alive)
+                        debuff.OnTurn();
+                    if (debuff.Turn < 1)
+                        buffRemove = debuff;
+                }
             }
             if (buffRemove != null)
-            {
-                //DebuffList.Remove(buffRemove);
                 buffRemove.End();
-                //buffRemove.Delete();
-            }
 		}
 		private class TourTimer : Timer
 		{
