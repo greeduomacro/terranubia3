@@ -237,7 +237,7 @@ namespace Server.Mobiles
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public virtual double CA
+        public override double CA
         {
             get
             {
