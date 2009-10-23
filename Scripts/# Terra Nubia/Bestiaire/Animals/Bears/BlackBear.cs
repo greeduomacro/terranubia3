@@ -16,10 +16,30 @@ namespace Server.Mobiles
 
             this.VirtualArmor = 1;
 
-            this.ConfigureCreature(4, ClasseType.Barbare);
             CreatureType = MobileType.Animal;
-             
-            
+
+            Server.Items.Fists griffes = new Server.Items.Fists();
+            griffes.De = De.quatre;
+            griffes.NbrLance = 1;
+            griffes.BonusDegatStatic = 4;
+            griffes.Movable = false;
+            EquipItem(griffes);
+            mMonsterAttaques = new int[]{2,6};
+            mMonsterCA = 13;
+            mMonsterHits = DndHelper.rollDe(De.huit, 3) + 6;
+            mMonsterReflexe = 4;
+            mMonsterVigueur = 5;
+            mMonsterVolonte = 2;
+            RawStr = 19;
+            RawDex = 13;
+            RawCons = 15;
+            RawInt = 2;
+            RawSag = 12;
+            RawCha = 6;
+            mMonsterNiveau = 2;
+            AddCompetence(CompType.Detection, 4);
+            AddCompetence(CompType.PerceptionAuditive, 4);
+            AddCompetence(CompType.Escalade, 4);
 
 			Tamable = true;
 			ControlSlots = 1;

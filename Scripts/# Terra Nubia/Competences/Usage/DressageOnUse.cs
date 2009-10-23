@@ -83,14 +83,14 @@ namespace Server.Mobiles
         }
         private class InternalTimer : Timer
         {
-            private NubiaMobile m_Tamer;
+            private NubiaPlayer m_Tamer;
             private NubiaCreature m_Creature;
             private int m_MaxCount;
             private int m_Count;
             private bool m_Paralyzed;
             private DateTime m_StartTime;
 
-            public InternalTimer(NubiaMobile tamer, NubiaCreature creature, int count)
+            public InternalTimer(NubiaPlayer tamer, NubiaCreature creature, int count)
                 : base(TimeSpan.FromSeconds(3.0), TimeSpan.FromSeconds(3.0), count)
             {
                 m_Tamer = tamer;

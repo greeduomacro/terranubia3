@@ -5,7 +5,7 @@ namespace Server.Mobiles
 {
 	[CorpseName( "a bull frog corpse" )]
 	[TypeAlias( "Server.Mobiles.Bullfrog" )]
-	public class BullFrog : BaseCreature
+    public class BullFrog : BaseBestiole
 	{
 		[Constructable]
 		public BullFrog() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )

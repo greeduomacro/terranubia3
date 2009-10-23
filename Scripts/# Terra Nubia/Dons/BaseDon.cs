@@ -97,8 +97,11 @@ namespace Server.Mobiles
         }
         public virtual void OnUse(NubiaPlayer p) { }
 
-      
 
-        public abstract bool hasConditions(NubiaPlayer mob);
+
+        public virtual bool hasConditions(NubiaPlayer mob)
+        {
+            return true;
+        }
     }
 }

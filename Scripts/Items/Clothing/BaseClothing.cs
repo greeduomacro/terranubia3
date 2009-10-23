@@ -21,7 +21,7 @@ namespace Server.Items
 		int MaxArcaneCharges{ get; set; }
 	}
 
-	public abstract class BaseClothing : Item, IDyable, IScissorable, IFactionItem, ICraftable, IWearableDurability
+	public abstract class BaseClothing : Item, IDyable, IScissorable, IFactionItem, ICraftable, IWearableDurability, IArtefact
 	{
 		#region Factions
 		private FactionItem m_FactionState;
@@ -49,6 +49,9 @@ namespace Server.Items
 		private bool m_PlayerConstructed;
 		protected CraftResource m_Resource;
 		private int m_StrReq = -1;
+
+        private ArtefactModus mArtefactMod = null;
+        public ArtefactModus ArtefactModus { get { return mArtefactMod; } set { mArtefactMod = value; } }
 
 		private AosAttributes m_AosAttributes;
 		private AosArmorAttributes m_AosClothingAttributes;

@@ -36,18 +36,22 @@ namespace Server.Spells
             : base("Hébêtement")
         {
         }
-       /* public override void doVerbal(Server.Mobiles.NubiaMobile caster)
+        protected override bool CheckResiste(NubiaMobile caster, NubiaMobile cible, int cercle, DndStat stat)
         {
-            caster.Emote("*Chante*");
-            caster.Say("Dormez, dormez...");
-        }*/
-        public override bool CheckResiste(NubiaMobile cible, ClasseType classe, int cercle)
-        {
-           return cible.HitsMax <= (4 * cible.Niveau);
+            if (cible is NubiaPlayer)
+            {
+                return ((NubiaPlayer)cible).Niveau > 4;
+            }
+            else if (cible is NubiaCreature)
+            {
+                return ((NubiaCreature)cible).Niveau > 4;
+            }
+            return false;
         }
-        protected override bool Execute(NubiaMobile caster, ClasseType classe, int cercle, Object[] Args)
+  
+        protected override bool Execute(NubiaMobile caster, int casterNiveau, DndStat stat, int cercle, object[] Args)
         {
-            if (base.Execute(caster, classe, cercle, Args))
+            if (base.Execute(caster, casterNiveau, stat, cercle, Args))
             {
                 //caster.Emote("*Chante une berceuse*");
                 for (int a = 0; a < Args.Length; a++)
@@ -55,7 +59,7 @@ namespace Server.Spells
                     if (Args[a] is NubiaMobile)
                     {
                         NubiaMobile mob = Args[a] as NubiaMobile;
-                        if (CheckResiste(mob, classe, cercle))
+                        if (CheckResiste(caster, mob, cercle, stat) || CheckRM(caster, mob, casterNiveau) )
                         {
                             mob.Emote("*Hébêté*");
                             new HebetementDebuff(caster, mob);

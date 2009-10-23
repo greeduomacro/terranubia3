@@ -8,10 +8,12 @@ namespace Server.Items
 		public TambourineTassel() : base( 0xE9E, 0x52, 0x53 )
 		{
 			Weight = 1.0;
+            Layer = Layer.TwoHanded;
 		}
 
 		public TambourineTassel( Serial serial ) : base( serial )
 		{
+            Layer = Layer.TwoHanded;
 		}
 
 		public override void Serialize( GenericWriter writer )

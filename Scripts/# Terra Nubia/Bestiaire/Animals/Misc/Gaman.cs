@@ -5,7 +5,7 @@ using Server.Items;
 namespace Server.Mobiles
 {
 	[CorpseName( "a gaman corpse" )]
-	public class Gaman : BaseCreature
+    public class Gaman : BaseBestiole
 	{
 		[Constructable]
 		public Gaman() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )

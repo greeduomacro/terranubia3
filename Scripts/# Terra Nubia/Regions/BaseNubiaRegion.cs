@@ -18,6 +18,7 @@ namespace Server.Regions
 	{
 		public virtual bool CanFoudre { get{ return true; } }
 		public virtual bool DisplayEnterExit { get{ return true; } }
+        public virtual bool CanAutoXP { get { return false; } }
 
 		public BaseNubiaRegion(string name, int priority, Rectangle2D rec) : base( name, Map.Felucca, priority, new Rectangle2D[]{ rec } )
 		{

@@ -15,6 +15,36 @@ namespace Server
 
         public override ClasseType CType { get { return ClasseType.Roublard; } }
 
+        public override DonEnum[][] DonClasse
+        {
+            get
+            {
+                return new DonEnum[][]{
+                    new DonEnum[0], //0
+                    new DonEnum[]{DonEnum.AttaqueSournoise, DonEnum.RecherchePiege}, //1
+                    new DonEnum[]{DonEnum.EsquiveTotale}, // 2
+                    new DonEnum[]{DonEnum.AttaqueSournoise, DonEnum.SensPieges}, //3
+                    new DonEnum[]{DonEnum.EsquiveInstinctive}, //4
+                    new DonEnum[]{DonEnum.AttaqueSournoise}, //5
+                    new DonEnum[]{DonEnum.SensPieges}, //6
+                    new DonEnum[]{DonEnum.AttaqueSournoise}, //7
+                     new DonEnum[]{DonEnum.EsquiveInstinctive}, //8
+                    new DonEnum[]{DonEnum.AttaqueSournoise, DonEnum.SensPieges}, //9
+                    new DonEnum[]{DonEnum.DonSupClasse}, //10
+                    new DonEnum[]{DonEnum.AttaqueSournoise }, //11
+                    new DonEnum[]{DonEnum.SensPieges}, //12
+                    new DonEnum[]{DonEnum.AttaqueSournoise, DonEnum.DonSupClasse}, //13
+                    new DonEnum[0], //14
+                   new DonEnum[]{DonEnum.AttaqueSournoise, DonEnum.SensPieges}, //15
+                    new DonEnum[]{DonEnum.DonSupClasse}, //16
+                    new DonEnum[]{DonEnum.AttaqueSournoise}, //17
+                    new DonEnum[]{DonEnum.SensPieges}, //18
+                    new DonEnum[]{DonEnum.AttaqueSournoise, DonEnum.DonSupClasse}, //19
+                    new DonEnum[0], //20*/
+                };
+            }
+        }
+
         public override CompType[] ClasseCompetences
         {
             get

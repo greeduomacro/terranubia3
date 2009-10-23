@@ -118,7 +118,7 @@ namespace Server.Items
                 case NubiaRessource.Mythril:
                     infos.Name = "Mythril";
                     infos.Durabilite = 1.5;
-                    infos.Hue = 2049;
+                    infos.Hue = 2263;
                     infos.GlobalAR = 1;
                     infos.BonusAttaque = 1;
                     infos.BonusDegat = 1;

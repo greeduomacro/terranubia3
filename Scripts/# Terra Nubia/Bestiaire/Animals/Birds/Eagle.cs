@@ -16,9 +16,29 @@ namespace Server.Mobiles
 
             this.VirtualArmor = 13;
 
-            this.ConfigureCreature(2, ClasseType.Barbare);
             CreatureType = MobileType.Animal;
 
+            Server.Items.Fists Serres = new Server.Items.Fists();
+            Serres.De = De.quatre;
+            Serres.NbrLance = 1;
+            Serres.BonusDegatStatic = 0;
+            Serres.Movable = false;
+            EquipItem(Serres);
+            mMonsterAttaques = new int[] { 0,-4 };
+            mMonsterCA = 14;
+            mMonsterHits = DndHelper.rollDe(De.huit, 1) + 1;
+            mMonsterReflexe = 4;
+            mMonsterVigueur = 3;
+            mMonsterVolonte = 2;
+            RawStr = 10;
+            RawDex = 15;
+            RawCons = 12;
+            RawInt = 2;
+            RawSag = 14;
+            RawCha = 6;
+            mMonsterNiveau = 1;
+            AddCompetence(CompType.Detection, 14);
+            AddCompetence(CompType.PerceptionAuditive, 2);
 
             Tamable = true;
             ControlSlots = 1;

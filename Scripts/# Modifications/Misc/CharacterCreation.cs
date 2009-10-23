@@ -76,8 +76,8 @@ namespace Server.Misc
             Console.WriteLine(" - Character: {0} (serial={1})", newChar.Name, newChar.Serial);
     //        Console.WriteLine(" - Started: {0} {1} in {2}", city.City, city.Location, city.Map.ToString());
 
-            if (newChar is NubiaMobile)
-                ((NubiaMobile)newChar).GiveXP(50);
+            if (newChar is NubiaPlayer)
+                ((NubiaPlayer)newChar).GiveXP(50);
 
             new WelcomeTimer(newChar).Start();
         }

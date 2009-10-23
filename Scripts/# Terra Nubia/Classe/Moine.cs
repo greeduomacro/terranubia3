@@ -38,25 +38,25 @@ namespace Server
             {
                 return new DonEnum[][]{
                     new DonEnum[0], //0
-                    new DonEnum[]{DonEnum.ScienceDuCombatAMainsNues, DonEnum.DonSupClasse}, // 1
-                /*    new DonEnum[]{DonEnum.EsquiveInstinctive}, //2
-                    new DonEnum[]{DonEnum.SensPieges}, //3
-                    new DonEnum[]{DonEnum.RageBerserker}, //4
-                    new DonEnum[]{DonEnum.EsquiveInstinctive}, //5
-                    new DonEnum[]{DonEnum.SensPieges}, //6
-                    new DonEnum[]{DonEnum.ReductionDegat}, //7
-                    new DonEnum[]{DonEnum.RageBerserker}, //8
-                    new DonEnum[]{DonEnum.SensPieges}, //9
-                    new DonEnum[]{DonEnum.ReductionDegat}, //10
-                    new DonEnum[]{DonEnum.RageGrandBerserker}, //11
-                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.SensPieges}, //12
-                    new DonEnum[]{DonEnum.ReductionDegat}, //13
-                    new DonEnum[]{DonEnum.VolonteIndomptable}, //13
-                    new DonEnum[]{DonEnum.SensPieges}, //15
-                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.ReductionDegat}, //16
-                    new DonEnum[]{DonEnum.RageSansFatigue}, //17
-                    new DonEnum[]{DonEnum.SensPieges}, //18
-                    new DonEnum[]{DonEnum.ReductionDegat}, //19
+                    new DonEnum[]{DonEnum.ScienceDuCombatAMainsNues, DonEnum.DelugeCoup, DonEnum.DonSupClasse}, // 1
+                    new DonEnum[]{DonEnum.DonSupClasse, DonEnum.EsquiveTotale}, //2
+                    new DonEnum[]{DonEnum.Serenite}, //3
+                    new DonEnum[]{DonEnum.FrappeKi}, //4
+                    new DonEnum[]{DonEnum.PuretePhysique}, //5
+                    new DonEnum[]{DonEnum.DonSupClasse}, //6
+                    new DonEnum[]{DonEnum.PlenitudePhysique}, //7
+                     new DonEnum[0], //8
+                    new DonEnum[]{DonEnum.EsquiveTotale}, //9
+                    new DonEnum[]{DonEnum.FrappeKi}, //10
+                    new DonEnum[]{DonEnum.DelugeCoup, DonEnum.CorpDiamant }, //11
+                    new DonEnum[]{DonEnum.SautAmeliore}, //12
+                    new DonEnum[]{DonEnum.AmeDiamant}, //13
+                    new DonEnum[0], //13
+                    new DonEnum[0], //15
+                    new DonEnum[]{DonEnum.FrappeKi}, //16
+                    new DonEnum[]{DonEnum.JeunesseEternelle}, //17
+                    new DonEnum[0], //18
+                    new DonEnum[0], //19
                     new DonEnum[]{DonEnum.RageBerserker, DonEnum.RageMaitreBerserker}, //20*/
                 };
             }
@@ -93,6 +93,36 @@ namespace Server
                     CompType.Representation,
                     CompType.Saut
                };
+            }
+        }
+        public int[][] DelugeCoup
+        {
+            get
+            {
+                return new int[][] 
+                { 
+                    new int[] { 0 }, //0
+                    new int[] { -2,-2 }, //1
+                    new int[] { -1,-1 }, //2
+                    new int[] { 0,0 }, //3
+                    new int[] { 1,1 }, //4
+                    new int[] { 2,2 }, //5
+                    new int[] { 3,3 }, //6
+                    new int[] { 4,4 }, //7
+                    new int[] { 5,5,0 }, //8
+                    new int[] { 6,6,1}, //9
+                    new int[] { 7,7,2 }, //10
+                    new int[] { 8,8,8,3}, //11
+                    new int[] { 9,9,9,4}, //12
+                    new int[] { 9,9,9,4}, //13
+                    new int[] { 10,10,10,5}, //14
+                    new int[] {  11,11,11,6,1}, //15
+                    new int[] { 12,12,12,7,2 }, //16
+                    new int[] { 12,12,12,7,2 }, //17
+                    new int[] { 13,13,13,8,3 }, //18
+                    new int[] { 14,14,14,9,4}, //19
+                    new int[] { 15,15,15,10,5} //20
+                };
             }
         }
         public override int[][] BonusAttaque

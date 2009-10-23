@@ -28,23 +28,26 @@ namespace Server.Spells
         public override MagieType Type { get { return MagieType.Profane; } }
         public override SortAction Action { get { return SortAction.Malefic; } }
         public override NSortTarget STarget { get { return NSortTarget.Zone; } }
+        public virtual SauvegardeEnum Sauvegarde { get { return SauvegardeEnum.Volonte; } }
 
         public SortBerceuse()
             : base("Berceuse")
         {
+
         }
-        public override int getRange(NubiaMobile caster, ClasseType classe, int cercle)
+        public override int getRange(NubiaMobile caster, int casterNiveau, DndStat stat)
         {
-            return 15 + (int)(1.5 * caster.getNiveauClasse(classe));
+            return 5 + (int)(1.5 * casterNiveau);
         }
-        public override void doVerbal(Server.Mobiles.NubiaMobile caster)
+       
+        public override void doVerbal(NubiaMobile caster)
         {
             caster.Emote("*Chante*");
             caster.Say("Dormez, dormez...");
         }
-        protected override bool Execute(NubiaMobile caster,ClasseType classe, int cercle, Object[] Args)
+        protected override bool Execute(NubiaMobile caster, int casterNiveau, DndStat stat, int cercle, object[] Args)
         {
-            if (base.Execute(caster, classe, cercle, Args))
+            if (base.Execute(caster,casterNiveau, stat, cercle, Args))
             {
                 //caster.Emote("*Chante une berceuse*");
                 for (int a = 0; a < Args.Length; a++)
@@ -54,10 +57,13 @@ namespace Server.Spells
                         NubiaMobile mob = Args[a] as NubiaMobile;
                         if (mob.CanSee(caster))
                         {
-                            if (!CheckResiste(mob, classe, cercle))
+                            if ( !CheckResiste(mob, mob, cercle, stat) && !CheckRM(caster, mob, casterNiveau ) )
                             {
                                 mob.Emote("*Baille*");
-                                new BerceuseDebuff(caster, mob, (int)caster.Competences[CompType.Concentration].getMaitrise() + caster.Niveau);
+                                int niveau = 5;
+                                if (caster is NubiaPlayer)
+                                    niveau = ((NubiaPlayer)caster).Niveau;
+                                new BerceuseDebuff(caster, mob, (int)caster.Competences[CompType.Concentration].getMaitrise() + niveau);
                             }
                         }
                     }

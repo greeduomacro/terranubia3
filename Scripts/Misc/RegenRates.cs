@@ -13,7 +13,7 @@ namespace Server.Misc
 		[CallPriority( 10 )]
 		public static void Configure()
 		{
-			Mobile.DefaultHitsRate = TimeSpan.FromSeconds( 11.0 );
+			Mobile.DefaultHitsRate = TimeSpan.FromSeconds( 700.0 );
 			Mobile.DefaultStamRate = TimeSpan.FromSeconds(  7.0 );
 			Mobile.DefaultManaRate = TimeSpan.FromSeconds(  7.0 );
 
@@ -55,7 +55,7 @@ namespace Server.Misc
 			int points = AosAttributes.GetValue( from, AosAttribute.RegenHits );
 
 			if ( from is BaseCreature && !((BaseCreature)from).IsAnimatedDead )
-				points += 4;
+				points += 20;
 
 			if ( (from is BaseCreature && ((BaseCreature)from).IsParagon) || from is Leviathan )
 				points += 40;
@@ -67,16 +67,24 @@ namespace Server.Misc
 				points += from.Skills[SkillName.Ninjitsu].Fixed / 300;
 			//TODO: What's the new increased rate?
 
-			if( Core.ML && from.Race == Race.Human )	//Is this affected by the cap?
-				points += 2;
+			/*if( Core.ML && from.Race == Race.Human )	//Is this affected by the cap?
+				points += 2;*/
+
+            if (from is NubiaPlayer)
+            {
+                if (((NubiaPlayer)from).hasDon(DonEnum.PlenitudePhysique))
+                    points += 15;
+            }
 
 			if ( points < 0 )
 				points = 0;
 
-			if( Core.ML && from is PlayerMobile )	//does racial bonus go before/after?
-				points = Math.Min ( points, 18 );
+            
 
-			return TimeSpan.FromSeconds( 1.0 / (0.1 * (1 + points)) );
+		/*	if( Core.ML && from is PlayerMobile )	//does racial bonus go before/after?
+				points = Math.Min ( points, 18 );*/
+
+			return TimeSpan.FromSeconds( 5.0 / (0.1 * (1 + points)) );
 		}
 
 		private static TimeSpan Mobile_StamRegenRate( Mobile from )

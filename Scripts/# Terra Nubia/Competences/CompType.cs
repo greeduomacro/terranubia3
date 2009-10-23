@@ -11,7 +11,7 @@ namespace Server.Mobiles
         All = -1,
         None = -1,
  
-        Acrobaties,
+        Acrobaties = 0,
         ArtMagie,
         //Artisana
         Couture,

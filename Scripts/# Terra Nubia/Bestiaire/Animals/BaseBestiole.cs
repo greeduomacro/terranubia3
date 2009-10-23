@@ -6,7 +6,11 @@ namespace Server.Mobiles
 {
     public abstract class BaseBestiole : NubiaCreature
     {
-        public BaseBestiole() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
+        public BaseBestiole()
+            : this(AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.5)
+        {
+        }
+        public BaseBestiole(AIType aitype, FightMode aggr, int un, int deux, double dun, double ddeux) : base( aitype, aggr, un, deux, dun, ddeux )
 		{
 			Body = 0xD0;
 			BaseSoundID = 0x6E;
@@ -14,7 +18,6 @@ namespace Server.Mobiles
 			
             this.VirtualArmor = 1;
 
-            this.ConfigureCreature(1, ClasseType.Roublard);
             CreatureType = MobileType.Animal;
 
 

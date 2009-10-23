@@ -6,7 +6,7 @@ namespace Server.Mobiles
 {
     public enum DndStat
     {
-        Force,
+        Force = 0,
         Dexterite,
         Constitution,
         Intelligence,

@@ -167,11 +167,14 @@ namespace Server.Items
             if( m.InRange(m.Location, Math.Max( mRange + 4, 8 ) ) && m is NubiaPlayer )
             {
                 NubiaPlayer player = m as NubiaPlayer;
-                if (player.Competences[CompType.Fouille].check(mDD))
+                if (mDD <= 20 || player.hasDon(DonEnum.RecherchePiege))
                 {
-                    player.PrivateOverheadMessage(MessageType.Regular, Utility.RandomRedHue(), true, "Piege proche !", player.NetState);
-                    SendInfoTo(player.NetState);
-                    //this.LabelTo(player, "Piège !");
+                    if (player.Competences[CompType.Fouille].check(mDD))
+                    {
+                        player.PrivateOverheadMessage(MessageType.Regular, Utility.RandomRedHue(), true, "Piege proche !", player.NetState);
+                        SendInfoTo(player.NetState);
+                        //this.LabelTo(player, "Piège !");
+                    }
                 }
             }
             if (m.InRange(this.Location, mRange))
@@ -217,9 +220,12 @@ namespace Server.Items
                 NubiaMobile mob = m as NubiaMobile;
                 int roll = DndHelper.rollDe(De.vingt);
                 roll += mob.getBonusReflexe(MagieEcole.Piege);
-                if (mob.hasDon(DonEnum.SensPieges))
+                if (m is NubiaPlayer)
                 {
-                    roll += mob.getDonNiveau(DonEnum.SensPieges);
+                    if (((NubiaPlayer)mob).hasDon(DonEnum.SensPieges))
+                    {
+                        roll += ((NubiaPlayer)mob).getDonNiveau(DonEnum.SensPieges);
+                    }
                 }
                 if (roll >= mDD)
                 {

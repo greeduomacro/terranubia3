@@ -37,7 +37,7 @@ namespace Server.Mobiles.Dons
         }
         public static void OnPickedInstrument(Mobile f, BaseInstrument instrument)
         {
-            NubiaMobile from = f as NubiaMobile;
+            NubiaPlayer from = f as NubiaPlayer;
            
 
             f.SendMessage("Qui voulez vous inspirer ?");
@@ -51,9 +51,9 @@ namespace Server.Mobiles.Dons
         }
         private class InternalTarget : Target
         {
-            NubiaMobile mOwner = null;
+            NubiaPlayer mOwner = null;
             BaseInstrument mInstrument = null;
-            public InternalTarget(NubiaMobile f, BaseInstrument instrument)
+            public InternalTarget(NubiaPlayer f, BaseInstrument instrument)
                 : base(12, false, TargetFlags.Beneficial)
             {
                 mOwner = f;

@@ -8,10 +8,12 @@ namespace Server.Items
 		public Lute() : base( 0xEB3, 0x4C, 0x4D )
 		{
 			Weight = 5.0;
+            Layer = Layer.TwoHanded;
 		}
 
 		public Lute( Serial serial ) : base( serial )
 		{
+            Layer = Layer.TwoHanded;
 		}
 
 		public override void Serialize( GenericWriter writer )

@@ -41,17 +41,18 @@ namespace Server.Mobiles.Dons
             Sauvegardes.Add(new SauvegardeMod(4, SauvegardeEnum.Volonte));
 
             mCA = -2;
-
-            if (caster.hasDon(DonEnum.VolonteIndomptable))
-                Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[]{MagieEcole.Enchantement} ) );
-
+            if (caster is NubiaPlayer)
+            {
+                if (((NubiaPlayer)caster).hasDon(DonEnum.VolonteIndomptable))
+                    Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[] { MagieEcole.Enchantement }));
+            }
             m_descrip = "Vous entrez dans une rage folle !";
         }
         public override void End()
         {
-            if (Caster != null && Caster.Alive)
+            if (Caster != null && Caster.Alive && Caster is NubiaPlayer)
             {
-                if (!Caster.hasDon(DonEnum.RageSansFatigue))
+                if (!((NubiaPlayer)Caster).hasDon(DonEnum.RageSansFatigue))
                     new RageFatigueDebuff(Caster);
             }
             base.End();
@@ -70,17 +71,19 @@ namespace Server.Mobiles.Dons
 
             mCA = -2;
 
-          if (caster.hasDon(DonEnum.VolonteIndomptable))
-                Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[]{MagieEcole.Enchantement} ));
-
+            if (caster is NubiaPlayer)
+            {
+                if (((NubiaPlayer)caster).hasDon(DonEnum.VolonteIndomptable))
+                    Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[] { MagieEcole.Enchantement }));
+            }
             m_descrip = "Vous entrez dans une rage folle !";
         }
       
         public override void End()
         {
-            if (Caster != null && Caster.Alive)
+            if (Caster != null && Caster.Alive && Caster is NubiaPlayer)
             {
-                if( !Caster.hasDon(DonEnum.RageSansFatigue) )
+                if (!((NubiaPlayer)Caster).hasDon(DonEnum.RageSansFatigue))
                     new RageFatigueDebuff(Caster);
             }
             base.End();
@@ -97,9 +100,11 @@ namespace Server.Mobiles.Dons
             mCons = 4;
             Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte));
 
-            if (caster.hasDon(DonEnum.VolonteIndomptable))
-                Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[] { MagieEcole.Enchantement }));
-
+            if (caster is NubiaPlayer)
+            {
+                if (((NubiaPlayer)caster).hasDon(DonEnum.VolonteIndomptable))
+                    Sauvegardes.Add(new SauvegardeMod(2, SauvegardeEnum.Volonte, new MagieEcole[] { MagieEcole.Enchantement }));
+            }
 
             mCA = -2;
             m_descrip = "Vous entrez dans une rage folle !";
@@ -107,9 +112,9 @@ namespace Server.Mobiles.Dons
   
         public override void End()
         {
-            if (Caster != null && Caster.Alive)
+            if (Caster != null && Caster.Alive && Caster is NubiaPlayer)
             {
-                if (!Caster.hasDon(DonEnum.RageSansFatigue))
+                if (!((NubiaPlayer)Caster).hasDon(DonEnum.RageSansFatigue))
                     new RageFatigueDebuff(Caster);
             }
             base.End();

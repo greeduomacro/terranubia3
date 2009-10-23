@@ -50,7 +50,6 @@ namespace Server.Mobiles
 			Utility.AssignRandomHair( this );
 
             VirtualArmor = 3;
-            ConfigureCreature(18, ClasseType.Guerrier);
 		}
 
 		public override void GenerateLoot()

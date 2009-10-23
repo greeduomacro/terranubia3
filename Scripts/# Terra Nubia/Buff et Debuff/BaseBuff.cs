@@ -285,7 +285,7 @@ namespace Server.Mobiles
 
 		public virtual void End()
 		{  
-			//Console.WriteLine("Endbuff");
+			Console.WriteLine("Endbuff dans buff");
 			if ( m_cible != null && m_caster != null)
 				m_caster.SendMessage("{0} prend fin sur {1}", Name, m_cible.Name);
 			
@@ -294,7 +294,7 @@ namespace Server.Mobiles
 				m_cible.HueMod = -1;
 				m_cible.NameMod = null;
 			}
-			if( m_isDebuff && m_cible != null)
+		/*	if( m_isDebuff && m_cible != null)
 			{
 				lock(m_cible.DebuffList)
 					m_cible.DebuffList.Remove(this as BaseDebuff);
@@ -303,13 +303,13 @@ namespace Server.Mobiles
 			{
 				lock(m_cible.BuffList)
 					m_cible.BuffList.Remove(this as BaseBuff);
-			}
-            m_cible.CloseGump(typeof(GumpBuff));
+			}*/
+         /*   m_cible.CloseGump(typeof(GumpBuff));
             m_cible.CloseGump(typeof(GumpDebuff));
             if (m_cible.BuffList.Count > 0 && m_cible is NubiaPlayer)
                 m_cible.SendGump(new GumpBuff(m_cible as NubiaPlayer));
             if (m_cible.DebuffList.Count > 0 && m_cible is NubiaPlayer)
-                m_cible.SendGump(new GumpDebuff(m_cible as NubiaPlayer));
+                m_cible.SendGump(new GumpDebuff(m_cible as NubiaPlayer));*/
 			m_turn = -1;
 		}
 		

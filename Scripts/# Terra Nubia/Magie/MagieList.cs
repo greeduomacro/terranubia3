@@ -60,6 +60,10 @@ namespace Server.Spells
         {
             get { return mInstinctMagic; }
         }
+        public void Restart()
+        {
+            mCastNumber = new Dictionary<int, int>();
+        }
         public int getSortDispo(int cercle)
         {
             int utilise = 0;
@@ -99,9 +103,10 @@ namespace Server.Spells
                     continue;
                 if( entry.Sort.GetType().Equals(sortType)){
 
-                    entry.Sort.Cast(mOwner, mClasse, entry.Cercle);
+                    entry.Sort.Cast(mOwner, mOwner.getNiveauClasse(mClasse), mOwner.getClasse(mClasse).MagieStat, entry.Cercle);
                     if (mCastNumber.ContainsKey(entry.Cercle))
                         mCastNumber[entry.Cercle] += 1;
+                    mOwner.NextSortCast = DateTime.Now + entry.Sort.Delay;
                 }
             }
             return false;

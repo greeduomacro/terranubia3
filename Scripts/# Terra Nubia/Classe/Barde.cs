@@ -38,12 +38,12 @@ namespace Server
                     new DonEnum[]{DonEnum.ChantLiberte}, //12
                     new DonEnum[0], //13
                     new DonEnum[]{DonEnum.InspirationVaillante}, //14
-                    new DonEnum[0], //15
+                    new DonEnum[]{DonEnum.InspirationIntrepide}, //15
                     new DonEnum[0], //16
                     new DonEnum[0], //17
                     new DonEnum[0], //18
                     new DonEnum[0], //19
-                    new DonEnum[0], //20*/
+                    new DonEnum[]{DonEnum.InspirationVaillante}, //20*/
                 };
             }
         }
@@ -57,7 +57,11 @@ namespace Server
             get
             {
                 return new Type[][]{
-                    /* Cercle 0 */ new Type[]{ typeof(SortBerceuse), typeof(SortHebetement) },
+                    /* Cercle 0 */ 
+                    new Type[]{ typeof(SortBerceuse), typeof(SortHebetement) , 
+                        typeof(SortLumiere), typeof(SortManipDistance), typeof(SortResistance) },
+                        /* Cercle 1 */
+                        new Type[]{ typeof(SortSoinLeger), typeof(SortSommeil) }
                 };
             }
         }

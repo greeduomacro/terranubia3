@@ -5,7 +5,7 @@ namespace Server.Mobiles
 {
 	[CorpseName( "a giant toad corpse" )]
 	[TypeAlias( "Server.Mobiles.Gianttoad" )]
-	public class GiantToad : BaseCreature
+    public class GiantToad : BaseBestiole
 	{
 		[Constructable]
 		public GiantToad() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )

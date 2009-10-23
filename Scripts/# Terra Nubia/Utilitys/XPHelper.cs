@@ -12,28 +12,28 @@ namespace Server
         {
             switch (cote)
             {
-                case 0: return 25;
-                case 1: return 50;
-                case 2: return 100;
-                case 3: return 200;
-                case 4: return 400;
-                case 5: return 600;
-                case 6: return 800;
-                case 7: return 1000;
-                case 8: return 1200;
-                case 9: return 1300;
+                case 0: return 250;
+                case 1: return 500;
+                case 2: return 1000;
+                case 3: return 2000;
+                case 4: return 4000;
+                case 5: return 6000;
+                case 6: return 8000;
+                case 7: return 10000;
+                case 8: return 12000;
+                case 9: return 13000;
                //
-                case 10: return 1400;
-                case 11: return 1500;
-                case 12: return 1600;
-                case 13: return 1800;
-                case 14: return 2000;
-                case 15: return 2200;
-                case 16: return 2400;
-                case 17: return 2600;
-                case 18: return 2800;
-                case 19: return 3100;
-                case 20: return 3500;
+                case 10: return 14000;
+                case 11: return 15000;
+                case 12: return 16000;
+                case 13: return 18000;
+                case 14: return 20000;
+                case 15: return 22000;
+                case 16: return 24000;
+                case 17: return 26000;
+                case 18: return 28000;
+                case 19: return 31000;
+                case 20: return 35000;
                 //
             }
             return 1400;
@@ -53,8 +53,9 @@ namespace Server
                 case 18: return 2.00;
                 case 19: return 2.20;
                 case 20: return 2.50;
+                    
             }
-            return 1;
+            return ((double)cote / 10 );
         }
         public static int GetClasseNiv(int LevelGlobal)
         {

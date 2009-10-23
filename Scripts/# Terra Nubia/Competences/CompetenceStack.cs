@@ -85,6 +85,7 @@ namespace Server.Mobiles
         {
             this.LearnCompetence(comp, false);
         }
+        
         private void LearnCompetence(CompType comp, bool msgDisplay)
         {
             if (!mCompetences.ContainsKey(comp))
