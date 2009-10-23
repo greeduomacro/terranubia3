@@ -87,6 +87,21 @@ namespace Server
 
 			protected override void OnTick()
 			{
+                if (m_Mobile is NubiaPlayer)
+                {
+                    if (((NubiaPlayer)m_Mobile).hasDon(DonEnum.CorpDiamant))
+                    {
+                        m_Mobile.LocalOverheadMessage(MessageType.Emote, 0x3F, true,
+                        "* Votre corps est imunisé contre le poison *");
+
+                        m_Mobile.NonlocalOverheadMessage(MessageType.Emote, 0x3F, true,
+                            String.Format("* {0} ne semble pas affecté par le poison *", m_Mobile.Name));
+
+                        Stop();
+                        return;
+                    }
+                }
+
 				if ( (Core.AOS && m_Poison.Level < 4 && TransformationSpellHelper.UnderTransformation( m_Mobile, typeof( VampiricEmbraceSpell ) )) ||
 					(m_Poison.Level < 3 && OrangePetals.UnderEffect( m_Mobile )) ||
 					AnimalForm.UnderTransformation( m_Mobile, typeof( Unicorn ) ) )

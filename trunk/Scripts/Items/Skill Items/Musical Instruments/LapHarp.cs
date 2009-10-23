@@ -8,10 +8,12 @@ namespace Server.Items
 		public LapHarp() : base( 0xEB2, 0x45, 0x46 )
 		{
 			Weight = 10.0;
+            Layer = Layer.TwoHanded;
 		}
 
 		public LapHarp( Serial serial ) : base( serial )
 		{
+            Layer = Layer.TwoHanded;
 		}
 
 		public override void Serialize( GenericWriter writer )

@@ -6,6 +6,7 @@ using System.Collections;
 using Server.Gumps;
 using Server.Spells;
 using System.Reflection;
+using Server.Regions;
 
 namespace Server.Mobiles
 {
@@ -45,6 +46,504 @@ namespace Server.Mobiles
 
     public class NubiaPlayer : PlayerMobile
     {
+        private int mXP = 0;
+
+        #region Vie & Compagnie
+        public override int HitsMax
+        {
+            get
+            {
+                int max = 4;
+                foreach (Classe c in GetClasses())
+                {
+                    max = c.GetDV * c.Niveau;
+                }
+                max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
+
+                switch (this.CurrentMoral)
+                {
+                    case Moral.Depression: max -= max / 4; break;
+                    case Moral.Deprime: max -= max / 10; break;
+                    case Moral.Bas: max -= max / 20; break;
+                }
+                if (max < 4)
+                    max = 4;
+                // max *= 5;
+                return max;
+            }
+        }
+        public override int ManaMax
+        {
+            get
+            {
+                int max = 20;
+
+                switch (this.CurrentMoral)
+                {
+                    case Moral.Depression: max -= max / 4; break;
+                    case Moral.Deprime: max -= max / 10; break;
+                    case Moral.Bas: max -= max / 20; break;
+                }
+                if (max < 4)
+                    max = 4;
+                return max;
+            }
+        }
+        public override int StamMax
+        {
+            get
+            {
+                int max = 10 + Niveau;
+
+                max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
+                switch (this.CurrentMoral)
+                {
+                    case Moral.Depression: max -= max / 4; break;
+                    case Moral.Deprime: max -= max / 10; break;
+                    case Moral.Bas: max -= max / 20; break;
+                }
+                if (max < 4)
+                    max = 4;
+
+                return max;
+            }
+        }
+        #endregion
+
+        public override int[] BonusAttaque
+        {
+            get
+            {
+                //On compte déjà le nbr de coup bonus.
+                int maxCoup = 1;
+
+                int buffbonus = base.BonusAttaque[0];
+
+                foreach (Classe c in GetClasses())
+                {
+                    if (DelugeDeCoup && c is ClasseMoine)
+                    {
+                        ClasseMoine cmoine = c as ClasseMoine;
+                        if (cmoine.DelugeCoup[c.Niveau].Length > maxCoup)
+                            maxCoup = cmoine.DelugeCoup[c.Niveau].Length;
+                    }
+                    else if (c.BonusAttaque[c.Niveau].Length > maxCoup)
+                        maxCoup = c.BonusAttaque[c.Niveau].Length;
+                }
+                int[] bonii = new int[maxCoup];
+                //initialisation
+                for (int n = 0; n < bonii.Length; n++)
+                    bonii[n] = buffbonus;
+                //Config
+                foreach (Classe c in GetClasses())
+                {
+                    if (DelugeDeCoup && c is ClasseMoine)
+                    {
+                        ClasseMoine cmoine = c as ClasseMoine;
+                        for (int i = 0; i < cmoine.DelugeCoup[c.Niveau].Length; i++)
+                            bonii[i] += cmoine.DelugeCoup[c.Niveau][i];
+                    }
+                    else
+                    {
+                        for (int i = 0; i < c.BonusAttaque[c.Niveau].Length; i++)
+                            bonii[i] += c.BonusAttaque[c.Niveau][i];
+                    }
+                }
+              
+
+                return bonii;
+            }
+        }
+        public override int getBonusReflexe()
+        {
+            return getBonusReflexe(MagieEcole.None);
+        }
+        public override int getBonusReflexe(MagieEcole ecole)
+        {
+
+            int bonus = base.getBonusReflexe(ecole);
+
+
+                foreach (Classe c in GetClasses())
+                {
+                    bonus += c.BonusReflexe[c.Niveau];
+                }
+                return bonus;
+            
+        }
+        public override int getBonusVigueur()
+        {
+            return getBonusVigueur(MagieEcole.None);
+        }
+        public override int getBonusVigueur(MagieEcole ecole)
+        {
+
+            int bonus = base.getBonusVigueur(ecole);
+
+                foreach (Classe c in GetClasses())
+                {
+                    bonus += c.BonusVigueur[c.Niveau];
+                }
+                if (ecole == MagieEcole.Enchantement && hasDon(DonEnum.Serenite))
+                    bonus += 2;
+                return bonus;
+            
+        }
+        public override  int getBonusVolonte()
+        {
+            return getBonusVolonte(MagieEcole.None);
+        }
+        public override  int getBonusVolonte(MagieEcole ecole)
+        {
+            int bonus = base.getBonusVolonte(ecole);
+
+                foreach (Classe c in GetClasses())
+                {
+                    bonus += c.BonusVolonte[c.Niveau];
+                }
+                if (ecole == MagieEcole.Enchantement && hasDon(DonEnum.Serenite))
+                    bonus += 2;
+                return bonus;
+            
+        }
+
+        private Dictionary<Type, Classe> m_Classes = new Dictionary<Type, Classe>();
+        private ClasseType m_lastClasse = ClasseType.Maximum;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public override int Niveau { get { return XPHelper.GetLevelForXP(mXP); } }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int XP { get { return mXP; } }
+
+        public void ResetXP()
+        {
+            GiveXP(-mXP);
+        }
+
+
+        public int getNiveauClasse(ClasseType cl)
+        {
+            int niv = 0;
+            foreach (Classe c in GetClasses())
+            {
+                if (c.CType == cl)
+                {
+                    niv = c.Niveau;
+                    break;
+                }
+            }
+            return niv;
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public virtual double CA
+        {
+            get
+            {
+                double ca = base.CA;
+                double armureMod = DndHelper.GetArmorCA(this);
+
+                double bouclierMod = 0.0; //ToDO
+                if (getBouclier() != null)
+                    bouclierMod = getBouclier().CA;
+
+                // CA DU MOINE
+                if (hasClasse(ClasseType.Moine))
+                {
+                    if (armureMod < 1 && bouclierMod <= 0)
+                    {
+                        double sagCA = DndHelper.GetCaracMod(this, DndStat.Sagesse);
+                        if (sagCA > 0)
+                            armureMod += sagCA;
+
+                        armureMod += (int)(getNiveauClasse(ClasseType.Moine) / 5);
+
+                    }
+                }
+                return ca;
+            }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public string StringClasses
+        {
+            get
+            {
+                if (GetClasses().Count > 0)
+                {
+                    string cs = "";
+                    foreach (Classe c in GetClasses())
+                    {
+                        cs += c.CType.ToString();
+                        cs += " / ";
+                    }
+                    return cs;
+                }
+                else
+                    return "Aucune";
+            }
+        }
+
+       
+        public bool MakeClasse(Type type, int niveau)
+        {
+            if (type == null)
+                return false;
+            bool ok = false;
+            if (niveau > 20)
+                niveau = 20;
+            //Console.WriteLine("Make Classe: "+type+" * "+niveau );
+            if (m_Classes.ContainsKey(type))
+            {
+                if (niveau <= 0)
+                {
+                    SendMessage(53, "Vous perdez la classe {0}", m_Classes[type].CType.ToString());
+
+                    m_Classes.Remove(type);
+                }
+                else
+                {
+                    m_Classes[type].Niveau = niveau;
+                    SendMessage(82, "Vous êtes maintenant " + m_Classes[type].CType.ToString() + " niveau " + m_Classes[type].Niveau);
+                    if (m_Classes[type] is ClasseArtisan)
+                    {
+                        ClasseArtisan nca = m_Classes[type] as ClasseArtisan;
+                        for (int cc = 0; cc < nca.ClasseCompetences.Length; cc++)
+                        {
+                            Competences.LearnCompetence(nca.ClasseCompetences[cc]);
+                        }
+                        for (int ctl = 0; ctl < nca.CompToLearn.Length; ctl++)
+                        {
+                            Competences.LearnCompetence(nca.CompToLearn[ctl]);
+                        }
+                    }
+                }
+                ok = true;
+            }
+            else if (m_Classes.Count < 2)
+            {
+                Classe classe = Activator.CreateInstance(type) as Classe;
+                if (classe != null)
+                {
+                    classe.Niveau = niveau;
+                    m_Classes.Add(type, classe);
+                    ok = true;
+                    SendMessage("(Changement de Classe)");
+                    SendMessage(82, "Vous êtes maintenant " + m_Classes[type].CType.ToString() + " niveau " + m_Classes[type].Niveau);
+
+                }
+                else
+                {
+                    SendMessage(2, "Impossible de créer la classe {0} oppération annulée", type.ToString());
+                    ok = false;
+                }
+            }
+            else
+                SendMessage("Vous ne pouvez pas multiclasser plus de deux fois !");
+            if (ok)
+                AfterMakeClasse();
+            return ok;
+        }
+        public int getAchats()
+        {
+            int achats = 0;
+            for (int i = 0; i < (int)CompType.Maximum; i++)
+                achats += Competences[(CompType)i].Achat;
+            return achats;
+        }
+
+        public int getAchatCap()
+        {
+            int total = (int)DndHelper.GetCaracMod(this, DndStat.Intelligence) * Niveau;
+            foreach (Classe c in GetClasses())
+                total += c.PtComp * c.Niveau;
+            if (total < 0)
+                total = 0;
+            return total;
+        }
+
+
+        public ICollection<Classe> GetClasses()
+        {
+            return m_Classes.Values;
+        }
+        public Classe getClasse(ClasseType type)
+        {
+            if (hasClasse(type))
+            {
+                foreach (Classe c in GetClasses())
+                {
+                    if (c.CType == type)
+                        return c;
+                }
+            }
+            return null;
+        }
+        public void ResetClasse()
+        {
+            m_lastClasse = ClasseType.Maximum;
+            m_Classes = new Dictionary<Type, Classe>();
+        }
+
+        public bool hasClasse(ClasseType cl)
+        {
+            foreach (Classe c in GetClasses())
+            {
+                if (c.CType == cl)
+                    return true;
+            }
+            return false;
+        }
+
+        public Dictionary<Type, Classe> Classes { get { return m_Classes; } }
+        public ClasseType LastClasse { get { return m_lastClasse; } set { m_lastClasse = value; } }
+
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public NubiaArmorType ArmorAllow
+        {
+            get
+            {
+                NubiaArmorType tCan = NubiaArmorType.None;
+                foreach (Classe c in GetClasses())
+                    if (c.ArmorAllow > tCan)
+                        tCan = c.ArmorAllow;
+                return tCan;
+            }
+        }
+
+     
+
+        public override bool getCanDoOpportunite()
+        {
+
+            if (Weapon is Fists && !hasDon(DonEnum.ScienceDuCombatAMainsNues)) //Pas d'attaque d'opportunité sans arts martiaux;
+                return false;
+            return base.getCanDoOpportunite();
+
+        }
+
+        public override int ResistanceMagie
+        {
+            get
+            {
+                int res =  base.ResistanceMagie;
+
+                if (hasClasse(ClasseType.Moine) && hasDon(DonEnum.AmeDiamant))
+                {
+                    res += 10 + getNiveauClasse(ClasseType.Moine);
+                }
+
+                return res;
+            }
+        }
+
+        public override void DamageMagic(int amount, Mobile from, MagieEcole ecole)
+        {
+            if (hasDon(DonEnum.PerfectionEtre))
+                amount = Math.Max(amount - 10, 0);
+            base.DamageMagic(amount, from, ecole);
+        }
+
+        public override void OnDamage(int amount, Mobile from, bool willKill)
+        {
+            if (hasDon(DonEnum.ReductionDegat))
+            {
+                int reduc = getDonNiveau(DonEnum.ReductionDegat);
+                if( from is NubiaPlayer )
+                {
+                    if( ((NubiaPlayer)from).hasDon(DonEnum.FrappeKi) )
+                    {
+                        reduc -= ((NubiaPlayer)from).getDonNiveau(DonEnum.FrappeKi);
+                        if( reduc < 0 )
+                            reduc = 0;
+                    }
+                }
+                amount -= reduc;
+            }
+          
+
+            if (amount > 0)
+                base.OnDamage(amount, from, willKill);
+        }
+
+        
+
+        #region Dons
+        //Deluge de coup du moin
+        public bool DelugeDeCoup = false;
+
+
+        protected Dictionary<DonEnum, int> mDons = new Dictionary<DonEnum, int>();
+
+        protected Dictionary<DonEnum, int> mDonsUses = new Dictionary<DonEnum, int>();
+        protected DateTime mNextDonUse = DateTime.Now;
+
+        public bool canUseDon(BaseDon don)
+        {
+            if (mNextDonUse > DateTime.Now)
+            {
+                SendMessage("Il est encore trop tôt pour utiliser un don");
+                return false;
+            }
+            if (hasDon(don.DType))
+            {
+                if (don.LimiteDayUse)
+                {
+                    if (!mDonsUses.ContainsKey(don.DType))
+                    {
+                        mDonsUses.Add(don.DType, 1);
+                        return true;
+                    }
+                    else
+                    {
+                        int uses = mDonsUses[don.DType];
+                        if (uses >= getDonNiveau(don.DType))
+                        {
+                            SendMessage("Vous ne pouvez plus utiliser ce don (Utilisé déjà {0} fois ce jour)", uses);
+                            return false;
+                        }
+                        else
+                        {
+                            uses++;
+                            mDonsUses[don.DType] = uses;
+                            return true;
+                        }
+
+                    }
+                }
+                else
+                    return true;
+            }
+            return false;
+        }
+
+        public ICollection Dons
+        {
+            get
+            {
+                return mDons.Keys;
+            }
+        }
+
+        public int getDonNiveau(DonEnum don)
+        {
+            if (mDons.ContainsKey(don))
+            {
+                return mDons[don];
+            }
+            return 0;
+        }
+
+        public bool hasDon(DonEnum don)
+        {
+            if (mDons.ContainsKey(don))
+                return true;
+            return false;
+        }
+        #endregion
+
         public override int getBonusRoll()
         {
             int bonus = base.getBonusRoll();
@@ -60,8 +559,23 @@ namespace Server.Mobiles
         #region Magie ! 
 
         private Dictionary<ClasseType, MagieList> mMagieLists = new Dictionary<ClasseType, MagieList>();
-        public DateTime LastSortCast = DateTime.Now;
+  //      public DateTime LastSortCast = DateTime.Now;
 
+        private DateTime mNextMagieRestart = DateTime.Now;
+
+        public DateTime NextMagieRestart
+        {
+            get { return mNextMagieRestart; }
+            set { mNextMagieRestart = value; }
+        }
+
+        public void MagieRestart()
+        {
+            foreach (MagieList ml in mMagieLists.Values)
+            {
+                ml.Restart();
+            }
+        }
 
         public MagieList getMagieOf(ClasseType type)
         {
@@ -256,29 +770,41 @@ namespace Server.Mobiles
             return iscotable;
         }
        
-        public override void GiveXP(int Xp)
+        public void GiveXP(int Xp)
         {
-            if (AccessLevel >= AccessLevel.GameMaster)
+            if (AccessLevel <= AccessLevel.Player)
             {
-                base.GiveXP(Xp);
-                return;
+
+                if (DateTime.Now < mTimeXpDelock)
+                    return;
+                if (mXPJournalier > XPHelper.getMaximumXPJour((int)Cote))
+                {
+                    mXPJournalier = 0;
+                    mTimeXpDelock = DateTime.Now + TimeSpan.FromHours(24);
+                    SendMessage("Vous avez atteind votre limite journalière d'XP");
+                    return;
+                }
+                double dXp = (double)Xp;
+                dXp *= XPHelper.getXPFactor((int)Cote);
+                Xp = (int)dXp;
+                if (Xp < 1)
+                    Xp = 1;
+                mXPJournalier += Xp;
             }
-            if (DateTime.Now < mTimeXpDelock)
-                return;
-            if( mXPJournalier > XPHelper.getMaximumXPJour((int)Cote  ))
+
+            int niv = Niveau;
+            mXP += Xp;
+            if (niv < Niveau)
             {
-                mXPJournalier = 0;
-                mTimeXpDelock = DateTime.Now + TimeSpan.FromHours(24);
-                SendMessage("Vous avez atteind votre limite journalière d'XP");
-                return;
+                SendMessage(58, "Vous avez gagnez un niveau !");
+                SendMessage("Vous êtes niveau " + Niveau);
+                OnLevelChange();
             }
-            double dXp = (double)Xp;
-            dXp *= XPHelper.getXPFactor( (int)Cote );
-            Xp = (int)dXp;
-            if (Xp < 1)
-                Xp = 1;
-            mXPJournalier += Xp;
-            base.GiveXP(Xp);
+            else if (niv > Niveau)
+            {
+                SendMessage(58, "Vous avez perdu un niveau !");
+                SendMessage("Vous êtes niveau " + Niveau);
+            }
         }
         #endregion
         //Variables
@@ -322,10 +848,17 @@ namespace Server.Mobiles
             if (AccessLevel != AccessLevel.Player)
                 return true;
 
+
             isRunning = (d & Direction.Running) != 0;
+
+
 
             if (isRunning)
             {
+                if (NextSortCast > DateTime.Now)
+                {
+                    InterruptCast(this, mLastSortClasse);
+                }
                 Stam -= (int)((double)TotalWeight / 100.0);
                 if (AttaqueParTour != 1)
                 {
@@ -333,6 +866,17 @@ namespace Server.Mobiles
                     SendMessage("Vous retournez à une attaque par tour");
                 }
 
+            }
+            else
+            {
+                if (NextSortCast > DateTime.Now)
+                {
+                    if (!Competences[CompType.Concentration].check(15, 0))
+                    {
+                        PrivateOverheadMessage(Server.Network.MessageType.Regular, GumpNubia.ColorTextRed, false, "Vous perdez votre concentration", this.NetState);
+                        InterruptCast(this, mLastSortClasse);
+                    }
+                }
             }
 
             if (Hidden /*&& DesignContext.Find( this ) == null */)	//Hidden & NOT customizing a house
@@ -565,8 +1109,33 @@ namespace Server.Mobiles
 
         public override void OnTurn()
         {
+            if (Turn % 112 == 0)
+            {
+                int AutoXP = WorldData.XpGain;
+                AutoXP /= 2;
+                if (this.Region != null)
+                {
+                    if (Region is BaseNubiaRegion )
+                    {
+                        BaseNubiaRegion nubiaRegion = this.Region as BaseNubiaRegion;
+                        if (nubiaRegion.CanAutoXP)
+                            AutoXP = WorldData.XpGain;
+                    }
+                }
+                GiveXP( (int)AutoXP );
+            }
             if (Alive)
             {
+                
+                if (Turn % 20 == 0)
+                {
+                    if (mNextMagieRestart <= DateTime.Now)
+                    {
+                        mNextMagieRestart = DateTime.Now + WorldData.SpellDay();
+                        MagieRestart();
+                        SendMessage("Vous vous sentez reposez... c'est un nouveau jour qui commence");
+                    }
+                }
                 if (Turn % 15 == 0 && mDeguisementMod != null)
                 {
                     foreach (PlayerMobile player in GetMobilesInRange(8))
@@ -609,6 +1178,8 @@ namespace Server.Mobiles
                 //Emote("*reprend conscience*");
             }
 
+            base.OnTurn();
+
             lock (DebuffList)
             {
                 CloseGump(typeof(GumpDebuff));
@@ -626,7 +1197,7 @@ namespace Server.Mobiles
                 }
             }            
 
-            base.OnTurn();
+            
         }
 
         //### MORT ###
@@ -726,7 +1297,7 @@ namespace Server.Mobiles
             return true;
         }
 
-        public override void AfterMakeClasse()
+        public void AfterMakeClasse()
         {
             //Vérification des dons
             
@@ -761,6 +1332,9 @@ namespace Server.Mobiles
                         else
                             mDons.Add(don, 1);
 
+                        if (don == DonEnum.PerfectionEtre)
+                            CreatureType = MobileType.Exterieur;
+
                         if ( !toRemove.Contains(don) )
                         {
                             string dname = "";
@@ -779,6 +1353,7 @@ namespace Server.Mobiles
 
         public NubiaPlayer()
         {
+            this.CreatureType = MobileType.Humanoide;
         }
         public NubiaPlayer(Serial s)
             : base(s)
@@ -842,6 +1417,19 @@ namespace Server.Mobiles
         {
             return NubiaPlayer.GetBeaute(this.Beaute, Female);
         }
+        private static string getStringBlessure(BlessureGravite g)
+        {
+            switch (g)
+            {
+                case BlessureGravite.Legere: return "Légèrement blessé";
+                case BlessureGravite.Normal: return "Blessé";
+                case BlessureGravite.Grave: return "Gravement blessé";
+                case BlessureGravite.TresGrave: return "Très gravement blessé";
+                case BlessureGravite.ExtremeGrave: return "Extrêmement blessé";
+                case BlessureGravite.DivinGrave: return "Mourrant";
+            }
+            return "Inconnue";
+        }
         public override void GetProperties(ObjectPropertyList list)
         {
             base.GetProperties(list);
@@ -855,7 +1443,22 @@ namespace Server.Mobiles
             string racename = Female ? displayRace.NameF : displayRace.Name;
 
 
-            string infos = String.Format("{0}, {1}",
+            string infos = "";
+            if (BlessureList.Count > 0)
+            {
+                BlessureGravite highter = BlessureGravite.Legere;
+                for (int i = 0; i < BlessureList.Count; i++)
+                {
+                    if (BlessureList[i] != null)
+                    {
+                        NubiaBlessure blessure = BlessureList[i] as NubiaBlessure;
+                        if (blessure.BGravite > highter)
+                            highter = blessure.BGravite;
+                    }
+                }
+                infos += getStringBlessure(highter) + "\n";
+            }
+            infos += String.Format("{0}, {1}",
                racename,
                 this.GetBeaute()
                 );
@@ -870,59 +1473,6 @@ namespace Server.Mobiles
                 from.NetState);
         }
 
-        #region vie & compagnie
-
-        public override int HitsMax
-        {
-            get
-            {
-                int hits = base.HitsMax;
-                switch (this.CurrentMoral)
-                {
-                    case Moral.Depression: hits -= hits / 4; break;
-                    case Moral.Deprime: hits -= hits / 10; break;
-                    case Moral.Bas: hits -= hits / 20; break;
-                }
-                if (hits < 1)
-                    hits = 1;
-                return hits;
-            }
-        }
-        public override int ManaMax
-        {
-            get
-            {
-                int mana = base.ManaMax;
-                switch (this.CurrentMoral)
-                {
-                    case Moral.Depression: mana -= mana / 4; break;
-                    case Moral.Deprime: mana -= mana / 10; break;
-                    case Moral.Bas: mana -= mana / 20; break;
-                }
-                if (mana < 1)
-                    mana = 1;
-
-                return mana;
-            }
-        }
-        public override int StamMax
-        {
-            get
-            {
-                int stam = base.StamMax;
-                switch (this.CurrentMoral)
-                {
-                    case Moral.Depression: stam -= stam / 4; break;
-                    case Moral.Deprime: stam -= stam / 10; break;
-                    case Moral.Bas: stam -= stam / 20; break;
-                }
-                if (stam < 1)
-                    stam = 1;
-
-                return stam;
-            }
-        }
-        #endregion
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -942,6 +1492,16 @@ namespace Server.Mobiles
             {
                 writer.Write((string)gms[i]);
                 writer.Write((DateTime)mCotationTimes[gms[i]]);
+            }
+
+            writer.Write((int)mXP);
+            writer.Write((int)m_lastClasse);
+
+            writer.Write((int)GetClasses().Count);
+            foreach (Classe c in GetClasses())
+            {
+                writer.Write((int)c.CType);
+                writer.Write((int)c.Niveau);
             }
         }
         public override void Deserialize(GenericReader reader)
@@ -967,6 +1527,18 @@ namespace Server.Mobiles
                     DateTime time = reader.ReadDateTime();
                     mCotationTimes.Add(gm, time);
                 }
+            }
+            mXP = reader.ReadInt();
+            m_lastClasse = (ClasseType)reader.ReadInt();
+
+            int countCl = reader.ReadInt();
+            for (int cl = 0; cl < countCl; cl++)
+            {
+                ClasseType ct = (ClasseType)reader.ReadInt();
+                int niv = reader.ReadInt();
+
+                Type t = Classe.GetClasse(ct);
+                MakeClasse(t, niv);
             }
         }
     }

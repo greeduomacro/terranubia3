@@ -29,39 +29,49 @@ namespace Server.Mobiles
         {
             get
             {
-                foreach (Classe cl in mOwner.GetClasses())
-                    if (cl.isComptenceClasse(CType))
-                        return true;
-                return false;
+                if (mOwner is NubiaPlayer)
+                {
+                    foreach (Classe cl in ((NubiaPlayer)mOwner).GetClasses())
+                        if (cl.isComptenceClasse(CType))
+                            return true;
+                    return false;
+                }
+                else
+                    return true;
             }
         }
         public double getCap()
         {
             double max = 0.0;
-            foreach( Classe c in mOwner.GetClasses() )
+            if (mOwner is NubiaPlayer)
             {
-                if (c is ClasseArtisan)
+                foreach (Classe c in ((NubiaPlayer)mOwner).GetClasses())
                 {
-                    ClasseArtisan ca = c as ClasseArtisan;
-                    for (int i = 0; i < ca.ClasseCompetences.Length; i++)
+                    if (c is ClasseArtisan)
                     {
-                        if ( ca.ClasseCompetences[i] == CType)
-                            return getArtisanCap(ca);
+                        ClasseArtisan ca = c as ClasseArtisan;
+                        for (int i = 0; i < ca.ClasseCompetences.Length; i++)
+                        {
+                            if (ca.ClasseCompetences[i] == CType)
+                                return getArtisanCap(ca);
+                        }
+                        for (int s = 0; s < ca.CompToLearn.Length; s++)
+                        {
+                            if (ca.CompToLearn[s] == CType)
+                                return getArtisanCap(ca);
+                        }
+                        break;
                     }
-                    for (int s = 0; s < ca.CompToLearn.Length; s++)
-                    {
-                        if (ca.CompToLearn[s] == CType)
-                            return getArtisanCap(ca);
-                    }
-                    break;
                 }
-            }
 
-            if (isCompetenceClasse)
-                max = mOwner.Niveau + 3;
+                if (isCompetenceClasse)
+                    max = ((NubiaPlayer)mOwner).Niveau + 3;
+                else
+                    max = (((NubiaPlayer)mOwner).Niveau + 3) / 2;
+                return Math.Round(max, 2);
+            }
             else
-                max = (mOwner.Niveau + 3)/2;
-            return Math.Round(max, 2);
+                return 100;
         }
         public int getArtisanCap( ClasseArtisan c )
         {
@@ -82,6 +92,12 @@ namespace Server.Mobiles
         {
             double maitrise = (isCompetenceClasse ? mAchat : ((double)mAchat / 2.0)) + DndHelper.GetCaracMod(mOwner, SType, !LimitedByArmor);
             maitrise = Math.Round(maitrise, 2);
+            if (mOwner is NubiaPlayer)
+            {
+                NubiaPlayer player = mOwner as NubiaPlayer;
+                if (CType == CompType.Saut && player.hasDon(DonEnum.SautAmeliore))
+                    maitrise += 5;
+            }
             return maitrise;
         }
 
@@ -154,6 +170,10 @@ namespace Server.Mobiles
             mOwner.NextSkillTime = DateTime.Now + TimeSpan.FromMilliseconds(msst);
             //Bonus Malus
             roll += mOwner.getBonusRoll();
+
+            if( mOwner is NubiaPlayer )
+                ((NubiaPlayer)mOwner).GiveXP(roll);
+
             return roll;
         }
         public virtual void onUse()

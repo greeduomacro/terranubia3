@@ -36,7 +36,8 @@ namespace Server.Commands
                     }
                     p.AttaqueParTour = a;
                     p.SendMessage("Vous attaquez maintenant {0} fois par tour", p.AttaqueParTour);
-
+                    if( p.AttaqueParTour > 1 )
+                        p.Emote("*Attaque à outrance*");
                 }
                 catch (Exception ex) {
                     p.SendMessage("Utilisation: .attaque [Nombre]");

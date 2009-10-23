@@ -31,7 +31,7 @@ namespace Server
         {
             int roll = 0;
             for (int i = 0; i < nbr; i++)
-                roll = Utility.RandomMinMax(1, (int)de);
+                roll += Utility.RandomMinMax(1, (int)de);
             return roll;
         }
         public static int getMaitriseMax(int niveau)

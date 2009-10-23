@@ -58,7 +58,7 @@ namespace Server.Mobiles
             }
             return "inconnue";
         }
-
+        
 		public string GetStringGravite()
 		{
 			switch(m_gravite)

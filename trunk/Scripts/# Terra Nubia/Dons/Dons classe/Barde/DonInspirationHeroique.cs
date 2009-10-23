@@ -19,7 +19,7 @@ namespace Server.Mobiles.Dons
 
         public override void OnUse(NubiaPlayer p)
         {
-            if (p.Competences[CompType.Representation].getMaitrise() < 12)
+            if (p.Competences[CompType.Representation].getMaitrise() < 13)
             {
                 p.SendMessage("Vous n'êtes pas assez doué en représentation pour ce don");
                 return;

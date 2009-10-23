@@ -28,13 +28,11 @@ namespace Server
     }
     public class WorldData
     {
-        public static int XpMultiplier = 450; //Chiffre de la formue X * (niveau^ 1.45)
-        public static int XpGain = 600; //Gain moyen tout les "XpGainInterval"
-
-        public static TimeSpan XpGainInterval = TimeSpan.FromMinutes(10.0); //Gain tout les X Minutes
+        public static int XpMultiplier = 4500; //Chiffre de la formue X * (niveau^ 1.45)
+        public static int XpGain = 1000; //Gain moyen tout les "XpGainInterval"
 
         public static TimeSpan TimeTour() { return TimeSpan.FromSeconds(8.0); }
-        public static TimeSpan SpellDay() { return TimeSpan.FromHours(4); }
+        public static TimeSpan SpellDay() { return TimeSpan.FromHours(5); }
 
         //Cheveux
         public static HairDef[] HairDefList = new HairDef[]{

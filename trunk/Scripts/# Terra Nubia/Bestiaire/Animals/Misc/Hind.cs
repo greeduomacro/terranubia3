@@ -4,7 +4,7 @@ using Server.Mobiles;
 namespace Server.Mobiles
 {
 	[CorpseName( "a deer corpse" )]
-	public class Hind : BaseCreature
+    public class Hind : BaseBestiole
 	{
 		[Constructable]
 		public Hind() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )

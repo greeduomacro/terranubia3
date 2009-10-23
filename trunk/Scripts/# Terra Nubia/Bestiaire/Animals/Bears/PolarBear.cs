@@ -14,9 +14,30 @@ namespace Server.Mobiles
 			Body = 213;
 			BaseSoundID = 0xA3;
 
-            this.ConfigureCreature(6, ClasseType.Barbare);
             CreatureType = MobileType.Animal;
             this.VirtualArmor = 3;
+
+            Server.Items.Fists griffes = new Server.Items.Fists();
+            griffes.De = De.huit;
+            griffes.NbrLance = 1;
+            griffes.BonusDegatStatic = 8;
+            griffes.Movable = false;
+            EquipItem(griffes);
+            mMonsterAttaques = new int[] { 13 };
+            mMonsterCA = 15;
+            mMonsterHits = DndHelper.rollDe(De.huit, 8) + 32;
+            mMonsterReflexe = 7;
+            mMonsterVigueur = 10;
+            mMonsterVolonte = 3;
+            RawStr = 27;
+            RawDex = 13;
+            RawCons = 19;
+            RawInt = 2;
+            RawSag = 12;
+            RawCha = 6;
+            mMonsterNiveau = 4;
+            AddCompetence(CompType.Detection, 7);
+            AddCompetence(CompType.PerceptionAuditive, 4);
 
             Tamable = true;
             ControlSlots = 1;

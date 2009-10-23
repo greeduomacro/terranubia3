@@ -37,8 +37,16 @@ namespace Server.Items
         private int mMiniCritique = 20; // mMiniCritique ou supérieur sur 1d20 pour un coup critique
         private int mCritiqueMulti = 2;
         private int mMaxRange = 1;
+        private int mBonusDegatStatic = 0;
         private ArmeCategorie mArmeCategorie = ArmeCategorie.Courante;
         private ArmeTemplate mTemplate = ArmeTemplate.Arbalete;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int BonusDegatStatic
+        {
+            get { return mBonusDegatStatic; }
+            set { mBonusDegatStatic = value; }
+        }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public ArmeCategorie ArmeCategorie
@@ -375,11 +383,24 @@ namespace Server.Items
             NubiaMobile AttMob = attacker as NubiaMobile;
             NubiaMobile DefMob = defender as NubiaMobile;
 
+            NubiaPlayer AttPlayer = null;
+            if (attacker is NubiaPlayer)
+                AttPlayer = attacker as NubiaPlayer;
+
+            NubiaPlayer DefPlayer = null;
+            if (defender is NubiaPlayer)
+                DefPlayer = defender as NubiaPlayer;
+
             //Attaque d'opportunité
             if (mOpportunite)
             {
                 mOpportunite = false;
-                AttMob.PrivateOverheadMessage(MessageType.Regular, 2119, false, "Attaque d'opportunité!", AttMob.NetState);
+                string msg = "Attaque d'opportunité!";
+                if (AttPlayer != null)
+                    if (AttPlayer.hasDon(DonEnum.AttaqueSournoise))
+                        msg = "Attaque sournoise!";
+                AttMob.PrivateOverheadMessage(MessageType.Regular, 2119, false, msg, AttMob.NetState);
+                AttMob.PrivateOverheadMessage(MessageType.Regular, 2119, false, msg, DefMob.NetState);
             }
 
             int roll = Utility.RandomMinMax(1, 20); //Jet de base du 1d20
@@ -391,15 +412,23 @@ namespace Server.Items
 
             //Bonus d'attaque du perso            
             bonii += AttMob.BonusAttaque[AttMob.GetAttackTurn()]; //On chope le bon bonus de classe(s) suivant le tour d'attaque 
-            AttMob.DoAttackTurn(); //Hop, un tour d'attaque pour passer au bonus suivant
-
-            if (AttMob.AttaqueParTour > 1 && AttMob.Stam > 5)
-                AttMob.Stam -= 5;
-            else if (AttMob.AttaqueParTour > 1 && AttMob.Stam <= 5)
-            {
-                AttMob.AttaqueParTour = 1;
-                AttMob.SendMessage("Vous êtes trop fatigué pour maintenir l'attaque a outrance");
-            }
+            AttMob.DoAttackTurn();//Hop, un tour d'attaque pour passer au bonus suivant
+           if (AttMob.AttaqueParTour > 1 && AttMob.Stam > 5)
+           {               
+               AttMob.Stam -= 5;
+               if (AttPlayer != null)
+               {
+                   if (AttPlayer.DelugeDeCoup)
+                       AttPlayer.Stam -= 2;
+               }
+           }
+           else if (AttMob.AttaqueParTour > 1 && AttMob.Stam <= 5)
+           {
+               AttMob.AttaqueParTour = 1;
+               if (AttPlayer != null)
+                   AttPlayer.DelugeDeCoup = false;
+               AttMob.SendMessage("Vous êtes trop fatigué pour maintenir l'attaque a outrance");
+           }
 
             //Modificateur de charactéristique en fonction de l'arme Distance ou contact
             if ( this.MaxRange > 3 )
@@ -458,7 +487,12 @@ namespace Server.Items
             bool prisDepourvu = false;
             if ((AttMob.Hidden || !DefMob.Warmode) && !DefMob.InCombat)
             {
-                if (!DefMob.hasDon(DonEnum.EsquiveInstinctive))
+                bool esquive = false;
+                if (DefPlayer != null)
+                    esquive = DefPlayer.hasDon(DonEnum.EsquiveInstinctive);
+                else
+                    esquive = Utility.RandomDouble() < 0.05;
+                if ( !esquive)
                 {
                     prisDepourvu = true;
                     DefMob.Emote("*Prit au dépourvu*");
@@ -564,13 +598,18 @@ namespace Server.Items
                 if(  AttMob.getCanDoOpportunite() )
                     mOpportunite = DefMob.CheckForOpportuniteResult(AttMob) > 0;
 
-                int damage = 0;
-                if (AttMob.hasClasse(ClasseType.Moine) && Template == ArmeTemplate.Poing)
+                int damage = DndHelper.rollDe(this.mDe, this.mNbrLance);
+                if (AttPlayer != null)
                 {
-                    damage = ClasseMoine.getDamage(AttMob.getNiveauClasse(ClasseType.Moine));
+                    if (AttPlayer.hasClasse(ClasseType.Moine) && Template == ArmeTemplate.Poing)
+                    {
+                        damage = ClasseMoine.getDamage(AttPlayer.getNiveauClasse(ClasseType.Moine));
+                    }
+                    else
+                        damage = DndHelper.rollDe(this.mDe, this.mNbrLance);
                 }
-                else
-                    damage = DndHelper.rollDe(this.mDe, this.mNbrLance);
+                
+                   
 
                 damage += (int)DamageBonus + mBonusDegat;
 
@@ -584,14 +623,26 @@ namespace Server.Items
                     damage *= mCritiqueMulti;
 
                     //BLESSURES
-                    if ( !(AttMob.Weapon is Fists) ||  AttMob.hasDon(DonEnum.ScienceDuCombatAMainsNues) )
+                    bool canBlessure = false;
+                    if (AttPlayer != null)
                     {
-                        if (Utility.RandomDouble() < 0.01)
+                        canBlessure = !(AttPlayer.Weapon is Fists) || AttPlayer.hasDon(DonEnum.ScienceDuCombatAMainsNues);
+                    }
+                    else
+                        canBlessure = true;
+                    if (canBlessure)
+                    {
+                        if (Utility.RandomDouble() < 0.05)
                             DefMob.AddBlessure(NubiaBlessure.getRandomBlessure());
                     }
                 }
 
-
+                //Attaque sournoise
+                if (AttPlayer != null && mOpportunite)
+                    if (AttPlayer.hasDon(DonEnum.AttaqueSournoise))
+                    {
+                        damage += DndHelper.rollDe(De.six, AttPlayer.getDonNiveau(DonEnum.AttaqueSournoise));
+                    }
                
 
                 OnHit(AttMob, DefMob, damage);
@@ -617,7 +668,8 @@ namespace Server.Items
 
 
             //XP
-            AttMob.GiveXP(10);
+            if( attacker is NubiaPlayer )
+                ((NubiaPlayer)attacker).GiveXP(10);
 
             if (DefMob.GetActionCombat() == ActionCombat.DefenseTotale)
                 Damage /= 2;
@@ -640,7 +692,8 @@ namespace Server.Items
             NubiaMobile AttMob = attacker as NubiaMobile;
             NubiaMobile DefMob = defender as NubiaMobile;
 
-            DefMob.GiveXP(10);
+            if (defender is NubiaPlayer)
+                ((NubiaPlayer)defender).GiveXP(10);
 
             if (Utility.RandomDouble() > 0.1 || DndHelper.GetArmorCA(defender as NubiaMobile) < 2)
             {
@@ -741,7 +794,7 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)1); //version
+            writer.Write((int)2); //version
             writer.Write((int)mDe);
             writer.Write((int)mNbrLance);
             writer.Write((int)mMiniCritique);
@@ -756,6 +809,7 @@ namespace Server.Items
             writer.Write((int)mNubiaQuality);
             for (int i = 0; i < mTRessourceList.Count; i++)
                 writer.Write((int)mTRessourceList[i]);
+            writer.Write((int)mBonusDegatStatic);
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -779,6 +833,10 @@ namespace Server.Items
                 for (int i = 0; i < rescount; i++)
                     mTRessourceList.Add((NubiaRessource)reader.ReadInt());
 
+            }
+            if (version >= 2)
+            {
+                mBonusDegatStatic = reader.ReadInt();
             }
         }
     }

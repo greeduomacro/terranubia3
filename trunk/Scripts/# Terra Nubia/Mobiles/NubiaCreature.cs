@@ -2,15 +2,59 @@
 using System.Collections.Generic;
 using System.Text;
 using Server.Items;
+using Server.Spells;
 
 namespace Server.Mobiles
 {
     public class NubiaCreature : BaseCreature
     {
+
+        /** CONFIGURATION CREATURE
+         * */
+        #region Creature Config
+        protected int mMonsterHits = 100;
+        protected int mMonsterCA = 10;
+        protected int[] mMonsterAttaques = new int[] { 0, 0 };
+        protected int mMonsterReflexe = 4;
+        protected int mMonsterVigueur = 2;
+        protected int mMonsterVolonte = 1;
+        protected int mMonsterNiveau = 4;
+
+        protected void AddCompetence(CompType c, int value)
+        {
+            if (Competences[c] is NullCompetence)
+            {
+                Competences.LearnCompetence(c);
+            }
+            Competences[c].Achat = value;
+        }
+        #endregion
+
+
         private bool mIsElite = false; //Pour les dégat et leur réduction, voir le NubiaWeapon
 
         private Dictionary<OrderType, double> mOrdersLearned = new Dictionary<OrderType, double>();
         private FactionEnum mFaction = FactionEnum.None;
+
+        public override int Niveau
+        {
+            get
+            {
+                return mMonsterNiveau;
+            }
+        }
+        public override int getBonusReflexe(MagieEcole ecole)
+        {
+            return mMonsterReflexe;
+        }
+        public override int getBonusVigueur(MagieEcole ecole)
+        {
+            return mMonsterVigueur;
+        }
+        public override int getBonusVolonte(MagieEcole ecole)
+        {
+            return mMonsterVolonte;
+        }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public FactionEnum Faction
@@ -32,8 +76,8 @@ namespace Server.Mobiles
             get
             {
                 if (mIsElite)
-                    return base.HitsMax * 5;
-                return base.HitsMax;
+                    return mMonsterHits * 5;
+                return mMonsterHits;
             }
         }
 
@@ -42,9 +86,7 @@ namespace Server.Mobiles
         {
             get
             {
-               /* if (mIsElite)
-                    return base.CA + (Niveau );*/
-                return VirtualArmor;
+                return Math.Max(mMonsterCA, base.CA);
             }
         }
 
@@ -61,6 +103,7 @@ namespace Server.Mobiles
         public NubiaCreature(AIType ai, FightMode fightmode, int viewRange, int attackRange, double activSpeed, double passivSpeed)
             : base(ai, fightmode, viewRange, attackRange, activSpeed, passivSpeed)
         {
+            Hits = 100;
         }
         public NubiaCreature(Serial s)
             : base(s)
@@ -74,6 +117,8 @@ namespace Server.Mobiles
                 mOrdersLearned.Add(order, 50.0);
             }
         }
+
+       
 
         public bool canDoOrder(OrderType order)
         {
@@ -158,29 +203,7 @@ namespace Server.Mobiles
                 list.Add("-Elite-");
             }
         }
-        public void ConfigureCreature(int niv, ClasseType clPrim)
-        {
-            ResetXP();
-            GiveXP(XPHelper.GetXpForLevel(niv));
-
-
-            MakeClasse(Server.Classe.GetClasse(clPrim), niv);
-            
-
-            switch (ArmorAllow)
-            {
-                case NubiaArmorType.None: VirtualArmor = 0; break;
-                case NubiaArmorType.Legere: VirtualArmor = 1; break;
-                case NubiaArmorType.Intermediaire: VirtualArmor = 3; break;
-                case NubiaArmorType.Lourde: VirtualArmor = 4; break;
-            }
-
-
-            Hits += 20000;
-            Stam += 20000;
-            Mana += 20000;
-
-        }
+       
 
         public override bool OnBeforeDeath()
         {
@@ -189,9 +212,9 @@ namespace Server.Mobiles
             {*/
                 foreach (AggressorInfo ainf in Aggressors)
                 {
-                    if (ainf.Attacker is NubiaMobile)
+                    if (ainf.Attacker is NubiaPlayer)
                     {
-                        NubiaMobile agg = ainf.Attacker as NubiaMobile;
+                        NubiaPlayer agg = ainf.Attacker as NubiaPlayer;
                         int xp = 30;
                         int dif = Niveau - agg.Niveau;
                         if (dif < -5)
@@ -201,7 +224,7 @@ namespace Server.Mobiles
                         xp += dif * dif;
                         if (IsElite)
                             xp *= 10;
-                        xp *= 5;
+                        xp *= 10;
                         agg.GiveXP(xp);
                     }
                 }
@@ -209,72 +232,7 @@ namespace Server.Mobiles
             return base.OnBeforeDeath();
         }
 
-        public override void OnLevelChange()
-        {
-            int niv = Niveau;
-
-            int statVal = (8 + niv / 4);
-            Str = statVal;
-            Dex = statVal;
-            Int = statVal;
-
-            if (Classe == ClasseType.Barbare ||
-                Classe == ClasseType.Paladin)
-            {
-                Str += 3;
-                Dex -= 1;
-                Int -= 2;
-            }
-            else if (Classe == ClasseType.Barde ||
-                Classe == ClasseType.Moine ||
-                Classe == ClasseType.Rodeur ||
-                Classe == ClasseType.Roublard)
-            {
-                Dex += 3;
-                Str -= 2;
-                Int -= 1;
-            }
-            else if (Classe == ClasseType.Druide ||
-               Classe == ClasseType.Ensorceleur ||
-               Classe == ClasseType.Magicien ||
-               Classe == ClasseType.Pretre)
-            {
-                Int += 3;
-                Str -= 2;
-                Dex -= 1;
-            }
-
-
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public ClasseType Classe //Pour le XML Spawner
-        {
-            get
-            {
-                int HLvl = 0;
-                ClasseType cl = ClasseType.Maximum;
-                foreach (Classe c in GetClasses())
-                    if (c.Niveau > HLvl)
-                        cl = c.CType;
-
-                return cl;
-            }
-            set
-            {
-                ClasseType prim = value;
-                ConfigureCreature(Niveau, prim);
-            }
-        }
-
-
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int NiveauCreature //Pour le XML Spawner
-        {
-            get { return Niveau; }
-            set { ConfigureCreature(value, Classe); }
-        }
+      
 
         public override void Serialize(GenericWriter writer)
         {

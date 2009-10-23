@@ -53,85 +53,15 @@ namespace Server.Mobiles
 
     public class NubiaMobile : Mobile
     {
-        #region Dons
-        protected Dictionary<DonEnum, int> mDons = new Dictionary<DonEnum, int>();
+        [CommandProperty(AccessLevel.GameMaster)]
+        public virtual int Niveau { get { return 1; } }
 
-        protected Dictionary<DonEnum, int> mDonsUses = new Dictionary<DonEnum, int>();
-        protected DateTime mNextDonUse = DateTime.Now;
-
-        public bool canUseDon(BaseDon don)
-        {
-            if( mNextDonUse > DateTime.Now ){
-                SendMessage("Il est encore trop tôt pour utiliser un don");
-                return false;
-            }
-            if (hasDon(don.DType))
-            {
-                if (don.LimiteDayUse)
-                {
-                    if (!mDonsUses.ContainsKey(don.DType))
-                    {
-                        mDonsUses.Add(don.DType, 1);
-                        return true;
-                    }
-                    else
-                    {
-                        int uses = mDonsUses[don.DType];
-                        if (uses >= getDonNiveau(don.DType))
-                        {
-                            SendMessage("Vous ne pouvez plus utiliser ce don (Utilisé déjà {0} fois ce jour)", uses);
-                            return false;
-                        }
-                        else
-                        {
-                            uses++;
-                            mDonsUses[don.DType] = uses;
-                            return true;
-                        }
-                            
-                    }
-                }
-                else
-                    return true;
-            }
-            return false;
-        }
-
-        public ICollection Dons
-        {
-            get
-            {
-                return mDons.Keys;
-            }
-        }
-
-        public int getDonNiveau(DonEnum don)
-        {
-            if (mDons.ContainsKey(don))
-            {
-                return mDons[don];
-            }
-            return 0;
-        }
-
-        public bool hasDon(DonEnum don)
-        {
-            if (mDons.ContainsKey(don))
-                return true;
-            return false;
-        }
-        #endregion
-
-        private TailleMob mTaille = TailleMob.Moyen;
-        private MobileType m_CreatureType = MobileType.Animal;
-        private List<MobileSousType> m_SousTypes = new List<MobileSousType>();
-        private CompetenceStack mCompetences = null;
-        private ArrayList m_blessureList = new ArrayList();
-
-        #region Magie ! 
+        #region Magie !
         public DateTime NextSortCast = DateTime.Now;
-        private BaseSort mLastSort = null;
-        private ClasseType mLastSortClasse = ClasseType.Barde;
+        protected BaseSort mLastSort = null;
+        protected ClasseType mLastSortClasse = ClasseType.Barde;
+
+
 
         public void beginCast(BaseSort sort, ClasseType classe)
         {
@@ -150,6 +80,14 @@ namespace Server.Mobiles
 
         #endregion
 
+
+        private TailleMob mTaille = TailleMob.Moyen;
+        private MobileType m_CreatureType = MobileType.Animal;
+        private List<MobileSousType> m_SousTypes = new List<MobileSousType>();
+        private CompetenceStack mCompetences = null;
+        private ArrayList m_blessureList = new ArrayList();
+
+        
 
         //BUFF
 
@@ -177,7 +115,7 @@ namespace Server.Mobiles
         //Nouvelles stats:
         private int mRawSag = 8, mRawCha = 8, mRawCons = 8;
 
-        private int mXP = 0;
+        
         private int mTurn = 0;
         private int mAttaqueParTour = 1;
 
@@ -226,14 +164,7 @@ namespace Server.Mobiles
             return true;
         }
 
-        public override void OnDamage(int amount, Mobile from, bool willKill)
-        {
-            if (hasDon(DonEnum.ReductionDegat))
-                amount -= getDonNiveau(DonEnum.ReductionDegat);
-
-            if (amount > 0)
-                base.OnDamage(amount, from, willKill);
-        }
+       
 
 
        public virtual void OnTurn() {
@@ -255,24 +186,18 @@ namespace Server.Mobiles
            if( toRemov != null )
                 BlessureList.Remove(toRemov);
 
-            AbstractBaseBuff buffRemove = null;
+            List<AbstractBaseBuff> buffRemoveList = new List<AbstractBaseBuff>();
 
-            lock (BuffList)
-            {
+        
                 foreach (AbstractBaseBuff buff in BuffList)
                 {
                     if (Alive)
                         buff.OnTurn();
                     if (buff.Turn < 1)
-                        buffRemove = buff;
+                        buffRemoveList.Add( buff );
                 }
-            }
-            if (buffRemove != null)
-                buffRemove.End();
             
-            buffRemove = null;
-            lock (DebuffList)
-            {
+          
                 foreach (AbstractBaseBuff debuff in DebuffList)
                 {
                     if (debuff == null)
@@ -280,11 +205,19 @@ namespace Server.Mobiles
                     if (Alive)
                         debuff.OnTurn();
                     if (debuff.Turn < 1)
-                        buffRemove = debuff;
+                        buffRemoveList.Add(debuff);
                 }
+            
+            while (buffRemoveList.Count > 0)
+            {
+                AbstractBaseBuff r = buffRemoveList[0];
+                Console.WriteLine("Remove: " + r.Name);
+                if (r.IsDebuff)
+                    DebuffList.Remove(r as BaseDebuff);
+                else
+                    BuffList.Remove(r);
+                buffRemoveList.RemoveAt(0);
             }
-            if (buffRemove != null)
-                buffRemove.End();
 		}
 		private class TourTimer : Timer
 		{
@@ -317,6 +250,27 @@ namespace Server.Mobiles
         }
 
         #region Action spécial durant le tour de combat
+
+        public virtual void DamageMagic(int amount, Mobile from, MagieEcole ecole)
+        {
+            Damage(amount, from, true);
+        }
+        public override void OnDamage(int amount, Mobile from, bool willKill)
+        {
+            for (int i = 0; i < DebuffList.Count; i++)
+            {
+                BaseDebuff deb = DebuffList[i];
+                if (deb is Spells.SortSommeil.SommeilDebuff)
+                {
+                    Frozen = false;
+                    DebuffList.Remove(deb);
+                    deb.End();
+                    break;
+                }
+            }
+            base.OnDamage(amount, from, willKill);
+        }
+
         private DateTime mOpportuniteExposeTime = DateTime.Now;
         private DateTime mLastOpportuniteAction = DateTime.Now;
         private DateTime mLastEtourdiTime = DateTime.Now;
@@ -351,11 +305,10 @@ namespace Server.Mobiles
             return true;
 
         }
-        public bool getCanDoOpportunite()
+        public virtual bool getCanDoOpportunite()
         {
            
-                if (Weapon is Fists && !hasDon(DonEnum.ScienceDuCombatAMainsNues) ) //Pas d'attaque d'opportunité sans arts martiaux;
-                    return false;
+              
                 return mLastOpportuniteAction < DateTime.Now - WorldData.TimeTour();
             
         }
@@ -550,12 +503,15 @@ namespace Server.Mobiles
             return mTourAttaque;
         }
 
-        public int[] BonusAttaque
+        public virtual int ResistanceMagie
+        {
+            get { return 0; }
+        }
+
+        public virtual int[] BonusAttaque
         {
             get
             {
-                //On compte déjà le nbr de coup bonus.
-                int maxCoup = 1;
 
                 int buffbonus = 0;
                 foreach (BaseBuff b in BuffList)
@@ -563,32 +519,14 @@ namespace Server.Mobiles
                 foreach (BaseDebuff d in DebuffList)
                     buffbonus += d.getSauvegarde(SauvegardeEnum.Attaque, MagieEcole.None);
 
-                foreach (Classe c in GetClasses())
-                {
-                    if (c.BonusAttaque[c.Niveau].Length > maxCoup)
-                        maxCoup = c.BonusAttaque[c.Niveau].Length;
-                }
-                int[] bonii = new int[maxCoup];
-                //initialisation
-                for (int n = 0; n < bonii.Length; n++)
-                    bonii[n] = buffbonus;
-                //Config
-                foreach (Classe c in GetClasses())
-                {
-                    for (int i = 0; i < c.BonusAttaque[c.Niveau].Length; i++)
-                        bonii[i] += c.BonusAttaque[c.Niveau][i];
-                }
-
-              
-
-                return bonii;
+                return new int[] { buffbonus };
             }
         }
-        public int getBonusReflexe()
+        public virtual int getBonusReflexe()
         {
             return getBonusReflexe(MagieEcole.None);
         }
-        public int getBonusReflexe(MagieEcole ecole)
+        public virtual int getBonusReflexe(MagieEcole ecole)
         {
            
                 int bonus = 0;
@@ -598,19 +536,14 @@ namespace Server.Mobiles
                 foreach (BaseDebuff d in DebuffList)
                     bonus += d.getSauvegarde(SauvegardeEnum.Reflexe, ecole);
 
-
-                foreach (Classe c in GetClasses())
-                {
-                    bonus += c.BonusReflexe[c.Niveau];
-                }
                 return bonus;
             
         }
-        public int getBonusVigueur()
+        public virtual int getBonusVigueur()
         {
             return getBonusVigueur(MagieEcole.None);
         }
-        public int getBonusVigueur(MagieEcole ecole)
+        public virtual int getBonusVigueur(MagieEcole ecole)
         {
             
                 int bonus = 0;
@@ -619,18 +552,14 @@ namespace Server.Mobiles
                 foreach (BaseDebuff d in DebuffList)
                     bonus += d.getSauvegarde(SauvegardeEnum.Vigueur, ecole);
 
-                foreach (Classe c in GetClasses())
-                {
-                    bonus += c.BonusVigueur[c.Niveau];
-                }
                 return bonus;
             
         }
-        public int getBonusVolonte()
+        public virtual  int getBonusVolonte()
         {
             return getBonusVolonte(MagieEcole.None);
         }
-        public int getBonusVolonte(MagieEcole ecole)
+        public virtual  int getBonusVolonte(MagieEcole ecole)
         {
                 int bonus = 0;
                 foreach (BaseBuff b in BuffList)
@@ -638,10 +567,7 @@ namespace Server.Mobiles
                 foreach (BaseDebuff d in DebuffList)
                     bonus += d.getSauvegarde(SauvegardeEnum.Volonte, ecole);
 
-                foreach (Classe c in GetClasses())
-                {
-                    bonus += c.BonusVolonte[c.Niveau];
-                }
+            
                 return bonus;
             
         }
@@ -649,21 +575,7 @@ namespace Server.Mobiles
         #endregion
         private int m_turn = 0;
 
-        private Dictionary<Type, Classe> m_Classes = new Dictionary<Type, Classe>();
-        private ClasseType m_lastClasse = ClasseType.Maximum;
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public NubiaArmorType ArmorAllow
-        {
-            get
-            {
-                NubiaArmorType tCan = NubiaArmorType.None;
-                foreach (Classe c in GetClasses())
-                    if (c.ArmorAllow > tCan)
-                        tCan = c.ArmorAllow;
-                return tCan;
-            }
-        }
+     
 
 
 
@@ -675,121 +587,8 @@ namespace Server.Mobiles
         {
             mCompetences = new CompetenceStack(this);            
         }
-        public int getAchats()
-        {
-            int achats = 0;
-            for (int i = 0; i < (int)CompType.Maximum; i++)
-                achats += Competences[(CompType)i].Achat;
-            return achats;
-        }
-
-        public int getAchatCap()
-        {
-            int total = (int)DndHelper.GetCaracMod(this, DndStat.Intelligence) * Niveau;
-            foreach (Classe c in GetClasses())
-                total += c.PtComp * c.Niveau;
-            if (total < 0)
-                total = 0;
-            return total;
-        }
-
-        public virtual void AfterMakeClasse()
-        {
-        }
-        public bool MakeClasse(Type type, int niveau)
-        {
-            if (type == null)
-                return false;
-            bool ok = false;
-            if (niveau > 20)
-                niveau = 20;
-            //Console.WriteLine("Make Classe: "+type+" * "+niveau );
-            if (m_Classes.ContainsKey(type))
-            {
-                if (niveau <= 0)
-                {
-                    SendMessage(53, "Vous perdez la classe {0}", m_Classes[type].CType.ToString());
-
-                    m_Classes.Remove(type);
-                }
-                else
-                {
-                    m_Classes[type].Niveau = niveau;
-                    SendMessage(82, "Vous êtes maintenant " + m_Classes[type].CType.ToString() + " niveau " + m_Classes[type].Niveau);
-                    if (m_Classes[type] is ClasseArtisan)
-                    {
-                        ClasseArtisan nca = m_Classes[type] as ClasseArtisan;
-                        for (int cc = 0; cc < nca.ClasseCompetences.Length; cc++)
-                        {
-                            Competences.LearnCompetence(nca.ClasseCompetences[cc]);
-                        }
-                        for (int ctl = 0; ctl < nca.CompToLearn.Length; ctl++)
-                        {
-                            Competences.LearnCompetence(nca.CompToLearn[ctl]);
-                        }
-                    }
-                }
-                ok = true;
-            }
-            else if (m_Classes.Count < 2)
-            {
-                Classe classe = Activator.CreateInstance(type) as Classe;
-                if (classe != null)
-                {
-                    classe.Niveau = niveau;
-                    m_Classes.Add(type, classe);
-                    ok = true;
-                    SendMessage("(Changement de Classe)");
-                    SendMessage(82, "Vous êtes maintenant " + m_Classes[type].CType.ToString() + " niveau " + m_Classes[type].Niveau);
-
-                }
-                else
-                {
-                    SendMessage(2, "Impossible de créer la classe {0} oppération annulée", type.ToString());
-                    ok = false;
-                }
-            }
-            else
-                SendMessage("Vous ne pouvez pas multiclasser plus de deux fois !");
-            if (ok)
-                AfterMakeClasse();
-            return ok;
-        }
-        public ICollection<Classe> GetClasses()
-        {
-            return m_Classes.Values;
-        }
-        public Classe getClasse(ClasseType type)
-        {
-            if (hasClasse(type))
-            {
-                foreach (Classe c in GetClasses())
-                {
-                    if (c.CType == type)
-                        return c;
-                }
-            }
-            return null;
-        }
-        public void ResetClasse()
-        {
-            m_lastClasse = ClasseType.Maximum;
-            m_Classes = new Dictionary<Type, Classe>();
-        }
-
-        public bool hasClasse(ClasseType cl)
-        {
-            foreach (Classe c in GetClasses())
-            {
-                if (c.CType == cl)
-                    return true;
-            }
-            return false;
-        }
-
-        public Dictionary<Type, Classe> Classes { get { return m_Classes; } }
-        public ClasseType LastClasse { get { return m_lastClasse; } set { m_lastClasse = value; } }
-
+       
+        
         #endregion
 
 
@@ -952,60 +751,6 @@ namespace Server.Mobiles
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public string StringClasses
-        {
-            get
-            {
-                if (GetClasses().Count > 0)
-                {
-                    string cs = "";
-                    foreach (Classe c in GetClasses())
-                    {
-                        cs += c.CType.ToString();
-                        cs += " / ";
-                    }
-                    return cs;
-                }
-                else
-                    return "Aucune";
-            }
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public string StringNivClasses
-        {
-            get
-            {
-                if (GetClasses().Count > 0)
-                {
-                    string cs = "";
-                    foreach (Classe c in GetClasses())
-                    {
-                        cs += "( " + c.Niveau.ToString(); cs += " )";
-                    }
-                    return cs;
-                }
-                else
-                    return "";
-            }
-        }
-
-        public int getNiveauClasse(ClasseType cl)
-        {
-            int niv = 0;
-            foreach (Classe c in GetClasses())
-            {
-                if (c.CType == cl)
-                {
-                    niv = c.Niveau;
-                    break;
-                }
-            }
-            return niv;
-        }
-
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public virtual double CA 
         {
             get
@@ -1019,19 +764,7 @@ namespace Server.Mobiles
                 double dexMod = DndHelper.GetCaracMod(this, DndStat.Dexterite);
                 double TailleMod = ((int)mTaille);
 
-                // CA DU MOINE
-                if (hasClasse(ClasseType.Moine))
-                {
-                    if (armureMod < 1 && bouclierMod <= 0)
-                    {
-                        double sagCA = DndHelper.GetCaracMod(this, DndStat.Sagesse);
-                        if (sagCA > 0)
-                            armureMod += sagCA;
-
-                        armureMod += (int)(getNiveauClasse(ClasseType.Moine) / 5);
-                        
-                    }
-                }
+                
 
                 //Bouclier Total :
                 if (getBouclier() != null && mActionCombat == ActionCombat.DefenseTotale)
@@ -1083,33 +816,7 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public MobileType CreatureType { get { return m_CreatureType; } set { m_CreatureType = value; } }
 
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int Niveau { get { return XPHelper.GetLevelForXP(mXP); } }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public int XP { get { return mXP; } }
-
-        public void ResetXP()
-        {
-            GiveXP(-mXP);
-        }
-
-        public virtual void GiveXP(int Xp)
-        {
-            int niv = Niveau;
-            mXP += Xp;
-            if (niv < Niveau)
-            {
-                SendMessage(58, "Vous avez gagnez un niveau !");
-                SendMessage("Vous êtes niveau " + Niveau);
-                OnLevelChange();
-            }
-            else if (niv > Niveau)
-            {
-                SendMessage(58, "Vous avez perdu un niveau !");
-                SendMessage("Vous êtes niveau " + Niveau);
-            }
-        }
+        
         public virtual void OnLevelChange()
         {
         }
@@ -1118,48 +825,13 @@ namespace Server.Mobiles
         public int Turn { get { return m_turn; } }
         #endregion
 
-        #region Vie & Compagnie
-        public override int HitsMax
-        {
-            get
-            {
-                int max = 4;
-                foreach (Classe c in GetClasses())
-                {
-                    max = c.GetDV * c.Niveau;
-                }
-                max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
-                if (max < 4)
-                    max = 4;
-               // max *= 5;
-                return max;
-            }
-        }
-        public override int ManaMax
-        {
-            get
-            {
-                int max = 20;
-                return max;
-            }
-        }
-        public override int StamMax
-        {
-            get
-            {
-                int max = 10 + Niveau;
-
-                max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
-                return max;
-            }
-        }
-        #endregion
+       
 
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
             writer.Write((int)2);//version;
-            writer.Write((int)mXP);
+           
 
             writer.Write((int)m_CreatureType);
             writer.Write((int)m_SousTypes.Count);
@@ -1168,14 +840,7 @@ namespace Server.Mobiles
                 MobileSousType mst = m_SousTypes[st];
                 writer.Write((int)mst);
             }
-            writer.Write((int)m_lastClasse);
-
-            writer.Write((int)GetClasses().Count);
-            foreach (Classe c in GetClasses())
-            {
-                writer.Write((int)c.CType);
-                writer.Write((int)c.Niveau);
-            }
+            
 
             //Charac additionelles
             writer.Write((int)mRawCha);
@@ -1212,7 +877,7 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
-            mXP = reader.ReadInt();
+            
 
             m_CreatureType = (MobileType)reader.ReadInt();
             int countSt = reader.ReadInt();
@@ -1221,17 +886,7 @@ namespace Server.Mobiles
                 MobileSousType mst = (MobileSousType)reader.ReadInt();
                 m_SousTypes.Add(mst);
             }
-            m_lastClasse = (ClasseType)reader.ReadInt();
-
-            int countCl = reader.ReadInt();
-            for (int cl = 0; cl < countCl; cl++)
-            {
-                ClasseType ct = (ClasseType)reader.ReadInt();
-                int niv = reader.ReadInt();
-
-                Type t = Classe.GetClasse(ct);
-                MakeClasse(t, niv);
-            }
+           
 
             if (version >= 1)
             {

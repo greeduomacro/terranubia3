@@ -24,6 +24,22 @@ namespace Server.Mobiles
         InspirationTalent,
         InspirationHero,
         ChantLiberte,
+        InspirationIntrepide,
+        //Moine
+        DelugeCoup,
+        EsquiveTotale,
+        Serenite,
+        FrappeKi,
+        PuretePhysique,
+        PlenitudePhysique,
+        CorpDiamant,
+        SautAmeliore,
+        AmeDiamant,
+        JeunesseEternelle,
+        PerfectionEtre,
+        //Roublard
+        AttaqueSournoise,
+        RecherchePiege,
 
         //Dons généraux
         DonSupGeneral = 1000,

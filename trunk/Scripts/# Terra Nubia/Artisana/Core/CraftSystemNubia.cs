@@ -177,6 +177,8 @@ namespace Server.Engines
 
                 Console.WriteLine("Craft réussi");
 
+                crafter.GiveXP(50);
+
                 try
                 {
                     ConstructorInfo constructor = entry.ToCraft.GetConstructor(Type.EmptyTypes);

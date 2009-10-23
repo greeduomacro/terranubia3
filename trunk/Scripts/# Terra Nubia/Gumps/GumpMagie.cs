@@ -18,7 +18,7 @@ namespace Server.Gumps
             int x = XBase;
             int y = YBase;
             int line = 2;
-            int scale = 22;
+            int scale = 25;
 
 
             for (int page = 1; page <= 10; page++)
@@ -58,10 +58,19 @@ namespace Server.Gumps
                         SortEntry entry = mMagieList.Sorts[i];
                         if (entry.Cercle == cercle)
                         {
-                            if (mMagieList.canCast(entry.Sort.GetType()))
-                                AddSimpleButton(x, y + line * scale, 500 + i, entry.Sort.Name);
+                            bool canCast = mMagieList.canCast(entry.Sort.GetType());
+                            //Launch
+                            if (canCast)
+                                AddButton(x, y + line * scale, 4029, 4031, 500 + i, GumpButtonType.Reply, 0);
                             else
-                                AddLabel(x, y + line * scale, ColorTextGray, entry.Sort.Name);
+                                AddImage(x, y + line * scale, 4029, ColorTextRed);
+                            //Name
+                            AddBackground(x + 32, y + line * scale, 130, 25, 3000);
+                            AddLabel(x+35, y + line * scale, ( canCast ? ColorTextGreen : ColorTextGray ), entry.Sort.Name);
+                            //Ecole
+                            AddBackground(x + 167, y + line * scale, 90, 25, 3000);
+                            AddLabel(x + 170, y + line * scale, ColorText, entry.Sort.Ecole.ToString());
+                            
                             line++;
                         }
                     }
