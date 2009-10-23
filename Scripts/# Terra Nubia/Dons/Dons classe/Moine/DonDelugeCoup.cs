@@ -19,13 +19,14 @@ namespace Server.Mobiles.Dons
 
         public override void OnUse(NubiaPlayer p)
         {
-            if (p.AttaqueParTour > 1)
+            if (p.Stam > 5)
             {
                 p.DelugeDeCoup = true;
                 p.Emote("*Déluge de coup*");
+                p.AttaqueParTour = p.BonusAttaque.Length;
             }
             else
-                p.SendMessage("Vous devez attaquer à outrance pour cela (.attaque X)");
+                p.SendMessage("Vous êtes trop fatigué pour cela");
         }
     }
 

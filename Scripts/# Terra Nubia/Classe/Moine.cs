@@ -57,7 +57,7 @@ namespace Server
                     new DonEnum[]{DonEnum.JeunesseEternelle}, //17
                     new DonEnum[0], //18
                     new DonEnum[0], //19
-                    new DonEnum[]{DonEnum.RageBerserker, DonEnum.RageMaitreBerserker}, //20*/
+                    new DonEnum[]{DonEnum.PerfectionEtre}, //20*/
                 };
             }
         }

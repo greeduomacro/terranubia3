@@ -249,19 +249,16 @@ namespace Server.Mobiles
                     bouclierMod = getBouclier().CA;
 
                 // CA DU MOINE
+                double moineCA = 0;
                 if (hasClasse(ClasseType.Moine))
                 {
                     if (armureMod < 1 && bouclierMod <= 0)
                     {
-                        double sagCA = DndHelper.GetCaracMod(this, DndStat.Sagesse);
-                        if (sagCA > 0)
-                            armureMod += sagCA;
-
-                        armureMod += (int)(getNiveauClasse(ClasseType.Moine) / 5);
-
+                        moineCA = DndHelper.GetCaracMod(this, DndStat.Sagesse);
+                        moineCA += (int)(getNiveauClasse(ClasseType.Moine) / 5);
                     }
                 }
-                return ca;
+                return ca + moineCA;
             }
         }
 
@@ -301,6 +298,7 @@ namespace Server.Mobiles
                     SendMessage(53, "Vous perdez la classe {0}", m_Classes[type].CType.ToString());
 
                     m_Classes.Remove(type);
+                    mDons = new Dictionary<DonEnum, int>();
                 }
                 else
                 {
@@ -1296,6 +1294,8 @@ namespace Server.Mobiles
             m_deathBodySave = BodyValue;
             return true;
         }
+
+
 
         public void AfterMakeClasse()
         {

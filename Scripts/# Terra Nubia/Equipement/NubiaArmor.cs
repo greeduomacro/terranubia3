@@ -128,11 +128,11 @@ namespace Server.Items
             {
                 switch (Layer)
                 {
-                    case Layer.Helm: return 0.1;
-                    case Layer.Neck: return 0.1;
-                    case Layer.InnerTorso: return 0.4;
-                    case Layer.Arms: return 0.15;
-                    case Layer.Gloves: return 0.05;
+                    case Layer.Helm: return 0.0;
+                    case Layer.Neck: return 0.0;
+                    case Layer.InnerTorso: return 0.5;
+                    case Layer.Arms: return 0.20;
+                    case Layer.Gloves: return 0.1;
                     case Layer.Pants: return 0.20;
                     default: return 0.0;
                 }

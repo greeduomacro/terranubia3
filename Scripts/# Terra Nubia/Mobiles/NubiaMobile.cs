@@ -498,6 +498,8 @@ namespace Server.Mobiles
         public int GetAttackTurn()
         {
             //On vérifie que le mTourAttaque soit pas plus haut que le tableau
+            if (mAttaqueParTour > BonusAttaque.Length )
+                mAttaqueParTour = BonusAttaque.Length ;
             if (mTourAttaque >= mAttaqueParTour)
                 mTourAttaque = 0;
             return mTourAttaque;
