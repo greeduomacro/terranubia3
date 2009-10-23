@@ -415,11 +415,11 @@ namespace Server.Items
             AttMob.DoAttackTurn();//Hop, un tour d'attaque pour passer au bonus suivant
            if (AttMob.AttaqueParTour > 1 && AttMob.Stam > 5)
            {               
-               AttMob.Stam -= 5;
+               AttMob.Stam -= 4;
                if (AttPlayer != null)
                {
                    if (AttPlayer.DelugeDeCoup)
-                       AttPlayer.Stam -= 2;
+                       AttPlayer.Stam -= 1;
                }
            }
            else if (AttMob.AttaqueParTour > 1 && AttMob.Stam <= 5)
@@ -431,9 +431,20 @@ namespace Server.Items
            }
 
             //Modificateur de charactéristique en fonction de l'arme Distance ou contact
-            if ( this.MaxRange > 3 )
+
+           bool moineSag = false;
+           if (AttPlayer != null)
+           {
+               if (AttPlayer.hasClasse(ClasseType.Moine) && this is Fists)
+               {
+                   bonii += (double)DndHelper.GetCaracMod(AttPlayer, DndStat.Sagesse);
+                   moineSag = true;
+               }
+           }
+
+            if ( this.MaxRange > 3 && !moineSag)
                 bonii += (double)DndHelper.GetCaracMod(AttMob, DndStat.Dexterite);
-            else
+            else if( !moineSag )
                 bonii += (double)DndHelper.GetCaracMod(AttMob, DndStat.Force);
           //  Console.WriteLine(AttMob.Name + " :: Bonus d'attaque (Classe+Mod Carac): +" + bonii);
 
@@ -601,12 +612,15 @@ namespace Server.Items
                 int damage = DndHelper.rollDe(this.mDe, this.mNbrLance);
                 if (AttPlayer != null)
                 {
-                    if (AttPlayer.hasClasse(ClasseType.Moine) && Template == ArmeTemplate.Poing)
+
+                    if ( AttPlayer.hasClasse(ClasseType.Moine) && this is Fists)
                     {
+                        
                         damage = ClasseMoine.getDamage(AttPlayer.getNiveauClasse(ClasseType.Moine));
+                        Console.WriteLine("Moine damage : "+damage.ToString() );
                     }
-                    else
-                        damage = DndHelper.rollDe(this.mDe, this.mNbrLance);
+                  /*  else
+                        damage = DndHelper.rollDe(this.mDe, this.mNbrLance);*/
                 }
                 
                    

@@ -453,7 +453,7 @@ namespace Server.Mobiles
                 {
                     if( ((NubiaPlayer)from).hasDon(DonEnum.FrappeKi) )
                     {
-                        reduc -= ((NubiaPlayer)from).getDonNiveau(DonEnum.FrappeKi);
+                        reduc -= ((NubiaPlayer)from).getDonNiveau(DonEnum.FrappeKi) * 2;
                         if( reduc < 0 )
                             reduc = 0;
                     }
