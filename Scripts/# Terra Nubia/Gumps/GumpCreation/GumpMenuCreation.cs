@@ -127,6 +127,17 @@ namespace Server.Gumps
                 from.SendMessage(99, "Bienvenue sur Terra Nubia");
               //  from.SendMessage("De la teinture pour cheveux à été placée dans votre sac");
               //  from.Backpack.AddItem(new HairDye());
+
+                from.Dons.Reset();
+                Classe classe = null;
+                foreach (Classe c in from.GetClasses())
+                {
+                    classe = c;
+                    break;
+                }
+                if( classe != null )
+                    from.Dons.LearnDonClasse(classe, 1);
+
                 from.Frozen = false;
 
                 // ZONE DE DEPART : 

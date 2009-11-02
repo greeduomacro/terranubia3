@@ -82,8 +82,8 @@ namespace Server.Mobiles
         }
         public bool canRaise()
         {
-           
-            if (getMaitrise() + (isCompetenceClasse ? 1 : 0.5) >= getCap()+ 0.4 )
+
+            if (getPureMaitrise() + (isCompetenceClasse ? 1 : 0.5) >= getCap() + 0.4)
                 return false;
             return true;
         }
@@ -92,18 +92,46 @@ namespace Server.Mobiles
         {
             double maitrise = (isCompetenceClasse ? mAchat : ((double)mAchat / 2.0)) + DndHelper.GetCaracMod(mOwner, SType, !LimitedByArmor);
             maitrise = Math.Round(maitrise, 2);
-            if (mOwner is NubiaPlayer)
-            {
-                NubiaPlayer player = mOwner as NubiaPlayer;
-                if (CType == CompType.Saut && player.hasDon(DonEnum.SautAmeliore))
-                    maitrise += 5;
-            }
+            
             return maitrise;
         }
 
         public double getMaitrise()
         {
-            return getPureMaitrise() + getSynergie();
+            int donBonus = 0;
+            if (mOwner is NubiaPlayer)
+            {
+                NubiaPlayer player = mOwner as NubiaPlayer;
+                if (CType == CompType.Saut && player.hasDon(DonEnum.SautAmeliore))
+                    donBonus += 5;
+                if ((CType == CompType.ArtMagie || CType == CompType.UtilisationObjetsMagiques) && player.hasDon(DonEnum.AffiniteMagique))
+                    donBonus += 2;
+                if(CType == CompType.Saut && player.hasDon(DonEnum.Athletisme)  )
+                    donBonus += 2;
+                if ((CType == CompType.Survie || CType == CompType.PremiersSecours) && player.hasDon(DonEnum.Autonome))
+                    donBonus += 2;
+                if ((CType == CompType.DeplacementSilencieux || CType == CompType.Discretion) && player.hasDon(DonEnum.Discret))
+                    donBonus += 2;
+                if ((CType == CompType.Escamotage || CType == CompType.Crochetage) && player.hasDon(DonEnum.DoigtsDeFee))
+                    donBonus += 2;
+                if ((CType == CompType.Renseignements || CType == CompType.Fouille) && player.hasDon(DonEnum.FinLimier))
+                    donBonus += 2;
+                if ((CType == CompType.Deguisement) && player.hasDon(DonEnum.Fourberie))
+                    donBonus += 2;
+                if ((CType == CompType.Dressage || CType == CompType.Equitation) && player.hasDon(DonEnum.FraterniteAnimale))
+                    donBonus += 2;
+                if ((CType == CompType.Equilibre || CType == CompType.Evasion) && player.hasDon(DonEnum.Funambule))
+                    donBonus += 2;
+                if ((CType == CompType.Erudition || CType == CompType.Estimation) && player.hasDon(DonEnum.Meticuleux))
+                    donBonus += 2;
+                if ((CType == CompType.Diplomatie || CType == CompType.Psychologie) && player.hasDon(DonEnum.Negociation))
+                    donBonus += 2;
+                if ((CType == CompType.Bluff || CType == CompType.Intimidation) && player.hasDon(DonEnum.Persuasion))
+                    donBonus += 2;
+                if ((CType == CompType.Crochetage || CType == CompType.Desamorçage) && player.hasDon(DonEnum.SavoirFaireMecanique))
+                    donBonus += 2;
+            }
+            return getPureMaitrise() + getSynergie() + donBonus;
         }
 
         public int getSynergie()

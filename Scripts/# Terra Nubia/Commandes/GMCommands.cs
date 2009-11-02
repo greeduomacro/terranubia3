@@ -11,7 +11,7 @@ namespace Server.Commands
     {
         public static void Initialize()
         {
-
+            CommandSystem.Register("resetdons", AccessLevel.GameMaster, new CommandEventHandler(resetdons_OnCommand));
             CommandSystem.Register("healgm", AccessLevel.GameMaster, new CommandEventHandler(healgm_OnCommand));
             CommandSystem.Register("ga", AccessLevel.GameMaster, new CommandEventHandler(ga_OnCommand));
 
@@ -20,7 +20,32 @@ namespace Server.Commands
             CommandSystem.Register("moraltest", AccessLevel.GameMaster, new CommandEventHandler(moraltest_OnCommand));
 
             CommandSystem.Register("gm", AccessLevel.Player, new CommandEventHandler(gm_OnCommand));
-               }
+        }
+
+        public static void resetdons_OnCommand(CommandEventArgs e)
+        {
+            NubiaPlayer p = e.Mobile as NubiaPlayer;
+            p.SendMessage("Ciblez le joueur pour remettre ses dons à Zéro");
+            p.Target = new ResetDonTarget();
+        }
+        private class ResetDonTarget : Target
+        {
+            public ResetDonTarget()
+                : base(30, false, TargetFlags.None)
+            {
+            }
+            protected override void OnTarget(Mobile from, object targeted)
+            {
+                if( targeted is NubiaPlayer) 
+                {
+                    NubiaPlayer player = targeted as NubiaPlayer;
+                    from.SendMessage("Vous remettez à Zéro les dons de " + player.Name);
+                    player.Dons.Reset();
+                }
+                else
+                    from.SendMessage("Cible invalide");
+            }
+        }
 
         public static void ga_OnCommand(CommandEventArgs e)
         {

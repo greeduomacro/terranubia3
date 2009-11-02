@@ -48,6 +48,37 @@ namespace Server.Mobiles
     {
         private int mXP = 0;
 
+        private DateTime mLastParadeProjectile = DateTime.Now;
+
+        public DateTime LastParadeProjectile { get { return mLastParadeProjectile; } set { mLastParadeProjectile = value; } }
+
+        public override bool CheckShove(Mobile shoved)
+        {
+            if (shoved is NubiaMobile)
+            {
+                NubiaMobile sho = shoved as NubiaMobile;
+                int myBonus = 0;
+                if (hasDon(DonEnum.ScienceDeLaBousculade))
+                    myBonus += 4;
+                if (sho.Str + DndHelper.rollDe(De.vingt) <= Str + DndHelper.rollDe(De.vingt) + myBonus)
+                {
+                    sho.Emote("*Bousculé par {0}*", Name);
+                    sho.Damage(1, this);
+                    if(!hasDon(DonEnum.ScienceDeLaBousculade) )
+                        ExposeToOpportunite();
+                    return true;
+                }
+                else
+                {
+                    Emote("*Tente de bousculer {0}", sho.Name);
+                    SendMessage("Vous n'arrivez pas a le bousculer pour passer");
+                    sho.SendMessage("Vous resistez à la bousculade de {0}", Name);
+                    return false;
+                }
+            }
+            else
+                return true;
+        }
         #region Vie & Compagnie
         public override int HitsMax
         {
@@ -59,6 +90,9 @@ namespace Server.Mobiles
                     max = c.GetDV * c.Niveau;
                 }
                 max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
+
+                if (hasDon(DonEnum.Robustesse))
+                    max += getDonNiveau(DonEnum.Robustesse) * 3;
 
                 switch (this.CurrentMoral)
                 {
@@ -93,17 +127,27 @@ namespace Server.Mobiles
         {
             get
             {
-                int max = 10 + Niveau;
-
+                int max = 4;
+                foreach (Classe c in GetClasses())
+                {
+                    max = c.GetDV * c.Niveau;
+                }
                 max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
+
                 switch (this.CurrentMoral)
                 {
                     case Moral.Depression: max -= max / 4; break;
                     case Moral.Deprime: max -= max / 10; break;
                     case Moral.Bas: max -= max / 20; break;
                 }
+                max /= 2;
+                if (hasDon(DonEnum.Athletisme))
+                    max += 5;
+                if (hasDon(DonEnum.Endurance))
+                    max += 20;
                 if (max < 4)
                     max = 4;
+                // max *= 5;
 
                 return max;
             }
@@ -163,6 +207,8 @@ namespace Server.Mobiles
 
             int bonus = base.getBonusReflexe(ecole);
 
+            if (hasDon(DonEnum.ReflexesSurhumains))
+                bonus += 2;
 
                 foreach (Classe c in GetClasses())
                 {
@@ -248,6 +294,21 @@ namespace Server.Mobiles
                 if (getBouclier() != null)
                     bouclierMod = getBouclier().CA;
 
+                NubiaArmor armor = DndHelper.GetBiggerArmor(this);
+                if (armor != null && hasDon(DonEnum.Esquive) )
+                {
+                    if (armor.ModDexMaximum >= DndHelper.GetCaracMod(this, DndStat.Dexterite, true))
+                        ca += 1;
+                }
+                if (getActionCombat() == ActionCombat.DefenseTotale && hasDon(DonEnum.PositionDefensiveAmelio) )
+                {
+                    ca += 2;
+                }
+                else if (getActionCombat() == ActionCombat.Defense && hasDon(DonEnum.PositionDefensiveAmelio)) //-4 a tout les jets
+                {
+                    ca += 2;
+                }
+
                 // CA DU MOINE
                 double moineCA = 0;
                 if (hasClasse(ClasseType.Moine))
@@ -298,7 +359,8 @@ namespace Server.Mobiles
                     SendMessage(53, "Vous perdez la classe {0}", m_Classes[type].CType.ToString());
 
                     m_Classes.Remove(type);
-                    mDons = new Dictionary<DonEnum, int>();
+                    if (mDons != null)
+                        mDons.Reset();
                 }
                 else
                 {
@@ -316,6 +378,7 @@ namespace Server.Mobiles
                             Competences.LearnCompetence(nca.CompToLearn[ctl]);
                         }
                     }
+                    Dons.LearnDonClasse(m_Classes[type], m_Classes[type].Niveau);
                 }
                 ok = true;
             }
@@ -327,8 +390,9 @@ namespace Server.Mobiles
                     classe.Niveau = niveau;
                     m_Classes.Add(type, classe);
                     ok = true;
-                    SendMessage("(Changement de Classe)");
+                    //SendMessage("(Changement de Classe)");
                     SendMessage(82, "Vous êtes maintenant " + m_Classes[type].CType.ToString() + " niveau " + m_Classes[type].Niveau);
+                    Dons.LearnDonClasse(m_Classes[type], m_Classes[type].Niveau);
 
                 }
                 else
@@ -339,8 +403,8 @@ namespace Server.Mobiles
             }
             else
                 SendMessage("Vous ne pouvez pas multiclasser plus de deux fois !");
-            if (ok)
-                AfterMakeClasse();
+         /*   if (ok)
+                AfterMakeClasse();*/
             return ok;
         }
         public int getAchats()
@@ -418,7 +482,18 @@ namespace Server.Mobiles
 
             if (Weapon is Fists && !hasDon(DonEnum.ScienceDuCombatAMainsNues)) //Pas d'attaque d'opportunité sans arts martiaux;
                 return false;
-            return base.getCanDoOpportunite();
+
+            TimeSpan time = WorldData.TimeTour();
+
+            if (hasDon(DonEnum.AttaquesReflexes))
+            {
+                int bonus = (int)DndHelper.GetCaracMod(this, DndStat.Dexterite);
+                if (bonus > 0)
+                    time = TimeSpan.FromSeconds(WorldData.TimeTour().TotalSeconds / (1 + bonus));
+            }
+
+            return mLastOpportuniteAction < DateTime.Now - time && !IsRenverse;
+            
 
         }
 
@@ -446,6 +521,16 @@ namespace Server.Mobiles
 
         public override void OnDamage(int amount, Mobile from, bool willKill)
         {
+            if (NextSortCast > DateTime.Now)
+            {
+                int dd = 10 + amount;
+                if (hasDon(DonEnum.MagieDeGuerre))
+                    dd -= 4;
+
+                if (!Competences[CompType.Concentration].check(dd, 0))
+                    InterruptCast(this, mLastSortClasse);
+            }
+            
             if (hasDon(DonEnum.ReductionDegat))
             {
                 int reduc = getDonNiveau(DonEnum.ReductionDegat);
@@ -472,74 +557,32 @@ namespace Server.Mobiles
         //Deluge de coup du moin
         public bool DelugeDeCoup = false;
 
+        private DonStack mDons = null;
 
-        protected Dictionary<DonEnum, int> mDons = new Dictionary<DonEnum, int>();
-
-        protected Dictionary<DonEnum, int> mDonsUses = new Dictionary<DonEnum, int>();
-        protected DateTime mNextDonUse = DateTime.Now;
-
-        public bool canUseDon(BaseDon don)
+        public DonStack Dons
         {
-            if (mNextDonUse > DateTime.Now)
-            {
-                SendMessage("Il est encore trop tôt pour utiliser un don");
-                return false;
-            }
-            if (hasDon(don.DType))
-            {
-                if (don.LimiteDayUse)
-                {
-                    if (!mDonsUses.ContainsKey(don.DType))
-                    {
-                        mDonsUses.Add(don.DType, 1);
-                        return true;
-                    }
-                    else
-                    {
-                        int uses = mDonsUses[don.DType];
-                        if (uses >= getDonNiveau(don.DType))
-                        {
-                            SendMessage("Vous ne pouvez plus utiliser ce don (Utilisé déjà {0} fois ce jour)", uses);
-                            return false;
-                        }
-                        else
-                        {
-                            uses++;
-                            mDonsUses[don.DType] = uses;
-                            return true;
-                        }
-
-                    }
-                }
-                else
-                    return true;
-            }
-            return false;
-        }
-
-        public ICollection Dons
-        {
-            get
-            {
-                return mDons.Keys;
-            }
-        }
-
-        public int getDonNiveau(DonEnum don)
-        {
-            if (mDons.ContainsKey(don))
-            {
-                return mDons[don];
-            }
-            return 0;
+            get { return mDons; }
         }
 
         public bool hasDon(DonEnum don)
         {
-            if (mDons.ContainsKey(don))
-                return true;
-            return false;
+            if (mDons == null)
+                return false;
+            return mDons.hasDon(don);
         }
+        public int getDonNiveau(DonEnum don)
+        {
+            if (mDons == null)
+                return 0;
+            return mDons.getDonNiveau(don);
+        }
+        public bool canUseDon(BaseDon don)
+        {
+            if (mDons == null)
+                return false;
+            return mDons.canUseDon(don);
+        }
+       
         #endregion
 
         public override int getBonusRoll()
@@ -844,10 +887,25 @@ namespace Server.Mobiles
         {
             
             if (AccessLevel != AccessLevel.Player)
-                return true;
+                return base.OnMove(d);
+
+            //Attaque d'opportunité au mouvement sur les joueurs
+            if (!(hasDon(DonEnum.AttaqueEclair) && DndHelper.GetBiggerArmor(this) != null && DndHelper.GetBiggerArmor(this).ModelType < ArmorModelType.Plaque))
+            {
+                if (LastMoveTime >= DateTime.Now - WorldData.TimeTour())
+                    ExposeToOpportunite();
+            }
+
 
 
             isRunning = (d & Direction.Running) != 0;
+
+            if (SpeedContext.ComputeSpeed(this) == SpeedContext.SpeedState.Fast)
+            {
+                Stam -= 2;
+                if( Stam <= 5 )
+                    SpeedContext.RemoveContext(this, "Course");
+            }
 
 
 
@@ -855,7 +913,8 @@ namespace Server.Mobiles
             {
                 if (NextSortCast > DateTime.Now)
                 {
-                    InterruptCast(this, mLastSortClasse);
+                    if( !Competences[CompType.Concentration].check(15,0) )
+                        InterruptCast(this, mLastSortClasse);
                 }
                 Stam -= (int)((double)TotalWeight / 100.0);
                 if (AttaqueParTour != 1)
@@ -869,7 +928,7 @@ namespace Server.Mobiles
             {
                 if (NextSortCast > DateTime.Now)
                 {
-                    if (!Competences[CompType.Concentration].check(15, 0))
+                    if (!Competences[CompType.Concentration].check(10, 0))
                     {
                         PrivateOverheadMessage(Server.Network.MessageType.Regular, GumpNubia.ColorTextRed, false, "Vous perdez votre concentration", this.NetState);
                         InterruptCast(this, mLastSortClasse);
@@ -963,7 +1022,7 @@ namespace Server.Mobiles
                 }
             }
 
-            return true; ;
+            return base.OnMove(d); 
 
         }
 
@@ -1121,6 +1180,7 @@ namespace Server.Mobiles
                     }
                 }
                 GiveXP( (int)AutoXP );
+                SendMessage("Auto XP = " + AutoXP.ToString());
             }
             if (Alive)
             {
@@ -1295,69 +1355,15 @@ namespace Server.Mobiles
             return true;
         }
 
-
-
-        public void AfterMakeClasse()
-        {
-            //Vérification des dons
-            
-            //On vire, par sécurité, tout les dons de classe
-            List<DonEnum> toRemove = new List<DonEnum>();
-
-                
-                foreach (DonEnum d in mDons.Keys)
-                {
-                    if ( (int)d < 1000) //Don de classe
-                        toRemove.Add(d);
-                }
-                foreach (DonEnum r in toRemove)
-                {
-                    if (mDons.ContainsKey(r))
-                    {
-                       // SendMessage("Vous perdez le don: ", r.ToString());
-                        mDons.Remove(r);
-                    }
-                }
-            
-
-            foreach ( Classe c in GetClasses() )
-            {
-                for (int i = 0; i < c.DonClasse.Length && i <= c.Niveau; i++)
-                {
-                    for (int d = 0; d < c.DonClasse[i].Length; d++)
-                    {
-                        DonEnum don = c.DonClasse[i][d];
-                        if (mDons.ContainsKey(don))
-                            mDons[don]++;
-                        else
-                            mDons.Add(don, 1);
-
-                        if (don == DonEnum.PerfectionEtre)
-                            CreatureType = MobileType.Exterieur;
-
-                        if ( !toRemove.Contains(don) )
-                        {
-                            string dname = "";
-                            if (BaseDon.DonBank.ContainsKey(don.ToString().ToLower() ))
-                                dname = BaseDon.DonBank[don.ToString().ToLower() ].Name;
-                            else
-                                dname = don.ToString();
-                            SendMessage(2049, "Vous gagnez le don: " + dname + " rang " + mDons[don]);
-                        }
-                        
-                    }
-                }
-            }
-
-        }
-
         public NubiaPlayer()
         {
             this.CreatureType = MobileType.Humanoide;
+            mDons = new DonStack(this);
         }
         public NubiaPlayer(Serial s)
             : base(s)
         {
+            mDons = new DonStack(this);
         }
         [CommandProperty(AccessLevel.GameMaster)]
         public int NivClassDispo
@@ -1473,10 +1479,13 @@ namespace Server.Mobiles
                 from.NetState);
         }
 
+
+
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)1);//version
+            writer.Write((int)0);//version
 
             writer.Write((int)m_beaute);
             writer.Write((int)m_race);
@@ -1503,34 +1512,56 @@ namespace Server.Mobiles
                 writer.Write((int)c.CType);
                 writer.Write((int)c.Niveau);
             }
+
+            int count = Dons.DonsEntrys.Values.Count;
+            writer.Write((int)count);
+            foreach (DonEntry entry in Dons.DonsEntrys.Values)
+            {
+                writer.Write((int)entry.Don);
+                writer.Write((int)entry.Classe);
+                writer.Write((int)entry.GiveAtLevel);
+                writer.Write((int)entry.UseThisDay);
+                writer.Write((int)entry.Value);
+            }
+
+
+            writer.Write((int)m_maitrises.Count);
+            foreach (ArmeTemplate t in m_maitrises.Keys)
+            {
+                writer.Write((int)t);
+                writer.Write((int)m_maitrises[t]);
+            }
         }
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
 
+          //  Console.WriteLine("*");
             m_beaute = (Apparence)reader.ReadInt();
             m_race = (RaceType)reader.ReadInt();
             m_deathTurn = reader.ReadInt();
 
+           // Console.WriteLine("*");
             mXPJournalier = reader.ReadInt();
             mTimeXpDelock = reader.ReadDateTime();
 
-            if (version >= 1)
+         //   Console.WriteLine("*");
+            mCote = reader.ReadInt();
+            int nbr = reader.ReadInt();
+            mCotationTimes = new Dictionary<string, DateTime>();
+            for (int i = 0; i < nbr; i++)
             {
-                mCote = reader.ReadInt();
-                int nbr = reader.ReadInt();
-                mCotationTimes = new Dictionary<string, DateTime>();
-                for (int i = 0; i < nbr; i++)
-                {
-                    string gm = reader.ReadString();
-                    DateTime time = reader.ReadDateTime();
-                    mCotationTimes.Add(gm, time);
-                }
+                string gm = reader.ReadString();
+                DateTime time = reader.ReadDateTime();
+                mCotationTimes.Add(gm, time);
             }
+
+         //   Console.WriteLine("*");
             mXP = reader.ReadInt();
             m_lastClasse = (ClasseType)reader.ReadInt();
 
+        //    Console.WriteLine("*");
             int countCl = reader.ReadInt();
             for (int cl = 0; cl < countCl; cl++)
             {
@@ -1540,6 +1571,40 @@ namespace Server.Mobiles
                 Type t = Classe.GetClasse(ct);
                 MakeClasse(t, niv);
             }
+
+
+        //    Console.WriteLine("*");
+                int donCount = reader.ReadInt();
+               // Console.WriteLine("donCount = " + donCount);
+                mDons = new DonStack(this);
+                for (int d = 0; d < donCount; d++)
+                {
+                    DonEnum don = (DonEnum)reader.ReadInt();
+                   // Console.WriteLine("don = " + don);
+                    ClasseType ctype = (ClasseType)reader.ReadInt();
+                   // Console.WriteLine("ctype = " + ctype);
+                    int giveatlevel = reader.ReadInt();
+                   // Console.WriteLine("giveatlevel = " + giveatlevel);
+                    int usethisday = reader.ReadInt();
+                  //  Console.WriteLine("usethisday = " + usethisday);
+                    int val = reader.ReadInt();
+                  //  Console.WriteLine("val = " + val);
+
+                    DonEntry entry = new DonEntry(don, ctype, giveatlevel);
+                    entry.Value = val;
+                    entry.UseThisDay = usethisday;
+                    Dons.DonsEntrys.Add(don, entry);
+                }
+
+                int maitriseCount = reader.ReadInt();
+                m_maitrises = new Dictionary<ArmeTemplate, int>();
+                for (int m = 0; m < maitriseCount; m++)
+                {
+                    ArmeTemplate t = (ArmeTemplate)reader.ReadInt();
+                    int vm = reader.ReadInt();
+                    m_maitrises.Add(t, vm);
+                }
+            
         }
     }
 }

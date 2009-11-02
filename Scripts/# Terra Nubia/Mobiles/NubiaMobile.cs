@@ -26,6 +26,11 @@ namespace Server.Mobiles
         None = 0,
         Defense = 1, //+2 CA
         DefenseTotale = 2, //+4 CA. +10 avec pavois. Annulé si on bouge
+        AttaqueEnPuissance = 3,
+        AttaqueEnRotation = 4,
+        CoupEtourdissant = 5,
+        FeuNourri = 6,
+        Renversement = 7,
     }
     /**"Il est possible de se contenter de se déplacer en se défendant, 
      * ce qui constitue une action simple. 
@@ -60,14 +65,24 @@ namespace Server.Mobiles
         public DateTime NextSortCast = DateTime.Now;
         protected BaseSort mLastSort = null;
         protected ClasseType mLastSortClasse = ClasseType.Barde;
+        protected int mLastSortCercle = 0;
 
 
-
-        public void beginCast(BaseSort sort, ClasseType classe)
+        public void beginCast(BaseSort sort, ClasseType classe, int cercle)
         {
             mLastSort = sort;
             mLastSortClasse = classe;
+            mLastSortCercle = cercle;
         }
+
+        public bool LanceUnSort
+        {
+            get
+            {
+                return NextSortCast > DateTime.Now;
+            }
+        }
+
 
         public void InterruptCast(NubiaMobile from, ClasseType classe) //ContreSort/Chant
         {
@@ -172,6 +187,20 @@ namespace Server.Mobiles
            m_turn++;
            if (m_turn > 1000)
                m_turn = 0;
+
+
+           if (IsRenverse)
+           {
+               mTourRenverse--;
+               if (mTourRenverse == 0)
+               {
+                   Emote("*Se relève*");
+                   SendMessage("Vous n'êtes plus renversé");
+               }
+               else
+                   ExposeToOpportunite();
+           }
+
            NubiaBlessure toRemov = null;
 
            foreach (NubiaBlessure blessure in BlessureList)
@@ -272,7 +301,7 @@ namespace Server.Mobiles
         }
 
         private DateTime mOpportuniteExposeTime = DateTime.Now;
-        private DateTime mLastOpportuniteAction = DateTime.Now;
+        protected DateTime mLastOpportuniteAction = DateTime.Now;
         private DateTime mLastEtourdiTime = DateTime.Now;
 
         private ActionCombat mActionCombat = ActionCombat.None;
@@ -283,7 +312,12 @@ namespace Server.Mobiles
             get { return mLastEtourdiTime > DateTime.Now - WorldData.TimeTour(); }
         }
 
-
+        public void Etourdir()
+        {
+            mLastEtourdiTime = DateTime.Now;
+            Stam -= 40;
+            Freeze(WorldData.TimeTour());
+        }
         public bool Etourdir(NubiaMobile attacker)
         {
             if (attacker == null)
@@ -309,7 +343,7 @@ namespace Server.Mobiles
         {
            
               
-                return mLastOpportuniteAction < DateTime.Now - WorldData.TimeTour();
+                return (mLastOpportuniteAction < DateTime.Now - WorldData.TimeTour() ) && !IsRenverse;
             
         }
 
@@ -400,12 +434,14 @@ namespace Server.Mobiles
                 else
                     Emote("*Defense totale*");
             }
-            else
+            else if (act == getActionCombat())
             {
                 SendMessage("Vous ne maintenez plus d'action de combat particulière");
                 mActionCombat = ActionCombat.None;
             }
 
+            else
+                mActionCombat = act;
         }
         public virtual int getBonusRoll()
         {
@@ -418,13 +454,30 @@ namespace Server.Mobiles
 
             return bonus;
         }
+
+        // Renversement
+        private int mTourRenverse = 0;
+
+        public void doRenversement(int tours)
+        {
+            Animate(21, 7, 1, true, false, 0);
+            Emote("*Renversé*");
+            mTourRenverse = tours;
+            ExposeToOpportunite();
+        }
+        public bool IsRenverse
+        {
+            get { return mTourRenverse > 0; }
+        }
+
+
         protected override bool OnMove(Direction d)
         {
-            //Attaque d'opportunité au mouvement sur les joueurs
-            if (!(this is BaseCreature))
+
+            if (IsRenverse)
             {
-                if (LastMoveTime >= DateTime.Now - WorldData.TimeTour())
-                    ExposeToOpportunite();
+                SendMessage("Vous êtes renversé !");
+                return false;
             }
 
             if (mActionCombat == ActionCombat.DefenseTotale)
@@ -766,7 +819,7 @@ namespace Server.Mobiles
                 double dexMod = DndHelper.GetCaracMod(this, DndStat.Dexterite);
                 double TailleMod = ((int)mTaille);
 
-                
+    
 
                 //Bouclier Total :
                 if (getBouclier() != null && mActionCombat == ActionCombat.DefenseTotale)

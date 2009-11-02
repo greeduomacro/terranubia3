@@ -5,6 +5,7 @@ using Server.Gumps;
 using Server.Network;
 using Server.Spells.Necromancy;
 using Server.Spells;
+using Server.Mobiles;
 
 namespace Server.SkillHandlers
 {
@@ -17,13 +18,22 @@ namespace Server.SkillHandlers
 
 		public static TimeSpan OnUse( Mobile m )
 		{
-			m.SendLocalizedMessage( 1011350 ); // What do you wish to track?
+            if (m is NubiaPlayer)
+            {
+                if (!((NubiaPlayer)m).hasDon(DonEnum.Pistage))
+                {
+                    m.SendMessage("Vous devez avoir le don de pistage pour cela");
+                }
+                m.SendLocalizedMessage(1011350); // What do you wish to track?
 
-			m.CloseGump( typeof( TrackWhatGump ) );
-			m.CloseGump( typeof( TrackWhoGump ) );
-			m.SendGump( new TrackWhatGump( m ) );
+                m.CloseGump(typeof(TrackWhatGump));
+                m.CloseGump(typeof(TrackWhoGump));
+                m.SendGump(new TrackWhatGump(m));
 
-			return TimeSpan.FromSeconds( 10.0 ); // 10 second delay before beign able to re-use a skill
+            }
+            else
+                m.SendMessage("ERROR");
+			    return TimeSpan.FromSeconds( 10.0 ); // 10 second delay before beign able to re-use a skill
 		}
 
 		public class TrackingInfo
@@ -65,8 +75,8 @@ namespace Server.SkillHandlers
 
 			m_Table.Remove( tracker );	//Reset as of Pub 40, counting it as bug for Core.SE.
 
-			if( Core.ML )
-				return Math.Min( bonus, 10 + tracker.Skills.Tracking.Value/10 );
+			/*if( Core.ML )
+				return Math.Min( bonus, 10 + tracker.Skills.Tracking.Value/10 );*/
 
 			return bonus;
 		}
@@ -85,8 +95,9 @@ namespace Server.SkillHandlers
 
 		public TrackWhatGump( Mobile from ) : base( 20, 30 )
 		{
+
 			m_From = from;
-			m_Success = from.CheckSkill( SkillName.Tracking, 0.0, 21.1 );
+            m_Success = ((NubiaPlayer)from).Competences[CompType.Survie].check(15, 0);
 
 			AddPage( 0 );
 
@@ -156,8 +167,11 @@ namespace Server.SkillHandlers
 			}
 		}
 
-		public static void DisplayTo( bool success, Mobile from, int type )
+		public static void DisplayTo( bool success, Mobile f, int type )
 		{
+            if( !(f is NubiaMobile ))
+                return;
+            NubiaMobile from = f as NubiaMobile;
 			if ( !success )
 			{
 				from.SendLocalizedMessage( 1018092 ); // You see no evidence of those in the area.
@@ -171,16 +185,18 @@ namespace Server.SkillHandlers
 
 			TrackTypeDelegate check = m_Delegates[type];
 
-			from.CheckSkill( SkillName.Tracking, 21.1, 100.0 ); // Passive gain
+			//from.CheckSkill( SkillName.Tracking, 21.1, 100.0 ); // Passive gain
 
-			int range = 10 + (int)(from.Skills[SkillName.Tracking].Value / 10);
+			int range = 10 + (int)from.Competences[CompType.Survie].getMaitrise() * 2;
 
 			List<Mobile> list = new List<Mobile>();
 
 			foreach ( Mobile m in from.GetMobilesInRange( range ) )
 			{
 				// Ghosts can no longer be tracked 
-				if ( m != from && (!Core.AOS || m.Alive) && (!m.Hidden || m.AccessLevel == AccessLevel.Player || from.AccessLevel > m.AccessLevel) && check( m ) && CheckDifficulty( from, m ) )
+				if ( m != from && (!Core.AOS || m.Alive) && 
+                    (!m.Hidden || m.AccessLevel == AccessLevel.Player || from.AccessLevel > m.AccessLevel)
+                    && check( m ) && CheckDifficulty( from, m ) )
 					list.Add( m );
 			}
 
@@ -208,9 +224,19 @@ namespace Server.SkillHandlers
 			if ( !Core.AOS || !m.Player )
 				return true;
 
+            if (!(from is NubiaPlayer) && !(m is NubiaMobile))
+                return false;
 
+            NubiaPlayer player = from as NubiaPlayer;
+            NubiaMobile cible = m as NubiaMobile;
 
-			int tracking = from.Skills[SkillName.Tracking].Fixed;	
+            int DD = 10;
+            if (cible.Hidden)
+                DD += (int)cible.Competences[CompType.Discretion].getMaitrise() / 2;
+
+            return player.Competences[CompType.Survie].check(DD, 0);
+
+			/*int tracking = from.Skills[SkillName.Tracking].Fixed;	
 			int detectHidden = from.Skills[SkillName.DetectHidden].Fixed;
 
 			if( Core.ML && m.Race == Race.Elf )
@@ -239,7 +265,7 @@ namespace Server.SkillHandlers
 			else
 				chance = 100;
 
-			return chance > Utility.Random( 100 );
+			return chance > Utility.Random( 100 );*/
 		}
 
 		private static bool IsAnimal( Mobile m )

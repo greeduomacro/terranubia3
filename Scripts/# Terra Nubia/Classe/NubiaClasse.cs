@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Server.Items;
 using Server.Mobiles;
@@ -9,7 +10,8 @@ namespace Server
 {
     public enum ClasseType
     {
-        Barbare,
+        None = -1,
+        Barbare = 0,
         Barde,
         Druide,
         Ensorceleur,
@@ -70,6 +72,22 @@ namespace Server
             {
                 return new DonEnum[][]{ new DonEnum[0] };
             }
+        }
+        public virtual DonEnum[] getCustomDon(NubiaPlayer p, int niveau)
+        {
+            List<DonEnum> list = new List<DonEnum>();
+            for (int d = (int)DonEnum.AffiniteMagique; d < (int)DonEnum.Maximum; d++)
+            {
+           //     Console.WriteLine("Don de custom: " + (DonEnum)d);
+                if (BaseDon.DonBank.ContainsKey( ((DonEnum)d).ToString().ToLower() ))
+                {
+                    BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString().ToLower() ];
+               //     Console.WriteLine("Don de la bank: " + don.ToString());
+                    if (don.hasConditions(p))
+                        list.Add(don.DType);
+                }
+            }
+            return list.ToArray();
         }
 
         public static string GetNameClasse(ClasseType ct)

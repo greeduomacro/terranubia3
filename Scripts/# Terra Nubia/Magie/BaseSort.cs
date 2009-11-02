@@ -74,11 +74,23 @@ namespace Server.Spells
             if (armor != null)
                 echecPercent = armor.PercentEchecSort;
 
-            if (cercle > 0 && caster is NubiaPlayer)
+            if ( caster is NubiaPlayer)
             {
-                NubiaPlayer player = caster as NubiaPlayer;                
-                echecPercent += getCoteEchec(player.Cote, cercle);
-                caster.SendMessage("Echec du a la cote: " + echecPercent + "%");
+                NubiaPlayer player = caster as NubiaPlayer;
+                if (player.Frozen && !player.Competences[CompType.Concentration].check(15,0) )
+                {
+                    echecPercent += 100;
+                }
+                if (cercle > 0)
+                {
+                    echecPercent += getCoteEchec(player.Cote, cercle);
+                   // caster.SendMessage("Echec du a la cote: " + echecPercent + "%");
+                }
+                if ((player.BodyValue != 400 && player.BodyValue != 401) && !player.hasDon(DonEnum.IncantationAnimale))
+                {
+                    echecPercent += 100;
+                    player.SendMessage("Vous ne pouvez pas incanter sous cette forme");
+                }
             }
             echecPercent /= 100;
             return echecPercent < Utility.RandomDouble();
@@ -133,7 +145,45 @@ namespace Server.Spells
             if (Action == SortAction.Benefic)
                 return true;
             bool sauve = false;
-            int DD = 10 + cercle + (int)DndHelper.GetCaracMod(caster, stat);
+            int DD = 10 + cercle + (int)DndHelper.GetCaracMod(caster, stat);            
+            if (caster is NubiaPlayer)
+            {
+                NubiaPlayer playerCaster = caster as NubiaPlayer;
+                if (Ecole == MagieEcole.Abjuration && playerCaster.hasDon(DonEnum.EcoleRenforceAbjuration))
+                    DD++;
+                else if (Ecole == MagieEcole.Divination && playerCaster.hasDon(DonEnum.EcoleRenforceDivination))
+                    DD++;
+                else if (Ecole == MagieEcole.Enchantement && playerCaster.hasDon(DonEnum.EcoleRenforceEnchantement))
+                    DD++;
+                else if (Ecole == MagieEcole.Evocation && playerCaster.hasDon(DonEnum.EcoleRenforceEvocation))
+                    DD++;
+                else if (Ecole == MagieEcole.Illusion && playerCaster.hasDon(DonEnum.EcoleRenforceIllusion))
+                    DD++;
+                else if (Ecole == MagieEcole.Ivocation && playerCaster.hasDon(DonEnum.EcoleRenforceInvocation))
+                    DD++;
+                else if (Ecole == MagieEcole.Necromancie && playerCaster.hasDon(DonEnum.EcoleRenforceNecromancie))
+                    DD++;
+                else if (Ecole == MagieEcole.Transmutation && playerCaster.hasDon(DonEnum.EcoleRenforceTransmutation))
+                    DD++;
+
+                if (Ecole == MagieEcole.Abjuration && playerCaster.hasDon(DonEnum.EcoleSuperieureAbjuration))
+                    DD++;
+                else if (Ecole == MagieEcole.Divination && playerCaster.hasDon(DonEnum.EcoleSuperieureDivination))
+                    DD++;
+                else if (Ecole == MagieEcole.Enchantement && playerCaster.hasDon(DonEnum.EcoleSuperieureEnchantement))
+                    DD++;
+                else if (Ecole == MagieEcole.Evocation && playerCaster.hasDon(DonEnum.EcoleSuperieureEvocation))
+                    DD++;
+                else if (Ecole == MagieEcole.Illusion && playerCaster.hasDon(DonEnum.EcoleSuperieureIllusion))
+                    DD++;
+                else if (Ecole == MagieEcole.Ivocation && playerCaster.hasDon(DonEnum.EcoleSuperieureInvocation))
+                    DD++;
+                else if (Ecole == MagieEcole.Necromancie && playerCaster.hasDon(DonEnum.EcoleSuperieureNecromancie))
+                    DD++;
+                else if (Ecole == MagieEcole.Transmutation && playerCaster.hasDon(DonEnum.EcoleSuperieureTransmutation))
+                    DD++;
+            }
+
             int roll = DndHelper.rollDe(De.vingt);
             switch (Sauvegarde)
             {
@@ -158,10 +208,17 @@ namespace Server.Spells
              * fonctionne contre la créature, celui qui l’utilise 
              * doit effectuer un test de niveau de lanceur de sorts 
              * (1d20 + niveau de lanceur de sorts).*/
-
+            int casterBonus = 0;
+            if (mobile is NubiaPlayer)
+            {
+                if (((NubiaPlayer)mobile).hasDon(DonEnum.EfficaciteDesSortsAccrue))
+                    casterBonus += 2;
+                if (((NubiaPlayer)mobile).hasDon(DonEnum.EfficaciteDesSortsSuperieure))
+                    casterBonus += 2;
+            }
             if (cible.ResistanceMagie < 20 + casterNiveau)
             {
-                int mageRoll = DndHelper.rollDe(De.vingt) + casterNiveau;
+                int mageRoll = DndHelper.rollDe(De.vingt) + casterNiveau + casterBonus;
                 bool resist = cible.ResistanceMagie > mageRoll;
 
                 if (resist)
@@ -256,7 +313,7 @@ namespace Server.Spells
                 mCercle = cercle;
 
                 mCaster.ExposeToOpportunite();
-
+                //mCaster.beginCast(sort, ClasseType.Barde, mCercle);
                 if (mSort.ComposanteVerbal)
                     mSort.doVerbal(caster);
                 if (mSort.ComposanteGestuelle)
