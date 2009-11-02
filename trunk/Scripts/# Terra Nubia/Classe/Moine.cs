@@ -11,19 +11,19 @@ namespace Server
         public static int getDamage(int moineNiveau)
         {
             if (moineNiveau <= 0)
-                return Utility.RandomMinMax(1, 3);
+                return DndHelper.rollDe(De.trois);
             else if (moineNiveau <= 3)
-                return Utility.RandomMinMax(1, 4);
+                return DndHelper.rollDe(De.six);
             else if (moineNiveau <= 7)
-                return Utility.RandomMinMax(1, 6);
+                return DndHelper.rollDe(De.huit);
             else if (moineNiveau <= 11)
-                return Utility.RandomMinMax(1, 8);
+                return DndHelper.rollDe(De.dix);
             else if (moineNiveau <= 15)
-                return Utility.RandomMinMax(1, 10);
+                return DndHelper.rollDe(De.six, 2);
             else if (moineNiveau <= 19)
-                return 2 * Utility.RandomMinMax(1, 6);
+                return DndHelper.rollDe(De.huit, 2);
             else
-                return 2 * Utility.RandomMinMax(1, 8);
+                return DndHelper.rollDe(De.dix, 2);
         }
 
         public override NubiaArmorType ArmorAllow { get { return NubiaArmorType.None; } }
@@ -61,6 +61,7 @@ namespace Server
                 };
             }
         }
+
 
 
         public override ClasseType CType { get { return ClasseType.Moine; } }

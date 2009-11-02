@@ -19,6 +19,10 @@ namespace Server
     }
     public  class DndHelper
     {
+        public static int getDonTotal(int Niveau)
+        {
+            return ( Niveau / 3 ) + 1;
+        }
         public static string nomDe(De de, int nbr)
         {
             return nbr.ToString() + "d" + ((int)de).ToString();

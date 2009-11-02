@@ -26,7 +26,7 @@ namespace Server.Gumps
 			int y = YBase;
 			int x = XBase;
 			int line = 0;
-			int scale = 28;
+			int scale = 25;
 			int decal = 5;
 
             ClasseType possClasse = ClasseType.Maximum;

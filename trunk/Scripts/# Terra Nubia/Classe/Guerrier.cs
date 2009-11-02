@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Server.Items;
 using Server.Mobiles;
@@ -33,6 +34,36 @@ namespace Server
             }
         }
 
+        public override DonEnum[] getCustomDon(NubiaPlayer p, int niveau)
+        {
+            List<DonEnum> list = new List<DonEnum>();
+
+            if (niveau == 1)
+            {
+                for (int d = (int)DonEnum.AffiniteMagique; d < (int)DonEnum.Maximum; d++)
+                {
+                    if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString()))
+                    {
+                        BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString()];
+                        if (don.hasConditions(p))
+                            list.Add(don.DType);
+                    }
+                }
+            }
+            else
+            {
+                for (int d = (int)DonEnum.AffiniteMagique; d < (int)DonEnum.Maximum; d++)
+                {
+                    if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString()))
+                    {
+                        BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString()];
+                        if (don.hasConditions(p) && don.WarriorDon )
+                            list.Add(don.DType);
+                    }
+                }
+            }
+            return list.ToArray();
+        }
 
         public override int[][] BonusAttaque
         {

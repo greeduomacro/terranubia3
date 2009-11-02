@@ -9,6 +9,9 @@ namespace Server.Commands
     {
         public static void Initialize()
         {
+            CommandSystem.Register("renversement", AccessLevel.Player,
+               new CommandEventHandler(renversement_OnCommand));
+
             CommandSystem.Register("attaque", AccessLevel.Player,
                new CommandEventHandler(attaque_OnCommand));
 
@@ -18,6 +21,12 @@ namespace Server.Commands
                 new CommandEventHandler(defense_OnCommand));
             CommandSystem.Register("roule", AccessLevel.Player,
                 new CommandEventHandler(roule_OnCommand));
+        }
+        public static void renversement_OnCommand(CommandEventArgs e)
+        {
+            NubiaMobile p = e.Mobile as NubiaMobile;
+            p.NewActionCombat(ActionCombat.Renversement);
+            p.SendMessage("Vous préparez votre renversement...");
         }
         public static void attaque_OnCommand(CommandEventArgs e)
         {

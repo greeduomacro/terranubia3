@@ -314,7 +314,12 @@ namespace Server.Items
 
            
             //Etourdi
-            if (DefMob.IsEtourdi)
+            if (AttMob.IsEtourdi)
+            {
+                canSwing = false;
+            }
+
+            if (AttMob.IsRenverse && AttMob.Weapon is BaseRanged)
             {
                 canSwing = false;
             }
@@ -391,6 +396,35 @@ namespace Server.Items
             if (defender is NubiaPlayer)
                 DefPlayer = defender as NubiaPlayer;
 
+            if (AttMob.getActionCombat() == ActionCombat.Renversement)
+            {
+                AttMob.NewActionCombat(ActionCombat.None);
+                AttMob.ExposeToOpportunite();
+                AttMob.Emote("*Tente un renversement*");
+                int ddRenv = DndHelper.rollDe(De.vingt) + (int)Math.Max(DndHelper.GetCaracMod(DefMob, DndStat.Force), DndHelper.GetCaracMod(DefMob, DndStat.Dexterite));
+                int rollAtt = DndHelper.rollDe(De.vingt) + (int)DndHelper.GetCaracMod(AttMob, DndStat.Force);
+                if (AttPlayer != null && AttPlayer.hasDon(DonEnum.ScienceDuRenversement))
+                    rollAtt += 4;
+                if (rollAtt >= ddRenv)
+                {
+                    DefMob.doRenversement(1);
+                }
+                else
+                {
+                    AttMob.SendMessage("Vous ratez votre tentative");
+                    DefMob.SendMessage("Vous resisté au renversement");
+                    rollAtt = DndHelper.rollDe(De.vingt) + (int)Math.Max(DndHelper.GetCaracMod(AttMob, DndStat.Force), DndHelper.GetCaracMod(AttMob, DndStat.Dexterite));
+                    ddRenv = DndHelper.rollDe(De.vingt) + (int)DndHelper.GetCaracMod(DefMob, DndStat.Force);
+                    if (ddRenv > rollAtt)
+                    {
+                        if( !( AttPlayer != null && AttPlayer.hasDon(DonEnum.ScienceDuRenversement) ) )
+                        {
+                            AttMob.doRenversement(1);
+                        }
+                    }
+                }
+            }
+            double DD = 0;
             //Attaque d'opportunité
             if (mOpportunite)
             {
@@ -399,6 +433,10 @@ namespace Server.Items
                 if (AttPlayer != null)
                     if (AttPlayer.hasDon(DonEnum.AttaqueSournoise))
                         msg = "Attaque sournoise!";
+
+                if( DefPlayer != null && DefPlayer.hasDon(DonEnum.SouplesseDuSerpent ) )
+                    DD += 4;
+
                 AttMob.PrivateOverheadMessage(MessageType.Regular, 2119, false, msg, AttMob.NetState);
                 AttMob.PrivateOverheadMessage(MessageType.Regular, 2119, false, msg, DefMob.NetState);
             }
@@ -406,7 +444,33 @@ namespace Server.Items
             int roll = Utility.RandomMinMax(1, 20); //Jet de base du 1d20
 
 
-            bool coupCritique = (roll >= mMiniCritique);
+            int minCritique = mMiniCritique;
+            if (AttPlayer != null)
+            {
+                if (mTemplate == ArmeTemplate.Arbalete && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueArbalete))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Arc && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueArc))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Baton && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueBaton))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Dague && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueDague))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Epee && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueEpee))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Hache && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueHache))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Hast && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueHast))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Jet && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueJet))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Lance && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueLance))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Masse && AttPlayer.hasDon(DonEnum.ScienceDuCritiqueMasse))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+                else if (mTemplate == ArmeTemplate.Poing && AttPlayer.hasDon(DonEnum.ScienceDuCritiquePoing))
+                    minCritique = 20 - ((20 - mMiniCritique) * 2);
+            }
+            bool coupCritique = (roll >= minCritique);
 
             double bonii = 0;
 
@@ -433,6 +497,7 @@ namespace Server.Items
             //Modificateur de charactéristique en fonction de l'arme Distance ou contact
 
            bool moineSag = false;
+           bool attaqueFinesse = false;
            if (AttPlayer != null)
            {
                if (AttPlayer.hasClasse(ClasseType.Moine) && this is Fists)
@@ -440,12 +505,23 @@ namespace Server.Items
                    bonii += (double)DndHelper.GetCaracMod(AttPlayer, DndStat.Sagesse);
                    moineSag = true;
                }
+
+               if (AttPlayer.hasDon(DonEnum.AttaqueEnFinesse) && AttPlayer.getBouclier() == null && (mTemplate == ArmeTemplate.Epee || mTemplate == ArmeTemplate.Dague || mTemplate == ArmeTemplate.Poing))
+               {
+                   bonii += (double)DndHelper.GetCaracMod(AttPlayer, DndStat.Dexterite, true);
+                   attaqueFinesse = true;
+               }
+
+               if (AttPlayer.getActionCombat() == ActionCombat.AttaqueEnPuissance)
+                   bonii -= AttPlayer.BonusAttaque[0] / 2;
            }
 
             if ( this.MaxRange > 3 && !moineSag)
                 bonii += (double)DndHelper.GetCaracMod(AttMob, DndStat.Dexterite);
-            else if( !moineSag )
+            else if (!moineSag && !attaqueFinesse)
                 bonii += (double)DndHelper.GetCaracMod(AttMob, DndStat.Force);
+
+            
           //  Console.WriteLine(AttMob.Name + " :: Bonus d'attaque (Classe+Mod Carac): +" + bonii);
 
            
@@ -494,6 +570,80 @@ namespace Server.Items
                 bonii -= 6;
             }
 
+           
+
+            // Armes de prédilections
+            if (AttPlayer != null)
+            {
+                if (mTemplate == ArmeTemplate.Arbalete && AttPlayer.hasDon(DonEnum.ArmeDePredilectionArbalete))
+                    bonii ++;
+                else if (mTemplate == ArmeTemplate.Arc && AttPlayer.hasDon(DonEnum.ArmeDePredilectionArc))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Baton && AttPlayer.hasDon(DonEnum.ArmeDePredilectionBaton))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Dague && AttPlayer.hasDon(DonEnum.ArmeDePredilectionDague))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Epee && AttPlayer.hasDon(DonEnum.ArmeDePredilectionEpee))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Hache && AttPlayer.hasDon(DonEnum.ArmeDePredilectionHache))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Hast && AttPlayer.hasDon(DonEnum.ArmeDePredilectionHast))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Jet && AttPlayer.hasDon(DonEnum.ArmeDePredilectionJet))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Lance && AttPlayer.hasDon(DonEnum.ArmeDePredilectionLance))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Masse && AttPlayer.hasDon(DonEnum.ArmeDePredilectionMasse))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Poing && AttPlayer.hasDon(DonEnum.ArmeDePredilectionPoing))
+                    bonii++;
+
+                if (mTemplate == ArmeTemplate.Arbalete && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupArbalete))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Arc && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupArc))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Baton && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupBaton))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Dague && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupDague))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Epee && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupEpee))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Hache && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupHache))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Hast && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupHast))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Jet && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupJet))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Lance && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupLance))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Masse && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupMasse))
+                    bonii++;
+                else if (mTemplate == ArmeTemplate.Poing && AttPlayer.hasDon(DonEnum.ArmeDePredilectionSupPoing))
+                    bonii++;
+
+
+                if (AttPlayer.Mount != null && !AttPlayer.hasDon(DonEnum.CombatMonte))
+                    bonii -= 7;
+
+                if (AttPlayer.getActionCombat() == ActionCombat.FeuNourri)
+                {
+                    if (AttPlayer.Weapon is BaseRanged)
+                    {
+                        bonii -= 4;
+                        if (AttPlayer.BonusAttaque[0] >= 11)
+                            bonii -= 2;
+                        if (AttPlayer.BonusAttaque[0] >= 16)
+                            bonii -= 2;
+
+                    }
+                }
+            }
+
+            //Renversé / A terre
+            if (AttMob.IsRenverse)
+            {
+                bonii -= 4;
+            }
             //Pris au dépourvu
             bool prisDepourvu = false;
             if ((AttMob.Hidden || !DefMob.Warmode) && !DefMob.InCombat)
@@ -515,7 +665,7 @@ namespace Server.Items
                 }
             }
 
-            double DD = (DefMob.CA);
+            DD += (DefMob.CA);
             if (prisDepourvu && DndHelper.GetCaracMod(DefMob, DndStat.Dexterite) > 0 )
                 DD -= DndHelper.GetCaracMod(DefMob, DndStat.Dexterite);
             //Bonus avec un jet d'acrobatie réussi
@@ -528,17 +678,36 @@ namespace Server.Items
             else if (DefMob.Competences[CompType.Acrobaties].check(0))
                 DD += 1;
 
-            //Test de bluff
-            if (AttMob.Competences[CompType.Bluff].getPureMaitrise() > 0)
+            if (DefMob.Mount != null)
+                DD += 2;
+
+            if (DefMob.IsEtourdi)
             {
-                int bluffDD = DefMob.Competences[CompType.Psychologie].pureRoll(0);
-                bluffDD += DefMob.BonusAttaque[DefMob.GetAttackTurn()];
-                if (DefMob.CreatureType != MobileType.Humanoide)
-                    bluffDD += 4;
-                if (AttMob.Competences[CompType.Bluff].check(bluffDD))
+                DD -= 2;
+                DD -= DndHelper.GetCaracMod(DefMob, DndStat.Dexterite);
+            }
+
+            if (DefMob.IsRenverse)
+            {
+                if (AttMob.Weapon is BaseRanged)
+                    DD += 4;
+                else
+                    DD -= 4;
+            }
+            //Test de bluff
+            if (AttPlayer != null && AttMob.Competences[CompType.Bluff].getPureMaitrise() > 0)
+            {
+                if (AttPlayer.hasDon(DonEnum.ScienceDeLaFeinte))
                 {
-                    AttMob.Emote("*feinte*");
-                    DD -= (DefMob.CA);
+                    int bluffDD = DefMob.Competences[CompType.Psychologie].pureRoll(0);
+                    bluffDD += DefMob.BonusAttaque[DefMob.GetAttackTurn()];
+                    if (DefMob.CreatureType != MobileType.Humanoide)
+                        bluffDD += 4;
+                    if (AttMob.Competences[CompType.Bluff].check(bluffDD))
+                    {
+                        AttMob.Emote("*feinte*");
+                        DD -= (DefMob.CA);
+                    }
                 }
             }
 
@@ -617,15 +786,43 @@ namespace Server.Items
                     {
                         
                         damage = ClasseMoine.getDamage(AttPlayer.getNiveauClasse(ClasseType.Moine));
-                        Console.WriteLine("Moine damage : "+damage.ToString() );
+                       // Console.WriteLine("Moine damage : "+damage.ToString() );
                     }
                   /*  else
                         damage = DndHelper.rollDe(this.mDe, this.mNbrLance);*/
-                }
-                
+
                    
+                }
+
+                if (AttPlayer != null)
+                {
+                    if (mTemplate == ArmeTemplate.Arbalete && AttPlayer.hasDon(DonEnum.SpecialisationMartialeArbalete))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Arc && AttPlayer.hasDon(DonEnum.SpecialisationMartialeArc))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Baton && AttPlayer.hasDon(DonEnum.SpecialisationMartialeBaton))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Dague && AttPlayer.hasDon(DonEnum.SpecialisationMartialeDague))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Epee && AttPlayer.hasDon(DonEnum.SpecialisationMartialeEpee))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Hache && AttPlayer.hasDon(DonEnum.SpecialisationMartialeHache))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Hast && AttPlayer.hasDon(DonEnum.SpecialisationMartialeHast))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Jet && AttPlayer.hasDon(DonEnum.SpecialisationMartialeJet))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Lance && AttPlayer.hasDon(DonEnum.SpecialisationMartialeLance))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Masse && AttPlayer.hasDon(DonEnum.SpecialisationMartialeMasse))
+                        DamageBonus += 2;
+                    else if (mTemplate == ArmeTemplate.Poing && AttPlayer.hasDon(DonEnum.SpecialisationMartialePoing))
+                        DamageBonus += 2;
+                }
 
                 damage += (int)DamageBonus + mBonusDegat;
+
+
 
                 if (coupCritique) //Critique !
                 {
@@ -646,17 +843,116 @@ namespace Server.Items
                         canBlessure = true;
                     if (canBlessure)
                     {
+                        double chance = 0.075;
+                        if (AttPlayer != null && AttPlayer.hasDon(DonEnum.DurACuire))
+                            chance -= 0.01;
+
+                        if (AttMob.FindItemOnLayer(Layer.Helm) != null && AttMob.FindItemOnLayer is NubiaArmor)
+                        {
+                            NubiaArmor helm = AttMob.FindItemOnLayer(Layer.Helm) as NubiaArmor;
+                            chance -= 0.01;
+                        }
+
                         if (Utility.RandomDouble() < 0.05)
                             DefMob.AddBlessure(NubiaBlessure.getRandomBlessure());
                     }
                 }
+                if (AttPlayer != null)
+                {
+                    if (AttPlayer.getActionCombat() == ActionCombat.AttaqueEnPuissance)
+                    {
+                        AttPlayer.NewActionCombat(ActionCombat.None);
+                        AttPlayer.Emote("*Attaque en puissance*");
+                        int damPuissance = AttPlayer.BonusAttaque[0];
+                        if (!(Layer == Layer.TwoHanded) || mTemplate == ArmeTemplate.Poing)
+                            damPuissance /= 2;
+                        damage += damPuissance;
+                        AttPlayer.Stam -= 10;
+                    }
 
+                    if (AttPlayer.getActionCombat() == ActionCombat.AttaqueEnRotation)
+                    {
+                        AttPlayer.NewActionCombat(ActionCombat.None);
+                        AttPlayer.Emote("*attaque en rotation*");
+                        AttPlayer.AttaqueParTour = 1;
+                        AttPlayer.Stam -= 10;
+                        IPooledEnumerable eable = AttPlayer.GetMobilesInRange(MaxRange);
+                        foreach (Mobile m in eable)
+                        {
+                            if (m != DefMob)
+                            {
+                                m.Damage(damage, AttPlayer);
+                            }
+                        }
+                        eable.Free();
+                    }
+
+                    if (AttPlayer.getActionCombat() == ActionCombat.CoupEtourdissant)
+                    {
+                        AttPlayer.NewActionCombat(ActionCombat.CoupEtourdissant);
+                        int resistDD = 10 + (int)DndHelper.GetCaracMod(AttPlayer, DndStat.Sagesse) + (AttPlayer.Niveau / 2);
+                        AttPlayer.Emote("*Coup étourdissant*");
+                        if (resistDD > DndHelper.rollDe(De.vingt) + DefMob.getBonusVigueur())
+                        {
+                            DefMob.Etourdir();
+                            DefMob.Emote("*Etourdit*");
+                        }
+                        else
+                            DefMob.Emote("*Encaisse*");
+                    }
+
+                    if (AttPlayer.getActionCombat() == ActionCombat.FeuNourri)
+                    {
+                        AttPlayer.NewActionCombat(ActionCombat.None);
+                        if (AttPlayer.Weapon is BaseRanged)
+                        {
+                            AttPlayer.Emote("*Feu nourri*");
+                            int fleches = 1;
+                            if (AttPlayer.BonusAttaque[0] >= 11)
+                                fleches = 2;
+                            if (AttPlayer.BonusAttaque[0] >= 16)
+                                fleches = 3;
+                            AttPlayer.Stam -= 10;
+                            new FeuNourriTimer(fleches, this as BaseRanged, AttPlayer, DefMob).Start();
+                        }
+                    }
+
+                   
+                }
                 //Attaque sournoise
                 if (AttPlayer != null && mOpportunite)
                     if (AttPlayer.hasDon(DonEnum.AttaqueSournoise))
                     {
                         damage += DndHelper.rollDe(De.six, AttPlayer.getDonNiveau(DonEnum.AttaqueSournoise));
                     }
+
+
+                if (DefPlayer != null)
+                {
+                    if ( this is BaseRanged && DefPlayer.hasDon(DonEnum.ParadeDeProjectiles) && DefPlayer.LastParadeProjectile + WorldData.TimeTour() < DateTime.Now)
+                    {
+                        DefPlayer.LastParadeProjectile = DateTime.Now;
+                        damage = 0;
+                        defender.Animate(20, 7, 1, true, false, 0);
+                        if (DefPlayer.hasDon(DonEnum.InterceptionDeProjectile))
+                        {
+                            DefPlayer.Emote("*Attrape et renvoie le projectile*");
+                            int defRenv = DefPlayer.BonusAttaque[DefPlayer.GetAttackTurn()] - 10 + (int)DndHelper.GetCaracMod(DefPlayer, DndStat.Dexterite);
+                            if (defRenv > AttMob.CA)
+                            {
+                                int damRenv = DndHelper.rollDe(De.six) + (int)DndHelper.GetCaracMod(DefPlayer, DndStat.Force);
+                                ((BaseRanged)this).OnHit(DefPlayer, AttMob, damRenv);
+                            }
+                            else
+                                ((BaseRanged)this).OnMiss(DefPlayer, AttMob);
+                        }
+                        else
+                        {
+                            DefPlayer.Emote("*Pare le projectile*");
+                            ((BaseRanged)this).OnMiss(AttMob, DefPlayer);
+                        }
+                    }
+                }               
                
 
                 OnHit(AttMob, DefMob, damage);
@@ -665,6 +961,41 @@ namespace Server.Items
                 OnMiss(AttMob, DefMob);
             
             return true;
+        }
+
+        private class FeuNourriTimer : Timer
+        {
+            private int mFleches = 0;
+            private BaseRanged mWeapon = null;
+            private NubiaMobile mAttacker = null;
+            private NubiaMobile mDefender = null;
+            public FeuNourriTimer(int fleches, BaseRanged weapon, NubiaMobile attacker, NubiaMobile defender)
+                :base(TimeSpan.FromMilliseconds(500))
+            {
+                mFleches = fleches;
+                mWeapon = weapon;
+                mAttacker = attacker;
+                mDefender = defender;
+            }
+            protected override void OnTick()
+            {
+                if (mWeapon != null && mAttacker !=  null && mDefender != null)
+                {
+                    if (mAttacker.Alive && mDefender.Alive)
+                    {
+                        mFleches--;
+                        if (mWeapon.OnFired(mAttacker, mDefender))
+                        {
+                            mDefender.Damage(DndHelper.rollDe(mWeapon.De, mWeapon.NbrLance)
+                                + (int)DndHelper.GetCaracMod(mAttacker, DndStat.Force)
+                                , mAttacker);
+                        }
+                        if (mFleches > 0)
+                            new FeuNourriTimer(mFleches, mWeapon, mAttacker, mDefender).Start();
+                    }
+                    Stop();
+                }
+            }
         }
 
         public virtual void OnHit(Mobile attacker, Mobile defender, double Damage)
@@ -793,7 +1124,17 @@ namespace Server.Items
                 if( maitrise > 3)
                     baseSec -= 0.1 * (maitrise - 3);
             }*/
-            if (mOpportunite)
+            if (m is NubiaPlayer)
+            {
+                NubiaPlayer player = m as NubiaPlayer;
+                if (player.hasDon(DonEnum.AttaquesReflexes) && mOpportunite)
+                {
+                    baseSec /= 2 + DndHelper.GetCaracMod(player, DndStat.Dexterite);
+                }
+                else if (mOpportunite)
+                    baseSec /= 2;
+            }
+            else if (mOpportunite)
             {
                 baseSec /= 2;
             }

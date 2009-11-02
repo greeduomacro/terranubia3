@@ -109,12 +109,12 @@ namespace Server.Gumps
             {
 
                 //AddButton(x, y + (line * scale), 0x1467, 0x1467, 50 + i, GumpButtonType.Reply, 0);
-                if (canUp && canUpClasse(mOwner, classes[i]))
+                if (canUp && canUpClasse(mOwner, classes[i]) && mOwner.Dons.canUpClasse() )
                     AddButton(x + 15, y + (line * scale), 0x1468, 0x1468, 75 + i, GumpButtonType.Reply, 0);
                 AddLabel(x + 20 + (canUp ? 15 : 0), y + (line * scale), ColorTextYellow, classes[i].CType.ToString() + " niveau " + classes[i].Niveau.ToString());
                 line++;
             }
-            if (classes.Length < 2 && canUp && canMultiClasse(mOwner)) //Nouvelle classe 100
+            if (classes.Length < 2 && canUp && canMultiClasse(mOwner) && mOwner.Dons.canUpClasse() ) //Nouvelle classe 100
             {
                 AddButton(x, y + (line * scale), 0x1468, 0x1468, 100, GumpButtonType.Reply, 0);
                 AddLabel(x + 20, y + (line * scale), ColorTextLight, "Choisir une nouvelle classe");
@@ -334,19 +334,51 @@ namespace Server.Gumps
                 maitrise_line++;
 
             }
-            scale += 3;
 
             // DONS
             // PAGE 2
-            AddPage(2);
-            line = 1;
-            AddButton(xprev, yprevnext, 4014, 4015, 5, GumpButtonType.Page, 1);
-            AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, 2);
-            AddLabel(XCol, y + line * scale, ColorTextYellow, "Dons du personnage");
-            line++;
 
-            foreach (DonEnum don in mOwner.Dons)
+
+            int totalLines = 2; // DndHelper.getDonTotal(mOwner.Niveau);
+            foreach (DonEnum don in mOwner.Dons.Dons)
             {
+                if (don == DonEnum.DonSupClasse)
+                    totalLines += mOwner.getDonNiveau(DonEnum.DonSupClasse);
+                totalLines++;
+            }
+
+
+
+            line = 1;
+            int page = 2;
+            int linePerPage = 19;
+            int totalPage = totalLines / 19 + page;
+            int donsDispo = DndHelper.getDonTotal(mOwner.Niveau);
+            
+
+            
+            foreach (DonEnum don in mOwner.Dons.Dons)
+            {
+                if (line == 1)
+                {
+                    AddPage(page);
+                    AddButton(xprev, yprevnext, 4014, 4015, 5, GumpButtonType.Page, page-1);
+                    if( page < totalPage )
+                        AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, page + 1);
+                    else
+                        AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, page );
+
+                    AddLabel(XCol, y + line * scale, ColorTextYellow, "Dons du personnage");
+                    line++;
+                    if (donsDispo > 0 || mOwner.Dons.DonsEntrys.ContainsKey(DonEnum.DonSupClasse) )
+                    {
+                        AddSimpleButton(XCol, y + line * scale, 90, "Choisir un don ( " + donsDispo + " disponibles )", ColorTextGreen);
+                        line++;
+                    }
+                }
+                if (don == DonEnum.DonSupClasse)
+                    continue;
+
                 int niv = mOwner.getDonNiveau(don);
                 if (niv > 0)
                 {
@@ -361,13 +393,18 @@ namespace Server.Gumps
                     BaseDon rdon = null;
                     if( BaseDon.DonBank.ContainsKey( don.ToString().ToLower() )){
                         rdon = BaseDon.DonBank[don.ToString().ToLower()];
-                        if( rdon.CanUse )
-                            AddLabel(XCol+120, y + line * scale,ColorTextGray, "[.don "+don.ToString()+"]" );
+                        if (rdon.CanUse)
+                        {
+                            line++;
+                            AddLabel(XCol + 20, y + line * scale, ColorTextGray, "(Utilisation: .don " + don.ToString() + ")");
+                        }
                     }
 
 
                     line++;
                 }
+                if (line > linePerPage)
+                    line = 1;
             }
         }
 
@@ -376,8 +413,11 @@ namespace Server.Gumps
             Mobile f = sender.Mobile;
             NubiaPlayer from = f as NubiaPlayer;
 
-
-            if (info.ButtonID == 100) //Nouvelle classe
+            if (info.ButtonID == 90) //Choix de don
+            {
+                from.SendGump(new GumpDonChoix(from));
+            }
+            else if (info.ButtonID == 100) //Nouvelle classe
             {
                 from.SendGump(new GumpChoixClasse(from, false));
             }

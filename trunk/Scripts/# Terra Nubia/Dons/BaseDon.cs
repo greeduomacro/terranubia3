@@ -35,6 +35,8 @@ namespace Server.Mobiles
                     }
                 }
             }
+            Console.WriteLine("## {0} dons au total", DonBank.Count);
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;
         }
         public static void Initialize(){
@@ -76,6 +78,16 @@ namespace Server.Mobiles
             else
                 p.SendMessage("Utilisation: .don [nom brut du don]");
         }
+
+        public static string getDonName(DonEnum don)
+        {
+            string dname = "";
+            if (BaseDon.DonBank.ContainsKey(don.ToString().ToLower()))
+                dname = BaseDon.DonBank[don.ToString().ToLower()].Name;
+            else
+                dname = don.ToString();
+            return dname;
+        }
         private DonEnum mDType = DonEnum.AffiniteMagique;
         private string mName = "noname";
         private bool mCanUse = false;
@@ -86,7 +98,8 @@ namespace Server.Mobiles
         public DonEnum DType { get { return mDType; } }
         public bool CanUse { get { return mCanUse; } }
         public bool LimiteDayUse { get { return mLimiteDayUse; } }
- 
+
+        public virtual bool WarriorDon { get { return false; } }
         
 
         public BaseDon(DonEnum type, string name, bool canUse)

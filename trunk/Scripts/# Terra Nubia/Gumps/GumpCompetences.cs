@@ -82,7 +82,7 @@ namespace Server.Gumps
                         double maitrise = com.getMaitrise();
                         if (maitrise > 0)
                             symbol = "+";
-                        int synergie = com.getSynergie();
+                        int synergie = (int)(maitrise - com.getPureMaitrise());
                         AddLabel(x + 190, y + line * scale, colval, symbol + maitrise.ToString());
                         if (synergie > 0)
                             AddLabel(x + 220, y + line * scale, ColorTextGreen, "(+" + synergie + ")");
