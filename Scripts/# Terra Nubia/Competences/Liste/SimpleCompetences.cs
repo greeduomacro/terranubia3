@@ -655,7 +655,7 @@ namespace Server.Mobiles
     public class CompDesamorcage : NubiaCompetence
     {
         public override string Name { get { return "Désamorçage"; } }
-        public override CompType CType { get { return CompType.Desamorçage; } }
+        public override CompType CType { get { return CompType.Desamorcage; } }
         public override DndStat SType { get { return DndStat.Intelligence; } }
         public override bool LimitedByArmor { get { return false; } }
         //public override bool MustLearn { get { return true; } }

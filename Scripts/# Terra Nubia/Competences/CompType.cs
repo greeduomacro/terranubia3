@@ -32,7 +32,7 @@ namespace Server.Mobiles
       //  Decryptage,
         Deguisement,
         DeplacementSilencieux,
-        Desamorçage,
+        Desamorcage,
         Detection,
         Diplomatie,
         Discretion,

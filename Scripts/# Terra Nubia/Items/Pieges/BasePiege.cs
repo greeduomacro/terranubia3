@@ -291,7 +291,7 @@ namespace Server.Items
         }
         public virtual bool tryDesarmorcer(NubiaMobile m)
         {
-            if (m.Competences[CompType.Desamorçage].check(mDD))
+            if (m.Competences[CompType.Desamorcage].check(mDD))
             {
                 return true;
             }
