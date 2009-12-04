@@ -8,22 +8,20 @@ using Server.Targeting;
 
 namespace Server.Mobiles.Dons
 {
-    public class DonAttaquePuissance : BaseDon
+    public class DonTirMonte : BaseDon
     {
         public override bool WarriorDon { get { return true; } }
-        public DonAttaquePuissance()
-            : base(DonEnum.AttaqueEnPuissance, "Attaque en puissance", true)
+        public DonTirMonte()
+            : base(DonEnum.TirMonte, "Tir monté", false)
         {
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return (mob.RawStr >= 13);
+            return (mob.Competences[CompType.Equitation].getPureMaitrise() >= 1 && mob.hasDon(DonEnum.CombatMonte));
         }
-        public override void OnUse(NubiaPlayer p)
-        {
-            p.NewActionCombat(ActionCombat.AttaqueEnPuissance);
-        }
+
     }
+
 }

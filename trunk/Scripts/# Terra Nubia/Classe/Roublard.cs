@@ -73,7 +73,7 @@ namespace Server
                //     CompType.Decryptage,
                     CompType.Deguisement,
                     CompType.DeplacementSilencieux,
-                    CompType.Desamorçage,
+                    CompType.Desamorcage,
                     CompType.Detection,
                     CompType.Diplomatie,
                     CompType.Discretion,

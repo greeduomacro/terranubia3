@@ -94,7 +94,7 @@ namespace Server.Items
         [Constructable]
         public LivreDesamorcage()
         {
-            Competence = CompType.Desamorçage;
+            Competence = CompType.Desamorcage;
         }
         [Constructable]
         public LivreDesamorcage(Serial s)

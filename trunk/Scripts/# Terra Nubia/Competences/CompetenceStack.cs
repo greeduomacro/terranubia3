@@ -104,7 +104,7 @@ namespace Server.Mobiles
                     //case CompType.Cuisine: c = new compcui
                     case CompType.Deguisement: c = new CompDeguisement(mOwner); break;
                     case CompType.DeplacementSilencieux: c = new CompDeplacementSilencieux(mOwner); break;
-                    case CompType.Desamorçage: c = new CompDesamorcage(mOwner); break;
+                    case CompType.Desamorcage: c = new CompDesamorcage(mOwner); break;
                     case CompType.Detection: c = new CompDetection(mOwner); break;
                     case CompType.Diplomatie: c = new CompDiplomatie(mOwner); break;
                     case CompType.Discretion: c = new CompDiscretion(mOwner); break;

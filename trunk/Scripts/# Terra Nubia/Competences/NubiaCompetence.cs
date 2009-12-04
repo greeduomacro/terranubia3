@@ -128,7 +128,7 @@ namespace Server.Mobiles
                     donBonus += 2;
                 if ((CType == CompType.Bluff || CType == CompType.Intimidation) && player.hasDon(DonEnum.Persuasion))
                     donBonus += 2;
-                if ((CType == CompType.Crochetage || CType == CompType.Desamorçage) && player.hasDon(DonEnum.SavoirFaireMecanique))
+                if ((CType == CompType.Crochetage || CType == CompType.Desamorcage) && player.hasDon(DonEnum.SavoirFaireMecanique))
                     donBonus += 2;
             }
             return getPureMaitrise() + getSynergie() + donBonus;
