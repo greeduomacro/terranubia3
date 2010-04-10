@@ -1,0 +1,322 @@
+using System;
+using System.Collections;
+using Server;
+using Server.Network;
+using Server.Multis;
+using Server.Nubia;
+using Server.Gumps;
+using Server.Mobiles;
+
+namespace Server.Gumps
+{
+	public class GumpInscription : Gump
+	{
+		private NubiaPlayer m_owner;
+
+		public GumpInscription( NubiaPlayer _owner ) : base( 50, 50 )
+		{
+			m_owner = _owner;
+			int largeur = 400;
+			int hauteur = 300;
+			int _x = 50;
+			int _y = 50;
+			int colG = _x+40;
+			int colG2 = colG+70;
+			int colorG = 2168;
+			int colorG2 = 2120;
+			int HColor = 2161;
+
+			int colCompetence = 375+_x;
+
+			AddBackground( _x, _y, _x+largeur,_y+hauteur, 0x2422 );
+			AddImageTiled( _x, _y,  _x+largeur,18, 0x280A );
+			
+			
+			
+			//AddAlphaRegion( _x+25, _y+25, _x+largeur-35,_y+hauteur-30 );
+			AddImage( 0,40, 0x28C8 );
+			AddImage( largeur+70,40, 0x28C9 );
+
+			AddImage( (largeur/2)-10,_y-3, 0x988 );
+			AddLabel( (largeur/2)+18, _y-2, 2123, "-= Inscription =-");
+		
+			int y = _y+60;
+			int x = _x+310;
+			int line = 0;
+			int scale = 30;
+			int decal = 5;
+			
+			AddHtml( _x+35, _y+35, largeur-35 , hauteur-50, "<center>Bienvenue sur Terra Nubia</center>"+
+					"<p>Votre account doit être validé pour que vous puissiez jouer.<br>"+
+					"Pour ce faire, vous devrez répondre à quelques petites questions. "+
+					"Vos réponses seront ensuite examiné par les Administrateurs qui validerons ou non votre Account."+
+					( m_owner.Account.NbrRefus > 0 ? "<br><br>Vous avez été refusé "+m_owner.Account.NbrRefus+" fois</p>" : "</p>" ), true, true );
+			
+			//AddBackground( _x, _y, _x+largeur,_y+hauteur, 0x2454 );
+
+			
+			
+			//line++;
+				//AddLabel( _x, y, 0, "Continuer");
+				AddButton( _x+35 , _y+hauteur, 0x850, 0x851,99, GumpButtonType.Reply, 0 );
+			
+		}
+
+		public override void OnResponse( NetState sender, RelayInfo info )
+		{
+			Mobile f = sender.Mobile;
+			NubiaPlayer from = f as NubiaPlayer;
+			if( info.ButtonID == 99 )
+			{
+				from.SendGump( new GumpInscriptionQRP( from ) );
+				return;
+			}
+			from.CloseGump( typeof( GumpInscription ) );
+			from.SendGump( new GumpInscription( m_owner ) );
+		}
+
+	}
+
+	public class GumpInscriptionQRP : Gump
+	{
+		private NubiaPlayer m_owner;
+
+		public GumpInscriptionQRP( NubiaPlayer _owner ) : base( 50, 50 )
+		{
+			m_owner = _owner;
+			int largeur = 400;
+			int hauteur = 300;
+			int _x = 50;
+			int _y = 50;
+			int colG = _x+40;
+			int colG2 = colG+70;
+			int colorG = 2168;
+			int colorG2 = 2120;
+			int HColor = 2161;
+
+			int colCompetence = 375+_x;
+
+			AddBackground( _x, _y, _x+largeur,_y+hauteur, 0x2422 );
+			AddImageTiled( _x, _y,  _x+largeur,18, 0x280A );
+			
+			
+			
+			//AddAlphaRegion( _x+25, _y+25, _x+largeur-35,_y+hauteur-30 );
+			AddImage( 0,40, 0x28C8 );
+			AddImage( largeur+70,40, 0x28C9 );
+
+			AddImage( (largeur/2)-10,_y-3, 0x988 );
+			AddLabel( (largeur/2)+18, _y-2, 2123, "-= Inscription =-");
+		
+			int y = _y+60;
+			int x = _x+310;
+			int line = 0;
+			int scale = 30;
+			int decal = 5;
+			
+			AddHtml( _x+35, _y+35, largeur-35 , 100, "<centerQuestion 1: Le Role Play</center>"+
+					"<p>Qu'est-ce que le Role Play (RP) pour vous?<br>"+
+					"Qu'est-ce qui selon vous apporte du plaisir dans le Jeux de Rôle et fait d'un rôle d'un personnage un 'Bon RP' ?</p>", true, true );
+			
+			AddBackground( _x+35, _y+150, largeur-35 , hauteur-150, 0x2454 );
+
+
+			AddTextEntry( _x+35, _y+150, largeur-35 , hauteur-150, 0 /*hue*/, 0 /*entryID*/, ( m_owner.Account.QuestionRP == null ? "Je pense que..." : m_owner.Account.QuestionRP ));
+			
+			
+			//line++;
+				//AddLabel( _x, y, 0, "Continuer");
+			
+			AddButton( _x+35 , _y+hauteur, 0x850, 0x851,99, GumpButtonType.Reply, 0 ); //Okay
+			AddButton( _x+35 + 200 , _y+hauteur, 0x847, 0x848,98, GumpButtonType.Reply, 0 ); //Annuler
+
+		}
+
+		public override void OnResponse( NetState sender, RelayInfo info )
+		{
+			Mobile f = sender.Mobile;
+			NubiaPlayer from = f as NubiaPlayer;
+			if( info.ButtonID == 99 )
+			{
+				from.Account.QuestionRP = info.GetTextEntry( 0 ).Text;
+				from.SendGump( new GumpInscriptionQBG( from ) );
+				return;
+			}
+			if( info.ButtonID == 98 )
+			{
+				from.Account.QuestionRP = null;
+				from.Account.QuestionBG = null;
+				from.Account.QuestionAutre = null;
+				from.SendGump( new GumpInscription( m_owner ) );
+				return;
+			}
+			from.CloseGump( typeof( GumpInscriptionQRP ) );
+			from.SendGump( new GumpInscriptionQRP( m_owner ) );
+		}
+
+	}
+
+	public class GumpInscriptionQBG : Gump
+	{
+		private NubiaPlayer m_owner;
+
+		public GumpInscriptionQBG( NubiaPlayer _owner ) : base( 50, 50 )
+		{
+			m_owner = _owner;
+			int largeur = 400;
+			int hauteur = 300;
+			int _x = 50;
+			int _y = 50;
+			int colG = _x+40;
+			int colG2 = colG+70;
+			int colorG = 2168;
+			int colorG2 = 2120;
+			int HColor = 2161;
+
+			int colCompetence = 375+_x;
+
+			AddBackground( _x, _y, _x+largeur,_y+hauteur, 0x2422 );
+			AddImageTiled( _x, _y,  _x+largeur,18, 0x280A );
+			
+			
+			
+			//AddAlphaRegion( _x+25, _y+25, _x+largeur-35,_y+hauteur-30 );
+			AddImage( 0,40, 0x28C8 );
+			AddImage( largeur+70,40, 0x28C9 );
+
+			AddImage( (largeur/2)-10,_y-3, 0x988 );
+			AddLabel( (largeur/2)+18, _y-2, 2123, "-= Inscription =-");
+		
+			int y = _y+60;
+			int x = _x+310;
+			int line = 0;
+			int scale = 30;
+			int decal = 5;
+			
+			AddHtml( _x+35, _y+35, largeur-35 , 100, "<centerQuestion 2: Votre personnage</center>"+
+					"<p>Quel personnage comptez vous jouer ?<br>"+
+					"De quelle race? Quel sera son charactère? Pourquoi est-il ici? Quel son ses défault et qualité ? <br>"+
+					"Nous attendons quelques lignes pour la description d'un de vos personnage 'type'.</p>", true, true );
+			
+			AddBackground( _x+35, _y+150, largeur-35 , hauteur-150, 0x2454 );
+
+
+			AddTextEntry( _x+35, _y+150, largeur-35 , hauteur-150, 0 /*hue*/, 1 /*entryID*/, ( m_owner.Account.QuestionBG == null ? "Mon personnage..." : m_owner.Account.QuestionBG ));
+			
+			
+			//line++;
+				//AddLabel( _x, y, 0, "Continuer");
+			
+			AddButton( _x+35 , _y+hauteur, 0x850, 0x851,99, GumpButtonType.Reply, 0 ); //Okay
+			AddButton( _x+35 + 200 , _y+hauteur, 0x847, 0x848,98, GumpButtonType.Reply, 0 ); //Annuler
+
+		}
+
+		public override void OnResponse( NetState sender, RelayInfo info )
+		{
+			Mobile f = sender.Mobile;
+			NubiaPlayer from = f as NubiaPlayer;
+			if( info.ButtonID == 99 )
+			{
+				from.Account.QuestionBG = info.GetTextEntry( 1 ).Text;
+				from.SendGump( new GumpInscriptionQAutre( from ) ) ;
+				return;
+			}
+			if( info.ButtonID == 98 )
+			{
+				from.Account.QuestionRP = null;
+				from.Account.QuestionBG = null;
+				from.Account.QuestionAutre = null;
+				from.SendGump( new GumpInscription( m_owner ) );
+				return;
+			}
+			from.CloseGump( typeof( GumpInscriptionQBG ) );
+			from.SendGump( new GumpInscriptionQBG( m_owner ) );
+		}
+
+	}
+
+	public class GumpInscriptionQAutre : Gump
+	{
+		private NubiaPlayer m_owner;
+
+		public GumpInscriptionQAutre( NubiaPlayer _owner ) : base( 50, 50 )
+		{
+			m_owner = _owner;
+			int largeur = 400;
+			int hauteur = 300;
+			int _x = 50;
+			int _y = 50;
+			int colG = _x+40;
+			int colG2 = colG+70;
+			int colorG = 2168;
+			int colorG2 = 2120;
+			int HColor = 2161;
+
+			int colCompetence = 375+_x;
+
+			AddBackground( _x, _y, _x+largeur,_y+hauteur, 0x2422 );
+			AddImageTiled( _x, _y,  _x+largeur,18, 0x280A );
+			
+			
+			
+			//AddAlphaRegion( _x+25, _y+25, _x+largeur-35,_y+hauteur-30 );
+			AddImage( 0,40, 0x28C8 );
+			AddImage( largeur+70,40, 0x28C9 );
+
+			AddImage( (largeur/2)-10,_y-3, 0x988 );
+			AddLabel( (largeur/2)+18, _y-2, 2123, "-= Inscription =-");
+		
+			int y = _y+60;
+			int x = _x+310;
+			int line = 0;
+			int scale = 30;
+			int decal = 5;
+			
+			AddHtml( _x+35, _y+35, largeur-35 , 100, "<centerQuestion 3: Votre désir profond</center>"+
+					"<p>Qu'attendez vous de Terra Nubia ?<br>"+
+					"Vous venez ici vous divertir, mais encore ? <br>"+
+					"Que comptez vous apporter a Terra Nubia? a son ambiance? Aux autres joueur?. Décrivez nous un peu vos sentiment et votre vision du jeux en général.</p>", true, true );
+			
+			AddBackground( _x+35, _y+150, largeur-35 , hauteur-150, 0x2454 );
+
+
+			AddTextEntry( _x+35, _y+150, largeur-35 , hauteur-150, 0 /*hue*/, 2 /*entryID*/, ( m_owner.Account.QuestionAutre == null ? "Ma vision..." : m_owner.Account.QuestionAutre ));
+			
+			
+			//line++;
+				//AddLabel( _x, y, 0, "Continuer");
+			
+			AddButton( _x+35 , _y+hauteur, 0x850, 0x851,99, GumpButtonType.Reply, 0 ); //Okay
+			AddButton( _x+35 + 200 , _y+hauteur, 0x847, 0x848,98, GumpButtonType.Reply, 0 ); //Annuler
+
+		}
+
+		public override void OnResponse( NetState sender, RelayInfo info )
+		{
+			Mobile f = sender.Mobile;
+			NubiaPlayer from = f as NubiaPlayer;
+			if( info.ButtonID == 99 )
+			{
+				from.Account.QuestionAutre = info.GetTextEntry( 2 ).Text;
+				from.SendMessage("Félicitation, vous avez terminer votre inscription");
+				from.SendMessage("L'équipe va être prévenu et votre compte pourra être validé par un des administrateur");
+				from.SendMessage("Vous n'êtes pas obligé d'être connecté pour que votre compte soit activé");
+				from.Account.InscriptionFinish = true;
+				//TO DO, TIMER
+				return;
+			}
+			if( info.ButtonID == 98 )
+			{
+				from.Account.QuestionRP = null;
+				from.Account.QuestionBG = null;
+				from.Account.QuestionAutre = null;
+				from.SendGump( new GumpInscription( m_owner ) );
+				return;
+			}
+			from.CloseGump( typeof( GumpInscriptionQAutre ) );
+			from.SendGump( new GumpInscriptionQAutre( m_owner ) );
+		}
+
+	}
+}
