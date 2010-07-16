@@ -13,8 +13,8 @@ namespace Server.Misc
          * 
         private const string CustomPath = @"C:\Program Files (x86)\Ultima Online - TN";
          */
-        //private static string CustomPath = null;
-        private const string CustomPath = @".\Fichiers\";
+        private static string CustomPath = null;
+       // private const string CustomPath = @".\Fichiers\";
 
 		/* The following is a list of files which a required for proper execution:
 		 * 

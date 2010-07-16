@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CAC02510-74B0-412C-BEF8-25610A2B5F67}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -556,6 +556,7 @@
     <Compile Include="# Modifications\Misc\CharacterCreation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Modifications\Misc\DataPath.cs" />
     <Compile Include="# Modifications\Misc\ServerList.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -6257,9 +6258,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Misc\CurrentExpansion.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Misc\DataPath.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Misc\DispellableAttribute.cs">
