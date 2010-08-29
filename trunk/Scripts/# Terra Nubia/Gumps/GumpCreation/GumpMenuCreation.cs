@@ -122,17 +122,21 @@ namespace Server.Gumps
                 from.RawCha = 8;
                 from.RawCons = 8;
                 from.RawSag = 8;
+                from.SendMessage("Reset de compétence");
                 from.resetCompetences();
                 from.GiveXP(50);
                 from.SendMessage(99, "Bienvenue sur Terra Nubia");
               //  from.SendMessage("De la teinture pour cheveux à été placée dans votre sac");
               //  from.Backpack.AddItem(new HairDye());
 
-                from.Dons.Reset();
+                
                 from.DonCredits.Clear();
                 from.DonCredits.Add(ClasseType.None, 1);
+
+                from.Dons.Reset();
                 if (from.Race is RaceHumain)
-                    from.DonCredits.Add(ClasseType.None, 1);
+                    from.DonCredits[ClasseType.None] += 1;
+
                 Classe classe = null;
                 foreach (Classe c in from.GetClasses())
                 {
@@ -141,6 +145,7 @@ namespace Server.Gumps
                 }
                 if( classe != null )
                     from.Dons.LearnDonClasse(classe, 1);
+
 
                 from.Frozen = false;
 
