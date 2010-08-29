@@ -14,6 +14,8 @@ namespace Server.Mobiles
 			Body = 0xD7;
 			BaseSoundID = 0x188;
 
+            Faction = FactionEnum.Nature;
+
             mMonsterHits = DndHelper.rollDe(De.huit, 1) + 1;
             mMonsterCA = 15;
             Server.Items.Fists griffes = new Server.Items.Fists();

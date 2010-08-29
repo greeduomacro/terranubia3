@@ -58,6 +58,7 @@ namespace Server.Mobiles
                     }
                 }
             }
+            mOwner.SendMessage("Reset des dons effectuée");
         }
 
         public bool canUpClasse()
@@ -86,6 +87,7 @@ namespace Server.Mobiles
             for (int d = 0; d < classe.DonClasse[niveau].Length; d++)
             {
                 DonEnum don = classe.DonClasse[niveau][d];
+                
                 DonEntry entry = new DonEntry(don, classe.CType, niveau);
                 if( mDons.ContainsKey(don) )
                     mDons[don].Value++;
@@ -102,7 +104,7 @@ namespace Server.Mobiles
                 }
                 else
                     mOwner.SendMessage("Vous gagnez le don {0} {1}", BaseDon.getDonName(don), (entry.Value > 1 ? "( Rang " + entry.Value.ToString() + " )" : ""));
-
+                
             }
         }
 
