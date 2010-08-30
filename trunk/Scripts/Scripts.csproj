@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CAC02510-74B0-412C-BEF8-25610A2B5F67}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -611,89 +611,91 @@
     <Compile Include="# Terra Nubia\Agriculture\PlanteRecoltePutralide.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Core\BaseToolNubia.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Core\BaseToolNubia.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Core\CraftableItemScanner.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\NubiaInfoRessource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Core\CraftListEnum.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Tools\CoutureTool.cs" />
+    <Compile Include="# Terra Nubia\Artisanat\Core\CraftableItemScanner.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Core\CraftSystemNubia.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Core\CraftListEnum.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Core\GumpArtisan.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Core\CraftSystemNubia.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Core\INubiaCraftable.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Core\GumpArtisan.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Core\NubiaQuality.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Core\INubiaCraftable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Core\RessourceNeed.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Core\NubiaQuality.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Listes\CraftEntry.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Core\RessourceNeed.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Listes\CraftList.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Listes\CraftEntry.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Listes\ListIngen.cs" />
-    <Compile Include="# Terra Nubia\Artisana\Listes\ListErudition.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Listes\CraftList.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Listes\ListForge.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Listes\ListCouture.cs" />
+    <Compile Include="# Terra Nubia\Artisanat\Listes\ListIngen.cs" />
+    <Compile Include="# Terra Nubia\Artisanat\Listes\ListErudition.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\BaseBois.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Listes\ListForge.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\BaseCuir.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\BaseBois.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\BaseMetal.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\BaseCuir.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\BaseOs.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\BaseMetal.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\BaseRessource.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\BaseOs.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\BaseTissu.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\BaseRessource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\ListBois.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\BaseTissu.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\ListCuir.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\ListBois.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\ListMetaux.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\ListCuir.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\ListOs.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\ListMetaux.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\NubiaInfoRessource.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\ListOs.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\NubiaRessource.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\NubiaRessource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Ressources\RessourceTissu.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Ressources\RessourceTissu.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Tools\EruditionToll.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Tools\EruditionTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Tools\ForgeronTool.cs">
+    <Compile Include="# Terra Nubia\Artisanat\Tools\ForgeronTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="# Terra Nubia\Artisana\Tools\IngeTool.cs" />
+    <Compile Include="# Terra Nubia\Artisanat\Tools\IngeTool.cs" />
     <Compile Include="# Terra Nubia\Bestiaire\Animals\BaseBestiole.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -8290,13 +8292,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="OrbServerSDK, Version=1.0.1434.35613, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\OrbServerSDK.dll</HintPath>
+    </Reference>
     <Reference Include="RunUO, Version=2.0.2959.20979, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\RunUO.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UOArchitectInterface, Version=1.0.1487.35809, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\UOArchitectInterface.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

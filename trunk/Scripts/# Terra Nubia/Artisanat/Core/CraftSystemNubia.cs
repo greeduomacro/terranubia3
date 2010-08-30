@@ -18,9 +18,6 @@ namespace Server.Engines
         protected CraftList mList = new ListForge();
         protected CompType mComp = CompType.Forge;
         protected string mName = "Craft System";
-        protected static CraftSystemNubia mSingleton = null;
-
-        
 
 
         public CraftList List
@@ -101,11 +98,32 @@ namespace Server.Engines
                         badselect = true;
                     }
                 }
-                
+                else if (type == typeof(BaseOs) && nbr > 0)
+                {
+                    if (tool.Os != null)
+                        type = tool.Os.GetType();
+                    else
+                    {
+                        crafter.SendMessage(2118, "Vous devez selectionner les Os");
+                        badselect = true;
+                    }
+                }
+                else if (type == typeof(BaseTissu) && nbr > 0)
+                {
+                    if (tool.Tissu != null)
+                        type = tool.Tissu.GetType();
+                    else
+                    {
+                        crafter.SendMessage(2118, "Vous devez selectionner le Tissu");
+                        badselect = true;
+                    }
+                }
                 if (badselect)
                     return;
 
-                
+
+                bool resIsNotRaffine = false;
+                Item notRaffineRes = null;
                 BaseRessource itAdd = null;
                 foreach (Item ritem in crafter.Backpack.Items)
                 {
@@ -121,8 +139,9 @@ namespace Server.Engines
                             Console.WriteLine(((BaseRessource)ritem).isRaffine);
                             if (!((BaseRessource)ritem).isRaffine)
                             {
-                                crafter.SendMessage(2118, "Vous devez raffiner votre {0} avant tout", ritem.Name);
-                                break;
+                                resIsNotRaffine = true;
+                                notRaffineRes = ritem;
+                                continue;
                             }
                             else
                                 itAdd = ritem as BaseRessource;
@@ -150,8 +169,11 @@ namespace Server.Engines
                     ressourceslist.Add(itAdd);
                 if (nbrTrouve < nbr)
                 {
+                    if(resIsNotRaffine)
+                        crafter.SendMessage(2118, "Vous devez raffiner votre {0} avant tout", notRaffineRes.Name);
+                    else
+                        crafter.SendMessage("Il vous manque des matériaux...");
                     allressource = false;
-                    crafter.SendMessage("Il vous manque des matériaux...");
                 }
                 else
                 {
@@ -263,14 +285,17 @@ namespace Server.Engines
         }
         public static void ConsumeQuantity(Container cont, Type types, int amounts, BaseToolNubia tool)
         {
-            Type type;
+            Type type = null;
             if (types == typeof(BaseMetal))
-                types = tool.Metal.GetType();
+                type = tool.Metal.GetType();
             else if (types == typeof(BaseCuir))
-                types = tool.Cuir.GetType();
+                type = tool.Cuir.GetType();
             else if (types == typeof(BaseBois))
-                types = tool.Bois.GetType();
-
+                type = tool.Bois.GetType();
+            else if (types == typeof(BaseOs))
+                type = tool.Os.GetType();
+            else if (types == typeof(BaseTissu))
+                type = tool.Tissu.GetType();
             Item itAdd = null;
 
             ArrayList targets = new ArrayList();
@@ -278,7 +303,7 @@ namespace Server.Engines
             foreach (Item ritem in cont.Items)
             {
                 //Console.WriteLine("Ritem="+ritem+" :: type="+type);
-                if (ritem.GetType().IsSubclassOf(types) || ritem.GetType() == types)
+                if (ritem.GetType().IsSubclassOf(type) || ritem.GetType() == type)
                 {
                     targets.Add(ritem);
                 }
@@ -293,10 +318,10 @@ namespace Server.Engines
                 //Console.WriteLine("Same Type");
                 if (ritem is BaseRessource)
                 {
-                    //	Console.WriteLine("BaseRessource tourvée");
+                    //	Console.WriteLine("BaseRessource trouvée");
                     //	Console.WriteLine(((BaseRessource)ritem).isRaffine);
                     if (!((BaseRessource)ritem).isRaffine)
-                        break;
+                        continue;
                 }
                 if ((ritem.Amount > amounts) && amounts > 0)
                 {
@@ -345,8 +370,9 @@ namespace Server.Engines
     }
     public class CraftForgeSystem : CraftSystemNubia
     {
+        private static CraftSystemNubia mSingleton = null;
 
-        public CraftForgeSystem()
+        private CraftForgeSystem()
         {
             mList = new ListForge();
             mComp = CompType.Forge;
@@ -365,7 +391,9 @@ namespace Server.Engines
 
     public class CraftForgeArmeSystem : CraftSystemNubia
     {
-        public CraftForgeArmeSystem()
+        private static CraftSystemNubia mSingleton = null;
+
+        private CraftForgeArmeSystem()
         {
             mList = new ListForge();
             mComp = CompType.Forge;
@@ -384,7 +412,9 @@ namespace Server.Engines
 
     public class CraftEruditionSystem : CraftSystemNubia
     {
-        public CraftEruditionSystem()
+        private static CraftSystemNubia mSingleton = null;
+
+        private CraftEruditionSystem()
         {
             mList = new ListErudition();
             mComp = CompType.Erudition;
@@ -403,11 +433,13 @@ namespace Server.Engines
 
     public class CraftIngenSystem : CraftSystemNubia
     {
-        public CraftIngenSystem()
+        private static CraftSystemNubia mSingleton = null;
+
+        private CraftIngenSystem()
         {
             mList = new ListIngen();
             mComp = CompType.Ingenierie;
-            mName = "Ingenieurie";
+            mName = "Ingénierie";
         }
         public static CraftSystemNubia Singleton
         {
@@ -415,6 +447,27 @@ namespace Server.Engines
             {
                 if (mSingleton == null)
                     mSingleton = new CraftIngenSystem();
+                return mSingleton;
+            }
+        }
+    }
+
+    public class CraftCoutureSystem : CraftSystemNubia
+    {
+        private static CraftSystemNubia mSingleton = null;
+
+        private CraftCoutureSystem()
+        {
+            mList = new ListCouture();
+            mComp = CompType.Couture;
+            mName = "Couture";
+        }
+        public static CraftSystemNubia Singleton
+        {
+            get
+            {
+                if (mSingleton == null)
+                    mSingleton = new CraftCoutureSystem();
                 return mSingleton;
             }
         }

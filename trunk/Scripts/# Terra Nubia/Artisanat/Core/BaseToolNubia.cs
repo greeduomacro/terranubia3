@@ -16,12 +16,14 @@ namespace Server.Items
         private BaseMetal mMetal = null; //new MetalFer();
         private BaseBois mBois = null; // BoisErable();
         private BaseCuir mCuir = null; // CuirClassique();
-        private BaseOs mOs = null; // CuirClassique();
+        private BaseOs mOs = null; // OsAnimaux();
+        private BaseTissu mTissu = null;
 
         public BaseMetal Metal { get { return mMetal; } set { mMetal = value; } }
         public BaseBois Bois { get { return mBois; } set { mBois = value; } }
         public BaseCuir Cuir { get { return mCuir; } set { mCuir = value; } }
         public BaseOs Os { get { return mOs; } set { mOs = value; } }
+        public BaseTissu Tissu { get { return mTissu; } set { mTissu = value; } }
 
         public abstract CraftSystemNubia System { get;}
 
@@ -51,6 +53,10 @@ namespace Server.Items
         public void GetNewCuir(NubiaPlayer mob)
         {
             mob.Target = new InternalTarget(mob, this, typeof(BaseCuir));
+        }
+        public void GetNewTissu(NubiaPlayer mob)
+        {
+            mob.Target = new InternalTarget(mob, this, typeof(BaseTissu));
         }
 
         private class InternalTarget : Target
@@ -86,6 +92,10 @@ namespace Server.Items
                 {
                     mTool.Cuir = o as BaseCuir;
                 }
+                else if (o is BaseTissu && mType == typeof(BaseTissu))
+                {
+                    mTool.Tissu = o as BaseTissu;
+                }
                 else
                     mCrafter.SendMessage("Cible non valide");
                 mTool.OnDoubleClick(mCrafter);
@@ -95,7 +105,6 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             NubiaPlayer player = from as NubiaPlayer;
-            CraftSystemNubia sys = null;
  
 
             if (System.GetType() == typeof(CraftForgeSystem))

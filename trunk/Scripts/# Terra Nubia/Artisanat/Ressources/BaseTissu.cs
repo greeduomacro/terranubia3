@@ -44,6 +44,7 @@ namespace Server.Engines
 		public BaseTissu(TissuEnum _tissu) : base( 0xDF8 )
 		{
 			m_tissu = _tissu;
+            mRessource = (NubiaRessource)((int)_tissu + 2000);
 			//Hue = GetHue();
 			Name = "Tissu";
 		}
@@ -80,7 +81,7 @@ namespace Server.Engines
 		public override void OnSingleClick( Mobile from )
 		{
 
-			if( Amount < 1 )
+			if( Amount <= 1 )
 				LabelTo( from, ( m_isRaffine ? "Etoffe" : "Fil" ) );
 			else
 				LabelTo( from, Amount + ( m_isRaffine ? " Etoffes" : " Fils" ) );
@@ -124,7 +125,7 @@ namespace Server.Engines
 					{
 						//BaseCompetence.Wait( m_owner, 7.0 );
 						from.Emote("*Tisse*");
-						from.SendMessage("Vous commencez à tisser le bois");
+						from.SendMessage("Vous commencez à tisser");
 						new DelayPlanche( m_owner, m_metal ).Start();
 					}
 					else
