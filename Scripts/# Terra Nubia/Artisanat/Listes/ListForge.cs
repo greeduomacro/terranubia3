@@ -239,7 +239,7 @@ namespace Server.Engines
 											new RessourceNeed( typeof(BaseBois), 5 ),
 											new RessourceNeed( typeof(BaseCuir), 2)});
             //Petite lance
-             AddEntry("petite lance", 2 /*perforant, voir liste dans GetCategorieList*/, typeof(ShortSpear),
+             AddEntry("Petite lance", 2 /*perforant, voir liste dans GetCategorieList*/, typeof(ShortSpear),
                                             4 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 6),
@@ -351,7 +351,7 @@ namespace Server.Engines
 											new RessourceNeed( typeof(BaseMetal), 10 ),
 											new RessourceNeed( typeof(BaseCuir), 5)});
             // camail
-           AddEntry("camail", 10, typeof(ChainCoif),
+           AddEntry("Camail", 10, typeof(ChainCoif),
                                             2 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 7 ),

@@ -28,12 +28,12 @@ namespace Server.Engines
                     ItemID = 0x3968;
                 }
                 else
-                    ItemID = 0x3968;
+                    ItemID = 3966;
             }
         }
 
         public BaseOs(NubiaRessource _Os)
-            : base(0x1BDD)
+            : base(3966)
         {
             mRessource = _Os;
             Hue = Infos.Hue;
@@ -86,8 +86,8 @@ namespace Server.Engines
                 if (canPlanche)
                 {
                     from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(8.0);
-                    from.Emote("*Travail du Os*");
-                    from.SendMessage("Vous commencez à travailler le Os");
+                    from.Emote("*Travaille l'Os*");
+                    from.SendMessage("Vous commencez à travailler l'Os");
                     new DelayPlanche(m_owner, m_metal).Start();
                 }
                 else

@@ -19,7 +19,7 @@ namespace Server.Engines
         private int m_diff;
         private RessourceNeed[] m_ressources;
         private string m_name;
-        private Type m_artisannat;
+        private Type m_artisanat;
 
         public int Categorie { get { return m_categorie; } }
         public string Name { get { return m_name; } }
@@ -27,11 +27,11 @@ namespace Server.Engines
         public int MinValue { get { return m_minValue; } }
         public int Diff { get { return m_diff; } }
         public RessourceNeed[] Ressource { get { return m_ressources; } }
-        public Type Artisannat { get { return m_artisannat; } }
+        public Type Artisanat { get { return m_artisanat; } }
 
         public CraftEntry(Type _art, string _name, int _cat, Type _toCraft, int _minValue, int _diff, RessourceNeed[] _ressources)
         {
-            m_artisannat = _art;
+            m_artisanat = _art;
             m_categorie = _cat;
             m_toCraft = _toCraft;
             m_minValue = _minValue;

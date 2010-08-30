@@ -11,8 +11,17 @@ using Server.Misc;
 
 namespace Server.Engines
 {
-    //Toutes les infos sur les métaux sont dans NubiaInfoRessource.cs (en bas)
-   /* public class OsMorcith : BaseOs
+    //Toutes les infos sur les Os sont dans NubiaInfoRessource.cs (en bas)
+    public class OsAnimaux : BaseOs
+    {
+        [Constructable]
+        public OsAnimaux() : base(NubiaRessource.Animaux) { }
+        public OsAnimaux(Serial s) : base(s) { }
+
+        public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
+        public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
+    }
+    public class OsMorcith : BaseOs
     {
         [Constructable]
         public OsMorcith() : base(NubiaRessource.Morcith) { }
@@ -182,5 +191,5 @@ namespace Server.Engines
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
-    }*/
+    } 
 }

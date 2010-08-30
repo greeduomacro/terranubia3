@@ -59,13 +59,13 @@ namespace Server.Engines
         private class InternalPlancheTarget : Target
         {
             private NubiaPlayer m_owner;
-            private BaseBois m_metal;
+            private BaseBois m_bois;
 
             public InternalPlancheTarget(NubiaPlayer owner, BaseBois met)
                 : base(1, true, TargetFlags.None)
             {
                 m_owner = owner;
-                m_metal = met;
+                m_bois = met;
                 m_owner.SendMessage("Où voulez vous travailler les buches ?");
             }
 
@@ -86,7 +86,7 @@ namespace Server.Engines
                     from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(8.0);
                     from.Emote("*Travail du bois*");
                     from.SendMessage("Vous commencez à travailler le bois");
-                    new DelayPlanche(m_owner, m_metal).Start();
+                    new DelayPlanche(m_owner, m_bois).Start();
                 }
                 else
                     from.SendMessage("Ceci n'est pas adapté");

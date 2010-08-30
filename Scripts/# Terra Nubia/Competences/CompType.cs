@@ -13,7 +13,7 @@ namespace Server.Mobiles
  
         Acrobaties = 0,
         ArtMagie,
-        //Artisana
+        //Artisanat
         Couture,
         Forge,
         Ingenierie,
