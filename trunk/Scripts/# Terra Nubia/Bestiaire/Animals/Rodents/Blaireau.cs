@@ -3,7 +3,7 @@ using Server.Mobiles;
 
 namespace Server.Mobiles
 {
-    [CorpseName("un corps de chien")]
+    [CorpseName("un corps de blaireau")]
     public class Blaireau : NubiaCreature
     {
         [Constructable]

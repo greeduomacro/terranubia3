@@ -71,7 +71,9 @@ namespace Server.Misc
             //CityInfo city = new CityInfo( "Britain", "Sweet Dreams Inn", 1496, 1628, 10, Map.Felucca );
 
             newChar.MoveToWorld(WorldData.PointDepart, WorldData.MapDefault);
+            newChar.Direction = Direction.Up;
 
+            newChar.Backpack.AddItem(new Gold(250));
             Console.WriteLine("Login: {0}: New character being created (account={1})", args.State, args.Account.Username);
             Console.WriteLine(" - Character: {0} (serial={1})", newChar.Name, newChar.Serial);
     //        Console.WriteLine(" - Started: {0} {1} in {2}", city.City, city.Location, city.Map.ToString());

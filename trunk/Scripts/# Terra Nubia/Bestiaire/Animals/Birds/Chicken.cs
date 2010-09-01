@@ -13,6 +13,12 @@ namespace Server.Mobiles
 			Body = 0xD0;
 			BaseSoundID = 0x6E;
 
+            if (Utility.RandomDouble() > 0.80)
+            {
+                Name = "Coq";
+                Hue = 1888;
+            }
+
 		}
 
 		public override int Meat{ get{ return 1; } }

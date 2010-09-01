@@ -152,7 +152,7 @@ namespace Server.Gumps
                 // ZONE DE DEPART : 
                 from.Map = Map.Trammel;
                 //from.MoveToWorld(new Point3D(3508, 2766, 0), Map.Felucca);
-                from.MoveToWorld(new Point3D(1200, 1132, -25), Map.Ilshenar);
+                from.MoveToWorld(new Point3D(1240, 1144, -25), Map.Ilshenar);
                 from.Hits = from.HitsMax;
             }
 
