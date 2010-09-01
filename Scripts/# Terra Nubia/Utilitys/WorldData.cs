@@ -79,8 +79,8 @@ namespace Server
             new HairDef("Barbe tressée", 13972, 20),
             new HairDef("'Mouske'", 13972, 20),
         };
-        public static Map MapDefault { get { return Map.Felucca; } }
-        public static Point3D PointDepart { get { return new Point3D(1591, 1667, 0); } }
+        public static Map MapDefault { get { return Map.Ilshenar; } }
+        public static Point3D PointDepart { get { return new Point3D(723, 1355, -61); } }
     //    public static Map MapDefault { get { return Map.Ilshenar; } }
      //   public static Point3D PointDepart { get { return new Point3D(1200, 1132, -25); } }
         public static TimeSpan NextTownJoin { get { return TimeSpan.FromDays(5.0); } }

@@ -1362,6 +1362,7 @@
     <Compile Include="# Terra Nubia\Dons\Generaux\DonVoltigeur.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Economie\Monaie.cs" />
     <Compile Include="# Terra Nubia\Equipement\Armes\Armes de jet\BaseLancer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1816,9 +1817,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="# Terra Nubia\Items\Medecine\MedecineKit.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="# Terra Nubia\Items\Monaies\Monaie.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="# Terra Nubia\Items\NubiaCompItem.cs">
@@ -8311,6 +8309,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\UOArchitectInterface.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="# Terra Nubia\Maladies\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
