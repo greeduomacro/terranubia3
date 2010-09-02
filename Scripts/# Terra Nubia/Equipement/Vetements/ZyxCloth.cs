@@ -421,7 +421,7 @@ namespace Server.Items
 
         [Constructable]
         public MCRobeGitane(int hue)
-            : base(13821, Layer.Shirt, hue)
+            : base(13821, Layer.MiddleTorso, hue)
         {
             Name = "Robe gitane";
         }
@@ -519,7 +519,7 @@ namespace Server.Items
 
         [Constructable]
         public NCChemiseRaffine(int hue)
-            : base(13810, Layer.Shirt, hue)
+            : base(13810, Layer.MiddleTorso, hue)
         {
             Name = "Chemise Raffinée";
         }
@@ -543,7 +543,7 @@ namespace Server.Items
 
         [Constructable]
         public NCHautMoulant(int hue)
-            : base(13769, Layer.Shirt, hue)
+            : base(13769, Layer.MiddleTorso, hue)
         {
             Name = "Haut moulant";
         }
@@ -591,7 +591,7 @@ namespace Server.Items
 
         [Constructable]
         public NCChemiseTombante(int hue)
-            : base(13767, Layer.Shirt, hue)
+            : base(13767, Layer.MiddleTorso, hue)
         {
             Name = "Chemise tombante";
         }
@@ -855,7 +855,7 @@ namespace Server.Items
 
         [Constructable]
         public NCRobeFendue(int hue)
-            : base(13739, Layer.Shirt, hue)
+            : base(13739, Layer.MiddleTorso, hue)
         {
             Name = "Robe fendue";
         }
@@ -903,7 +903,7 @@ namespace Server.Items
 
         [Constructable]
         public NCBandageTorse(int hue)
-            : base(12553, Layer.Shirt, hue)
+            : base(12553, Layer.MiddleTorso, hue)
         {
             Name = "Bandages";
         }

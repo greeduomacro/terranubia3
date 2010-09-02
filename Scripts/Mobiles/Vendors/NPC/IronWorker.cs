@@ -97,7 +97,7 @@ namespace Server.Mobiles
 			if ( item != null )
 				item.Hue = RandomBrightHue();
 
-			item = FindItemOnLayer( Layer.Shirt );
+			item = FindItemOnLayer( Layer.MiddleTorso );
 
 			if ( item != null )
 				item.Hue = RandomBrightHue();

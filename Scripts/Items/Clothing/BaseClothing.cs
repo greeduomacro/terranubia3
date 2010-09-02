@@ -472,7 +472,7 @@ namespace Server.Items
 			if ( Layer == Layer.Pants )
 				return ( m.FindItemOnLayer( Layer.InnerLegs ) != null );
 
-			if ( Layer == Layer.Shirt )
+			if ( Layer == Layer.MiddleTorso )
 				return ( m.FindItemOnLayer( Layer.InnerTorso ) != null );
 
 			return false;

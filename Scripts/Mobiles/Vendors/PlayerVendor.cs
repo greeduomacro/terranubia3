@@ -721,7 +721,7 @@ namespace Server.Mobiles
 				else if ( item is BasePants )
 					item.Layer = Layer.Pants;
 				else if ( item is BaseShirt )
-					item.Layer = Layer.Shirt;
+					item.Layer = Layer.MiddleTorso;
 				else if ( item is BaseWaist )
 					item.Layer = Layer.Waist;
 				else if ( item is BaseShoes )

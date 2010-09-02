@@ -14,7 +14,7 @@ namespace Server.Engines.MyRunUO
 			Layer.Cloak,
 			Layer.Bracelet,
 			Layer.Ring,
-			Layer.Shirt,
+			Layer.MiddleTorso,
 			Layer.Pants,
 			Layer.InnerLegs,
 			Layer.Shoes,
