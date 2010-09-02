@@ -155,6 +155,7 @@ namespace Server.Mobiles
         private int mXP = 0;
 
         private DateTime mLastParadeProjectile = DateTime.Now;
+        private DateTime mLastBouscul = DateTime.Now;
 
         private Dictionary<ClasseType, int> mDonCredits = new Dictionary<ClasseType, int>();
 
@@ -173,7 +174,7 @@ namespace Server.Mobiles
                 int myBonus = 0;
                 if (hasDon(DonEnum.ScienceDeLaBousculade))
                     myBonus += 4;
-                if (sho.Str + DndHelper.rollDe(De.vingt) <= Str + DndHelper.rollDe(De.vingt) + myBonus)
+                if (mLastBouscul + TimeSpan.FromSeconds(6) < DateTime.Now && sho.Str + DndHelper.rollDe(De.vingt) <= Str + DndHelper.rollDe(De.vingt) + myBonus)
                 {
                     sho.Emote("*Bousculé par {0}*", Name);
                     sho.Damage(1, this);
@@ -1514,6 +1515,58 @@ namespace Server.Mobiles
         public void changeRace(RaceType newrace)
         {
             m_race = newrace;
+            Item skin = FindItemOnLayer(Layer.Shirt);
+            if (skin != null)
+            {
+                if (skin is TNRaceSkin)
+                {
+                    skin.Delete();
+                }
+                else if( newrace != RaceType.Humain )
+                {
+                    //déséquip ?
+                }
+            }
+
+            switch (newrace)
+            {
+                case RaceType.Aasimar: skin = new TNRaceSkinAasimar(this.Hue); break;
+                case RaceType.Changelin: skin = new TNRaceSkinChangelin(this.Hue); break;
+                case RaceType.DemiElf: skin = new TNRaceSkinHalfElf(this.Hue); break;
+                case RaceType.DemiOrc: skin = new TNRaceSkinHalforc(this.Hue); break;
+                case RaceType.Drakeide: skin = new TNRaceSkinDrake(this.Hue); break;
+                case RaceType.Drow: skin = new TNRaceSkinElf(this.Hue); break;
+                case RaceType.ElfLune: skin = new TNRaceSkinElf(this.Hue); break;
+                case RaceType.Githzerai: skin = new TNRaceSkinGith(this.Hue); break;
+                case RaceType.Halfelin: skin = new TNRaceSkinHalfelin(this.Hue); break;
+                case RaceType.HautElf: skin = new TNRaceSkinElf(this.Hue); break;
+                case RaceType.Humain: skin = null; break;
+            }
+
+            if (skin != null)
+            {
+                EquipItem(skin);
+            }
+        }
+
+        public override int Hue
+        {
+            get
+            {
+                return base.Hue;
+            }
+            set
+            {
+                Item skin = FindItemOnLayer(Layer.Shirt);
+                if (skin != null)
+                {
+                    if (skin is TNRaceSkin)
+                    {
+                        skin.Hue = value;
+                    }
+                }
+                base.Hue = value;
+            }
         }
 
         public BaseRace Race

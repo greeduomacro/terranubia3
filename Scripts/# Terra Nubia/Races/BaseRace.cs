@@ -11,6 +11,8 @@ namespace Server.Mobiles
 {
 	public abstract class BaseRace
 	{
+
+
 		public abstract string Name{get;}
 		public abstract string NameF{get;}
        public abstract bool AllowHair { get;}
