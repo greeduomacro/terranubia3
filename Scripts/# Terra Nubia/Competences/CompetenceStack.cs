@@ -68,7 +68,9 @@ namespace Server.Mobiles
                     CompType.Renseignements,
                     CompType.Representation,
                     CompType.Saut,
-                    CompType.Survie
+                    CompType.Survie,
+                    CompType.Buchage,
+                    CompType.Minage
                 };
             }
         }
@@ -93,6 +95,9 @@ namespace Server.Mobiles
                 NubiaCompetence c = null;
                 switch (comp)
                 {
+                    case CompType.Minage: c = new CompMinage(mOwner); break;
+                    case CompType.Buchage: c = new CompBuchage(mOwner); break;
+
                     case CompType.Acrobaties: c = new CompAcrobatie(mOwner);break;
                     case CompType.ArtMagie: c = new CompArtMagie(mOwner); break;
                     case CompType.Bluff: c = new CompBluff(mOwner); break;

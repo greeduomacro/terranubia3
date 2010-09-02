@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Server.Mobiles;
 
 namespace Server.Engines.Harvest
 {
@@ -13,7 +14,7 @@ namespace Server.Engines.Harvest
 		private int m_MaxRange;
 		private int m_ConsumedPerHarvest, m_ConsumedPerFeluccaHarvest;
 		private bool m_PlaceAtFeetIfFull;
-		private SkillName m_Skill;
+		private CompType m_Skill;
 		private int[] m_EffectActions;
 		private int[] m_EffectCounts;
 		private int[] m_EffectSounds;
@@ -38,7 +39,7 @@ namespace Server.Engines.Harvest
 		public int ConsumedPerHarvest{ get{ return m_ConsumedPerHarvest; } set{ m_ConsumedPerHarvest = value; } }
 		public int ConsumedPerFeluccaHarvest{ get{ return m_ConsumedPerFeluccaHarvest; } set{ m_ConsumedPerFeluccaHarvest = value; } }
 		public bool PlaceAtFeetIfFull{ get{ return m_PlaceAtFeetIfFull; } set{ m_PlaceAtFeetIfFull = value; } }
-		public SkillName Skill{ get{ return m_Skill; } set{ m_Skill = value; } }
+		public CompType Skill{ get{ return m_Skill; } set{ m_Skill = value; } }
 		public int[] EffectActions{ get{ return m_EffectActions; } set{ m_EffectActions = value; } }
 		public int[] EffectCounts{ get{ return m_EffectCounts; } set{ m_EffectCounts = value; } }
 		public int[] EffectSounds{ get{ return m_EffectSounds; } set{ m_EffectSounds = value; } }

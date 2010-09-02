@@ -1,6 +1,7 @@
 using System;
 using Server;
 using Server.Items;
+using Server.Mobiles;
 
 namespace Server.Engines.Harvest
 {
@@ -47,7 +48,7 @@ namespace Server.Engines.Harvest
 			lumber.MaxRespawn = TimeSpan.FromMinutes( 30.0 );
 
 			// Skill checking is done on the Lumberjacking skill
-			lumber.Skill = SkillName.Lumberjacking;
+            lumber.Skill = CompType.Buchage ;
 
 			// Set the list of harvestable tiles
 			lumber.Tiles = m_TreeTiles;
@@ -76,42 +77,23 @@ namespace Server.Engines.Harvest
 			{
 				res = new HarvestResource[]
 				{
-					new HarvestResource(  00.0, 00.0, 100.0, 1072540, typeof( Log ) ),
-					new HarvestResource(  65.0, 25.0, 105.0, 1072541, typeof( OakLog ) ),
-					new HarvestResource(  80.0, 40.0, 120.0, 1072542, typeof( AshLog ) ),
-					new HarvestResource(  95.0, 55.0, 135.0, 1072543, typeof( YewLog ) ),
-					new HarvestResource( 100.0, 60.0, 140.0, 1072544, typeof( HeartwoodLog ) ),
-					new HarvestResource( 100.0, 60.0, 140.0, 1072545, typeof( BloodwoodLog ) ),
-					new HarvestResource( 100.0, 60.0, 140.0, 1072546, typeof( FrostwoodLog ) ),
+					new HarvestResource(  10, 1072540, typeof( Log ) )
 				};
 
 
 				veins = new HarvestVein[]
 				{
-					new HarvestVein( 58.4, 0.0, res[0], null ),	// Ordinary Logs
-					new HarvestVein( 30.0, 0.5, res[1], res[0] ), // Oak
-					new HarvestVein( 10.0, 0.5, res[2], res[0] ), // Ash
-					new HarvestVein( 01.0, 0.5, res[3], res[0] ), // Yew
-					new HarvestVein( 00.3, 0.5, res[4], res[0] ), // Heartwood
-					new HarvestVein( 00.2, 0.5, res[5], res[0] ), // Bloodwood
-					new HarvestVein( 00.1, 0.5, res[6], res[0] ), // Frostwood
+					new HarvestVein( 100.0, 0.0, res[0], null ),	// Ordinary Logs
+				
 				};
 
-				lumber.BonusResources = new BonusHarvestResource[]
-				{
-					new BonusHarvestResource( 0, 83.9, null, null ),	//Nothing
-					new BonusHarvestResource( 100, 10.0, 1072548, typeof( BarkFragment ) ),
-					new BonusHarvestResource( 100, 03.0, 1072550, typeof( LuminescentFungi ) ),
-					new BonusHarvestResource( 100, 02.0, 1072547, typeof( SwitchItem ) ),
-					new BonusHarvestResource( 100, 01.0, 1072549, typeof( ParasiticPlant ) ),
-					new BonusHarvestResource( 100, 00.1, 1072551, typeof( BrilliantAmber ) )
-				};
+			
 			}
 			else
 			{
 				res = new HarvestResource[]
 				{
-					new HarvestResource( 00.0, 00.0, 100.0, 500498, typeof( Log ) )
+					new HarvestResource(  10, 1072540, typeof( Log ) )
 				};
 
 				veins = new HarvestVein[]

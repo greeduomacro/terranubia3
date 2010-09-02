@@ -5,7 +5,7 @@ using Server.Items;
 
 namespace Server.Mobiles
 {
-    class TNRaceSkinTiefelin : TNRaceSkin
+    public class TNRaceSkinTiefelin : TNRaceSkin
     {
         private static int itemID = 0x2298;
 
@@ -16,11 +16,18 @@ namespace Server.Mobiles
         [Constructable]
         public TNRaceSkinTiefelin(Serial serial) : base(serial) { }
 
-        public override void Serialize(GenericWriter writer) { }
-        public override void Deserialize(GenericReader reader) { }
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
 
-    class TNRaceSkinHalforc : TNRaceSkin
+    public class TNRaceSkinHalforc : TNRaceSkin
     {
         private static int itemID = 0x2297;
 
@@ -31,11 +38,18 @@ namespace Server.Mobiles
         [Constructable]
         public TNRaceSkinHalforc(Serial serial) : base(serial) { }
 
-        public override void Serialize(GenericWriter writer) { }
-        public override void Deserialize(GenericReader reader) { }
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
 
-    class TNRaceSkinHalfelin : TNRaceSkin
+    public class TNRaceSkinHalfelin : TNRaceSkin
     {
         private static int itemID = 0x2296;
 
@@ -45,12 +59,18 @@ namespace Server.Mobiles
         public TNRaceSkinHalfelin(int hue) : base(itemID, hue) { }
         [Constructable]
         public TNRaceSkinHalfelin(Serial serial) : base(serial) { }
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
 
-        public override void Serialize(GenericWriter writer) { }
-        public override void Deserialize(GenericReader reader) { }
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
 
-    class TNRaceSkinHalfElf : TNRaceSkin
+    public class TNRaceSkinHalfElf : TNRaceSkin
     {
         private static int itemID = 0x2295;
 
@@ -61,11 +81,18 @@ namespace Server.Mobiles
         [Constructable]
         public TNRaceSkinHalfElf(Serial serial) : base(serial) { }
 
-        public override void Serialize(GenericWriter writer) { }
-        public override void Deserialize(GenericReader reader) { }
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
 
-    class TNRaceSkinGith : TNRaceSkin
+    public class TNRaceSkinGith : TNRaceSkin
     {
         private static int itemID = 0x2294;
 
@@ -76,11 +103,18 @@ namespace Server.Mobiles
         [Constructable]
         public TNRaceSkinGith(Serial serial) : base(serial) { }
 
-        public override void Serialize(GenericWriter writer) { }
-        public override void Deserialize(GenericReader reader) { }
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
 
-    class TNRaceSkinElf : TNRaceSkin
+    public class TNRaceSkinElf : TNRaceSkin
     {
         private static int itemID = 0x2293;
 
@@ -91,11 +125,18 @@ namespace Server.Mobiles
         [Constructable]
         public TNRaceSkinElf(Serial serial) : base(serial) { }
 
-        public override void Serialize(GenericWriter writer) { }
-        public override void Deserialize(GenericReader reader) { }
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
 
-    class TNRaceSkinDrake : TNRaceSkin
+    public class TNRaceSkinDrake : TNRaceSkin
     {
         private static int itemID = 0x2292;
 
@@ -106,11 +147,18 @@ namespace Server.Mobiles
         [Constructable]
         public TNRaceSkinDrake(Serial serial) : base(serial) { }
 
-        public override void Serialize(GenericWriter writer) { }
-        public override void Deserialize(GenericReader reader) { }
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
 
-    class TNRaceSkinChangelin : TNRaceSkin
+    public class TNRaceSkinChangelin : TNRaceSkin
     {
         private static int itemID = 0x2291;
 
@@ -121,11 +169,18 @@ namespace Server.Mobiles
         [Constructable]
         public TNRaceSkinChangelin(Serial serial) : base(serial) { }
 
-        public override void Serialize(GenericWriter writer) { }
-        public override void Deserialize(GenericReader reader) { }
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
 
-    class TNRaceSkinAasimar : TNRaceSkin
+    public class TNRaceSkinAasimar : TNRaceSkin
     {
         private static int itemID = 0x2290;
 
@@ -136,11 +191,18 @@ namespace Server.Mobiles
         [Constructable]
         public TNRaceSkinAasimar(Serial serial): base(serial){}
 
-		public override void Serialize( GenericWriter writer ){}
-		public override void Deserialize( GenericReader reader ){}
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+        }
     }
     
-    class TNRaceSkin : BaseShirt
+    public abstract class TNRaceSkin : BaseShirt
     {
         private void config()
         {

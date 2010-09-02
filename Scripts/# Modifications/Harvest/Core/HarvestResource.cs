@@ -5,13 +5,11 @@ namespace Server.Engines.Harvest
 	public class HarvestResource
 	{
 		private Type[] m_Types;
-		private double m_ReqSkill, m_MinSkill, m_MaxSkill;
+		private int m_DD;
 		private object m_SuccessMessage;
 
 		public Type[] Types{ get{ return m_Types; } set{ m_Types = value; } }
-		public double ReqSkill{ get{ return m_ReqSkill; } set{ m_ReqSkill = value; } }
-		public double MinSkill{ get{ return m_MinSkill; } set{ m_MinSkill = value; } }
-		public double MaxSkill{ get{ return m_MaxSkill; } set{ m_MaxSkill = value; } }
+        public int DD { get { return m_DD; } set { m_DD = value; } }
 		public object SuccessMessage{ get{ return m_SuccessMessage; } }
 
 		public void SendSuccessTo( Mobile m )
@@ -22,11 +20,9 @@ namespace Server.Engines.Harvest
 				m.SendMessage( (string)m_SuccessMessage );
 		}
 
-		public HarvestResource( double reqSkill, double minSkill, double maxSkill, object message, params Type[] types )
+		public HarvestResource( int dd,object message, params Type[] types )
 		{
-			m_ReqSkill = reqSkill;
-			m_MinSkill = minSkill;
-			m_MaxSkill = maxSkill;
+            m_DD = dd;
 			m_Types = types;
 			m_SuccessMessage = message;
 		}

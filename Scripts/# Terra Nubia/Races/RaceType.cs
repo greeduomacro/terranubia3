@@ -8,16 +8,17 @@ namespace Server.Mobiles
     {
         None = -1,
         Humain = 0,
-        DemiElf,
-        DemiOrc,        
-        Halfelin,
-        Githzerai,
-        ElfLune,
+        DemiElf = 1,
+        DemiOrc = 2,        
+        Halfelin = 3,
+        Githzerai = 4,
+        ElfLune = 5,
         //Restreintes
-        HautElf,
-        Drow,     
-        Drakeide,
-        Aasimar,
-        Changelin
+        HautElf = 6,
+        Drow = 7,     
+        Drakeide = 8,
+        Aasimar = 9,
+        Changelin = 10,
+        Tiefelin = 11
     }
 }

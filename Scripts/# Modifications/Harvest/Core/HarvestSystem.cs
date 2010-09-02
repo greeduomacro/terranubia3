@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Targeting;
+using Server.Mobiles;
 
 namespace Server.Engines.Harvest
 {
@@ -142,13 +143,14 @@ namespace Server.Engines.Harvest
 			HarvestResource fallback = vein.FallbackResource;
 			HarvestResource resource = MutateResource( from, tool, def, map, loc, vein, primary, fallback );
 
-			double skillBase = from.Skills[def.Skill].Base;
-			double skillValue = from.Skills[def.Skill].Value;
-
 			Type type = null;
+			//if ( skillBase >= resource.ReqSkill && from.CheckSkill( def.Skill, resource.MinSkill, resource.MaxSkill ) )
+            NubiaMobile mob = from as NubiaMobile;
+            bool check = mob.Competences[def.Skill].check(resource.DD,0);
 
-			if ( skillBase >= resource.ReqSkill && from.CheckSkill( def.Skill, resource.MinSkill, resource.MaxSkill ) )
-			{
+      //      Console.WriteLine("Harvest Base comp " + def.Skill.ToString() + " DD " + resource.DD + " success: " + check);
+           if (check)
+            {
 				type = GetResourceType( from, tool, def, map, loc, resource );
 
 				if ( type != null )
@@ -200,7 +202,7 @@ namespace Server.Engines.Harvest
 
 						BonusHarvestResource bonus = def.GetBonusResource();
 
-						if ( bonus != null && bonus.Type != null && skillBase >= bonus.ReqSkill )
+						if ( bonus != null && bonus.Type != null )
 						{
 							Item bonusItem = Construct( bonus.Type, from );
 
@@ -319,10 +321,10 @@ namespace Server.Engines.Harvest
 			if( vein.ChanceToFallback > (Utility.RandomDouble() + (racialBonus ? .20 : 0)) )
 				return fallback;
 
-			double skillValue = from.Skills[def.Skill].Value;
+		/*	double skillValue = from.Skills[def.Skill].Value;
 
 			if ( fallback != null && (skillValue < primary.ReqSkill || skillValue < primary.MinSkill) )
-				return fallback;
+				return fallback;*/
 
 			return primary;
 		}
@@ -441,6 +443,7 @@ namespace Server.Engines.Harvest
 				return;
 			}
 
+            DoHarvestingEffect(from, tool, def, from.Map, loc);
 			new HarvestTimer( from, tool, this, def, toHarvest, toLock ).Start();
 			OnHarvestStarted( from, tool, def, toHarvest );
 		}
