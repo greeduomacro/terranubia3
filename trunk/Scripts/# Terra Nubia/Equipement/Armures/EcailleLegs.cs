@@ -12,6 +12,8 @@ namespace Server.Items
 		[Constructable]
 		public EcailleLegs() : base( 13829 )
 		{
+            //Layer = Layer.MiddleTorso;
+            Layer = Layer.MiddleTorso;
 			Weight = 6.0;
 			//m_capaNeed = 7;
 			Name = "Pantalons d'écailles";

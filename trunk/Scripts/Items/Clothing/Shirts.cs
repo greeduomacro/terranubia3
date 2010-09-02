@@ -6,10 +6,12 @@ namespace Server.Items
 	{
 		public BaseShirt( int itemID ) : this( itemID, 0 )
 		{
+            Layer = Layer.MiddleTorso;
 		}
 
-		public BaseShirt( int itemID, int hue ) : base( itemID, Layer.Shirt, hue )
+		public BaseShirt( int itemID, int hue ) : base( itemID, Layer.MiddleTorso, hue )
 		{
+            Layer = Layer.MiddleTorso;
 		}
 
 		public BaseShirt( Serial serial ) : base( serial )
