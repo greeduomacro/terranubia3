@@ -42,31 +42,37 @@ namespace Server.Gumps
             addRaceChoix(x, y + line * scale, "Githzerai", 50 + (int)RaceType.Githzerai);
             line++;
 
-         /*   //Elfe
-            addRaceChoix(x + col * decal, y + line * scale, 125, "Elfe", 14);
-            col++;
+            if (m_owner.CanRaceRestricted)
+            {
 
-            line++;
-            col = 0;
+                   //Elfe
+                 addRaceChoix(x, y + line * scale, "Haut Elfe", 50 + (int)RaceType.HautElf);
+                line++;
+                //Drow
+                addRaceChoix(x, y + line * scale, "Elfe Noir", 50 + (int)RaceType.Drow);
+                line++;
 
-            //ASAMIR
-            addRaceChoix(x + col *decal, y + line *scale, 114, "Aasimar", 16);
-            col++;
-            //Changelin
-            addRaceChoix(x + col * decal, y + line * scale, 115, "Changelin", 17);
-            col++;
-            //Drakeide
-            addRaceChoix(x + col * decal, y + line * scale, 116, "Drakéide", 18);
-            col++;
-            //Drow
-            addRaceChoix(x + col * decal, y + line * scale, 117, "Elfe noir", 19);
-            col++;
-           
-            */
+                //Drakeide
+                addRaceChoix(x, y + line * scale, "Drakéïde", 50 + (int)RaceType.Drakeide);
+                line++;
+
+                   //ASAMIR
+                   addRaceChoix(x, y + line * scale, "Aasimar", 50 + (int)RaceType.Aasimar);
+                   line++;
+                   //TIEFELIN
+                   addRaceChoix(x, y + line * scale, "Tiefelin", 50 + (int)RaceType.Tiefelin);
+                   line++;
+                   //Changelin
+                   addRaceChoix(x, y + line * scale, "Changelin", 50 + (int)RaceType.Changelin);
+                   line++;
+                   
+                  
+                   
+            }
 
             if (choix > 0)
             {
-                AddSimpleButton(x + 5, y + line * scale + 175, 100, "Continuer");
+                AddSimpleButton(x + 5, y + line * scale +10, 100, "Continuer");
             }
 
            

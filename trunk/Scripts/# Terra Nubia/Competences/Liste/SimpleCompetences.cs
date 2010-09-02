@@ -4,6 +4,57 @@ using System.Text;
 
 namespace Server.Mobiles
 {
+    public class CompMinage : NubiaCompetence
+    {
+        public override string Name { get { return "Minage"; } }
+        public override CompType CType { get { return CompType.Minage; } }
+        public override DndStat SType { get { return DndStat.Force; } }
+        public override bool LimitedByArmor { get { return true; } }
+        //public override bool MustLearn { get { return false; } }
+        public override CompType[] SynergieTab
+        {
+            get
+            {
+                return new CompType[]{
+            };
+            }
+        }
+
+        public CompMinage(NubiaMobile m)
+            : base(m)
+        {
+        }
+        public override void onUse()
+        {
+            base.onUse();
+        }
+    }
+    public class CompBuchage : NubiaCompetence
+    {
+        public override string Name { get { return "Buchage"; } }
+        public override CompType CType { get { return CompType.Buchage; } }
+        public override DndStat SType { get { return DndStat.Force; } }
+        public override bool LimitedByArmor { get { return true; } }
+        //public override bool MustLearn { get { return false; } }
+        public override CompType[] SynergieTab
+        {
+            get
+            {
+                return new CompType[]{
+            };
+            }
+        }
+
+        public CompBuchage(NubiaMobile m)
+            : base(m)
+        {
+        }
+        public override void onUse()
+        {
+            base.onUse();
+        }
+    }
+
     public class CompChirurgie : NubiaCompetence
     {
         public override string Name { get { return "Chirurgie"; } }

@@ -11,7 +11,7 @@ namespace Server.Engines.Harvest
 		private object m_ToHarvest, m_Locked;
 		private int m_Index, m_Count;
 
-		public HarvestTimer( Mobile from, Item tool, HarvestSystem system, HarvestDefinition def, object toHarvest, object locked ) : base( TimeSpan.Zero, def.EffectDelay )
+		public HarvestTimer( Mobile from, Item tool, HarvestSystem system, HarvestDefinition def, object toHarvest, object locked ) : base( TimeSpan.FromSeconds(4), def.EffectDelay )
 		{
 			m_From = from;
 			m_Tool = tool;

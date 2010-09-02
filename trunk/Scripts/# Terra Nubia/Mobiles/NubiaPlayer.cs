@@ -46,6 +46,14 @@ namespace Server.Mobiles
 
     public class NubiaPlayer : PlayerMobile
     {
+        private bool mCanRaceRestricted = false;
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool CanRaceRestricted
+        {
+            get { return mCanRaceRestricted; }
+            set { mCanRaceRestricted = value; }
+        }
+
         //Compagnon Animal
         #region COMPAGNON ANIMAL
         private DateTime m_Compagnon_Date_Rituel = DateTime.Now;
@@ -1557,13 +1565,20 @@ namespace Server.Mobiles
             }
             set
             {
-                Item skin = FindItemOnLayer(Layer.Shirt);
-                if (skin != null)
+                try
                 {
-                    if (skin is TNRaceSkin)
+                    Item skin = FindItemOnLayer(Layer.Shirt);
+                    if (skin != null)
                     {
-                        skin.Hue = value;
+                        if (skin is TNRaceSkin)
+                        {
+                            skin.Hue = value;
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Skin hue error: " + ex.Message);
                 }
                 base.Hue = value;
             }

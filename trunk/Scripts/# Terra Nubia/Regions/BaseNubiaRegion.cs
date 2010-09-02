@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Server;
 using Server.Regions;
+using  Server.Items;
 
 //new Point2D(2826,1360),new Point2D(2990,1530) (Chante Lune )
 namespace Server.Regions
@@ -10,8 +11,7 @@ namespace Server.Regions
 	{
 		public static void Initialize()
 		{
-			new ChanteLuneRegion();
-			new OmbreRocRegion();
+            new RegionMineRendsbourg();
 		}
 	}
 	public class BaseNubiaRegion : Region
@@ -20,7 +20,11 @@ namespace Server.Regions
 		public virtual bool DisplayEnterExit { get{ return true; } }
         public virtual bool CanAutoXP { get { return false; } }
 
-		public BaseNubiaRegion(string name, int priority, Rectangle2D rec) : base( name, Map.Felucca, priority, new Rectangle2D[]{ rec } )
+        //Ressources spéciales des mines & co
+        public virtual NubiaRessource[] Ressources { get { return new NubiaRessource[] { }; } }
+
+        public BaseNubiaRegion(string name, int priority, Rectangle2D rec, Map map)
+            : base(name, map, priority, new Rectangle2D[] { rec })
 		{
 			Console.WriteLine("CONSTRUCTION DE REGION: "+Name);
 			Register();

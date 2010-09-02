@@ -15,7 +15,7 @@ namespace Server.Items
 		public Scimitar() : base( 0x13B6 )
 		{
 			Weight = 5.0;
-            Layer = Layer.TwoHanded;
+            Layer = Layer.OneHanded;
 		}
 
 		public Scimitar( Serial serial ) : base( serial )

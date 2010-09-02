@@ -51,7 +51,7 @@ namespace Server.Engines.Harvest
 			fish.MaxRespawn = TimeSpan.FromMinutes( 20.0 );
 
 			// Skill checking is done on the Fishing skill
-			fish.Skill = SkillName.Fishing;
+			fish.Skill = CompType.Bluff;
 
 			// Set the list of harvestable tiles
 			fish.Tiles = m_WaterTiles;
@@ -80,7 +80,7 @@ namespace Server.Engines.Harvest
 
 			res = new HarvestResource[]
 				{
-					new HarvestResource( 00.0, 00.0, 100.0, 1043297, typeof( Fish ) )
+					new HarvestResource( 10, 1043297, typeof( Fish ) )
 				};
 
 			veins = new HarvestVein[]
