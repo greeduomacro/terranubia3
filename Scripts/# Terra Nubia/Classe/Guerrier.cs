@@ -70,11 +70,14 @@ namespace Server
 
             if (niveau == 1)
             {
+               // Console.WriteLine("DOn niveau 1 guerrier... Scan");
                 for (int d = (int)DonEnum.AffiniteMagique; d < (int)DonEnum.Maximum; d++)
                 {
-                    if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString()))
+                    
+                    if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString().ToLower() ))
                     {
-                        BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString()];
+                        BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString().ToLower()];
+                       // Console.WriteLine("Trouvé: "+don.ToString() );
                         if (don.hasConditions(p))
                             list.Add(don.DType);
                     }
@@ -84,9 +87,9 @@ namespace Server
             {
                 for (int d = (int)DonEnum.AffiniteMagique; d < (int)DonEnum.Maximum; d++)
                 {
-                    if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString()))
+                    if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString().ToLower()))
                     {
-                        BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString()];
+                        BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString().ToLower()];
                         if (don.hasConditions(p) && don.WarriorDon )
                             list.Add(don.DType);
                     }

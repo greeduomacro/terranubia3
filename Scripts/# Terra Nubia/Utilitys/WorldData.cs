@@ -37,47 +37,40 @@ namespace Server
         //Cheveux
         public static HairDef[] HairDefList = new HairDef[]{
             new HairDef("Chauve", 0, 0),
-            new HairDef("Court", 8251, 10),
             new HairDef("Long", 8252, 10),
             new HairDef("Queue de cheval", 8253, 10),
             new HairDef("Mohawk", 8260, 10),
-            new HairDef("Noble", 8261, 10),
-            new HairDef("Burn", 8262, 10),
-            new HairDef("Affro", 8263, 10 ),
-            new HairDef("Rasé", 8264, 10 ),
-            new HairDef("Deux Couettes", 8265, 10),
-            new HairDef("Krisna", 8266, 10 ),
-            //New :)
-            new HairDef("Toupet", 19750, 20),
-            new HairDef("Lisse & Court", 13751, 20),
-            new HairDef("Grande couette", 13752, 20),
-            new HairDef("Ancestral", 13964, 20),
-            new HairDef("Long & plaqués", 13965, 20),
-            new HairDef("Long & raides", 13968, 20),
-            new HairDef("Long cache-visage", 13966, 20),
-            new HairDef("Couette fillette", 13967, 20),
-            new HairDef("Court & plat", 13980, 20),
-            new HairDef("Court en pétard", 13981, 20),
+            new HairDef("Rasta", 8261, 10),
+
+            new HairDef("Queue de cheval haute", 8878, 15),
+            new HairDef("Chignon", 8879, 18),
+            new HairDef("Double Chignon", 8859, 20),
+            new HairDef("Plat", 8860, 15),
+            new HairDef("Long en volume", 8861, 15),
+            new HairDef("Long plat", 8862, 15),
+            new HairDef("Long plaqué", 8863, 15),
+            new HairDef("Long mèches", 8864, 15),
+            new HairDef("Long orné", 8865, 20),
+            new HairDef("Long en bataille", 8866, 15),
+            new HairDef("Court de coté", 8867, 15),
+            new HairDef("Longue natte", 8868, 15),
+
         };
         //Barbes
         //Barbes
         public static HairDef[] FacialHairDefList = new HairDef[]{
             new HairDef("Imberbe / Rasé", 0, 0),
-            new HairDef("Barbe courte & Moustache", 8267, 10),
-            new HairDef("Barbe longue & Moustace", 8268, 10),
-            new HairDef("Bouc", 8269, 10),
-            new HairDef("Barbiche", 8256, 10),
-            new HairDef("Moustache", 8257, 10),
-            new HairDef("Barbe longue", 8254, 10),
-            new HairDef("Barbe courte", 8255, 10),
-            //New :)
-            new HairDef("Mal rasé", 13969, 20),
-            new HairDef("Barbe ancestrale", 13970, 20),
-            new HairDef("Barbe fine", 13971, 20),
-            new HairDef("Barbe tressée", 13972, 20),
-            new HairDef("Moustache tressée", 13973, 20),
-            new HairDef("Barbe tressée", 13972, 20),
-            new HairDef("'Mouske'", 13972, 20),
+            new HairDef("Barbe courte & Moustache", 8869, 10),
+            new HairDef("Barbe courte", 8870, 10),
+            new HairDef("Barbe longue & Moustace", 8871, 10),
+            new HairDef("Barbe longue", 8872, 10),
+            new HairDef("Barbe longue touffue", 8873, 10),
+           
+            new HairDef("Bouc", 8876, 10),
+            new HairDef("Barbiche", 8875, 10),
+            new HairDef("Moustache", 8877, 10),
+            new HairDef("Long Bouc", 8874, 10),
+            
         };
         public static Map MapDefault { get { return Map.Ilshenar; } }
         public static Point3D PointDepart { get { return new Point3D(723, 1355, -61); } }

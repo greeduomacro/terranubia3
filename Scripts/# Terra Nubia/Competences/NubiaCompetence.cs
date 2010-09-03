@@ -252,9 +252,13 @@ namespace Server.Mobiles
         public abstract CompType[] SynergieTab { get; } // [i]=CompType [i+1]=Value
 
         public bool check(int tourActions){
-            return check(10, tourActions);
+            return check(10, tourActions, false);
         }
         public bool check(int DD, int tourActions)
+        {
+            return check(DD, tourActions, false);
+        }
+        public bool check(int DD, int tourActions, bool silent)
         {
           /*  Utilisation des compétences. 
            * Voici la formule pour jouer un test de compétence :
@@ -267,12 +271,18 @@ namespace Server.Mobiles
 
             return roll > DD;
         }
+
+        public int pureRoll(int tourActions)
+        {
+             return pureRoll(tourActions, false);
+        }
        
-        public int pureRoll( int tourActions)
+        public int pureRoll( int tourActions, bool silent)
         {
             if (mOwner.NextSkillTime > DateTime.Now && tourActions > 0)
             {
-                mOwner.SendMessage("vous devez attendre pour utiliser une compétence");
+                if( !silent )
+                     mOwner.SendMessage("vous devez attendre pour utiliser une compétence");
                 return 1;
             }
             int roll = Utility.RandomMinMax(1, 20);

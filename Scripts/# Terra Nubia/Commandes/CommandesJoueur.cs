@@ -14,13 +14,13 @@ namespace Server.Commands
         public static void Initialize()
         {
 
-            CommandSystem.Register("tissage", AccessLevel.Player,
+            CommandSystem.Register("tissage", AccessLevel.GameMaster,
               new CommandEventHandler(tissage_OnCommand));
 
        /*     CommandSystem.Register("maitrise", AccessLevel.Player,
               new CommandEventHandler(maitrise_OnCommand));*/
 
-            CommandSystem.Register("magie", AccessLevel.Player,
+            CommandSystem.Register("magie", AccessLevel.GameMaster,
               new CommandEventHandler(magie_OnCommand));
             CommandSystem.Register("magiegm", AccessLevel.GameMaster,
               new CommandEventHandler(magiegm_OnCommand));

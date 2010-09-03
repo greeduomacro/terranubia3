@@ -169,7 +169,7 @@ namespace Server.Items
                 NubiaPlayer player = m as NubiaPlayer;
                 if (mDD <= 20 || player.hasDon(DonEnum.RecherchePiege))
                 {
-                    if (player.Competences[CompType.Fouille].check(mDD))
+                    if (player.Competences[CompType.Fouille].check(mDD,0,true))
                     {
                         player.PrivateOverheadMessage(MessageType.Regular, Utility.RandomRedHue(), true, "Piege proche !", player.NetState);
                         SendInfoTo(player.NetState);

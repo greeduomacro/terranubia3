@@ -14,7 +14,7 @@ namespace Server.Gumps
         private bool m_primary;
         private int page = 0;
         public GumpChoixCheveux(NubiaPlayer _owner, int _choix, int _page)
-            : base("Choix de la coupe...", 180, 450)
+            : base("Choix de la coupe...", 180, 465)
         {
             m_owner = _owner;
             choix = _choix;
@@ -34,10 +34,10 @@ namespace Server.Gumps
                 AddButtonTrueFalse(x, y + (line * scale), i + 50, (choix == i), WorldData.HairDefList[i].Name);
                 line++;
                 if( page > 0 )
-                    AddButtonPagePrecedante(x+130, y, 2);
+                    AddButtonPagePrecedante(x+100, y, 2);
                 if( line > limit )
                 {
-                    AddButtonPageSuivante(x+155, y, 1);
+                    AddButtonPageSuivante(x+125, y, 1);
                     break;
                 }
             }

@@ -16,6 +16,18 @@ namespace Server
 
     class NubiaHelper
     {
+
+        public static void RandomHair(Mobile from)
+        {
+
+            int hair = WorldData.HairDefList[Utility.RandomMinMax(0, WorldData.HairDefList.Length - 1)].ItemID;
+            int hue = Utility.RandomHairHue();
+
+            from.HairItemID = hair;
+            from.HairHue = hue;
+
+        }
+
         private static void CopyProperties(Item dest, Item src)
         {
             PropertyInfo[] props = src.GetType().GetProperties();

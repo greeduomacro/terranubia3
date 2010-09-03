@@ -24,7 +24,7 @@ namespace Server.Mobiles
     public class RaceDemiOrc : BaseRace
     {
         public override bool AllowHair { get { return true; } }
-        public override bool AllowFacialHair { get { return true; } }
+        public override bool AllowFacialHair { get { return false; } }
         
         public override CustomHuePicker HuePicker { get { return new RaceDemiOrcHue(); } }
         public override string Name { get { return "Demi-orque"; } }
