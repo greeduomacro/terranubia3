@@ -86,7 +86,19 @@ namespace Server.Items
 
 
         //Bois
-        Erable = 1500,
+        Bois = 1500,
+
+        Vela ,
+        Vespre,
+        Malatia,
+        Estiu,
+        Fosc,
+        Amanida,
+        Glacera,
+        Noctar,
+        Riquesa,
+        Caoba,
+/*
 		Pommier,
 		Pecher,
 		Poirier,
@@ -96,7 +108,7 @@ namespace Server.Items
 		Noyer,
 		Saule,
         Elendielle,
-
+        */
 
         // Tissu
         Lin = 2000,

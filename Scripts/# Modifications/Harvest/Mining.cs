@@ -83,7 +83,7 @@ namespace Server.Engines.Harvest
 
 			res = new HarvestResource[]
 				{
-					new HarvestResource( 10, 1007072, typeof( IronOre ),			typeof( Granite ) ),
+					new HarvestResource( 10, 1007072, typeof( MetalFer ),			typeof( Granite ) ),
 };
 
 			veins = new HarvestVein[]

@@ -736,100 +736,113 @@ namespace Server.Items
 
                 #region Bois
                     //+1
-                case NubiaRessource.Pommier:
-                    infos.Name = "Pommier";
+                case NubiaRessource.Vela:
+                    infos.Name = "Vëla";
                     infos.Durabilite = 1;
-                    infos.Hue = 1417;
+                    infos.Hue = 2143;
                     infos.GlobalAR = 1;
                     infos.BonusAttaque = 1;
                     infos.BonusDegat = 0;
-                    infos.Diff = 12;
+                    infos.Diff = 15;
                     break;
-                case NubiaRessource.Pecher:
-                    infos.Name = "Pêcher";
+                case NubiaRessource.Vespre:
+                    infos.Name = "Vèspré";
                     infos.Durabilite = 1;
-                    infos.Hue = 2034;
+                    infos.Hue = 2313;
                     infos.GlobalAR = 1;
                     infos.BonusAttaque = 0;
                     infos.BonusDegat = 1;
-                    infos.Diff = 12;
+                    infos.Diff = 16;
                     break;
-                case NubiaRessource.Poirier:
-                    infos.Name = "Poirier";
+                case NubiaRessource.Malatia:
+                    infos.Name = "Malâtia";
                     infos.Durabilite = 1.5;
-                    infos.Hue = 2263;
+                    infos.Hue = 1246;
                     infos.GlobalAR = 1;
                     infos.BonusAttaque = 1;
                     infos.BonusDegat = 1;
-                    infos.Diff = 13;
+                    infos.Diff = 17;
                     break;
 
                     //+2
-                case NubiaRessource.Cedre:
-                    infos.Name = "Cèdre";
+                case NubiaRessource.Estiu:
+                    infos.Name = "Estiù";
                     infos.Durabilite = 1.5;
-                    infos.Hue = 2176;
+                    infos.Hue = 2207;
                     infos.GlobalAR = 2;
                     infos.BonusAttaque = 2;
                     infos.BonusDegat = 1;
-                    infos.Diff = 15;
+                    infos.Diff = 18;
                     infos.ResistanceAcide = 2;
                     break;
-                case NubiaRessource.Cocotier:
-                    infos.Name = "Cocotier";
+                case NubiaRessource.Fosc:
+                    infos.Name = "Fosc";
                     infos.Durabilite = 1.5;
-                    infos.Hue = 2172;
+                    infos.Hue = 2052;
                     infos.GlobalAR = 2;
                     infos.BonusAttaque = 1;
                     infos.BonusDegat = 2;
-                    infos.Diff = 15;
+                    infos.Diff = 19;
                     infos.ResistanceEnergie = 2;
                     break;
 
                     //+4
-                case NubiaRessource.Chene:
-                    infos.Name = "Chêne";
+                case NubiaRessource.Amanida:
+                    infos.Name = "Amanida";
                     infos.Durabilite = 2;
-                    infos.Hue = 2033;
+                    infos.Hue = 2186;
                     infos.GlobalAR = 4;
                     infos.BonusAttaque = 3;
                     infos.BonusDegat = 2;
-                    infos.Diff = 17;
+                    infos.Diff = 20;
                     infos.ResistanceEnergie = 1;
                     break;
-                case NubiaRessource.Noyer:
-                    infos.Name = "Noyer";
+                case NubiaRessource.Glacera:
+                    infos.Name = "Glacera";
                     infos.Durabilite = 2;
-                    infos.Hue = 2051;
+                    infos.Hue = 2049;
                     infos.GlobalAR = 4;
                     infos.BonusAttaque = 2;
                     infos.BonusDegat = 3;
-                    infos.Diff = 17;
+                    infos.Diff = 22;
                     infos.ResistanceFroid = 1;
                     break;
 
                     //+5
-                case NubiaRessource.Saule:
-                    infos.Name = "Saule";
+                case NubiaRessource.Noctar:
+                    infos.Name = "Noctar";
                     infos.Durabilite = 3;
-                    infos.Hue = 1953;
+                    infos.Hue = 2041;
                     infos.GlobalAR = 5;
                     infos.BonusAttaque = 0;
                     infos.BonusDegat = 3;
-                    infos.Diff = 18;
+                    infos.Diff = 24;
                     infos.ResistanceFeu = 1;
                     infos.ResistanceEnergie = 1;
                     infos.ResistanceAcide = 1;
                     infos.ResistanceFroid = 1;
                     break;
-                case NubiaRessource.Elendielle:
-                    infos.Name = "Elendielle";
+                case NubiaRessource.Riquesa:
+                    infos.Name = "Riquësa";
                     infos.Durabilite = 3;
-                    infos.Hue = 1944;
+                    infos.Hue = 2062;
                     infos.GlobalAR = 5;
                     infos.BonusAttaque = 4;
                     infos.BonusDegat = 0;
-                    infos.Diff = 18;
+                    infos.Diff = 26;
+                    infos.ResistanceFeu = 1;
+                    infos.ResistanceEnergie = 1;
+                    infos.ResistanceAcide = 1;
+                    infos.ResistanceFroid = 1;
+                    break;
+                case NubiaRessource.Caoba:
+                    infos.Name = "Caôba";
+                    infos.Durabilite = 3;
+                    infos.Hue = 2153;
+                    infos.GlobalAR = 4;
+                    infos.BonusAttaque = 5;
+                    infos.BonusDegat = 2;
+                    infos.Diff = 28;
                     infos.ResistanceFeu = 1;
                     infos.ResistanceEnergie = 1;
                     infos.ResistanceAcide = 1;

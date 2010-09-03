@@ -57,8 +57,8 @@ namespace Server.Engines.Harvest
 			lumber.MaxRange = 2;
 
 			// Ten logs per harvest action
-			lumber.ConsumedPerHarvest = 10;
-			lumber.ConsumedPerFeluccaHarvest = 20;
+			lumber.ConsumedPerHarvest = 2;
+			lumber.ConsumedPerFeluccaHarvest = 4;
 
 			// The chopping effect
 			lumber.EffectActions = new int[]{ 13 };
@@ -77,7 +77,7 @@ namespace Server.Engines.Harvest
 			{
 				res = new HarvestResource[]
 				{
-					new HarvestResource(  10, 1072540, typeof( Log ) )
+					new HarvestResource(  10, 1072540, typeof( BoisNormal ) )
 				};
 
 
@@ -93,7 +93,7 @@ namespace Server.Engines.Harvest
 			{
 				res = new HarvestResource[]
 				{
-					new HarvestResource(  10, 1072540, typeof( Log ) )
+					new HarvestResource(  10, 1072540, typeof( BoisNormal ) )
 				};
 
 				veins = new HarvestVein[]
