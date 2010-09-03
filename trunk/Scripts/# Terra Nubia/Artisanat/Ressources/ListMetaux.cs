@@ -21,6 +21,17 @@ namespace Server.Engines
         public override void Serialize(GenericWriter writer){base.Serialize(writer);}
         public override void Deserialize(GenericReader reader){base.Deserialize(reader);}
     }
+    public class MetalVerdan : BaseMetal
+    {
+        [Constructable]
+        public MetalVerdan() : base(NubiaRessource.Verdan) { }
+        public MetalVerdan(Serial s) : base(s) { }
+
+        public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
+        public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
+    }
+
+
     public class MetalCarriate : BaseMetal
     {
         [Constructable]

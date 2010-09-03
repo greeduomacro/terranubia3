@@ -24,6 +24,14 @@ namespace Server.Engines.Harvest
 
 		protected override void OnTarget( Mobile from, object targeted )
 		{
+
+            if (targeted is NubiaSpecialHarvest && from is NubiaPlayer)
+            {
+                ((NubiaSpecialHarvest)targeted).BeginSpecialHarvest(from as NubiaPlayer, m_Tool);
+                return;
+            }
+
+
 			if ( m_System is Mining && targeted is StaticTarget )
 			{
 				int itemID = ((StaticTarget)targeted).ItemID;

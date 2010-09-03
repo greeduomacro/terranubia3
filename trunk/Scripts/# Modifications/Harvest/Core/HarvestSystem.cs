@@ -104,6 +104,15 @@ namespace Server.Engines.Harvest
 			int tileID;
 			Map map;
 			Point3D loc;
+          
+
+            if (toHarvest is NubiaSpecialHarvest)
+            {
+
+                from.SendMessage("SPECIAL HARVEST 2");
+                return;
+            }
+
 
 			if ( !GetHarvestDetails( from, tool, toHarvest, out tileID, out map, out loc ) )
 			{
@@ -115,9 +124,9 @@ namespace Server.Engines.Harvest
 				OnBadHarvestTarget( from, tool, toHarvest );
 				return;
 			}
-			
-			if ( !CheckRange( from, tool, def, map, loc, true ) )
-				return;
+
+            if (!CheckRange(from, tool, def, map, loc, true))
+                return;
 			else if ( !CheckResources( from, tool, def, map, loc, true ) )
 				return;
 			else if ( !CheckHarvest( from, tool, def, toHarvest ) )
@@ -347,7 +356,7 @@ namespace Server.Engines.Harvest
 				OnBadHarvestTarget( from, tool, toHarvest );
 				return false;
 			}
-			else if ( !def.Validate( tileID ) )
+			else if (!(toHarvest is NubiaSpecialHarvest)&& !def.Validate( tileID ) )
 			{
 				from.EndAction( locked );
 				OnBadHarvestTarget( from, tool, toHarvest );
@@ -358,12 +367,12 @@ namespace Server.Engines.Harvest
 				from.EndAction( locked );
 				return false;
 			}
-			else if ( !CheckResources( from, tool, def, map, loc, true ) )
+            else if (!(toHarvest is NubiaSpecialHarvest) && !CheckResources(from, tool, def, map, loc, true))
 			{
 				from.EndAction( locked );
 				return false;
 			}
-			else if ( !CheckHarvest( from, tool, def, toHarvest ) )
+            else if (!(toHarvest is NubiaSpecialHarvest) && !CheckHarvest(from, tool, def, toHarvest))
 			{
 				from.EndAction( locked );
 				return false;
@@ -414,10 +423,17 @@ namespace Server.Engines.Harvest
 			Map map;
 			Point3D loc;
 
+
+           
+
+
 			if ( !GetHarvestDetails( from, tool, toHarvest, out tileID, out map, out loc ) )
 			{
-				OnBadHarvestTarget( from, tool, toHarvest );
-				return;
+                if (!(toHarvest is NubiaSpecialHarvest))
+                {
+                    OnBadHarvestTarget(from, tool, toHarvest);
+                    return;
+                }
 			}
 
 			HarvestDefinition def = GetDefinition( tileID );
@@ -442,6 +458,21 @@ namespace Server.Engines.Harvest
 				OnConcurrentHarvest( from, tool, def, toHarvest );
 				return;
 			}
+
+
+            if (toHarvest is NubiaSpecialHarvest)
+            {
+                from.SendMessage("Vous commencez à exploiter la ressource spéciale");
+
+                ((NubiaSpecialHarvest)toHarvest).RessourceConsume();
+
+                DoHarvestingEffect(from, tool, def, from.Map, loc);
+                new HarvestTimer(from, tool, this, def, toHarvest, toLock).Start();
+                OnHarvestStarted(from, tool, def, toHarvest);
+
+                return;
+            }
+
 
             DoHarvestingEffect(from, tool, def, from.Map, loc);
 			new HarvestTimer( from, tool, this, def, toHarvest, toLock ).Start();

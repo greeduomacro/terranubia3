@@ -12,92 +12,101 @@ using Server.Misc;
 namespace Server.Engines
 {
     //Toutes les infos sur les métaux sont dans NubiaInfoRessource.cs (en bas)
-    public class BoisErable : BaseBois
+    public class BoisNormal : BaseBois
     {
         [Constructable]
-        public BoisErable() : base(NubiaRessource.Erable) { }
-        public BoisErable(Serial s) : base(s) { }
+        public BoisNormal() : base(NubiaRessource.Bois) { }
+        public BoisNormal(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisPommier : BaseBois
+    public class BoisVela : BaseBois
     {
         [Constructable]
-        public BoisPommier() : base(NubiaRessource.Pommier) { }
-        public BoisPommier(Serial s) : base(s) { }
+        public BoisVela() : base(NubiaRessource.Vela) { }
+        public BoisVela(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisPecher : BaseBois
+    public class BoisVespre : BaseBois
     {
         [Constructable]
-        public BoisPecher() : base(NubiaRessource.Pecher) { }
-        public BoisPecher(Serial s) : base(s) { }
+        public BoisVespre() : base(NubiaRessource.Vespre) { }
+        public BoisVespre(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisPoirier : BaseBois
+    public class BoisMalatia : BaseBois
     {
         [Constructable]
-        public BoisPoirier() : base(NubiaRessource.Poirier) { }
-        public BoisPoirier(Serial s) : base(s) { }
+        public BoisMalatia() : base(NubiaRessource.Malatia) { }
+        public BoisMalatia(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisCedre : BaseBois
+    public class BoisEstiu : BaseBois
     {
         [Constructable]
-        public BoisCedre() : base(NubiaRessource.Cedre) { }
-        public BoisCedre(Serial s) : base(s) { }
+        public BoisEstiu() : base(NubiaRessource.Estiu) { }
+        public BoisEstiu(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisCocotier : BaseBois
+    public class BoisFosc : BaseBois
     {
         [Constructable]
-        public BoisCocotier() : base(NubiaRessource.Cocotier) { }
-        public BoisCocotier(Serial s) : base(s) { }
+        public BoisFosc() : base(NubiaRessource.Fosc) { }
+        public BoisFosc(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisChene : BaseBois
+    public class BoisAmanida : BaseBois
     {
         [Constructable]
-        public BoisChene() : base(NubiaRessource.Chene) { }
-        public BoisChene(Serial s) : base(s) { }
+        public BoisAmanida() : base(NubiaRessource.Amanida) { }
+        public BoisAmanida(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisNoyer : BaseBois
+    public class BoisGlacera : BaseBois
     {
         [Constructable]
-        public BoisNoyer() : base(NubiaRessource.Noyer) { }
-        public BoisNoyer(Serial s) : base(s) { }
+        public BoisGlacera() : base(NubiaRessource.Glacera) { }
+        public BoisGlacera(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisSaule : BaseBois
+    public class BoisNoctar : BaseBois
     {
         [Constructable]
-        public BoisSaule() : base(NubiaRessource.Saule) { }
-        public BoisSaule(Serial s) : base(s) { }
+        public BoisNoctar() : base(NubiaRessource.Noctar) { }
+        public BoisNoctar(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
     }
-    public class BoisElendielle : BaseBois
+    public class BoisRiquesa : BaseBois
     {
         [Constructable]
-        public BoisElendielle() : base(NubiaRessource.Elendielle) { }
-        public BoisElendielle(Serial s) : base(s) { }
+        public BoisRiquesa() : base(NubiaRessource.Riquesa) { }
+        public BoisRiquesa(Serial s) : base(s) { }
+
+        public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
+        public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
+    }
+    public class BoisCaoba : BaseBois
+    {
+        [Constructable]
+        public BoisCaoba() : base(NubiaRessource.Caoba) { }
+        public BoisCaoba(Serial s) : base(s) { }
 
         public override void Serialize(GenericWriter writer) { base.Serialize(writer); }
         public override void Deserialize(GenericReader reader) { base.Deserialize(reader); }
