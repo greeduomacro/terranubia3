@@ -38,6 +38,13 @@ namespace Server.Items
             foliage.Map = Map;
         }
 
+        public override void OnDelete()
+        {
+            if (foliage != null)
+                foliage.Delete();
+            base.OnDelete();
+        }
+
         public override void RessourceConsume()
         {
             Charges--;

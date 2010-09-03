@@ -119,11 +119,11 @@ namespace Server.Gumps
         }
         public void AddButtonPageSuivante(int x, int y, int id)
         {
-            AddButton(x, y, 0x2622, 0x2623, id, GumpButtonType.Reply, 0);
+            AddButton(x, y, 4005, 4007, id, GumpButtonType.Reply, 0);
         }
         public void AddButtonPagePrecedante(int x, int y, int id)
         {
-            AddButton(x, y, 0x2626, 0x2627, id, GumpButtonType.Reply, 0);
+            AddButton(x, y, 4014, 4016, id, GumpButtonType.Reply, 0);
         }
     }
 }

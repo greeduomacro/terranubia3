@@ -164,7 +164,7 @@ namespace Server.Gumps
                 colorCharac = ColorTextRed;
             else if (modCharac > 0)
                 colorCharac = ColorTextLight;
-            if (canUpCharac && mOwner.RawStr < mOwner.Niveau + 17)
+            if (canUpCharac && mOwner.RawStr < mOwner.Niveau + 15)
                 AddSimpleButton(x, y + line * scale, 200 + (int)DndStat.Force, "Force: ");
             else
                 AddLabel(x, y + (line * scale), ColorText, "Force: ");
@@ -179,7 +179,7 @@ namespace Server.Gumps
                 colorCharac = ColorTextRed;
             else if (modCharac > 0)
                 colorCharac = ColorTextLight;
-            if (canUpCharac && mOwner.RawDex < mOwner.Niveau + 17)
+            if (canUpCharac && mOwner.RawDex < mOwner.Niveau + 15)
                 AddSimpleButton(x, y + line * scale, 200 + (int)DndStat.Dexterite, "Dextérité: ");
             else
                 AddLabel(x, y + (line * scale), ColorText, "Dextérité: ");
@@ -194,7 +194,7 @@ namespace Server.Gumps
                 colorCharac = ColorTextRed;
             else if (modCharac > 0)
                 colorCharac = ColorTextLight;
-            if (canUpCharac && mOwner.RawCons < mOwner.Niveau + 17)
+            if (canUpCharac && mOwner.RawCons < mOwner.Niveau + 15)
                 AddSimpleButton(x, y + line * scale, 200 + (int)DndStat.Constitution, "Constitution: ");
             else
                 AddLabel(x, y + (line * scale), ColorText, "Constitution: ");
@@ -209,7 +209,7 @@ namespace Server.Gumps
                 colorCharac = ColorTextRed;
             else if (modCharac > 0)
                 colorCharac = ColorTextLight;
-            if (canUpCharac && mOwner.RawInt < mOwner.Niveau + 17)
+            if (canUpCharac && mOwner.RawInt < mOwner.Niveau + 15)
                 AddSimpleButton(x, y + line * scale, 200 + (int)DndStat.Intelligence, "Intelligence: ");
             else
                 AddLabel(x, y + (line * scale), ColorText, "Intelligence: ");
@@ -224,7 +224,7 @@ namespace Server.Gumps
                 colorCharac = ColorTextRed;
             else if (modCharac > 0)
                 colorCharac = ColorTextLight;
-            if (canUpCharac && mOwner.RawSag < mOwner.Niveau + 17)
+            if (canUpCharac && mOwner.RawSag < mOwner.Niveau + 15)
                 AddSimpleButton(x, y + line * scale, 200 + (int)DndStat.Sagesse, "Sagesse: ");
             else
                 AddLabel(x, y + (line * scale), ColorText, "Sagesse: ");
@@ -239,7 +239,7 @@ namespace Server.Gumps
                 colorCharac = ColorTextRed;
             else if (modCharac > 0)
                 colorCharac = ColorTextLight;
-            if (canUpCharac && mOwner.RawCha < mOwner.Niveau + 17)
+            if (canUpCharac && mOwner.RawCha < mOwner.Niveau + 15)
                 AddSimpleButton(x, y + line * scale, 200 + (int)DndStat.Charisme, "Charisme: ");
             else
                 AddLabel(x, y + (line * scale), ColorText, "Charisme: ");

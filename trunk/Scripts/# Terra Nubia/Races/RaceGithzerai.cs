@@ -24,8 +24,8 @@ namespace Server.Mobiles
     }
     public class RaceGithzerai : BaseRace
     {
-        public override bool AllowHair { get { return true; } }
-        public override bool AllowFacialHair { get { return true; } }
+        public override bool AllowHair { get { return false; } }
+        public override bool AllowFacialHair { get { return false; } }
 
         public override CustomHuePicker HuePicker { get { return new RaceGithzeraiHue(); } }
         public override string Name { get { return "Githzerai"; } }
