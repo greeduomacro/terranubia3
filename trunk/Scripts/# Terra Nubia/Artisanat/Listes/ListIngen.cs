@@ -21,7 +21,7 @@ namespace Server.Engines
                     "Outils", //0
                     "Lumières", //1
                     "Jeux", // 2
-                    "Sacs", // 3
+                    "Contenants", // 3
                 };
             }
         }
@@ -79,29 +79,52 @@ namespace Server.Engines
                     new RessourceNeed(typeof(BaseMetal), 2)});
 
             // J E U X
-            AddEntry("Jeu de backgammon", 2, typeof(Backgammon), 5, 10,
+            AddEntry("Jeu de backgammon", 2, typeof(Backgammon), 3, 10,
                 new RessourceNeed[]{
                     new RessourceNeed(typeof(BaseBois), 5)});
-            AddEntry("Jeu d'échec", 2, typeof(Chessboard), 5, 10,
+            AddEntry("Jeu d'échec", 2, typeof(Chessboard), 3, 10,
                 new RessourceNeed[]{
                     new RessourceNeed(typeof(BaseBois), 5)});
-            AddEntry("Jeu de dames", 2, typeof(CheckerBoard), 5, 10,
+            AddEntry("Jeu de dames", 2, typeof(CheckerBoard), 3, 10,
                 new RessourceNeed[]{
                     new RessourceNeed(typeof(BaseBois), 5)});
-            AddEntry("Dés", 2, typeof(Dices), 5, 10,
+            AddEntry("Dés", 2, typeof(Dices), 3, 10,
                 new RessourceNeed[]{
                     new RessourceNeed(typeof(BaseBois), 1)});
 
-            // S A C S
-            AddEntry("Bourse", 3, typeof(Pouch), 5, 10,
+            // Contenants
+            AddEntry("Petite caisse", 3, typeof(SmallCrate), 2, 10,
                 new RessourceNeed[]{
-                    new RessourceNeed(typeof(BaseCuir), 2)});
-            AddEntry("Sac", 3, typeof(Bag), 5, 10,
+                    new RessourceNeed(typeof(BaseBois), 3)});
+
+            AddEntry("Caisse", 3, typeof(MediumCrate), 2, 10,
                 new RessourceNeed[]{
-                    new RessourceNeed(typeof(BaseCuir), 3)});
-            AddEntry("Sac à dos", 3, typeof(Backpack), 5, 10,
+                    new RessourceNeed(typeof(BaseBois), 5)});
+
+            AddEntry("Grosse caisse", 3, typeof(MediumCrate), 2, 10,
                 new RessourceNeed[]{
-                    new RessourceNeed(typeof(BaseCuir), 5)});
+                    new RessourceNeed(typeof(BaseBois), 8)});
+
+            AddEntry("Boîte de bois", 3, typeof(WoodenBox), 3, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseMetal), 1),
+                    new RessourceNeed(typeof(BaseBois), 5)});
+
+            AddEntry("Boîte de métal", 3, typeof(MetalBox), 3, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseMetal), 6)});
+
+            AddEntry("Coffre de bois", 3, typeof(WoodenChest), 5, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseMetal), 2),
+                    new RessourceNeed(typeof(BaseBois), 8)});
+
+            AddEntry("Coffre de métal", 3, typeof(MetalChest), 5, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseMetal), 10)});
+
+            
+           
 
         }
 
