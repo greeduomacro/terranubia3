@@ -20,8 +20,12 @@ namespace Server.Mobiles
 		{
 			public InternalBuyInfo()
 			{
+                Add(new GenericBuyInfo(typeof(Shoes), 5, 10, 5903, 0));
+                Add(new GenericBuyInfo(typeof(Boots), 10, 10, 5899, 0));
+                Add(new GenericBuyInfo(typeof(Sandals), 3, 10, 5901, 0));
+                Add(new GenericBuyInfo(typeof(ThighBoots), 20, 10, 5905, 0));
 
-				Add( new GenericBuyInfo( typeof( SewingKit ), 3, 20, 0xF9D, 0 ) ); 
+				Add( new GenericBuyInfo( typeof( CoutureTool ), 3, 20, 0xF9D, 0 ) ); 
 				Add( new GenericBuyInfo( typeof( Scissors ), 11, 20, 0xF9F, 0 ) );
 				Add( new GenericBuyInfo( typeof( DyeTub ), 8, 20, 0xFAB, 0 ) ); 
 				Add( new GenericBuyInfo( typeof( Dyes ), 8, 20, 0xFA9, 0 ) ); 

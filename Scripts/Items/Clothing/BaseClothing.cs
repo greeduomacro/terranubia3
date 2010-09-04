@@ -231,7 +231,7 @@ namespace Server.Items
 			return base.CanEquip( from );
 		}
 
-		public virtual int AosStrReq{ get{ return 10; } }
+		public virtual int AosStrReq{ get{ return 0; } }
 		public virtual int OldStrReq{ get{ return 0; } }
 
 		public virtual int InitMinHits{ get{ return 0; } }

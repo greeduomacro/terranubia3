@@ -21,7 +21,7 @@ namespace Server.Mobiles
 			public InternalBuyInfo() 
 			{ 
 
-				Add( new GenericBuyInfo( typeof( Clock ), 22, 20, 0x104B, 0 ) );
+				/*Add( new GenericBuyInfo( typeof( Clock ), 22, 20, 0x104B, 0 ) );
 				Add( new GenericBuyInfo( typeof( Nails ), 3, 20, 0x102E, 0 ) );
 				Add( new GenericBuyInfo( typeof( ClockParts ), 3, 20, 0x104F, 0 ) );
 				Add( new GenericBuyInfo( typeof( AxleGears ), 3, 20, 0x1051, 0 ) );
@@ -32,19 +32,23 @@ namespace Server.Mobiles
 				Add( new GenericBuyInfo( typeof( SextantParts ), 5, 20, 0x1059, 0 ) );
 				Add( new GenericBuyInfo( typeof( Axle ), 2, 20, 0x105B, 0 ) );
 				Add( new GenericBuyInfo( typeof( Springs ), 3, 20, 0x105D, 0 ) );
-
+                */
 				Add( new GenericBuyInfo( "1024111", typeof( Key ), 8, 20, 0x100F, 0 ) );
 				Add( new GenericBuyInfo( "1024112", typeof( Key ), 8, 20, 0x1010, 0 ) );
 				Add( new GenericBuyInfo( "1024115", typeof( Key ), 8, 20, 0x1013, 0 ) );
 				Add( new GenericBuyInfo( typeof( KeyRing ), 8, 20, 0x1010, 0 ) );
 				Add( new GenericBuyInfo( typeof( Lockpick ), 12, 20, 0x14FC, 0 ) );
 
-				Add( new GenericBuyInfo( typeof( TinkerTools ), 7, 20, 0x1EB8, 0 ) );
-				Add( new GenericBuyInfo( typeof( Board ), 3, 20, 0x1BD7, 0 ) );
-				Add( new GenericBuyInfo( typeof( IronIngot ), 5, 16, 0x1BF2, 0 ) );
-				Add( new GenericBuyInfo( typeof( SewingKit ), 3, 20, 0xF9D, 0 ) );
+			//	Add( new GenericBuyInfo( typeof( TinkerTools ), 7, 20, 0x1EB8, 0 ) );
+			//	Add( new GenericBuyInfo( typeof( Board ), 3, 20, 0x1BD7, 0 ) );
+			//	Add( new GenericBuyInfo( typeof( IronIngot ), 5, 16, 0x1BF2, 0 ) );
+			
+                Add( new GenericBuyInfo( typeof( CoutureTool ), 30, 20, 0xF9D, 0 ) );
+                Add(new GenericBuyInfo(typeof(ForgeronTool), 30, 20, 0x13E3, 0));
+				Add(new GenericBuyInfo("Outils d'ingenieur", typeof(IngeTool), 30, 4, 7864, 0 ) );
+                Add(new GenericBuyInfo("Outils d'érudit", typeof(EruditionTool), 30, 4, 0xFBF, 0));
 
-				Add( new GenericBuyInfo( typeof( DrawKnife ), 10, 20, 0x10E4, 0 ) );
+	/*			Add( new GenericBuyInfo( typeof( DrawKnife ), 10, 20, 0x10E4, 0 ) );
 				Add( new GenericBuyInfo( typeof( Froe ), 10, 20, 0x10E5, 0 ) );
 				Add( new GenericBuyInfo( typeof( Scorp ), 10, 20, 0x10E7, 0 ) );
 				Add( new GenericBuyInfo( typeof( Inshave ), 10, 20, 0x10E6, 0 ) );
@@ -57,24 +61,23 @@ namespace Server.Mobiles
 
 				Add( new GenericBuyInfo( typeof( DovetailSaw ), 12, 20, 0x1028, 0 ) );
 				Add( new GenericBuyInfo( typeof( Saw ), 15, 20, 0x1034, 0 ) );
+*/
+			//	Add( new GenericBuyInfo( typeof( Hammer ), 17, 20, 0x102A, 0 ) );
+			// TODO: Sledgehammer
 
-				Add( new GenericBuyInfo( typeof( Hammer ), 17, 20, 0x102A, 0 ) );
-				Add( new GenericBuyInfo( typeof( SmithHammer ), 23, 20, 0x13E3, 0 ) );
-				// TODO: Sledgehammer
-
-				Add( new GenericBuyInfo( typeof( Shovel ), 12, 20, 0xF39, 0 ) );
+		/*		Add( new GenericBuyInfo( typeof( Shovel ), 12, 20, 0xF39, 0 ) );
 
 				Add( new GenericBuyInfo( typeof( MouldingPlane ), 11, 20, 0x102C, 0 ) );
 				Add( new GenericBuyInfo( typeof( JointingPlane ), 10, 20, 0x1030, 0 ) );
 				Add( new GenericBuyInfo( typeof( SmoothingPlane ), 11, 20, 0x1032, 0 ) );
-
+*/
 				Add( new GenericBuyInfo( typeof( Pickaxe ), 25, 20, 0xE86, 0 ) );
+                Add(new GenericBuyInfo(typeof(Hatchet), 25, 20, 0xF44, 0));
 
-
-				Add( new GenericBuyInfo( typeof( Drums ), 21, 20, 0x0E9C, 0 ) );
+	/*			Add( new GenericBuyInfo( typeof( Drums ), 21, 20, 0x0E9C, 0 ) );
 				Add( new GenericBuyInfo( typeof( Tambourine ), 21, 20, 0x0E9E, 0 ) );
 				Add( new GenericBuyInfo( typeof( LapHarp ), 21, 20, 0x0EB2, 0 ) );
-				Add( new GenericBuyInfo( typeof( Lute ), 21, 20, 0x0EB3, 0 ) );
+				Add( new GenericBuyInfo( typeof( Lute ), 21, 20, 0x0EB3, 0 ) );*/
 
 			} 
 		} 

@@ -17,19 +17,28 @@ namespace Server.Gumps
             if( mOwner == null )
                 return;
 
-            List<Mobile> worldMobiles = new List<Mobile>(World.Mobiles.Values);
-
-            for (int i = 0; i < worldMobiles.Count; i++)
+            try
             {
-                if (!(worldMobiles[i] is NubiaPlayer))
-                    continue;
-                NubiaPlayer player = worldMobiles[i] as NubiaPlayer;
-                if (player.isCotable(mOwner.Account.Username) && player.AccessLevel == AccessLevel.Player)
+                List<Mobile> worldMobiles = new List<Mobile>(World.Mobiles.Values);
+
+                for (int i = 0; i < worldMobiles.Count; i++)
                 {
-                    mPlayers.Add(player);
+                    if (worldMobiles[i] == null)
+                        continue;
+                    if (!(worldMobiles[i] is NubiaPlayer))
+                        continue;
+                    NubiaPlayer player = worldMobiles[i] as NubiaPlayer;
+                    if (player.isCotable(mOwner.Account.Username) && player.AccessLevel == AccessLevel.Player)
+                    {
+                        mPlayers.Add(player);
+                    }
+                    else
+                        continue;
                 }
-                else
-                    continue;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -44,6 +53,7 @@ namespace Server.Gumps
             int scale = 27;
             int decal = 5;
 
+            mPlayers = new List<NubiaPlayer>();
             constructList();
 
             if (mPlayers.Count == 0)
@@ -67,8 +77,16 @@ namespace Server.Gumps
                 for (int i = 0; i < mPlayers.Count; i++)
                 {
                     NubiaPlayer player = mPlayers[i];
-                    AddBackground(x, y + line * scale, 80, 25, 3000);
-                    AddLabel(x + 5, y + line * scale, ColorText, player.Account.Username);
+                    if (player == null)
+                        continue;
+
+                    if (player.Account == null)
+                        continue;
+                    
+                    
+                    AddBackground(x, y + line * scale, 80, 25, 3000);                      
+                        
+                     AddLabel(x + 5, y + line * scale, ColorText, player.Account.Username);
 
                     AddBackground(x + 80, y + line * scale, 170, 25, 3000);
                     AddLabel(x + 85, y + line * scale, ColorTextLight, player.Name);
@@ -86,9 +104,11 @@ namespace Server.Gumps
                     AddButton(x + 410, y + line * scale + 1, 250, 251, 1500 + i, GumpButtonType.Reply, 0);
 
 
-
-                    if (NetState.Instances.Contains(player.NetState)) // ON LINE !
-                        AddButton(x + 435, y + line * scale +1, 4005, 4006, 100 + i, GumpButtonType.Reply, 0);
+                    if (player.NetState != null)
+                    {
+                        if (NetState.Instances.Contains(player.NetState)) // ON LINE !
+                            AddButton(x + 435, y + line * scale + 1, 4005, 4006, 100 + i, GumpButtonType.Reply, 0);
+                    }
 
                     line++;
                 }

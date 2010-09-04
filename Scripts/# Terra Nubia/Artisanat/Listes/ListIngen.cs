@@ -29,6 +29,9 @@ namespace Server.Engines
         public override void ConstructList()
         {
             // O U T I L S
+            AddEntry("Parchemin d'ecriture", 0, typeof(NubiaParchemin), 5, 15,
+                new RessourceNeed[]{ 
+                    new RessourceNeed(typeof(BaseBois), 1) });
             AddEntry("Nécessaire d'écriture", 0, typeof(EruditionTool), 5, 10,
                 new RessourceNeed[]{ 
                     new RessourceNeed(typeof(Feather), 2),

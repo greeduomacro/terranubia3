@@ -278,6 +278,21 @@ namespace Server.Mobiles
         VolonteDeFer,
         Voltigeur,
 
+        //RODEUR
+        EmpathieSauvage,
+
+        EnemiJureAberration,
+        EnemiJureGeant,
+        EnemiJureAnimal,
+        EnemiJureHumanoide,
+        EnemiJureCreatureArticifielle,
+        EnemiJureMagique,
+        EnemiJureDragon,
+        EnemiJureElementaire,
+        EnemiJureMortVivant,
+        EnemiJurePlante,
+        EnemiJureVermine,
+
         Maximum
     }
 }

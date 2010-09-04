@@ -20,7 +20,7 @@ namespace Server.Mobiles
 		{ 
 			public InternalBuyInfo() 
 			{ 
-				Add( new GenericBuyInfo( typeof( Cabbage ), 5, 20, 0xC7B, 0 ) );
+				/*Add( new GenericBuyInfo( typeof( Cabbage ), 5, 20, 0xC7B, 0 ) );
 				Add( new GenericBuyInfo( typeof( Cantaloupe ), 6, 20, 0xC79, 0 ) );
 				Add( new GenericBuyInfo( typeof( Carrot ), 3, 20, 0xC78, 0 ) );
 				Add( new GenericBuyInfo( typeof( HoneydewMelon ), 7, 20, 0xC74, 0 ) );
@@ -40,7 +40,14 @@ namespace Server.Mobiles
 				Add( new GenericBuyInfo( typeof( Lemon ), 3, 20, 0x1728, 0 ) );
 				Add( new GenericBuyInfo( typeof( Lime ), 3, 20, 0x172A, 0 ) );
 				Add( new GenericBuyInfo( typeof( Grapes ), 3, 20, 0x9D1, 0 ) );
-				Add( new GenericBuyInfo( typeof( Apple ), 3, 20, 0x9D0, 0 ) );
+				Add( new GenericBuyInfo( typeof( Apple ), 3, 20, 0x9D0, 0 ) );*/
+
+                Add(new GenericBuyInfo("Graine de blé", typeof(PlanteBle), 2, 20, 0xF27, 0));
+                Add(new GenericBuyInfo("Graine de Citrouille", typeof(PlanteCitrouille), 2, 20, 0xF27, 0));
+                Add(new GenericBuyInfo("Graine de Coton", typeof(PlanteCoton), 2, 20, 0xF27, 0));
+                Add(new GenericBuyInfo("Graine de Lin", typeof(PlanteLin), 2, 20, 0xF27, 0));
+                Add(new GenericBuyInfo("Graine d'Aqualide", typeof(PlanteAqualide), 100, 3, 0xF27, 0));
+
 				Add( new GenericBuyInfo( typeof( SheafOfHay ), 2, 20, 0xF36, 0 ) );
 
 			} 
