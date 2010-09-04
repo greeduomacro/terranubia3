@@ -19,6 +19,7 @@ namespace Server.Gumps
             : base("Choix de la " + (_creation ? "Première classe" : "classe"), 250, 485)
 		{
 			//Closable = false;
+            Closable = !creation;
 			m_owner = _owner;
 			creation = _creation;
             choix = _choix;

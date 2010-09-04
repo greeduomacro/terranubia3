@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CAC02510-74B0-412C-BEF8-25610A2B5F67}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -130,6 +130,18 @@
     <Compile Include="# Modifications\Engines\AI\Team\TeamRegistry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Modifications\Harvest\Core\BonusHarvestResource.cs" />
+    <Compile Include="# Modifications\Harvest\Core\HarvestBank.cs" />
+    <Compile Include="# Modifications\Harvest\Core\HarvestDefinition.cs" />
+    <Compile Include="# Modifications\Harvest\Core\HarvestResource.cs" />
+    <Compile Include="# Modifications\Harvest\Core\HarvestSoundTimer.cs" />
+    <Compile Include="# Modifications\Harvest\Core\HarvestSystem.cs" />
+    <Compile Include="# Modifications\Harvest\Core\HarvestTarget.cs" />
+    <Compile Include="# Modifications\Harvest\Core\HarvestTimer.cs" />
+    <Compile Include="# Modifications\Harvest\Core\HarvestVein.cs" />
+    <Compile Include="# Modifications\Harvest\Fishing.cs" />
+    <Compile Include="# Modifications\Harvest\Lumberjacking.cs" />
+    <Compile Include="# Modifications\Harvest\Mining.cs" />
     <Compile Include="# Modifications\Items\Armor\ArmorEnums.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -614,6 +626,7 @@
     <Compile Include="# Terra Nubia\Artisanat\Core\BaseToolNubia.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Artisanat\Haverest\NubiaSpecialHarvest.cs" />
     <Compile Include="# Terra Nubia\Artisanat\Ressources\NubiaInfoRessource.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -948,6 +961,7 @@
     <Compile Include="# Terra Nubia\Bestiaire\Brigand.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Bestiaire\GardeAuzac.cs" />
     <Compile Include="# Terra Nubia\Blessures\BlessureEnum.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1946,6 +1960,7 @@
     <Compile Include="# Terra Nubia\OrbRemoteServer\UOArchitect\UOAR_ObjectTarget.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Races\Aasimar.cs" />
     <Compile Include="# Terra Nubia\Races\BaseRace.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1955,27 +1970,34 @@
     <Compile Include="# Terra Nubia\Races\ElfeLune.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Races\RaceChangelin.cs" />
     <Compile Include="# Terra Nubia\Races\RaceDemiElfe.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Races\RaceDrake.cs" />
+    <Compile Include="# Terra Nubia\Races\RaceDrow.cs" />
     <Compile Include="# Terra Nubia\Races\RaceGithzerai.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="# Terra Nubia\Races\RaceHalfelin.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Races\RaceHautElf.cs" />
     <Compile Include="# Terra Nubia\Races\RaceHumain.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="# Terra Nubia\Races\RaceManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Races\RaceTiefelin.cs" />
     <Compile Include="# Terra Nubia\Races\RaceType.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Races\TNRaceSkin.cs" />
     <Compile Include="# Terra Nubia\Regions\BaseNubiaRegion.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Regions\MineRegion.cs" />
     <Compile Include="# Terra Nubia\Regions\VillesRegion.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -2778,42 +2800,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Engines\Factions\Mobiles\Vendors\FactionReagentVendor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\BonusHarvestResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\HarvestBank.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\HarvestDefinition.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\HarvestResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\HarvestSoundTimer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\HarvestSystem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\HarvestTarget.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\HarvestTimer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Core\HarvestVein.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Fishing.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Lumberjacking.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engines\Harvest\Mining.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="# Modifications\Help\HelpGump.cs">

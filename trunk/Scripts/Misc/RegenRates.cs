@@ -52,20 +52,20 @@ namespace Server.Misc
 
 		private static TimeSpan Mobile_HitsRegenRate( Mobile from )
 		{
-			int points = AosAttributes.GetValue( from, AosAttribute.RegenHits );
+            int points = 1; // AosAttributes.GetValue(from, AosAttribute.RegenHits);
 
-			if ( from is BaseCreature && !((BaseCreature)from).IsAnimatedDead )
+			/*if ( from is BaseCreature && !((BaseCreature)from).IsAnimatedDead )
 				points += 20;
 
 			if ( (from is BaseCreature && ((BaseCreature)from).IsParagon) || from is Leviathan )
 				points += 40;
 
 			if ( CheckTransform( from, typeof( HorrificBeastSpell ) ) )
-				points += 20;
+				points += 20;*/
 
-			if ( CheckAnimal( from, typeof( Dog ) ) || CheckAnimal( from, typeof( Cat ) ) )
+		/*	if ( CheckAnimal( from, typeof( Dog ) ) || CheckAnimal( from, typeof( Cat ) ) )
 				points += from.Skills[SkillName.Ninjitsu].Fixed / 300;
-			//TODO: What's the new increased rate?
+		*/	//TODO: What's the new increased rate?
 
 			/*if( Core.ML && from.Race == Race.Human )	//Is this affected by the cap?
 				points += 2;*/

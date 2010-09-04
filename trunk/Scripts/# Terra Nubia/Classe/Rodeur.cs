@@ -3,6 +3,7 @@ using System.Collections;
 using System.Reflection;
 using Server.Items;
 using Server.Mobiles;
+using System.Collections.Generic;
 
 namespace Server
 {
@@ -14,6 +15,58 @@ namespace Server
         public ClasseRodeur() { }
 
         public override ClasseType CType { get { return ClasseType.Rodeur; } }
+
+        public override DonEnum[][] DonClasse
+        {
+            get
+            {
+                return new DonEnum[][]{
+                    new DonEnum[0], //0
+                    new DonEnum[]{DonEnum.EmpathieSauvage, DonEnum.Pistage, DonEnum.DonSupClasse}, // 1
+                    new DonEnum[0], //2
+                   new DonEnum[0], //3
+                    new DonEnum[0], //4
+                    new DonEnum[0], //5
+                    new DonEnum[0], //6
+                    new DonEnum[0], //7
+                    new DonEnum[0], //8
+                    new DonEnum[0],//9
+                    new DonEnum[0], //10
+                   new DonEnum[0], //11
+                   new DonEnum[0], //12
+                    new DonEnum[0], //13
+                   new DonEnum[0],//13
+                   new DonEnum[0], //15
+                   new DonEnum[0],//16
+                    new DonEnum[0], //17
+                    new DonEnum[0], //18
+                    new DonEnum[0], //19
+                   new DonEnum[0], //20
+                };
+            }
+        }
+
+        public override DonEnum[] getCustomDon(NubiaPlayer p, int niveau)
+        {
+            List<DonEnum> list = new List<DonEnum>();
+
+            if (niveau == 1)
+            {
+                list.Add(DonEnum.EnemiJureAberration);
+                list.Add(DonEnum.EnemiJureAnimal);
+                list.Add(DonEnum.EnemiJureCreatureArticifielle);
+                list.Add(DonEnum.EnemiJureDragon);
+                list.Add(DonEnum.EnemiJureElementaire);
+                list.Add(DonEnum.EnemiJureGeant);
+                list.Add(DonEnum.EnemiJureHumanoide);
+                list.Add(DonEnum.EnemiJureMagique);
+                list.Add(DonEnum.EnemiJureMortVivant);
+                list.Add(DonEnum.EnemiJurePlante);
+                list.Add(DonEnum.EnemiJureVermine);
+            }
+          
+            return list.ToArray();
+        }
 
         public override CompType[] ClasseCompetences
         {

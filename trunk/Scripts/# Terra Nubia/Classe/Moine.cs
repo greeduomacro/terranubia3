@@ -10,9 +10,10 @@ namespace Server
     {
         public static int getDamage(int moineNiveau)
         {
-            if (moineNiveau <= 0)
+           /* if (moineNiveau <= 0)
                 return DndHelper.rollDe(De.trois);
-            else if (moineNiveau <= 3)
+            else*/
+            if (moineNiveau <= 3)
                 return DndHelper.rollDe(De.six);
             else if (moineNiveau <= 7)
                 return DndHelper.rollDe(De.huit);

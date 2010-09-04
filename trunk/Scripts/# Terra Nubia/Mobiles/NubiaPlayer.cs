@@ -182,13 +182,19 @@ namespace Server.Mobiles
                 int myBonus = 0;
                 if (hasDon(DonEnum.ScienceDeLaBousculade))
                     myBonus += 4;
-                if (mLastBouscul + TimeSpan.FromSeconds(6) < DateTime.Now && sho.Str + DndHelper.rollDe(De.vingt) <= Str + DndHelper.rollDe(De.vingt) + myBonus)
+                if ( mLastBouscul + TimeSpan.FromSeconds(6) < DateTime.Now && sho.Str + DndHelper.rollDe(De.vingt) <= Str + DndHelper.rollDe(De.vingt) + myBonus)
                 {
-                    sho.Emote("*Bousculé par {0}*", Name);
-                    sho.Damage(1, this);
-                    if(!hasDon(DonEnum.ScienceDeLaBousculade) )
-                        ExposeToOpportunite();
-                    return true;
+                    if (!(Hidden))
+                    {
+                        mLastBouscul = DateTime.Now;
+                        sho.Emote("*Bousculé par {0}*", Name);
+                        sho.Damage(1, this);
+                        if (!hasDon(DonEnum.ScienceDeLaBousculade))
+                            ExposeToOpportunite();
+                        return true;
+                    }
+                    else
+                        return true;
                 }
                 else
                 {
@@ -1416,17 +1422,19 @@ namespace Server.Mobiles
             {
                 if (item != null)
                 {
-                    Console.WriteLine("Autoequip: " + item);
+                 //   Console.WriteLine("Autoequip: " + item);
                     EquipItem(item);
                 }
             }
+            Console.WriteLine("Corpse: " + m_lastCorpse);
             if (m_lastCorpse != null)
             {
-                if (m_lastCorpse.Items.Count < 1)
-                {
+              //  itemToPack = m_lastCorpse.AcquireItems;
+               //if (m_lastCorpse.Items.Count < 1)
+             //   {
                     foreach (Item it in m_lastCorpse.Items)
                     {
-                        Console.WriteLine("AutoPackItem (0): " + it);
+                        Console.WriteLine("AutoPackItem list :(0) " + it);
                         itemToPack.Add(it);
                     }
 
@@ -1434,14 +1442,14 @@ namespace Server.Mobiles
                     {
                         if (iti != null)
                         {
-                            Console.WriteLine("AutoPackItem: " + iti);
+                            Console.WriteLine("AutoPackItem pack: " + iti);
                             if (Backpack != null)
                                 Backpack.DropItem(iti);
                             else
                                 iti.MoveToWorld(Location, Map);
                         }
                     }
-                }
+            //    }
 
                 m_lastCorpse.Delete();
             }
