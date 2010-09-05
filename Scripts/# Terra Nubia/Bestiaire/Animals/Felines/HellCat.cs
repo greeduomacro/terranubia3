@@ -60,7 +60,7 @@ namespace Server.Mobiles
 
 		public override bool HasBreath{ get{ return true; } } // fire breath enabled
 		public override int Hides{ get{ return 10; } }
-		public override HideType HideType{ get{ return HideType.Spined; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Demoniaque; } }
 		public override FoodType FavoriteFood{ get{ return FoodType.Meat; } }
 		public override PackInstinct PackInstinct{ get{ return PackInstinct.Feline; } }
 

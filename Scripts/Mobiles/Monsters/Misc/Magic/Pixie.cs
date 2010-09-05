@@ -1,6 +1,7 @@
 using System;
 using Server;
 using Server.Misc;
+using Server.Items;
 
 namespace Server.Mobiles
 {
@@ -53,7 +54,7 @@ namespace Server.Mobiles
 			AddLoot( LootPack.Gems, 2 );
 		}
 
-		public override HideType HideType{ get{ return HideType.Spined; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Demoniaque; } }
 		public override int Hides{ get{ return 5; } }
 		public override int Meat{ get{ return 1; } }
 

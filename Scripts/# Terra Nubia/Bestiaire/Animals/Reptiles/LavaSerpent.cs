@@ -57,7 +57,7 @@ namespace Server.Mobiles
 		public override bool HasBreath{ get{ return true; } } // fire breath enabled
 		public override int Meat{ get{ return 4; } }
 		public override int Hides{ get{ return 15; } }
-		public override HideType HideType{ get{ return HideType.Spined; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Reptilien; } }
 
 		public LavaSerpent(Serial serial) : base(serial)
 		{

@@ -46,155 +46,157 @@ namespace Server.Engines
 											new RessourceNeed( typeof(BaseMetal), 1),
 											new RessourceNeed( typeof(BaseCuir), 4)});
 
-            AddEntry("Gorget de cuir", 7, typeof(LeatherGorget), 3 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Gorget de cuir", 7, typeof(LeatherGorget), 3, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 1),
 											new RessourceNeed( typeof(BaseCuir), 4)});
 
-            AddEntry("Jambières de cuir", 7, typeof(LeatherLegs), 3 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Jambières de cuir", 7, typeof(LeatherLegs), 3, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 1),
 											new RessourceNeed( typeof(BaseCuir), 10)});
 
-            AddEntry("Torse de cuir", 7, typeof(LeatherChest), 3 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Torse de cuir", 7, typeof(LeatherChest), 3, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 1),
 											new RessourceNeed( typeof(BaseCuir), 15)});
 
 
             //Armure de cuir clouté
-            AddEntry("Brassards de cuir clouté", 8, typeof(StuddedArms), 4 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Brassards de cuir clouté", 8, typeof(StuddedArms), 4, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 3),
 											new RessourceNeed( typeof(BaseCuir), 6)});
 
-            AddEntry("Gants de cuir clouté", 8, typeof(StuddedGloves), 4 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Gants de cuir clouté", 8, typeof(StuddedGloves), 4, 10,
                                 new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 2),
 											new RessourceNeed( typeof(BaseCuir), 4)});
 
-            AddEntry("Gorget de cuir clouté", 8, typeof(StuddedGorget), 4 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Gorget de cuir clouté", 8, typeof(StuddedGorget), 4, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 2),
 											new RessourceNeed( typeof(BaseCuir), 4)});
 
-            AddEntry("Jambières de cuir clouté", 8, typeof(StuddedLegs), 4 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Jambières de cuir clouté", 8, typeof(StuddedLegs), 4, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 5),
 											new RessourceNeed( typeof(BaseCuir), 10)});
 
-            AddEntry("Torse de cuir clouté", 8, typeof(StuddedChest), 4 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Torse de cuir clouté", 8, typeof(StuddedChest), 4, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 8),
 											new RessourceNeed( typeof(BaseCuir), 15)});
 
 
             //Armure d'os
-            AddEntry("Brassards d'os", 9, typeof(BoneArms), 5 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Brassards d'os", 9, typeof(BoneArms), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseOs), 6),
 											new RessourceNeed( typeof(BaseCuir), 3)});
 
-            AddEntry("Gants d'os", 9, typeof(BoneGloves), 5 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Gants d'os", 9, typeof(BoneGloves), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseOs), 4),
 											new RessourceNeed( typeof(BaseCuir), 2)});
 
-            AddEntry("Jambières d'os", 9, typeof(BoneLegs), 5 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Jambières d'os", 9, typeof(BoneLegs), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseOs), 10),
 											new RessourceNeed( typeof(BaseCuir), 5)});
 
-            AddEntry("Torse d'os", 9, typeof(BoneChest), 0 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Torse d'os", 9, typeof(BoneChest), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseOs), 15),
 											new RessourceNeed( typeof(BaseCuir), 8)});
 
 
-            //Chapeaux FIXME: Valeurs
-            AddEntry("Kasa", 2, typeof(Kasa), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            //Chapeaux
+
+            AddEntry("Bandeau", 2, typeof(Bandana), 0, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 1)});
+
+            AddEntry("Bandeau de pirate", 2, typeof(SkullCap), 1, 10,
+                                          new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 2)});
+
+            AddEntry("Kasa", 2, typeof(Kasa), 2, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 4)});
+
+            AddEntry("Bandeau de fleurs", 2, typeof(FlowerGarland), 3, 10,  
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 2)});
+
+            AddEntry("Chapeau de pêcheur", 2, typeof(FloppyHat), 4, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 6)});
+          
+            AddEntry("Casquette", 2, typeof(Cap), 5, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 3)});
+
+            AddEntry("Chapeau de paille", 2, typeof(StrawHat), 4, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 5)});
 
-            AddEntry("Masque de Ninja", 2, typeof(ClothNinjaHood), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Bonnet", 2, typeof(Bonnet), 4, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 3)});
+
+            AddEntry("Chapeau à large bords", 2, typeof(WideBrimHat), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 5)});
 
-            AddEntry("Bandeau de fleurs", 2, typeof(FlowerGarland), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Chapeau à pointe", 2, typeof(TallStrawHat), 5, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 7)});
+
+            AddEntry("Chapeau à plume", 2, typeof(FeatheredHat), 5, 10,
+                                            new RessourceNeed[]{
+                                            new RessourceNeed( typeof(Feather), 1),
+											new RessourceNeed( typeof(BaseTissu), 5)});
+
+            AddEntry("Chapeau de bouffon", 2, typeof(JesterHat), 6, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 6)});
+
+            AddEntry("Tricorne", 2, typeof(TricorneHat), 7, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 5)});
 
-            AddEntry("Chapeau de pêcheur", 2, typeof(FloppyHat), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Chapeau de magicien", 2, typeof(WizardsHat), 8, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 7)});
+
+            AddEntry("Masque de Ninja", 2, typeof(ClothNinjaHood), 6, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 3)});
+
+            AddEntry("Masque de sauvage", 2, typeof(SavageMask), 4, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 5)});
 
-            AddEntry("Chapeau à large bords", 2, typeof(WideBrimHat), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Masque tribal à cornes", 2, typeof(HornedTribalMask), 6, 10,
                                             new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
+											new RessourceNeed( typeof(BaseCuir), 5)});
 
-            AddEntry("Casquette", 2, typeof(Cap), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Masque tribal", 2, typeof(TribalMask), 5, 10,
                                             new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
+											new RessourceNeed( typeof(BaseTissu), 3)});
 
-            AddEntry("Bandeau de pirate", 2, typeof(SkullCap), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Masque d'ours", 2, typeof(BearMask), 6, 10,
                                             new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
+											new RessourceNeed( typeof(BaseCuir), 8)});
 
-            AddEntry("Bandeau", 2, typeof(Bandana), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Masque de chevreuil", 2, typeof(DeerMask), 7, 10,
                                             new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
+											new RessourceNeed( typeof(BaseCuir), 8)});
 
-            AddEntry("Masque d'ours", 2, typeof(BearMask), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
+            AddEntry("Masque d'orc", 2, typeof(OrcishKinMask), 8, 10,
                                             new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Masque de chevreuil", 2, typeof(DeerMask), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Masque tribal à cornes", 2, typeof(HornedTribalMask), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Masque tribal", 2, typeof(TribalMask), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Chapeau à pointe", 2, typeof(TallStrawHat), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Chapeau de paille", 2, typeof(StrawHat), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Masque d'orc", 2, typeof(OrcishKinMask), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Masque de sauvage", 2, typeof(SavageMask), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Chapeau de magicien", 2, typeof(WizardsHat), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Bonnet", 2, typeof(Bonnet), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Chapeau à plume", 2, typeof(FeatheredHat), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Tricorne", 2, typeof(TricorneHat), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
-
-            AddEntry("Chapeau de bouffon", 2, typeof(JesterHat), 2 /*Min value pour crafter*/, 10 /*Difficulte*/,
-                                            new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 5)});
+											new RessourceNeed( typeof(BaseCuir), 5)});
 
 
             // Capes
@@ -202,7 +204,7 @@ namespace Server.Engines
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 10)});
 
-            AddEntry("Cape de fourrure", 4, typeof(FurCape), 3, 10,
+            AddEntry("Cape de fourrure", 4, typeof(FurCape), 5, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseCuir), 10)});
 
@@ -212,7 +214,7 @@ namespace Server.Engines
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseCuir), 3)});
             
-            AddEntry("Sandales", 3, typeof(Sandals), 3, 10,
+            AddEntry("Sandales", 3, typeof(Sandals), 4, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseCuir), 2)});
 
@@ -220,15 +222,15 @@ namespace Server.Engines
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseCuir), 5)});
 
-            AddEntry("Bottes longues", 3, typeof(ThighBoots), 3, 10,
+            AddEntry("Bottes longues", 3, typeof(ThighBoots), 5, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseCuir), 8)});
 
-            /*AddEntry("Bottes elfiques", 3, typeof(ElvenBoots), 4, 10,
+            /*AddEntry("Bottes elfiques", 3, typeof(ElvenBoots), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseCuir), 5)});*/
 
-            AddEntry("Bottes de fourrure", 3, typeof(FurBoots), 5, 10,
+            AddEntry("Bottes de fourrure", 3, typeof(FurBoots), 7, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseCuir), 5)});
 
@@ -242,13 +244,14 @@ namespace Server.Engines
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 8)});
 
-            /*AddEntry("Pantalons elfiques", 1, typeof(ElvenPants), 4, 10,
+            /*AddEntry("Pantalons elfiques", 1, typeof(ElvenPants), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 8)});*/
 
             AddEntry("Tattsuke Hakama", 1, typeof(TattsukeHakama), 8, 10,
                                             new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 10)});
+                                            new RessourceNeed( typeof(BaseCuir), 5),
+											new RessourceNeed( typeof(BaseTissu), 5)});
 
             AddEntry("Jupe", 1, typeof(Skirt), 0, 10,
                                             new RessourceNeed[]{
@@ -261,6 +264,7 @@ namespace Server.Engines
             AddEntry("Hakama", 1, typeof(Hakama), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 8)});
+
 
             //Hauts de vetements
             AddEntry("Chandail", 0, typeof(Shirt), 1, 10,
@@ -287,12 +291,17 @@ namespace Server.Engines
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 12)});
 
+            AddEntry("Hakama-Shita", 0, typeof(HakamaShita), 5, 10,
+                                            new RessourceNeed[]{
+                                            new RessourceNeed( typeof(BaseCuir), 6),
+											new RessourceNeed( typeof(BaseTissu), 5)});
+
             AddEntry("Jin-Baori", 0, typeof(JinBaori), 7, 10,
                                             new RessourceNeed[]{
                                             new RessourceNeed( typeof(BaseCuir), 2),
 											new RessourceNeed( typeof(BaseTissu), 6)});
 
-            /*AddEntry("Chandail elfique", 0, typeof(ElvenShirt), 4, 10,
+            /*AddEntry("Chandail elfique", 0, typeof(ElvenShirt), 6, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 10)});*/
 
@@ -301,12 +310,47 @@ namespace Server.Engines
 											new RessourceNeed( typeof(BaseTissu), 12)});
 
             AddEntry("Veste de cérémonie", 0, typeof(FormalShirt), 8, 10,
-                                           new RessourceNeed[]{
-											new RessourceNeed( typeof(BaseTissu), 15)});
+                                            new RessourceNeed[]{
+										    new RessourceNeed( typeof(BaseTissu), 15)});
 
 
             // Robes et toges
 
+            AddEntry("Toge", 5, typeof(Robe), 5, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 15)});
+
+            AddEntry("Robe", 5, typeof(PlainDress), 3, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 10)});
+
+            AddEntry("Robe de qualité", 5, typeof(FancyDress), 5, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 12)});
+
+            AddEntry("Robe de soirée", 5, typeof(GildedDress), 7, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 15)});
+
+            /*AddEntry("Toge elfique pour homme", 5, typeof(MaleElvenRobe), 6, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 15)});*/
+
+            /*AddEntry("Toge elfique pour femme", 5, typeof(FemaleElvenRobe), 6, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 15)});*/
+
+            AddEntry("Kamishimo", 5, typeof(Kamishimo), 8, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 17)});
+
+            AddEntry("Kimono pour homme", 5, typeof(MaleKimono), 9, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 20)});
+
+            AddEntry("Kimono pour femme", 5, typeof(FemaleKimono), 9, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 18)});
 
 
             //Accessoires
@@ -321,6 +365,10 @@ namespace Server.Engines
             AddEntry("Tablier long", 6, typeof(FullApron), 3, 10,
                                             new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseTissu), 7)});
+
+            AddEntry("Tablier de fourrure", 6, typeof(FullApron), 5, 10,
+                                            new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseTissu), 6)});
 
             AddEntry("Bourse", 6, typeof(Pouch), 5, 10,
                                             new RessourceNeed[]{

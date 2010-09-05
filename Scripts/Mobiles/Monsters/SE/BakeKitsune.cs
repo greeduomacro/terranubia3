@@ -58,7 +58,7 @@ namespace Server.Mobiles
 
 		public override int Meat{ get{ return 5; } }
 		public override int Hides{ get{ return 10; } }
-		public override HideType HideType{ get{ return HideType.Barbed; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Chair; } }
 		public override FoodType FavoriteFood{ get{ return FoodType.Fish; } }
 
 		public override void OnGaveMeleeAttack( Mobile defender )

@@ -60,7 +60,7 @@ namespace Server.Mobiles
 
 		public override int Meat{ get{ return 4; } }
 		public override int Hides{ get{ return 15; } }
-		public override HideType HideType{ get{ return HideType.Spined; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Reptilien; } }
 
 		public GiantSerpent(Serial serial) : base(serial)
 		{

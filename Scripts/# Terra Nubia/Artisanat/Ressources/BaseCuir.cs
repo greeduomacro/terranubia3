@@ -33,13 +33,18 @@ namespace Server.Engines
         }
 
         public BaseCuir(NubiaRessource _cuir)
-            : base(0x1079)
+            : this(_cuir, 1)
+        {
+        }
+
+
+        public BaseCuir(NubiaRessource _cuir, int amount)
+            : base(0x1079, amount)
         {
             mRessource = _cuir;
             Hue = Infos.Hue;
             Name = "Cuir";
         }
-
        
 
         public BaseCuir(Serial s)

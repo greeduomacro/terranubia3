@@ -14,6 +14,7 @@ using Server.Engines.Quests;
 using Server.Factions;
 using Server.Spells.Bushido;
 using Server.Spells.Spellweaving;
+using Server.Engines;
 
 namespace Server.Mobiles
 {
@@ -1252,14 +1253,56 @@ namespace Server.Mobiles
 
 				if ( hides != 0 )
 				{
-					if ( HideType == HideType.Regular )
-						corpse.DropItem( new Hides( hides ) );
-					else if ( HideType == HideType.Spined )
-						corpse.DropItem( new SpinedHides( hides ) );
-					else if ( HideType == HideType.Horned )
-						corpse.DropItem( new HornedHides( hides ) );
-					else if ( HideType == HideType.Barbed )
-						corpse.DropItem( new BarbedHides( hides ) );
+
+                    switch(HideType)
+                    {
+                        case NubiaRessource.Classique:
+                            corpse.DropItem(new CuirClassique(hides)); break;
+                        case NubiaRessource.Ophidian:
+                            corpse.DropItem(new CuirOphidian(hides)); break;
+                        case NubiaRessource.Demoniaque:
+                            corpse.DropItem(new CuirDemoniaque(hides)); break;
+                        case NubiaRessource.Sang:
+                            corpse.DropItem(new CuirSang(hides)); break;
+                        case NubiaRessource.Rageur:
+                            corpse.DropItem(new CuirRageur(hides)); break;
+                        case NubiaRessource.Gargoulien:
+                            corpse.DropItem(new CuirGargoulien(hides)); break;
+                        case NubiaRessource.Lupus:
+                            corpse.DropItem(new CuirLupus(hides)); break;
+                        case NubiaRessource.Maritime:
+                            corpse.DropItem(new CuirMaritime(hides)); break;
+                        case NubiaRessource.Givre:
+                            corpse.DropItem(new CuirGivre(hides)); break;
+                        case NubiaRessource.Chair:
+                            corpse.DropItem(new CuirChair(hides)); break;
+                        case NubiaRessource.Balron:
+                            corpse.DropItem(new CuirBalron(hides)); break;
+                        case NubiaRessource.Reptilien:
+                            corpse.DropItem(new CuirReptilien(hides)); break;
+                        case NubiaRessource.Terathan:
+                            corpse.DropItem(new CuirTerathan(hides)); break;
+                        case NubiaRessource.Draconique:
+                            corpse.DropItem(new CuirDraconique(hides)); break;
+                        case NubiaRessource.Geant:
+                            corpse.DropItem(new CuirGeant(hides)); break;
+                        case NubiaRessource.Rautour:
+                            corpse.DropItem(new CuirRautour(hides)); break;
+                        case NubiaRessource.Pierre:
+                            corpse.DropItem(new CuirPierre(hides)); break;
+                        case NubiaRessource.Legendaire:
+                            corpse.DropItem(new CuirLegendaire(hides)); break;
+                        case NubiaRessource.Nordique:
+                            corpse.DropItem(new CuirNordique(hides)); break;
+                        case NubiaRessource.Volcanique:
+                            corpse.DropItem(new CuirVolcanique(hides)); break;
+                        case NubiaRessource.Hydro:
+                            corpse.DropItem(new CuirHydro(hides)); break;
+                        default:
+                            Console.WriteLine("Error: " + corpse.Owner.Name + " a un HideType (" + HideType +
+                                ") ne correspondant pas à du cuir");
+                            break;
+                    };
 
 					from.SendLocalizedMessage( 500471 ); // You skin it, and the hides are now in the corpse.
 				}
@@ -2456,7 +2499,7 @@ namespace Server.Mobiles
 		public virtual int Meat{ get{ return 0; } }
 
 		public virtual int Hides{ get{ return 0; } }
-		public virtual HideType HideType{ get{ return HideType.Regular; } }
+		public virtual NubiaRessource HideType{ get{ return NubiaRessource.Classique; } }
 
 		public virtual int Scales{ get{ return 0; } }
 		public virtual ScaleType ScaleType{ get{ return ScaleType.Red; } }
