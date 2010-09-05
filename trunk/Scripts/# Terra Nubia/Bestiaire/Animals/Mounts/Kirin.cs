@@ -1,6 +1,7 @@
 using System;
 using Server.Mobiles;
 using Server.Network;
+using Server.Items;
 
 namespace Server.Mobiles
 {
@@ -97,7 +98,7 @@ namespace Server.Mobiles
 
 		public override int Meat{ get{ return 3; } }
 		public override int Hides{ get{ return 10; } }
-		public override HideType HideType{ get{ return HideType.Horned; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Geant; } }
 		public override FoodType FavoriteFood{ get{ return FoodType.FruitsAndVegies | FoodType.GrainsAndHay; } }
 
 		public Kirin( Serial serial ) : base( serial )

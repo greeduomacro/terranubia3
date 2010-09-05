@@ -1,5 +1,6 @@
 using System;
 using Server.Mobiles;
+using Server.Items;
 
 namespace Server.Mobiles
 {
@@ -49,7 +50,7 @@ namespace Server.Mobiles
 		}
 
 		public override int Hides{ get{ return 12; } }
-		public override HideType HideType{ get{ return HideType.Spined; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Maritime; } }
 		public override FoodType FavoriteFood{ get{ return FoodType.Fish | FoodType.Meat; } }
 
 		public GiantToad(Serial serial) : base(serial)

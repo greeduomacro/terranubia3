@@ -58,7 +58,7 @@ namespace Server.Mobiles
 
 		public override int Meat{ get{ return 10; } }
 		public override int Hides{ get{ return 20; } }
-		public override HideType HideType{ get{ return HideType.Horned; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Terathan; } }
 
 		public override int GetAttackSound()
 		{

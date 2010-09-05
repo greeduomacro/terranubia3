@@ -63,7 +63,7 @@ namespace Server.Mobiles
 		public override bool ReacquireOnMovement{ get{ return true; } }
 		public override bool HasBreath{ get{ return true; } } // fire breath enabled
 		public override bool AutoDispel{ get{ return true; } }
-		public override HideType HideType{ get{ return HideType.Barbed; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Legendaire; } }
 		public override int Hides{ get{ return 40; } }
 		public override int Meat{ get{ return 19; } }
 		public override int Scales{ get{ return 12; } }

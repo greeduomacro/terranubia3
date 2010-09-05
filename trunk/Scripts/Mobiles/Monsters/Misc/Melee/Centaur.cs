@@ -59,7 +59,7 @@ namespace Server.Mobiles
 
 		public override int Meat{ get{ return 1; } }
 		public override int Hides{ get{ return 8; } }
-		public override HideType HideType{ get{ return HideType.Spined; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Chair; } }
 
 		public Centaur( Serial serial ) : base( serial )
 		{

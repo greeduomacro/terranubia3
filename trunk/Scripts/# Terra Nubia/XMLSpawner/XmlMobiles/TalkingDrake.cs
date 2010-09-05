@@ -57,7 +57,7 @@ namespace Server.Mobiles
 		public override int TreasureMapLevel{ get{ return 2; } }
 		public override int Meat{ get{ return 10; } }
 		public override int Hides{ get{ return 20; } }
-		public override HideType HideType{ get{ return HideType.Horned; } }
+		public override NubiaRessource HideType{ get{ return NubiaRessource.Draconique; } }
 		public override int Scales{ get{ return 2; } }
 		public override ScaleType ScaleType{ get{ return ( Body == 60 ? ScaleType.Yellow : ScaleType.Red ); } }
 		public override FoodType FavoriteFood{ get{ return FoodType.Meat | FoodType.Fish; } }
