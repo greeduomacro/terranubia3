@@ -12,7 +12,7 @@ namespace Server.Items
 		private EnumPlanteState m_State = EnumPlanteState.Graine;
 		private EnumPlanteTare m_Tare = EnumPlanteTare.Aucune;
 		private int m_rollResult = 0;
-		private int m_turn = 20; //Tour en heure... de 18 a 24;
+		private int m_turn = 8; //Tour en heure... de 18 a 24;
 		//Constantes
 		public virtual EnumPlanteTerrain Terrain { get{return EnumPlanteTerrain.Ferme; }}
 		public virtual bool CanEat { get{return false; }} //Savoir si on peu directement manger la récolte
