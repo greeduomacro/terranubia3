@@ -473,4 +473,25 @@ namespace Server.Engines
         }
     }
 
+    public class CraftAlchimieSystem : CraftSystemNubia
+    {
+        private static CraftSystemNubia mSingleton = null;
+
+        private CraftAlchimieSystem()
+        {
+            mList = new ListAlchimie();
+            mComp = CompType.Chimie;
+            mName = "Chimie";
+        }
+        public static CraftSystemNubia Singleton
+        {
+            get
+            {
+                if (mSingleton == null)
+                    mSingleton = new CraftAlchimieSystem();
+                return mSingleton;
+            }
+        }
+    }
+
 }

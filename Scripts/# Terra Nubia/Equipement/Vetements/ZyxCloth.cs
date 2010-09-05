@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Server.Items
 {
+    /*
     public class MCVeste : BaseClothing
     {
         [Constructable]
@@ -1089,12 +1090,14 @@ namespace Server.Items
             int version = reader.ReadInt();
         }
     }
-
+    */
 
 
     /**
      * LOT 1 
      */ 
+
+    /*
     public class NCMasque : BaseClothing
     {
         [Constructable]
@@ -1248,5 +1251,5 @@ namespace Server.Items
             base.Deserialize(reader);
             int version = reader.ReadInt();
         }
-    }
+    }*/
 }

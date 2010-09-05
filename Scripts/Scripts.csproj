@@ -623,13 +623,18 @@
     <Compile Include="# Terra Nubia\Agriculture\PlanteRecoltePutralide.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Agriculture\PlantesSauvages\BasePlanteSauvage.cs" />
+    <Compile Include="# Terra Nubia\Agriculture\PlantesSauvages\Plantes.cs" />
+    <Compile Include="# Terra Nubia\Artisanat\Baume.cs" />
     <Compile Include="# Terra Nubia\Artisanat\Core\BaseToolNubia.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="# Terra Nubia\Artisanat\Haverest\NubiaSpecialHarvest.cs" />
+    <Compile Include="# Terra Nubia\Artisanat\Listes\AlchimieList.cs" />
     <Compile Include="# Terra Nubia\Artisanat\Ressources\NubiaInfoRessource.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Artisanat\Tools\ChimieTool.cs" />
     <Compile Include="# Terra Nubia\Artisanat\Tools\CoutureTool.cs" />
     <Compile Include="# Terra Nubia\Artisanat\Core\CraftableItemScanner.cs">
       <SubType>Code</SubType>
@@ -1181,6 +1186,8 @@
     <Compile Include="# Terra Nubia\Dons\Dons classe\Moine\PuretePhysique.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Dons\Dons classe\Rodeur\DonEmpathieSauvage.cs" />
+    <Compile Include="# Terra Nubia\Dons\Dons classe\Rodeur\DonEnemisJures.cs" />
     <Compile Include="# Terra Nubia\Dons\Dons classe\Roublard\DonAttaqueSournoise.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1818,6 +1825,7 @@
     <Compile Include="# Terra Nubia\Houses System\Utilities v1.03\Gumps Plus\ResponseGump.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Items\Bandage.cs" />
     <Compile Include="# Terra Nubia\Items\BloodNubia.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1848,6 +1856,7 @@
     <Compile Include="# Terra Nubia\Items\PurificateurEauTenebre.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Items\ReposItem.cs" />
     <Compile Include="# Terra Nubia\Items\TerreRetourne.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -5517,9 +5526,6 @@
     <Compile Include="Items\Skill Items\Magical\SpellweavingBook.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Skill Items\Misc\Bandage.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Items\Skill Items\Misc\FireHorn.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -8297,6 +8303,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="# Terra Nubia\Items\Monaies\" />
     <Folder Include="# Terra Nubia\Maladies\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
