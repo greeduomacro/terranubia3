@@ -42,7 +42,10 @@ namespace Server.Mobiles
 			//	Add( new GenericBuyInfo( typeof( TinkerTools ), 7, 20, 0x1EB8, 0 ) );
 			//	Add( new GenericBuyInfo( typeof( Board ), 3, 20, 0x1BD7, 0 ) );
 			//	Add( new GenericBuyInfo( typeof( IronIngot ), 5, 16, 0x1BF2, 0 ) );
-			
+
+                Add(new GenericBuyInfo("Bouteille vide", typeof(Bottle), 5, 50, 3854, 0));
+
+                Add(new GenericBuyInfo(typeof(ChimieTool), 30, 20, 3739, 0));
                 Add( new GenericBuyInfo( typeof( CoutureTool ), 30, 20, 0xF9D, 0 ) );
                 Add(new GenericBuyInfo(typeof(ForgeronTool), 30, 20, 0x13E3, 0));
 				Add(new GenericBuyInfo("Outils d'ingenieur", typeof(IngeTool), 30, 4, 7864, 0 ) );

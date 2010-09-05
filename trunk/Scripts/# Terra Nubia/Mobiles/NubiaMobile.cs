@@ -113,6 +113,34 @@ namespace Server.Mobiles
         }
 
         //######### BLESSURES #########
+        public bool hasHemo()
+        {
+            bool has = false;
+            lock (BlessureList)
+            {
+                foreach (NubiaBlessure blessure in BlessureList)
+                {
+                    if (blessure.Hemo)
+                        has = true;
+                }
+            }
+            return has;
+        }
+        public void StopSaignements()
+        {
+            lock (BlessureList)
+            {
+                    foreach (NubiaBlessure blessure in BlessureList)
+                    {
+                        if (blessure.Hemo)
+                        {
+                            blessure.StopHemo();
+                            SendMessage("La blessure ({0}) arrête de saigner", blessure.Localisation.ToString());
+                        }
+                    }
+                
+            }
+        }
         public void AddBlessure(NubiaBlessure blessure)
         {
             m_blessureList.Add(blessure);

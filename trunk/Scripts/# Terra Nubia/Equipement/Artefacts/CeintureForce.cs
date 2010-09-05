@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Server.Items
 {
-    public class CeintureForce : NCCeinture
+    public class CeintureForce : BodySash
     {
         public CeintureForce(Serial s)
             : base(s)

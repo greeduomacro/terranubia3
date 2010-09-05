@@ -843,17 +843,17 @@ namespace Server.Items
                         canBlessure = true;
                     if (canBlessure)
                     {
-                        double chance = 0.75;
+                        double chance = 0.2;
                         if (AttPlayer != null && AttPlayer.hasDon(DonEnum.DurACuire))
-                            chance -= 0.01;
+                            chance -= 0.2;
 
-                        if (AttMob.FindItemOnLayer(Layer.Helm) != null && AttMob.FindItemOnLayer is NubiaArmor)
+                        if (AttMob.FindItemOnLayer(Layer.Helm) != null && AttMob.FindItemOnLayer(Layer.Helm) is NubiaArmor)
                         {
                             NubiaArmor helm = AttMob.FindItemOnLayer(Layer.Helm) as NubiaArmor;
-                            chance -= 0.01;
+                            chance -= 0.2;
                         }
 
-                        if (Utility.RandomDouble() < 0.05)
+                        if (Utility.RandomDouble() < chance)
                             DefMob.AddBlessure(NubiaBlessure.getRandomBlessure());
                     }
                 }

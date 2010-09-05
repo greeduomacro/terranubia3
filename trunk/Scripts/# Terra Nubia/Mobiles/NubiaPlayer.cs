@@ -797,7 +797,7 @@ namespace Server.Mobiles
             if (mDeguisementMod != null)
             {
                 mDeguisementMod = null;
-                NameMod = "";
+                NameMod = String.Empty;
                 BodyMod = 0;
                 HueMod = 0;
                 SendMessage("Vous n'êtes plus déguisé");

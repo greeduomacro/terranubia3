@@ -9,9 +9,137 @@ using Server.Targeting;
 
 namespace Server.Items
 {
+    public class BandageSale : Item
+    {
+        [Constructable]
+		public BandageSale() : this( 1 )
+		{
+		}
+
+		[Constructable]
+		public BandageSale( int amount ) : base( 3616 )
+		{
+			Stackable = true;
+			Amount = amount;
+		}
+
+        public BandageSale(Serial serial)
+            : base(serial)
+		{
+		}
+
+
+        private int[] Eau
+        {
+            get
+            {
+                return new int[]{
+                    2881,2882
+                };
+            }
+        }
+
+        private bool checkEau(int itemid)
+        {
+            for (int i = 0; i < Eau.Length; i++)
+            {
+                if (i == itemid)
+                    return true;
+
+            }
+            return false;
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+
+        public override void OnDoubleClick(Mobile from)
+        {
+            if (from.InRange(GetWorldLocation(), 1))
+            {
+                from.RevealingAction();
+
+                from.SendLocalizedMessage(500948); // Who will you use the bandages on?
+
+                from.Target = new InternalTarget(this);
+            }
+            else
+            {
+                from.SendLocalizedMessage(500295); // You are too far away to do that.
+            }
+        }
+        public void clean(Mobile from)
+        {
+            int amount = Amount;
+            Delete();
+            Bandage cleans = new Bandage(amount);
+            if (from.Backpack != null)
+                from.Backpack.AddItem(cleans);
+            else
+            {
+                cleans.MoveToWorld(from.Location, from.Map);
+            }
+        }
+        private class InternalTarget : Target
+        {
+            private BandageSale m_Bandage;
+
+            public InternalTarget(BandageSale bandage)
+                : base(1, false, TargetFlags.Beneficial)
+            {
+                m_Bandage = bandage;
+            }
+
+            protected override void OnTarget(Mobile from, object targeted)
+            {
+                if (m_Bandage.Deleted)
+                    return;
+                if (from == null)
+                    return;
+                if (!from.Alive)
+                    return;
+                if (targeted is StaticTarget)
+                {
+                    if (m_Bandage.checkEau(((StaticTarget)targeted).ItemID))
+                        m_Bandage.clean(from);
+                    else
+                        from.SendMessage("Ce n'est pas approprié");
+                }
+                else if (targeted is Static)
+                {
+                    if (m_Bandage.checkEau(((Static)targeted).ItemID))
+                        m_Bandage.clean(from);
+                    else
+                        from.SendMessage("Ce n'est pas approprié");
+                }
+                else if (targeted is Item)
+                {
+                    if (m_Bandage.checkEau(((Item)targeted).ItemID))
+                        m_Bandage.clean(from);
+                    else
+                        from.SendMessage("Ce n'est pas approprié");
+                }
+                else
+                {
+                    from.SendLocalizedMessage(500970); // Bandages can not be used on that.
+                }
+            }
+        }
+    }
 	public class Bandage : Item, IDyable
 	{
-		public static int Range = ( Core.AOS ? 2 : 1 ); 
+		public static int Range = ( Core.AOS ? 2 : 1 );
 
 		public override double DefaultWeight
 		{
@@ -73,7 +201,6 @@ namespace Server.Items
 				from.SendLocalizedMessage( 500295 ); // You are too far away to do that.
 			}
 		}
-
 		private class InternalTarget : Target
 		{
 			private Bandage m_Bandage;
@@ -88,27 +215,80 @@ namespace Server.Items
 				if ( m_Bandage.Deleted )
 					return;
 
-				if ( targeted is Mobile )
+				if ( targeted is NubiaMobile )
 				{
 					if ( from.InRange( m_Bandage.GetWorldLocation(), Bandage.Range ) )
 					{
-						if ( BandageContext.BeginHeal( from, (Mobile)targeted ) != null )
+						/*if ( BandageContext.BeginHeal( from, (Mobile)targeted ) != null )
 						{
 							m_Bandage.Consume();
-						}
+						}*/
+
+                        NubiaMobile mob = targeted as NubiaMobile;
+
+                        if (mob.hasHemo() )
+                        {
+                            from.Emote("*Tente d'enrayer l'hémoragie*");
+                        }
+                        else
+                            from.SendMessage("Votre cible n'a pas d'hémoragie");
+
 					}
 					else
 					{
 						from.SendLocalizedMessage( 500295 ); // You are too far away to do that.
 					}
 				}
-				else
-				{
-					from.SendLocalizedMessage( 500970 ); // Bandages can not be used on that.
-				}
+              
+                else
+                {
+                    from.SendLocalizedMessage(500970); // Bandages can not be used on that.
+                }
 			}
 		}
+        private class InternalNubiaTimer : Timer
+        {
+            private Bandage mBandage;
+            private NubiaMobile mSoigneur;
+            private NubiaMobile mVictime;
+            public InternalNubiaTimer(NubiaMobile soigneur, NubiaMobile victime, Bandage b)
+                : base(WorldData.TimeTour())
+            {
+                mBandage = b;
+                mSoigneur = soigneur;
+                mVictime = victime;
+            }
+            protected override void OnTick()
+            {
+                base.OnTick();
+                if( mSoigneur == null )
+                    return;
+                if ( !mSoigneur.Alive )
+                    return;
+                if (mVictime == null)
+                    return;
+                if (!mVictime.Alive)
+                    return;
+                if (mBandage == null)
+                    return;
+                if (mSoigneur.Competences[CompType.PremiersSecours].check(15, 0))
+                {
+                    mSoigneur.Emote("*Arrête l'hémoragie");
+                    mVictime.StopSaignements();
+                }
+                else
+                {
+                    mSoigneur.Emote("*N'arrive pas à arrêter l'hémoragie*");
+                   
+                }
+                if (mSoigneur.Backpack != null)
+                    mSoigneur.Backpack.AddItem(new BandageSale());
+                if (mBandage != null)
+                    mBandage.Consume();
+            }
+        }
 	}
+
 
 	public class BandageContext
 	{
