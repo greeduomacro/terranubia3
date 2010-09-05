@@ -59,9 +59,10 @@ namespace Server.Mobiles
 				case 6: AddItem( new Spear() ); break;
 			}
 
-            mMonsterHits = DndHelper.rollDe(De.huit, 2) + 4;
+            mMonsterHits = Utility.Random(20)+40;
+            Hits = 100;
             this.VirtualArmor = 15;
-            mMonsterAttaques = new int[] { 2, -2 };
+            mMonsterAttaques = new int[] { 6, 4 };
         
             mMonsterCA = VirtualArmor;
 

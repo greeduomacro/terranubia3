@@ -843,7 +843,7 @@ namespace Server.Items
                         canBlessure = true;
                     if (canBlessure)
                     {
-                        double chance = 0.075;
+                        double chance = 0.75;
                         if (AttPlayer != null && AttPlayer.hasDon(DonEnum.DurACuire))
                             chance -= 0.01;
 
