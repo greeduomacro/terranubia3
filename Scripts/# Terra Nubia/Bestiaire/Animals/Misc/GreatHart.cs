@@ -22,6 +22,8 @@ namespace Server.Mobiles
 
 			SetDamage( 5, 9 );
 
+            Faction = FactionEnum.Nature;
+
 			SetDamageType( ResistanceType.Physical, 100 );
 
 			SetResistance( ResistanceType.Physical, 20, 25 );

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Mobiles.NubiaFaction
+namespace Server.Mobiles
 {
     public class FactionNature : BaseFaction
     {
@@ -30,9 +30,11 @@ namespace Server.Mobiles.NubiaFaction
                 bonus += 100;
             else if (p.Race is RaceElfeLune)
                 bonus += 150;
-            else if (p.Race is RaceDemiOrc)
-                bonus -= 100;
             else if (p.Race is RaceHumain)
+                bonus -= 50;
+            else if (p.Race is RaceHautElf)
+                bonus += 200;
+            else if (p.Race is RaceDrow)
                 bonus -= 50;
 
             foreach (Classe c in p.GetClasses())

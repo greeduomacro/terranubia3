@@ -8,7 +8,7 @@ namespace Server.Mobiles
 	public class GreyWolf : NubiaCreature
 	{
 		[Constructable]
-		public GreyWolf() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
+		public GreyWolf() : base( AIType.AI_Melee, FightMode.Aggressor, 10, 1, 0.02, 0.4 )
 		{
 			Name = "Loup gris";
 			Body = Utility.RandomList( 25, 27 );
@@ -16,34 +16,14 @@ namespace Server.Mobiles
 
 
             CreatureType = MobileType.Animal;
-
-            mMonsterHits = DndHelper.rollDe(De.huit, 2) + 4;
-            this.VirtualArmor = 14;
-            mMonsterAttaques = new int[] { 2, -2 };
-            Server.Items.Fists MonsterWeapon = new Server.Items.Fists();
-            MonsterWeapon.De = De.six;
-            MonsterWeapon.NbrLance = 1;
-            MonsterWeapon.BonusDegatStatic = 1;
-            MonsterWeapon.Movable = false;
-            EquipItem(MonsterWeapon);
-            mMonsterCA = VirtualArmor;
-
-            mMonsterReflexe = 5;
-            mMonsterVigueur = 5;
-            mMonsterVolonte = 1;
-            RawStr = 13;
-            RawDex = 15;
-            RawCons = 15;
-            RawInt = 2;
-            RawSag = 12;
-            RawCha = 6;
-
+            Faction = FactionEnum.Nature;
+            NiveauCreature = 6;
             AddCompetence(CompType.Detection, 3);
             AddCompetence(CompType.PerceptionAuditive, 3);
             AddCompetence(CompType.DeplacementSilencieux, 3);
             AddCompetence(CompType.PerceptionAuditive, 3);
             AddCompetence(CompType.Survie, 1);
-            mMonsterNiveau = 1;
+        
 
 			Tamable = true;
 			ControlSlots = 1;

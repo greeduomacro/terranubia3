@@ -18,9 +18,12 @@ namespace Server.Mobiles
         public static void saut_OnCommand(CommandEventArgs e)
         {
             NubiaPlayer p = e.Mobile as NubiaPlayer;
-
-            p.SendMessage("Où sauter ?");
-            p.Target = new InternalSautTarget(p);
+            if (p.Competences.mustWait())
+            {
+                p.SendMessage("Où sauter ?");
+                p.Target = new InternalSautTarget(p);
+            }
+            p.SendMessage("Vous devez attendre pour utiliser une compétence");
         }
 
         public class InternalSautTarget : Target

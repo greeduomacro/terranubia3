@@ -54,6 +54,21 @@ namespace Server.Mobiles
             set { mCanRaceRestricted = value; }
         }
 
+        //réputations
+        private ReputationStack mReputationStack = null;
+
+        public ReputationStack ReputationStack
+        {
+            get
+            {
+                if (mReputationStack == null)
+                {
+                    mReputationStack = new ReputationStack(this);
+                }
+                return mReputationStack;
+            }
+        }
+
         //Compagnon Animal
         #region COMPAGNON ANIMAL
         private DateTime m_Compagnon_Date_Rituel = DateTime.Now;
@@ -1110,6 +1125,10 @@ namespace Server.Mobiles
                             int hideDD = observateur.Competences[CompType.PerceptionAuditive].pureRoll(0);
                             if (isRunning)
                                 hideDD += 10;
+                            if (m is BaseBestiole)
+                                hideDD -= 20;
+                            if (m is BaseCreature)
+                                hideDD -= 5;
                             bool reussite = Competences[CompType.DeplacementSilencieux].check(hideDD,0);
                             SendMessage("Jet réussi: {0} DD={1}", reussite, hideDD);
 
@@ -1687,7 +1706,7 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0);//version
+            writer.Write((int)1);//version
 
             writer.Write((int)m_beaute);
             writer.Write((int)m_race);
@@ -1740,6 +1759,19 @@ namespace Server.Mobiles
                 writer.Write((int)ct);
                 writer.Write((int)mDonCredits[ct]);
             }
+
+            /// VERSION 1
+            /// 
+
+            writer.Write((int)ReputationStack.Reputations.Count);
+            foreach (FactionEnum faction in ReputationStack.Reputations.Keys)
+            {
+
+                    writer.Write((int)faction);
+                    writer.Write((int)ReputationStack.Reputations[faction]);
+                
+            }
+
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -1827,6 +1859,23 @@ namespace Server.Mobiles
                         mDonCredits[ct] = val;
                     else
                         mDonCredits.Add(ct, val);
+                }
+
+            //VERSION 1
+                if (version >= 1)
+                {
+                    int repCount = reader.ReadInt();
+
+                   // Console.WriteLine("Nubia Player: "+this);
+                    mReputationStack = new ReputationStack(this);
+                    for (int r = 0; r < repCount; r++)
+                    {
+                        FactionEnum fac = (FactionEnum)reader.ReadInt();
+                        int val = reader.ReadInt();
+                        
+                       // Console.WriteLine("Deserialize: "+fac+" /"+val.ToString());
+                        mReputationStack.Reputations.Add(fac, val);
+                    }
                 }
         }
     }

@@ -7,16 +7,16 @@ using Server.Network;
 
 namespace Server.Mobiles
 {
-    public class GardeAuzac : NubiaCreature
+    public class GardeMoff : NubiaCreature
     {
         public override bool ClickTitle { get { return false; } }
 
         [Constructable]
-        public GardeAuzac()
+        public GardeMoff()
             : base(AIType.AI_Melee, FightMode.Closest, 15, 2, 0.1, 0.2)
         {
             SpeechHue = Utility.RandomDyedHue();
-            Title = "(Garde d'Auzac)";
+            Title = "(Garde d'Edgar Moff)";
             Hue = Utility.RandomList(new int[] { 1025, 1032, 1049, 1057, 1878 });
 
             if (this.Female = Utility.RandomBool())
@@ -32,17 +32,17 @@ namespace Server.Mobiles
 
 
             AddItem(new Boots(Utility.RandomNeutralHue()));
-            
-            AddItem(new PlateLegs());
+
+            AddItem(new ChainLegs());
             AddItem(new ChainChest());
-            AddItem(new StuddedArms());
-            AddItem(new StuddedGloves());
+            AddItem(new PlateArms());
+            AddItem(new PlateGloves());
             AddItem(new PlateGorget());
-            AddItem(new Helmet() );
+            AddItem(new Helmet());
 
 
-            AddItem(new Cloak(2241) );
-            AddItem(new Surcoat(2241) );
+            AddItem(new Cloak(2121));
+            AddItem(new BodySash(2121));
 
             switch (Utility.Random(4))
             {
@@ -60,11 +60,12 @@ namespace Server.Mobiles
             AddCompetence(CompType.DeplacementSilencieux, 3);
             AddCompetence(CompType.PerceptionAuditive, 3);
             AddCompetence(CompType.Survie, 1);
-     
+
 
             //Utility.AssignRandomHair( this );
             NubiaHelper.RandomHair(this);
 
+            Faction = FactionEnum.EdgarMoff;
 
         }
 
@@ -74,7 +75,7 @@ namespace Server.Mobiles
         }
 
 
-        public GardeAuzac(Serial serial)
+        public GardeMoff(Serial serial)
             : base(serial)
         {
         }

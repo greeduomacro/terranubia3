@@ -366,7 +366,7 @@ namespace Server.Mobiles
 		#endregion
 
 		[CommandProperty( AccessLevel.GameMaster )]
-		public bool IsParagon
+		public virtual bool IsParagon
 		{
 			get{ return m_Paragon; }
 			set
@@ -773,9 +773,9 @@ namespace Server.Mobiles
 			if ( IsParagon )
 			{
 				if ( suffix.Length == 0 )
-					suffix = "(Paragon)";
+					suffix = "(Elite)";
 				else
-					suffix = String.Concat( suffix, " (Paragon)" );
+					suffix = String.Concat( suffix, " (Elite)" );
 			}
 
 			return base.ApplyNameSuffix( suffix );
@@ -1404,6 +1404,9 @@ namespace Server.Mobiles
 			m_arSpellDefense = new List<Type>();
 
 			m_bDebugAI = false;
+
+            if (m_Paragon)
+                Paragon.UnConvert(this);
 		}
 
 		public override void Serialize( GenericWriter writer )
@@ -1727,10 +1730,10 @@ namespace Server.Mobiles
 				m_RemoveStep = reader.ReadInt();
 			}
 
-			if( version <= 14 && m_Paragon && Hue == 0x31 )
+			/*if( version <= 14 && m_Paragon && Hue == 0x31 )
 			{
 				Hue = Paragon.Hue; //Paragon hue fixed, should now be 0x501.
-			}
+			}*/
 
 			CheckStatTimers();
 
@@ -2586,7 +2589,7 @@ namespace Server.Mobiles
 				switch( acqType )
 				{
 					case FightMode.Strongest : 
-						return (m.Skills[SkillName.Tactics].Value + m.Str); //returns strongest mobile
+						return ( /*m.Skills[SkillName.Tactics].Value +*/ m.Str * 4 + m.Dex * 4); //returns strongest mobile
 
 					case FightMode.Weakest : 
 						return -m.Hits; // returns weakest mobile
@@ -3952,10 +3955,10 @@ namespace Server.Mobiles
 
 			if ( !Summoned && !NoKillAwards && !IsBonded && treasureLevel >= 0 )
 			{
-				if ( m_Paragon && Paragon.ChestChance > Utility.RandomDouble() )
+			/*	if ( m_Paragon && Paragon.ChestChance > Utility.RandomDouble() )
 					PackItem( new ParagonChest( this.Name, treasureLevel ) );
 				else if ( (Map == Map.Felucca || Map == Map.Trammel) && TreasureMap.LootChance >= Utility.RandomDouble() )
-					PackItem( new TreasureMap( treasureLevel, Map ) );
+					PackItem( new TreasureMap( treasureLevel, Map ) );*/
 			}		
 
 			if ( !Summoned && !NoKillAwards && !m_HasGeneratedLoot )

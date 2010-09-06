@@ -113,7 +113,9 @@ namespace Server.Items
         public NubiaShield(int itemid) : base(itemid) {
             Layer = Layer.TwoHanded;
         }
-        public NubiaShield(Serial s) : base(s) { }
+        public NubiaShield(Serial s) : base(s) {
+            Layer = Layer.TwoHanded;
+        }
 
         public override void Serialize(GenericWriter writer)
         {

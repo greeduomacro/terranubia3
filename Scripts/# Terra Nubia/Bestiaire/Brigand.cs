@@ -59,30 +59,13 @@ namespace Server.Mobiles
 				case 6: AddItem( new Spear() ); break;
 			}
 
-            mMonsterHits = Utility.Random(20)+40;
-            Hits = 100;
-            this.VirtualArmor = 15;
-            mMonsterAttaques = new int[] { 6, 4 };
-        
-            mMonsterCA = VirtualArmor;
-
-            mMonsterReflexe = 1;
-            mMonsterVigueur = 5;
-            mMonsterVolonte = 1;
-            RawStr = 13;
-            RawDex = 15;
-            RawCons = 15;
-            RawInt = 2;
-            RawSag = 12;
-            RawCha = 6;
+            NiveauCreature = 7;
 
             AddCompetence(CompType.Detection, 3);
             AddCompetence(CompType.PerceptionAuditive, 3);
             AddCompetence(CompType.DeplacementSilencieux, 3);
             AddCompetence(CompType.PerceptionAuditive, 3);
             AddCompetence(CompType.Survie, 1);
-            mMonsterNiveau = 3;
-
 			//Utility.AssignRandomHair( this );
             NubiaHelper.RandomHair(this);
 

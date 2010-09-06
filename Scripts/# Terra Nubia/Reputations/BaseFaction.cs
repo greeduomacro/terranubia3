@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Mobiles.NubiaFaction
+namespace Server.Mobiles
 {
     public abstract class BaseFaction
     {
+
+        
+
         public abstract FactionEnum Faction { get; }
         protected string mName = "base faction";
 

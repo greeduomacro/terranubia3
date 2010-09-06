@@ -2585,7 +2585,69 @@ namespace Server.Mobiles
 
 					theirVal = m_Mobile.GetFightModeRanking( m, acqType, bPlayerOnly );
 
-					if( theirVal > val && m_Mobile.InLOS( m ) )
+                    // NUBIA REPUTATION
+
+                    if (m_Mobile is NubiaCreature && m is NubiaPlayer)
+                    {
+                        NubiaPlayer player = m as NubiaPlayer;
+                        NubiaCreature creature = m_Mobile as NubiaCreature;
+
+                        if (creature.Faction != FactionEnum.None)
+                        {
+                            theirVal = -5;
+                            //theirVal = 0;
+                            ReputationEnum reput = FactionHelper.getReputForVal( player.ReputationStack.getReputation(creature.Faction) );
+                            if (reput >= ReputationEnum.Neutre)
+                            {
+                                if (reput >= ReputationEnum.Amical)
+                                {
+                                    if (player.Combatant != null && player.Combatant is NubiaCreature && player.Combatant != creature)
+                                    {
+                                        NubiaCreature cenem = player.Combatant as NubiaCreature;
+                                        if (cenem.Faction != creature.Faction && FactionHelper.friendOf(creature.Faction, cenem.Faction))
+                                        {
+                                            theirVal = 50;
+                                            if (cenem.InLOS(m_Mobile))
+                                            {
+                                                creature.Emote("*porte secours à {0}*", player.Name);
+                                                newFocusMob = cenem;
+                                                theirVal = 20;
+                                            }
+                                        }
+                                    }
+                                    else if (player.Combatant != null && player.Combatant is NubiaPlayer )
+                                    {
+                                        NubiaPlayer penem = player.Combatant as NubiaPlayer;
+                                        if ( FactionHelper.getReputForVal(  penem.ReputationStack.getReputation(creature.Faction)  )<= ReputationEnum.Amical)
+                                        {
+                                            if (penem.ReputationStack.getReputation(creature.Faction) < player.ReputationStack.getReputation(creature.Faction))
+                                            {
+                                                if (penem.InLOS(m_Mobile))
+                                                {
+                                                    creature.Emote("*porte secours à {0}*", player.Name);
+                                                    newFocusMob = penem;
+                                                    theirVal = 20;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                            else
+                            {
+                                double chance = FactionHelper.getValAI(reput);
+
+                                if (Utility.RandomDouble() * 100 < chance)
+                                {
+                                    theirVal = chance;
+                                }
+                            }
+
+                        }
+                    }
+
+                    if (theirVal > val && m_Mobile.InLOS(m) && theirVal > 0)
 					{
 						newFocusMob = m;
 						val = theirVal;
@@ -2593,6 +2655,8 @@ namespace Server.Mobiles
 				}
 
 				eable.Free();
+
+
 
 				m_Mobile.FocusMob = newFocusMob;
 			}

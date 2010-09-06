@@ -16,26 +16,7 @@ namespace Server.Mobiles
 
             Faction = FactionEnum.Nature;
 
-            mMonsterHits = DndHelper.rollDe(De.huit, 1) + 1;
-            mMonsterCA = 15;
-            Server.Items.Fists griffes = new Server.Items.Fists();
-            griffes.De = De.quatre;
-            griffes.NbrLance = 1;
-            griffes.BonusDegatStatic = 0;
-            griffes.Movable = false;
-            EquipItem(griffes);
-            mMonsterAttaques = new int[] { 4 };
-
-            mMonsterReflexe = 5;
-            mMonsterVigueur = 3;
-            mMonsterVolonte = 3;
-            RawStr = 10;
-            RawDex = 17;
-            RawCons = 15;
-            RawInt = 1;
-            RawSag = 12;
-            RawCha = 6;
-            mMonsterNiveau = 2;
+            NiveauCreature = 2;
             AddCompetence(CompType.Detection, 4);
             AddCompetence(CompType.PerceptionAuditive, 4);
             AddCompetence(CompType.DeplacementSilencieux, 4);

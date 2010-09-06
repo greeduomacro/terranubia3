@@ -15,25 +15,7 @@ namespace Server.Mobiles
 			Hue = 0x674;
 			BaseSoundID = 0x8F;
 
-            Server.Items.Fists Serres = new Server.Items.Fists();
-            Serres.De = De.quatre;
-            Serres.NbrLance = 3;
-            Serres.BonusDegatStatic = 8;
-            Serres.Movable = false;
-            EquipItem(Serres);
-            mMonsterAttaques = new int[] { 0, -4 };
-            mMonsterCA = 14;
-            mMonsterHits = DndHelper.rollDe(De.huit, 6) + 1;
-            mMonsterReflexe = 4;
-            mMonsterVigueur = 3;
-            mMonsterVolonte = 2;
-            RawStr = 10;
-            RawDex = 15;
-            RawCons = 12;
-            RawInt = 2;
-            RawSag = 14;
-            RawCha = 6;
-            mMonsterNiveau = 5;
+            NiveauCreature = 5;
             AddCompetence(CompType.Detection, 14);
             AddCompetence(CompType.PerceptionAuditive, 2);
 
