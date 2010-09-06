@@ -228,6 +228,25 @@ namespace Server.Items
         }
         public NubiaWeapon(Serial serial) : base(serial) { }
 
+        public override bool CheckConflictingLayer(Mobile m, Item item, Layer layer)
+        {
+            if (base.CheckConflictingLayer(m, item, layer))
+                return true;
+
+            if (this.Layer == Layer.TwoHanded && layer == Layer.OneHanded)
+            {
+                m.SendLocalizedMessage(500214); // You already have something in both hands.
+                return true;
+            }
+            else if (this.Layer == Layer.OneHanded && layer == Layer.TwoHanded && !(item is BaseShield) && !(item is BaseEquipableLight))
+            {
+                m.SendLocalizedMessage(500215); // You can only wield one weapon at a time.
+                return true;
+            }
+
+            return false;
+        }
+
         public virtual void PlaySwingAnimation(Mobile from)
         {
             int action;

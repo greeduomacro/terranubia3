@@ -111,7 +111,7 @@ namespace Server.Items
         }
               
         public NubiaShield(int itemid) : base(itemid) {
-            Layer = Layer.FirstValid;
+            Layer = Layer.TwoHanded;
         }
         public NubiaShield(Serial s) : base(s) { }
 

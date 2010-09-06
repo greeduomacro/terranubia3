@@ -135,31 +135,31 @@ namespace Server.Commands
         public static void cache_OnCommand(CommandEventArgs e)
         {
             NubiaPlayer p = e.Mobile as NubiaPlayer;
-            bool canHide = false;
-            int DD = 0;
+            int DD = 10;
             int NuitModus = 0;
             if (p.Competences.mustWait())
                 return;
             if (LightCycle.ComputeLevelFor(p) > p.LightLevel)
             {
-                if (LightCycle.ComputeLevelFor(p) > 15)
+                if (LightCycle.ComputeLevelFor(p) > 10)
                     NuitModus -= 5;
-                else if (LightCycle.ComputeLevelFor(p) < 15)
+                else if (LightCycle.ComputeLevelFor(p) < 10)
                     NuitModus += 5;
 
-                p.SendMessage("Bonus de nuit: " + NuitModus);
+                p.SendMessage("Bonus de nuit: -" + NuitModus);
             }
             else
             {
-                if (p.LightLevel > 15)
+                if (p.LightLevel > 10)
                     NuitModus -= 5;
-                else if (p.LightLevel < 15)
+                else if (p.LightLevel < 10)
                     NuitModus += 5;
-                p.SendMessage("Bonus de nuit: " + NuitModus);
+                p.SendMessage("Bonus de nuit: -" + NuitModus);
             }
             DD += NuitModus;
             DD += (int)p.Taille * 2;
             bool mustBluff = false;
+            int DDBluff = 10;
             foreach (NubiaMobile mob in p.GetMobilesInRange(8))
             {
                 if (mob == p)
@@ -167,19 +167,19 @@ namespace Server.Commands
                 if (mob.CanSee(p))
                 {
                     int mobPsy = mob.Competences[CompType.Psychologie].pureRoll(0) - NuitModus;
-                    int bluff = mob.Competences[CompType.Bluff].pureRoll(0) + NuitModus;
+                    int bluff = p.Competences[CompType.Bluff].pureRoll(0) + NuitModus;
                     if (mobPsy < bluff)
                     {
                         mob.SendMessage("Quelques choses vous attire l'oeil plus loin");
                     }
-                    DD += mobPsy - bluff;
+                    DDBluff += mobPsy - bluff;
                     mustBluff = true;
                 }
             }
 
             if (mustBluff)
             {
-                if (p.Competences[CompType.Bluff].check(DD))
+                if (p.Competences[CompType.Bluff].check(DDBluff,1))
                 {
                     p.SendMessage("Vous réussissez à distraitre les observateurs pour vous cacher");
                 }
@@ -189,7 +189,7 @@ namespace Server.Commands
                     return;
                 }
             }
-            if (p.Competences[CompType.Discretion].check(DD))
+            if (p.Competences[CompType.Discretion].check(DD,1))
             {
                 p.SendMessage("Vous vous dissimulez avec discretion");
                 p.Hidden = true;
