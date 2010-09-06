@@ -13,16 +13,7 @@ namespace Server.Mobiles
 			this.Body = 0x33;
 			this.Name = ("a jwilson");
 			this.VirtualArmor = 8;
-
-			this.InitStats(Utility.Random(22,13),Utility.Random(16,6),Utility.Random(16,5));
-
-			this.Skills[SkillName.Wrestling].Base = Utility.Random(24,17);
-			this.Skills[SkillName.Tactics].Base = Utility.Random(18,14);
-			this.Skills[SkillName.MagicResist].Base = Utility.Random(15,6);
-			this.Skills[SkillName.Poisoning].Base = Utility.Random(31,20);
-
-			this.Fame = Utility.Random(0,1249);
-			this.Karma = Utility.Random(0,-624);
+            NiveauCreature = 4;
 		}
 
 		public Jwilson(Serial serial) : base(serial)

@@ -18,7 +18,7 @@ namespace Server.Mobiles
         protected int mMonsterReflexe = 4;
         protected int mMonsterVigueur = 2;
         protected int mMonsterVolonte = 1;
-        protected int mMonsterNiveau = 4;
+        private int mMonsterNiveau = 4;
         protected SortEnergie mEnergie = SortEnergie.Vie;
 
         protected void AddCompetence(CompType c, int value)
@@ -37,6 +37,21 @@ namespace Server.Mobiles
         private Dictionary<OrderType, double> mOrdersLearned = new Dictionary<OrderType, double>();
         private FactionEnum mFaction = FactionEnum.None;
 
+        public void makeWeapon()
+        {
+            Item f = FindItemOnLayer(Layer.TwoHanded);
+            if (f != null && f is Fists)
+            {
+                f.Delete();
+                Server.Items.Fists griffes = new Server.Items.Fists();
+                griffes.De = De.quatre;
+                griffes.NbrLance = mMonsterNiveau / 2;
+                griffes.BonusDegatStatic = mMonsterNiveau / 2;
+                griffes.Movable = false;
+                EquipItem(griffes);
+            }
+            
+        }
         public override int Niveau
         {
             get
@@ -44,17 +59,150 @@ namespace Server.Mobiles
                 return mMonsterNiveau;
             }
         }
-        public override int getBonusReflexe(SortEnergie ecole)
+        public int NiveauCreature
         {
-            return mMonsterReflexe;
+            get
+            {
+                return mMonsterNiveau;
+            }
+            set
+            {
+                mMonsterNiveau = value;
+               
+
+                int[][] att =  new int[][] 
+                { 
+                    new int[] { 0 }, //0
+                    new int[] { 1 }, //1
+                    new int[] { 2 }, //2
+                    new int[] { 3 }, //3
+                    new int[] { 4 }, //4
+                    new int[] { 5 }, //5
+                    new int[] { 6,1 }, //6
+                    new int[] { 7,2 }, //7
+                    new int[] { 8,3 }, //8
+                    new int[] { 9,4 }, //9
+                    new int[] { 10,5 }, //10
+                    new int[] { 11,6,1 }, //11
+                    new int[] { 12,7,2 }, //12
+                    new int[] { 13,8,3 }, //13
+                    new int[] { 14,9,4 }, //14
+                    new int[] { 15,10,5 }, //15
+                    new int[] { 16,11,6,1 }, //16
+                    new int[] { 17,12,7,2 }, //17
+                    new int[] { 18,13,8,3 }, //18
+                    new int[] { 19,14,9,4 }, //19
+                    new int[] { 20,15,10,5 } //20
+                };
+
+                mMonsterAttaques = att[Math.Min(mMonsterNiveau, 20)];
+                makeWeapon();
+
+                RawStr = Niveau * 2 + 10;
+                RawDex = Niveau + 10;
+                RawCons = Niveau + 10;
+                RawCha = Niveau/2 + 5;
+                RawInt = Niveau / 2 + 5;
+                RawSag = Niveau / 2 + 5;
+
+                mMonsterCA = 12 + (int)( Niveau / 1.5);
+
+                mMonsterHits = Niveau + DndHelper.rollDe(De.douze) * Niveau;
+
+                Hits = HitsMax;
+            }
+        }
+
+        public override int getBonusReflexe(SortEnergie ecole)
+        {           
+   
+            int[] reflex = new int[]
+                {
+                    0, //0
+                    0, //1
+                    0, //2
+                    1, //3
+                    1, //4
+                    1, //5
+                    2, //6
+                    2, //7
+                    2, //8
+                    3, //9
+                    3, //10
+                    3, //11
+                    4, //12
+                    4, //13
+                    4, //14
+                    5, //15
+                    5, //16
+                    5, //17
+                    6, //18
+                    6, //19
+                    6 //20
+                };
+
+
+            return reflex[Math.Min(mMonsterNiveau, 20)] +  mMonsterReflexe;
         }
         public override int getBonusVigueur(SortEnergie ecole)
         {
-            return mMonsterVigueur;
+             int[] vig = new int[]
+                {
+                   0, //0
+                    2, //1
+                    3, //2
+                    3, //3
+                    4, //4
+                    4, //5
+                    5, //6
+                    5, //7
+                    6, //8
+                    6, //9
+                    7, //10
+                    7, //11
+                    8, //12
+                    8, //13
+                    9, //14
+                    9, //15
+                    10, //16
+                    10, //17
+                    11, //18
+                    11, //19
+                    12 //20
+                };
+
+
+            return vig[Math.Min(mMonsterNiveau, 20)] + mMonsterVigueur;
         }
         public override int getBonusVolonte(SortEnergie ecole)
         {
-            return mMonsterVolonte;
+            int[] vol = new int[]
+                {
+                   0, //0
+                    0, //1
+                    1, //2
+                    1, //3
+                    1, //4
+                    1, //5
+                    2, //6
+                    2, //7
+                    2, //8
+                    3, //9
+                    3, //10
+                    3, //11
+                    4, //12
+                    4, //13
+                    4, //14
+                    5, //15
+                    5, //16
+                    5, //17
+                    6, //18
+                    6, //19
+                    6 //20
+                };
+
+
+            return vol[Math.Min(mMonsterNiveau, 20)] + mMonsterVolonte;
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -76,6 +224,25 @@ namespace Server.Mobiles
         {
             get { return mIsElite; }
             set { mIsElite = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public override bool IsParagon
+        {
+            get { return mIsElite; }
+            set
+            {
+                if (mIsElite == value)
+                    return;
+              /*  if( para
+                    Paragon.UnConvert(this);
+
+                m_Paragon = value;*/
+
+                mIsElite = value;
+
+                InvalidateProperties();
+            }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -234,6 +401,28 @@ namespace Server.Mobiles
                             xp *= 10;
                         xp *= 10;
                         agg.GiveXP(xp);
+
+                        if (mFaction != FactionEnum.None)
+                        {
+                            agg.ReputationStack.IncReputation(mFaction, -5);
+
+                            for (int f = 0; f < (int)FactionEnum.Maximum; f++)
+                            {
+                                BaseFaction faction = FactionHelper.getFaction((FactionEnum)f);
+                                if (faction != null)
+                                {
+                                    for (int e = 0; e < faction.Enemies.Length; e++)
+                                    {
+                                        if (faction.Enemies[e] == mFaction)
+                                        {
+                                            agg.ReputationStack.IncReputation(faction.Faction, 1);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
           //  }

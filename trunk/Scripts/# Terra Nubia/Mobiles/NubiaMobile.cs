@@ -276,6 +276,9 @@ namespace Server.Mobiles
             : base(s)
 		{
             new TourTimer(this).Start();
+            Hits += 100;
+            Stam += 100;
+
         }
 
         #region Action spécial durant le tour de combat

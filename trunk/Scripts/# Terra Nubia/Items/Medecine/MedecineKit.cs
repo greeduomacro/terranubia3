@@ -60,7 +60,7 @@ namespace Server.Items
         {
             if (targeted is NubiaMobile)
             {
-                if (((NubiaMobile)targeted).BlessureList.Count > 1)
+                if (((NubiaMobile)targeted).BlessureList.Count > 0)
                     from.SendGump(new GumpBlessure((NubiaPlayer)targeted, (NubiaPlayer)from));
                 else
                     from.SendMessage("{0} n'est pas blessé", ((NubiaMobile)targeted).Name);

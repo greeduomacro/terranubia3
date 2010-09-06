@@ -286,6 +286,8 @@ namespace Server.Engines
         public static void ConsumeQuantity(Container cont, Type types, int amounts, BaseToolNubia tool)
         {
             Type type = null;
+            if (tool == null)
+                return;
             if (types == typeof(BaseMetal))
                 type = tool.Metal.GetType();
             else if (types == typeof(BaseCuir))
@@ -296,7 +298,12 @@ namespace Server.Engines
                 type = tool.Os.GetType();
             else if (types == typeof(BaseTissu))
                 type = tool.Tissu.GetType();
+            else
+                type = types;
             Item itAdd = null;
+
+            if (type == null)
+                return;
 
             ArrayList targets = new ArrayList();
 

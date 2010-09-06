@@ -18,25 +18,7 @@ namespace Server.Mobiles
 
             CreatureType = MobileType.Animal;
 
-            Server.Items.Fists griffes = new Server.Items.Fists();
-            griffes.De = De.quatre;
-            griffes.NbrLance = 1;
-            griffes.BonusDegatStatic = 0;
-            griffes.Movable = false;
-            EquipItem(griffes);
-            mMonsterAttaques = new int[] { 5 };
-            mMonsterCA = 14;
-            mMonsterHits = DndHelper.rollDe(De.huit, 1);
-            mMonsterReflexe = 5;
-            mMonsterVigueur = 2;
-            mMonsterVolonte = 2;
-            RawStr = 4;
-            RawDex = 17;
-            RawCons = 10;
-            RawInt = 2;
-            RawSag = 14;
-            RawCha = 4;
-            mMonsterNiveau = 2;
+            NiveauCreature = 3;
             AddCompetence(CompType.DeplacementSilencieux, 17);
             AddCompetence(CompType.Detection, 6);
             AddCompetence(CompType.PerceptionAuditive, 14);

@@ -6,8 +6,8 @@ namespace Server.Mobiles
 {
     public enum FactionEnum
     {
-        None = 0,
-        CiteVent = 1,
+        None = -1,
+        CiteVent = 0,
         // Nature
         Nature, //Generale Nature
         AncienGardien,
@@ -27,5 +27,9 @@ namespace Server.Mobiles
         //Autres
         PlumeSang, //Harpies
 
+        Auzac,
+        EdgarMoff,
+
+        Maximum //Count
     }
 }

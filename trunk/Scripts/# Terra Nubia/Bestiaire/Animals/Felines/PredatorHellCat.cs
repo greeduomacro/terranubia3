@@ -15,26 +15,7 @@ namespace Server.Mobiles
 			Body = 127;
 			BaseSoundID = 0xBA;
 
-            mMonsterHits = DndHelper.rollDe(De.huit, 6) + 18;
-            this.VirtualArmor = 14;
-            mMonsterAttaques = new int[] { 9, 4 };
-            Server.Items.Fists MonsterWeapon = new Server.Items.Fists();
-            MonsterWeapon.De = De.huit;
-            MonsterWeapon.NbrLance = 1;
-            MonsterWeapon.BonusDegatStatic = 6;
-            MonsterWeapon.Movable = false;
-            EquipItem(MonsterWeapon);
-            mMonsterCA = VirtualArmor;
-
-            mMonsterReflexe = 7;
-            mMonsterVigueur = 8;
-            mMonsterVolonte = 3;
-            RawStr = 23;
-            RawDex = 15;
-            RawCons = 17;
-            RawInt = 2;
-            RawSag = 12;
-            RawCha = 6;
+            NiveauCreature = 7;
 
             AddCompetence(CompType.Detection, 3);
             AddCompetence(CompType.PerceptionAuditive, 3);
@@ -43,8 +24,7 @@ namespace Server.Mobiles
             AddCompetence(CompType.Equilibre, 6);
             AddCompetence(CompType.PerceptionAuditive, 3);
             AddCompetence(CompType.Survie, 0);
-            mMonsterNiveau = 4;
-
+            
 
 			Tamable = true;
 			ControlSlots = 1;

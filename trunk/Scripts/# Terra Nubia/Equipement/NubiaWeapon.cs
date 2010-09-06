@@ -862,14 +862,14 @@ namespace Server.Items
                         canBlessure = true;
                     if (canBlessure)
                     {
-                        double chance = 0.2;
+                        double chance = 0.05;
                         if (AttPlayer != null && AttPlayer.hasDon(DonEnum.DurACuire))
-                            chance -= 0.2;
+                            chance -= 0.01;
 
                         if (AttMob.FindItemOnLayer(Layer.Helm) != null && AttMob.FindItemOnLayer(Layer.Helm) is NubiaArmor)
                         {
                             NubiaArmor helm = AttMob.FindItemOnLayer(Layer.Helm) as NubiaArmor;
-                            chance -= 0.2;
+                            chance -= 0.01;
                         }
 
                         if (Utility.RandomDouble() < chance)

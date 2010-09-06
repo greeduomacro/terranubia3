@@ -38,6 +38,7 @@ namespace Server.Misc
 		 */
 
 		public static readonly string Address = "terranubia.servegame.com";
+       // public static readonly string Address = "127.0.0.1";
 		public static readonly string ServerName = "Terra Nubia 3";
 
 		public static readonly bool AutoDetect = true;

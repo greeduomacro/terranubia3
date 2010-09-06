@@ -8,7 +8,8 @@ namespace Server.Mobiles
 	public class GrizzlyBear : NubiaCreature
 	{
 		[Constructable]
-		public GrizzlyBear() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
+        public GrizzlyBear()
+            : base(AIType.AI_Melee, FightMode.Aggressor, 10, 1, 0.1, 0.4)
 		{
 			Name = "Grizzly";
 			Body = 212;
@@ -17,26 +18,9 @@ namespace Server.Mobiles
 
             CreatureType = MobileType.Animal;
             this.VirtualArmor = 3;
+            Faction = FactionEnum.Nature;
 
-            Server.Items.Fists griffes = new Server.Items.Fists();
-            griffes.De = De.huit;
-            griffes.NbrLance = 1;
-            griffes.BonusDegatStatic = 8;
-            griffes.Movable = false;
-            EquipItem(griffes);
-            mMonsterAttaques = new int[] { 15,10 };
-            mMonsterCA = 15;
-            mMonsterHits = DndHelper.rollDe(De.huit, 8) + 32;
-            mMonsterReflexe = 7;
-            mMonsterVigueur = 10;
-            mMonsterVolonte = 3;
-            RawStr = 27;
-            RawDex = 13;
-            RawCons = 19;
-            RawInt = 2;
-            RawSag = 12;
-            RawCha = 6;
-            mMonsterNiveau = 5;
+            NiveauCreature = 6;
 
             Tamable = true;
             ControlSlots = 1;

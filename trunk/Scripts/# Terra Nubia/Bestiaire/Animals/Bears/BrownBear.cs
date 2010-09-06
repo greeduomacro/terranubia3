@@ -8,7 +8,8 @@ namespace Server.Mobiles
 	public class BrownBear : NubiaCreature
 	{
 		[Constructable]
-		public BrownBear() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
+        public BrownBear()
+            : base(AIType.AI_Melee, FightMode.Aggressor, 10, 1, 0.1, 0.4)
 		{
 			Name = "Ours brun";
 			Body = 167;
@@ -16,28 +17,9 @@ namespace Server.Mobiles
 
 
             CreatureType = MobileType.Animal;
+            Faction = FactionEnum.Nature;
 
-            Fists griffes = new Fists();
-            griffes.De = De.huit;
-            griffes.NbrLance = 1;
-            griffes.BonusDegatStatic = 8;
-            griffes.Movable = false;
-            EquipItem(griffes);
-            mMonsterAttaques = new int[]{11};
-            mMonsterCA = 15;
-            mMonsterHits = DndHelper.rollDe(De.huit, 6) + 24;
-            mMonsterReflexe = 6;
-            mMonsterVigueur = 9;
-            mMonsterVolonte = 3;
-            RawStr = 27;
-            RawDex = 13;
-            RawCons = 19;
-            RawInt = 2;
-            RawSag = 12;
-            RawCha = 6;
-            mMonsterNiveau = 4;
-            AddCompetence(CompType.Detection, 7);
-            AddCompetence(CompType.PerceptionAuditive, 4);
+            NiveauCreature = 4;
 
             Tamable = true;
             ControlSlots = 1;

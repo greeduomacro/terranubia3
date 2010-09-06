@@ -967,6 +967,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="# Terra Nubia\Bestiaire\GardeAuzac.cs" />
+    <Compile Include="# Terra Nubia\Bestiaire\GardeMoff.cs" />
     <Compile Include="# Terra Nubia\Blessures\BlessureEnum.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1687,6 +1688,7 @@
     <Compile Include="# Terra Nubia\Equipement\Artefacts\CeintureForce.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Equipement\Artefacts\MedecineKitElfique.cs" />
     <Compile Include="# Terra Nubia\Equipement\Fists.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1747,6 +1749,7 @@
     <Compile Include="# Terra Nubia\Gumps\GumpDonChoix.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Gumps\GumpFactions.cs" />
     <Compile Include="# Terra Nubia\Gumps\GumpNubia.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1933,6 +1936,7 @@
     <Compile Include="# Terra Nubia\Mobiles\NubiaPlayer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Bestiaire\MonstreBrigandEcarlate.cs" />
     <Compile Include="# Terra Nubia\OrbRemoteServer\OrbServer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -2019,9 +2023,14 @@
     <Compile Include="# Terra Nubia\Reputations\FactionEnum.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Reputations\FactionHelper.cs" />
+    <Compile Include="# Terra Nubia\Reputations\Factions\FactionAuzac.cs" />
     <Compile Include="# Terra Nubia\Reputations\Factions\FactionCiteVent.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Reputations\Factions\FactionEcarlate.cs" />
+    <Compile Include="# Terra Nubia\Reputations\Factions\FactionMoff.cs" />
+    <Compile Include="# Terra Nubia\Reputations\ReputationEnum.cs" />
     <Compile Include="# Terra Nubia\Reputations\ReputationStack.cs">
       <SubType>Code</SubType>
     </Compile>

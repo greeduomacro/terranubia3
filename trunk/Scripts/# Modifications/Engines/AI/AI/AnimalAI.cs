@@ -46,7 +46,7 @@ namespace Server.Mobiles
 
 			double hitPercent = (double)m_Mobile.Hits / m_Mobile.HitsMax;
 
-			if ( !m_Mobile.Summoned && !m_Mobile.Controlled && hitPercent < 0.1 ) // Less than 10% health
+			if ( !m_Mobile.Summoned && !m_Mobile.Controlled && hitPercent < 0.8 ) // Less than 10% health
 			{
 				m_Mobile.DebugSay( "I am low on health!" );
 				Action = ActionType.Flee;

@@ -17,6 +17,10 @@ namespace Server.Commands
             CommandSystem.Register("tissage", AccessLevel.GameMaster,
               new CommandEventHandler(tissage_OnCommand));
 
+            CommandSystem.Register("reputations", AccessLevel.Player,
+              new CommandEventHandler(reputation_OnCommand));
+
+
        /*     CommandSystem.Register("maitrise", AccessLevel.Player,
               new CommandEventHandler(maitrise_OnCommand));*/
 
@@ -40,6 +44,13 @@ namespace Server.Commands
             CommandSystem.Register("blessure", AccessLevel.Player,
                new CommandEventHandler(blessure_OnCommand));
         }
+        public static void reputation_OnCommand(CommandEventArgs e)
+        {
+            NubiaPlayer p = e.Mobile as NubiaPlayer;
+            p.CloseGump(typeof(GumpFactions));
+            p.SendGump(new GumpFactions(p));
+        }
+
         public static void maitrise_OnCommand(CommandEventArgs e)
         {
             NubiaPlayer p = e.Mobile as NubiaPlayer;

@@ -8,7 +8,8 @@ namespace Server.Mobiles
 	public class PolarBear : NubiaCreature
 	{
 		[Constructable]
-		public PolarBear() : base( AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
+        public PolarBear()
+            : base(AIType.AI_Melee, FightMode.Aggressor, 10, 1, 0.1, 0.4)
 		{
 			Name = "a polar bear";
 			Body = 213;
@@ -16,28 +17,9 @@ namespace Server.Mobiles
 
             CreatureType = MobileType.Animal;
             this.VirtualArmor = 3;
+            Faction = FactionEnum.Nature;
 
-            Server.Items.Fists griffes = new Server.Items.Fists();
-            griffes.De = De.huit;
-            griffes.NbrLance = 1;
-            griffes.BonusDegatStatic = 8;
-            griffes.Movable = false;
-            EquipItem(griffes);
-            mMonsterAttaques = new int[] { 13 };
-            mMonsterCA = 15;
-            mMonsterHits = DndHelper.rollDe(De.huit, 8) + 32;
-            mMonsterReflexe = 7;
-            mMonsterVigueur = 10;
-            mMonsterVolonte = 3;
-            RawStr = 27;
-            RawDex = 13;
-            RawCons = 19;
-            RawInt = 2;
-            RawSag = 12;
-            RawCha = 6;
-            mMonsterNiveau = 4;
-            AddCompetence(CompType.Detection, 7);
-            AddCompetence(CompType.PerceptionAuditive, 4);
+            NiveauCreature = 7;
 
             Tamable = true;
             ControlSlots = 1;

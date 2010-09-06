@@ -4,18 +4,18 @@ using System.Text;
 
 namespace Server.Mobiles
 {
-    public class FactionCiteVent : BaseFaction
+    public class FactionEcarlate : BaseFaction
     {
-        public override FactionEnum Faction { get { return FactionEnum.CiteVent; } }
+        public override FactionEnum Faction { get { return FactionEnum.MainEcarlate; } }
 
-        public FactionCiteVent()
+        public FactionEcarlate()
         {
-            mName = "Cité des vents";
+            mName = "La main écarlate";
         }
 
         public override FactionEnum[] Enemies
         {
-            get { return new FactionEnum[0]; }
+            get { return new FactionEnum[] { FactionEnum.MilleVisage }; }
         }
         public virtual FactionEnum[] Allys
         {
@@ -24,10 +24,9 @@ namespace Server.Mobiles
 
         public override int ComputeBonus(NubiaPlayer p)
         {
-            int bonus = base.ComputeBonus(p);
-            bonus += 250;
-            return bonus;
+            return base.ComputeBonus(p);
         }
+
 
     }
 }
