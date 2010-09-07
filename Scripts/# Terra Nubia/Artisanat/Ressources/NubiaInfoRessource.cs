@@ -78,6 +78,41 @@ namespace Server.Items
 
             switch (res)
             {
+                #region tissu
+                case NubiaRessource.Lin:
+                    infos.Name = "Lin";
+                    infos.Durabilite = 1;
+                    infos.GlobalAR = 0;
+                    infos.BonusAttaque = 0;
+                    infos.BonusDegat = 0;
+                    infos.Diff = 12;
+                    break;
+                case NubiaRessource.Coton:
+                    infos.Name = "Coton";
+                    infos.Durabilite = 2;
+                    infos.GlobalAR = 0;
+                    infos.BonusAttaque = 0;
+                    infos.BonusDegat = 0;
+                    infos.Diff = 14;
+                    break;
+                case NubiaRessource.Laine:
+                    infos.Name = "Laine";
+                    infos.Durabilite = 1;
+                    infos.GlobalAR = 0;
+                    infos.BonusAttaque = 0;
+                    infos.BonusDegat = 0;
+                    infos.Diff = 14;
+                    break;
+                case NubiaRessource.Soie:
+                    infos.Name = "Soie";
+                    infos.Durabilite = 5;
+                    infos.GlobalAR = 0;
+                    infos.BonusAttaque = 0;
+                    infos.BonusDegat = 0;
+                    infos.Diff = 18;
+                    break;
+                #endregion
+
                 #region metal
                 ///// +1
                 case NubiaRessource.Verdan:

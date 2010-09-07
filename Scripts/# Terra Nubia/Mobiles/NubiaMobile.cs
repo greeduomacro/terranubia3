@@ -659,6 +659,41 @@ namespace Server.Mobiles
 
 
         #region Methodes Get & Set
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public override int HitsMax
+        {
+            get
+            {
+                int bonus = 0;
+                lock (BlessureList)
+                {
+                    foreach (NubiaBlessure blessure in BlessureList)
+                    {
+                        bonus -= blessure.getMalusVie();
+                    }
+                }
+                return base.HitsMax + bonus;
+            }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public override int StamMax
+        {
+            get
+            {
+                int bonus = 0;
+                lock (BlessureList)
+                {
+                    foreach (NubiaBlessure blessure in BlessureList)
+                    {
+                        bonus -= blessure.getMalusVie();
+                    }
+                }
+                return base.StamMax + bonus;
+            }
+        }
+
         [CommandProperty(AccessLevel.GameMaster)]
         public TailleMob Taille
         {

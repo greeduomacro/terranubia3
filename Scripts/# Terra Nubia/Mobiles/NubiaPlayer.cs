@@ -230,7 +230,7 @@ namespace Server.Mobiles
                 int max = 4;
                 foreach (Classe c in GetClasses())
                 {
-                    max = c.GetDV * c.Niveau;
+                    max += c.GetDV * c.Niveau;
                 }
                 max += (int)(DndHelper.GetCaracMod(this, DndStat.Constitution, true) * Niveau);
 
@@ -245,6 +245,16 @@ namespace Server.Mobiles
                 }
                 if (max < 4)
                     max = 4;
+
+                lock (BlessureList)
+                {
+                    foreach (NubiaBlessure blessure in BlessureList)
+                    {
+                        max -= blessure.getMalusVie();
+                    }
+                }
+                if (max < 1)
+                    max = 1; // MORT DEFINITIVE A GERER
                 // max *= 5;
                 return max;
             }
@@ -290,6 +300,17 @@ namespace Server.Mobiles
                     max += 20;
                 if (max < 4)
                     max = 4;
+
+                lock (BlessureList)
+                {
+                    foreach (NubiaBlessure blessure in BlessureList)
+                    {
+                        max -= blessure.getMalusVie();
+                    }
+                }
+                if (max < 1)
+                    max = 1;
+
                 // max *= 5;
 
                 return max;

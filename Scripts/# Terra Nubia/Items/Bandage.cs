@@ -229,6 +229,7 @@ namespace Server.Items
                         if (mob.hasHemo() )
                         {
                             from.Emote("*Tente d'enrayer l'hémoragie*");
+                            new InternalNubiaTimer(from as NubiaMobile, mob, m_Bandage).Start();
                         }
                         else
                             from.SendMessage("Votre cible n'a pas d'hémoragie");
