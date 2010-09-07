@@ -2657,8 +2657,14 @@ namespace Server.Mobiles
 				eable.Free();
 
 
+                if( newFocusMob != null )
+				    m_Mobile.FocusMob = newFocusMob;
 
-				m_Mobile.FocusMob = newFocusMob;
+                if (m_Mobile.FocusMob != null)
+                {
+                    if (!m_Mobile.FocusMob.InRange(m_Mobile.Location,m_Mobile.RangePerception))
+                        m_Mobile.FocusMob = null;
+                }
 			}
 
 			return (m_Mobile.FocusMob != null);

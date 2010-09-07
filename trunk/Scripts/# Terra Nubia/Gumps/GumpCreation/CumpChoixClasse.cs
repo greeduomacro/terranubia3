@@ -53,7 +53,7 @@ namespace Server.Gumps
                     ((ClasseType)i == ClasseType.Ensorceleur && possClasse == ClasseType.Magicien))
                     continue;*/
 
-                if(  (ClasseType)i < ClasseType.ArtisanCouturier || canArtisan  )
+                if ((ClasseType)i < ClasseType.ArtisanSoigneur || canArtisan)
                     AddButtonTrueFalse(x, y + (line * scale), i + 100, (choix == i), Classe.GetNameClasse((ClasseType)i));
                 line++;
         	}
@@ -94,7 +94,7 @@ namespace Server.Gumps
                      //  from.GiveNiveau(from.Niveau + 1);
 
                 }
-                else
+                else if(creation)
                 {
                     from.SendGump(new GumpChoixClasse(m_owner, creation));
                     from.SendMessage(43, "Vous devez choisir une classe");

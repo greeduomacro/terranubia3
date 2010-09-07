@@ -119,12 +119,12 @@ namespace Server.Engines
             {
                 if ( true ) //SkillCheck.CheckSkill(m_owner, m_owner.Skills[SkillName.Lumberjacking], m_metal.Infos.Diff))
                 {
-                    m_owner.SendMessage("Vous travaillez le bois avec succès");
+                    m_owner.SendMessage("Vous travaillez le cuir avec succès");
                     m_metal.isRaffine = true;
                 }
                 else
                 {
-                    m_owner.SendMessage("Vous n'arrivez pas à travailler le bois. Votre tentative rend les buches inexploitables");
+                    m_owner.SendMessage("Vous n'arrivez pas à travailler le cuir. Votre tentative rend les buches inexploitables");
                     if (m_metal.Amount > 2)
                         m_metal.Amount /= 2;
                     else

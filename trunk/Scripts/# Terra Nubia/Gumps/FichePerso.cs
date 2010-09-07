@@ -20,11 +20,17 @@ namespace Server.Gumps
         private bool canMultiClasse(NubiaMobile mob)
         {
             bool ok = true;
+            int countArtisan = 0;
             for (int i = 0; i < classes.Length; i++)
             {
                 if (classes[i].Niveau < 4 && !(classes[i] is ClasseArtisan))
-                    ok = false;
+                {
+                    countArtisan++;
+
+                }
             }
+            if (countArtisan >= 2)
+                ok = false;
             return ok;
         }
         private bool canUpClasse(NubiaMobile mob, Classe c)

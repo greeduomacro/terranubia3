@@ -50,6 +50,7 @@ namespace Server.Mobiles
                 Add(new GenericBuyInfo(typeof(ForgeronTool), 30, 20, 0x13E3, 0));
 				Add(new GenericBuyInfo("Outils d'ingenieur", typeof(IngeTool), 30, 4, 7864, 0 ) );
                 Add(new GenericBuyInfo("Outils d'érudit", typeof(EruditionTool), 30, 4, 0xFBF, 0));
+                Add(new GenericBuyInfo("Trousse de chirurgie", typeof(MedecineKit), 30, 4, 7864, 2117));
 
 	/*			Add( new GenericBuyInfo( typeof( DrawKnife ), 10, 20, 0x10E4, 0 ) );
 				Add( new GenericBuyInfo( typeof( Froe ), 10, 20, 0x10E5, 0 ) );

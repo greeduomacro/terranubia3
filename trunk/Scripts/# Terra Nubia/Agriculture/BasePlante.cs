@@ -30,7 +30,7 @@ namespace Server.Items
 
 		public void InitialTurn()
 		{
-			m_turn = Utility.RandomMinMax( 18,24);
+			m_turn = Utility.RandomMinMax( 6,10);
 		}
 
 		public void HourTurn()
@@ -451,7 +451,7 @@ namespace Server.Items
 		public BasePlante( Serial serial ) : base( serial )
 		{
 			if( m_State >= EnumPlanteState.GrainePlante )
-			new InternalTimer( this ).Start();
+			    new InternalTimer( this ).Start();
 		}
 
 		public override void Serialize( GenericWriter writer )

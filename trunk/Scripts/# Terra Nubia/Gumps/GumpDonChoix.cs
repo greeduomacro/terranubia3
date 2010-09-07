@@ -53,18 +53,25 @@ namespace Server.Gumps
                 if (cl != ClasseType.None)
                 {
 
-                    DonEntry entry = mOwner.Dons.DonsEntrys[DonEnum.DonSupClasse];
-                    AddLabel(x, y, ColorTextYellow, "Don supplémentaire de " + Classe.GetNameClasse(cl) + " niveau " + entry.GiveAtLevel);
-                    line++;
-                    DonEnum[] dispos = owner.getClasse(entry.Classe).getCustomDon(mOwner, entry.GiveAtLevel);
-                    for (int d = 0; d < dispos.Length; d++)
+                    if (mOwner.Dons.DonsEntrys.ContainsKey(DonEnum.DonSupClasse))
                     {
-                        if (BaseDon.DonBank.ContainsKey(dispos[d].ToString().ToLower()) && !mOwner.hasDon(dispos[d]))
+                        DonEntry entry = mOwner.Dons.DonsEntrys[DonEnum.DonSupClasse];
+                        AddLabel(x, y, ColorTextYellow, "Don supplémentaire de " + Classe.GetNameClasse(cl) + " niveau " + entry.GiveAtLevel);
+                        line++;
+                        DonEnum[] dispos = owner.getClasse(entry.Classe).getCustomDon(mOwner, entry.GiveAtLevel);
+                        for (int d = 0; d < dispos.Length; d++)
                         {
-                            BaseDon don = BaseDon.DonBank[dispos[d].ToString().ToLower()];
-                            list.Add(don.DType);
+                            if (BaseDon.DonBank.ContainsKey(dispos[d].ToString().ToLower()) && !mOwner.hasDon(dispos[d]))
+                            {
+                                BaseDon don = BaseDon.DonBank[dispos[d].ToString().ToLower()];
+                                list.Add(don.DType);
 
+                            }
                         }
+                    }
+                    else
+                    {
+                        mOwner.SendMessage("BUG PAGEZ (Demandez Nexam. Bug N°01");
                     }
                 }
                 else if (cl == ClasseType.None)
@@ -72,18 +79,25 @@ namespace Server.Gumps
 
                     //  int libre = DndHelper.getDonTotal(owner.Niveau);
                     //    if (libre > 0)
-                    AddLabel(x, y, ColorTextGreen, "Dons Disponible : " + mOwner.DonCredits[ClasseType.None]);
-                    for (int d = (int)DonEnum.AffiniteMagique; d < (int)DonEnum.Maximum; d++)
+                    if (mOwner.Dons.DonsEntrys.ContainsKey(DonEnum.DonSupClasse))
                     {
-                        if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString().ToLower()) && !mOwner.hasDon(((DonEnum)d)))
+                        AddLabel(x, y, ColorTextGreen, "Dons Disponible : " + mOwner.DonCredits[ClasseType.None]);
+                        for (int d = (int)DonEnum.AffiniteMagique; d < (int)DonEnum.Maximum; d++)
                         {
-                            BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString().ToLower()];
-                            if (don.hasConditions(mOwner))
+                            if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString().ToLower()) && !mOwner.hasDon(((DonEnum)d)))
                             {
-                                list.Add(don.DType);
+                                BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString().ToLower()];
+                                if (don.hasConditions(mOwner))
+                                {
+                                    list.Add(don.DType);
 
+                                }
                             }
                         }
+                    }
+                    else
+                    {
+                        mOwner.SendMessage("BUG PAGEZ (Demandez Nexam. Bug N°02");
                     }
                 }
 
