@@ -31,7 +31,7 @@ namespace Server.Gumps
 
             for (int i = page*limit; i < (int)WorldData.HairDefList.Length; i++)
             {
-                if (WorldData.HairDefList[i].skillReq > 10)
+                if (WorldData.HairDefList[i].skillReq > 20)
                     continue;
                 AddButtonTrueFalse(x, y + (line * scale), i + 50, (choix == i), WorldData.HairDefList[i].Name);
                 line++;

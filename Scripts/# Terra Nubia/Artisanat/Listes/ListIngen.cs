@@ -29,6 +29,9 @@ namespace Server.Engines
         public override void ConstructList()
         {
             // O U T I L S
+            AddEntry("Paire de ciseaux", 0, typeof(Scissors), 5, 15,
+                new RessourceNeed[]{ 
+                    new RessourceNeed(typeof(BaseMetal), 1) });
             AddEntry("Parchemin d'ecriture", 0, typeof(NubiaParchemin), 5, 15,
                 new RessourceNeed[]{ 
                     new RessourceNeed(typeof(BaseBois), 1) });
@@ -123,7 +126,11 @@ namespace Server.Engines
                 new RessourceNeed[]{
                     new RessourceNeed(typeof(BaseMetal), 10)});
 
-            
+            AddEntry("Sacs pour monture", 3, typeof(PackMonture), 5, 20,
+             new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseCuir), 20),
+                    new RessourceNeed(typeof(BaseMetal), 4)
+             });
            
 
         }
