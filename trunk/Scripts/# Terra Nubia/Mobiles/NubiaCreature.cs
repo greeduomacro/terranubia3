@@ -45,8 +45,8 @@ namespace Server.Mobiles
                 f.Delete();
                 Server.Items.Fists griffes = new Server.Items.Fists();
                 griffes.De = De.quatre;
-                griffes.NbrLance = mMonsterNiveau / 2;
-                griffes.BonusDegatStatic = mMonsterNiveau / 2;
+                griffes.NbrLance = mMonsterNiveau / 4;
+                griffes.BonusDegatStatic = mMonsterNiveau / 8;
                 griffes.Movable = false;
                 EquipItem(griffes);
             }
@@ -98,7 +98,7 @@ namespace Server.Mobiles
                 mMonsterAttaques = att[Math.Min(mMonsterNiveau, 20)];
                 makeWeapon();
 
-                RawStr = Niveau * 2 + 10;
+                RawStr = Niveau  + 10;
                 RawDex = Niveau + 10;
                 RawCons = Niveau + 10;
                 RawCha = Niveau/2 + 5;

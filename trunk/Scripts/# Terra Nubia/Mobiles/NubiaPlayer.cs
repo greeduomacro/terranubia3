@@ -905,7 +905,7 @@ namespace Server.Mobiles
                     moral = Moral.Normal;
                 else if( moralValue < 90 )
                     moral = Moral.BonneHumeur;
-                else if( moralValue < 100 )
+                else if( moralValue <= 100 )
                     moral = Moral.SuperHumeur;
                 return moral;
             }
