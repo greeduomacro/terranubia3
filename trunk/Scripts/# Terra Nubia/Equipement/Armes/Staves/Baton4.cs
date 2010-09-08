@@ -4,15 +4,15 @@ using Server.Items;
 
 namespace Server.Items
 {
-	public class Baton3 : BaseStaff
+	public class Baton4 : BaseStaff
 	{
 		[Constructable]
-		public Baton3() : base( 0x3DD6 )
+		public Baton4() : base( 0x3DD6 )
 		{
 			Weight = 6.0;
 		}
 
-		public Baton3( Serial serial ) : base( serial )
+		public Baton4( Serial serial ) : base( serial )
 		{
 		}
 
