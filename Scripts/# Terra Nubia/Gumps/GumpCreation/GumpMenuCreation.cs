@@ -116,6 +116,8 @@ namespace Server.Gumps
             }
             else if (id == 99)
             {
+                from.finishCreation();
+
                 from.RawStr = 8;
                 from.RawDex = 8;
                 from.RawInt = 8;

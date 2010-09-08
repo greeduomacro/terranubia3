@@ -46,6 +46,20 @@ namespace Server.Mobiles
 
     public class NubiaPlayer : PlayerMobile
     {
+
+        private bool creationFinished = false;
+
+        public void finishCreation()
+        {
+            creationFinished = true;
+        }
+
+        [CommandProperty(AccessLevel.Developer)]
+        public bool Created
+        {
+            get { return creationFinished; }
+        }
+
         private bool mCanRaceRestricted = false;
         [CommandProperty(AccessLevel.GameMaster)]
         public bool CanRaceRestricted
@@ -1448,6 +1462,8 @@ namespace Server.Mobiles
         public override void Resurrect()
         {
             base.Resurrect();
+
+            
            
             Hits = HitsMax / 10;
             Mana = Mana / 2;
@@ -1466,7 +1482,7 @@ namespace Server.Mobiles
                     EquipItem(item);
                 }
             }
-            Console.WriteLine("Corpse: " + m_lastCorpse);
+            //Console.WriteLine("Corpse: " + m_lastCorpse);
             if (m_lastCorpse != null)
             {
               //  itemToPack = m_lastCorpse.AcquireItems;
@@ -1727,7 +1743,7 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)1);//version
+            writer.Write((int)2);//version
 
             writer.Write((int)m_beaute);
             writer.Write((int)m_race);
@@ -1792,6 +1808,9 @@ namespace Server.Mobiles
                     writer.Write((int)ReputationStack.Reputations[faction]);
                 
             }
+
+            // VERSION 2
+            writer.Write((bool)creationFinished);
 
         }
         public override void Deserialize(GenericReader reader)
@@ -1897,6 +1916,15 @@ namespace Server.Mobiles
                        // Console.WriteLine("Deserialize: "+fac+" /"+val.ToString());
                         mReputationStack.Reputations.Add(fac, val);
                     }
+                }
+
+                if (version <= 1)
+                    creationFinished = true;
+            //VERSION 2
+                if (version >= 2)
+                {
+
+                    creationFinished = reader.ReadBool();
                 }
         }
     }

@@ -14,7 +14,7 @@ namespace Server.Gumps
         private bool m_primary;
         private int page = 0;
         public GumpChoixBarbe(NubiaPlayer _owner, int _choix, int _page)
-            : base("Choix de la barbe...", 180, 350)
+            : base("Choix de la barbe...", 200, 350)
         {
             m_owner = _owner;
             choix = _choix;
@@ -31,6 +31,8 @@ namespace Server.Gumps
 
             for (int i = page * limit; i < (int)WorldData.FacialHairDefList.Length; i++)
             {
+                if (WorldData.FacialHairDefList[i].skillReq > 10)
+                    continue;
                 AddButtonTrueFalse(x, y + (line * scale), i + 50, (choix == i), WorldData.FacialHairDefList[i].Name);
                 line++;
                 if (page > 0)
