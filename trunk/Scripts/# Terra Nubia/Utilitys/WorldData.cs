@@ -37,12 +37,18 @@ namespace Server
         //Cheveux
         public static HairDef[] HairDefList = new HairDef[]{
             new HairDef("Chauve", 0, 0),
+            new HairDef("Court", 8251, 10),
             new HairDef("Long", 8252, 10),
             new HairDef("Queue de cheval", 8253, 10),
-            new HairDef("Mohawk", 8260, 10),
-            new HairDef("Rasta", 8261, 10),
+            new HairDef("Crête", 8260, 10),
+            new HairDef("Précieux", 8261, 10),
+            new HairDef("Double chignon", 8262, 10),
+            new HairDef("Afro", 8263, 10),
+            new HairDef("Rasé", 8264, 10),
+            new HairDef("Deux nattes", 8265, 10),
+            new HairDef("Queue de rat", 8266, 10),
 
-            new HairDef("Queue de cheval haute", 8878, 15),
+         /*   new HairDef("Queue de cheval haute", 8878, 15),
             new HairDef("Chignon", 8879, 18),
             new HairDef("Double Chignon", 8859, 20),
             new HairDef("Plat", 8860, 15),
@@ -53,22 +59,20 @@ namespace Server
             new HairDef("Long orné", 8865, 20),
             new HairDef("Long en bataille", 8866, 15),
             new HairDef("Court de coté", 8867, 15),
-            new HairDef("Longue natte", 8868, 15),
+            new HairDef("Longue natte", 8868, 15),*/
 
         };
         //Barbes
         //Barbes
         public static HairDef[] FacialHairDefList = new HairDef[]{
             new HairDef("Imberbe / Rasé", 0, 0),
-            new HairDef("Barbe courte & Moustache", 8869, 10),
-            new HairDef("Barbe courte", 8870, 10),
-            new HairDef("Barbe longue & Moustace", 8871, 10),
-            new HairDef("Barbe longue", 8872, 10),
-            new HairDef("Barbe longue touffue", 8873, 10),
-           
-            new HairDef("Bouc", 8876, 10),
-            new HairDef("Barbiche", 8875, 10),
-            new HairDef("Moustache", 8877, 10),
+            new HairDef("Barbe courte & Moustache", 8267, 10), //ok
+            new HairDef("Barbe courte", 8255, 10), //Ok
+            new HairDef("Barbe longue & Moustace", 8268, 10),
+            new HairDef("Barbe longue", 8254, 10), //OK           
+            new HairDef("Bouc", 8256, 10), //ok
+            new HairDef("Barbiche", 8269, 10), //ok
+            new HairDef("Moustache", 8257, 10), //ok
             new HairDef("Long Bouc", 8874, 10),
             
         };

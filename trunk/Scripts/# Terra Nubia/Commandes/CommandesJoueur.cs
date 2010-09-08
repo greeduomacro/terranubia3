@@ -263,15 +263,26 @@ namespace Server.Commands
         public static void comp_OnCommand(CommandEventArgs e)
         {
             NubiaPlayer p = e.Mobile as NubiaPlayer;
-            p.CloseGump(typeof(GumpCompetences));
-            p.SendGump(new GumpCompetences(p, p));
+              if (p.Created)
+            {
+                p.CloseGump(typeof(GumpCompetences));
+                p.SendGump(new GumpCompetences(p, p));
+            }
+              else
+                  p.SendMessage("Vous devez valider la création du personnage");
         }
 
         public static void fiche_OnCommand(CommandEventArgs e)
         {
             NubiaPlayer p = e.Mobile as NubiaPlayer;
-            p.CloseGump(typeof(GumpFichePerso));
-            p.SendGump(new GumpFichePerso(p, p));
+
+            if (p.Created)
+            {
+                p.CloseGump(typeof(GumpFichePerso));
+                p.SendGump(new GumpFichePerso(p, p));
+            }
+            else
+                p.SendMessage("Vous devez valider la création du personnage");
         }
     }
 }
