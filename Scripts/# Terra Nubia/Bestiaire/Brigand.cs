@@ -12,7 +12,7 @@ namespace Server.Mobiles
 		public override bool ClickTitle{ get{ return false; } }
 
 		[Constructable]
-		public Brigand() : base( AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4 )
+		public Brigand() : base( AIType.AI_Melee, FightMode.Closest, 10, 1, 0.25, 0.4 )
 		{
 			SpeechHue = Utility.RandomDyedHue();
 			Title = "le brigand";
