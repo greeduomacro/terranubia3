@@ -71,7 +71,7 @@ namespace Server.Gumps
                     }
                     else
                     {
-                        mOwner.SendMessage("BUG PAGEZ (Demandez Nexam. Bug N°01");
+                   //     mOwner.SendMessage("BUG PAGEZ (Demandez Nexam. Bug N°01");
                     }
                 }
                 else if (cl == ClasseType.None)
@@ -97,7 +97,7 @@ namespace Server.Gumps
                     }
                     else
                     {
-                        mOwner.SendMessage("BUG PAGEZ (Demandez Nexam. Bug N°02");
+                //        mOwner.SendMessage("BUG PAGEZ (Demandez Nexam. Bug N°02");
                     }
                 }
 
