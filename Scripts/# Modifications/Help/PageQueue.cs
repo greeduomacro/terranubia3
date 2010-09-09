@@ -183,8 +183,12 @@ namespace Server.Engines.Help
 
 				if ( m_Entry.Sender.NetState != null && index != -1 )
 				{
-					m_Entry.Sender.SendLocalizedMessage( 1008077, true, (index + 1).ToString() ); // Thank you for paging. Queue status : 
-					m_Entry.Sender.SendLocalizedMessage( 1008084 ); // You can reference our website at www.uo.com or contact us at support@uo.com. To cancel your page, please select the help button again and select cancel.
+					//Message automatique annoncant la position du page au joueur
+					m_Entry.Sender.SendMessage( "Veuillez patienter, un MJ répondra à votre page dès que possible.");
+					if (index == 0 )
+						m_Entry.Sender.SendMessage( "Vous êtes le prochain sur la liste de pages.");
+					else
+						m_Entry.Sender.SendMessage( "Vous êtes le " + (index + 1) + "e dans la liste de pages");
 				}
 				else
 				{
@@ -222,7 +226,7 @@ namespace Server.Engines.Help
 			}
 			else if ( pm.PagingSquelched )
 			{
-				from.SendMessage( "You cannot request help, sorry." );
+				from.SendMessage( "Vous ne pouvez pas faire de page" );
 				return false;
 			}
 
@@ -264,7 +268,7 @@ namespace Server.Engines.Help
 			}
 			else
 			{
-				e.Mobile.SendMessage( "The page queue is empty." );
+				e.Mobile.SendMessage( "La liste de pages est vide." );
 			}
 		}
 
@@ -332,14 +336,14 @@ namespace Server.Engines.Help
 				Mobile m = ns.Mobile;
 
 				if ( m != null && m.AccessLevel >= AccessLevel.Counselor && m.AutoPageNotify && !IsHandling( m ) )
-					m.SendMessage( "A new page has been placed in the queue." );
+					m.SendMessage( "Un nouveau page a été ajouté." );
 
 				if ( m != null && m.AccessLevel >= AccessLevel.Counselor && m.AutoPageNotify && m.LastMoveTime >= (DateTime.Now - TimeSpan.FromMinutes( 10.0 )) )
 					isStaffOnline = true;
 			}
 
 			if ( !isStaffOnline )
-				entry.Sender.SendMessage( "We are sorry, but no staff members are currently available to assist you.  Your page will remain in the queue until one becomes available, or until you cancel it manually." );
+				entry.Sender.SendMessage( "Désolé, aucun MJ est actuellement disponible. Votre page restera dans la liste tant que vous demeurez en ligne." );
 
 			if ( Email.SpeechLogPageAddresses != null && entry.SpeechLog != null )
 				SendEmail( entry );
