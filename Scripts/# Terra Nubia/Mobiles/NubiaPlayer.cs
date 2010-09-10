@@ -1743,7 +1743,7 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)2);//version
+            writer.Write((int)3);//version
 
             writer.Write((int)m_beaute);
             writer.Write((int)m_race);
@@ -1812,6 +1812,8 @@ namespace Server.Mobiles
             // VERSION 2
             writer.Write((bool)creationFinished);
 
+            // VERSION 3
+            writer.Write((int)moralValue);
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -1926,6 +1928,12 @@ namespace Server.Mobiles
 
                     creationFinished = reader.ReadBool();
                 }
-        }
+
+            // VERSION 3
+                if (version >= 3)
+                {
+                    moralValue = reader.ReadInt();
+                }
+        }   
     }
 }
