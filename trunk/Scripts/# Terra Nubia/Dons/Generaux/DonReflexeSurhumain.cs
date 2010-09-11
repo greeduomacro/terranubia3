@@ -10,6 +10,14 @@ namespace Server.Mobiles.Dons
 {
     public class DonReflexeSurhumain : BaseDon
     {
+        public override int Icone { get { return 21283; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +2 aux jets de Réflexes.";
+            }
+        }
         public DonReflexeSurhumain()
             : base(DonEnum.ReflexesSurhumains, "Reflexes surhumains", false)
         {

@@ -50,7 +50,7 @@ namespace Server.Items
                     return;
                 }
 
-                if (mPlayer.Competences[CompType.Survie].check(mPlante.DD, 0))
+                if (mPlayer.Competences[CompType.Survie].roll(mPlante.DD))
                 {
                     mPlayer.Emote("*ramasse la plante*");
                     mPlante.Movable = true;

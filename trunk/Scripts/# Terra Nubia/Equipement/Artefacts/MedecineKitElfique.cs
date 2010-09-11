@@ -7,8 +7,7 @@ using Server.Mobiles;
 
 namespace Server.Items
 {
-    [FlipableAttribute(7864, 7865)]
-    public class MedecineKitElfique : Item
+    public class MedecineKitElfique : MedecineKit
     {
 
         [Constructable]
@@ -36,9 +35,6 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadInt();
-
-            if (version == 0 && Weight == 0.1)
-                Weight = -1;
         }
 
     }

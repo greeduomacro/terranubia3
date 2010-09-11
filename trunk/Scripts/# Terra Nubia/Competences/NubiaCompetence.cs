@@ -251,14 +251,10 @@ namespace Server.Mobiles
 
         public abstract CompType[] SynergieTab { get; } // [i]=CompType [i+1]=Value
 
-        public bool check(int tourActions){
-            return check(10, tourActions, false);
+        public bool roll(int dd){
+            return roll(dd, false);
         }
-        public bool check(int DD, int tourActions)
-        {
-            return check(DD, tourActions, false);
-        }
-        public bool check(int DD, int tourActions, bool silent)
+        public bool roll(int DD, bool silent)
         {
           /*  Utilisation des compétences. 
            * Voici la formule pour jouer un test de compétence :
@@ -267,31 +263,27 @@ namespace Server.Mobiles
            * (modificateur de compétence = 
            * degré de maîtrise + modificateur de caractéristique + modificateurs divers).*/
 
-            int roll = pureRoll(tourActions);
+            int roll = intRoll(silent);
 
             return roll > DD;
         }
 
-        public int pureRoll(int tourActions)
+        public int intRoll()
         {
-             return pureRoll(tourActions, false);
+            return intRoll(false);
         }
-       
-        public int pureRoll( int tourActions, bool silent)
+
+        
+
+        public int intRoll(bool silent)
         {
-            if (mOwner.NextSkillTime > DateTime.Now && tourActions > 0)
+            if (mOwner.NextSkillTime > DateTime.Now )
             {
                 if( !silent )
                      mOwner.SendMessage("vous devez attendre pour utiliser une compétence");
                 return 1;
             }
-            int roll = Utility.RandomMinMax(1, 20);
-            roll += (int)getMaitrise();
-            double msst = WorldData.TimeTour().TotalMilliseconds;
-            msst *= tourActions;
-            msst -= 500;
-            
-            mOwner.NextSkillTime = DateTime.Now + TimeSpan.FromMilliseconds(msst);
+            int roll = DndHelper.rollDe(De.vingt);
             //Bonus Malus
             roll += mOwner.getBonusRoll();
 

@@ -123,12 +123,12 @@ namespace Server.Items
                     if (!m_From.InRange(item.GetWorldLocation(), 1))
                         return;
 
-                    bool canPsy = m_From.Competences[CompType.Psychologie].check(0);
+                    bool canPsy = m_From.Competences[CompType.Psychologie].roll(10);
                     foreach (NubiaMobile m in m_From.GetMobilesInRange(6))
                     {
                         if (m is NubiaPlayer && m != m_From)
                         {
-                            if (m.Competences[CompType.PerceptionAuditive].pureRoll(0) >= m_From.Competences[CompType.Discretion].pureRoll(0))
+                            if (m.Competences[CompType.PerceptionAuditive].intRoll(false) >= m_From.Competences[CompType.Discretion].intRoll())
                             {
                                 if (canPsy)
                                     m_From.SendMessage("{0} semble vous avoir repérez, vous manquez de discretion !", m.Name);
@@ -158,7 +158,7 @@ namespace Server.Items
                         m_From.SendMessage("Vous n'avez pas d'outils, malus de circonstance de " + malus.ToString());
                     }
 
-                    if (m_From.Competences[CompType.Crochetage].check((int)m_Item.Serrure + malus))
+                    if (m_From.Competences[CompType.Crochetage].roll((int)m_Item.Serrure + malus))
                     {
                         // Success! Pick the lock!
                         item.SendLocalizedMessageTo(m_From, 502076); // The lock quickly yields to your skill.
@@ -172,7 +172,7 @@ namespace Server.Items
                     }
 
                     //Consomation du lockPick
-                    if (m_Lockpick != null && !m_From.Competences[CompType.Crochetage].check((int)m_Item.Serrure))
+                    if (m_Lockpick != null && !m_From.Competences[CompType.Crochetage].roll((int)m_Item.Serrure))
                         BrokeLockPickTest();
                 }
             }

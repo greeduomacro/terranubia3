@@ -8,6 +8,7 @@ using Server.Targeting;
 
 namespace Server.Mobiles.Dons
 {
+    /*
     public class DonEcoleAbjuration : BaseDon
     {
         public DonEcoleAbjuration()
@@ -15,6 +16,10 @@ namespace Server.Mobiles.Dons
         {
             mAchatMax = 1;
             mLimiteDayUse = false;
+        }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
         }
     }
     public class DonEcoleDivination : BaseDon
@@ -25,6 +30,10 @@ namespace Server.Mobiles.Dons
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
+        }
     }
     public class DonEcoleEnchantement : BaseDon
     {
@@ -33,6 +42,10 @@ namespace Server.Mobiles.Dons
         {
             mAchatMax = 1;
             mLimiteDayUse = false;
+        }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
         }
     }
     public class DonEcoleEvocation : BaseDon
@@ -43,6 +56,10 @@ namespace Server.Mobiles.Dons
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
+        }
     }
     public class DonEcoleIllusion : BaseDon
     {
@@ -51,6 +68,10 @@ namespace Server.Mobiles.Dons
         {
             mAchatMax = 1;
             mLimiteDayUse = false;
+        }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
         }
     }
     public class DonEcoleInvocation : BaseDon
@@ -61,6 +82,10 @@ namespace Server.Mobiles.Dons
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
+        }
     }
     public class DonEcoleNecromancie : BaseDon
     {
@@ -69,6 +94,10 @@ namespace Server.Mobiles.Dons
         {
             mAchatMax = 1;
             mLimiteDayUse = false;
+        }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
         }
     }
     public class DonEcoleTransmutation : BaseDon
@@ -79,5 +108,9 @@ namespace Server.Mobiles.Dons
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
-    }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
+        }
+    }*/
 }

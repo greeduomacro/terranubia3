@@ -10,6 +10,15 @@ namespace Server.Mobiles.Dons
 {
     public class DonRobustesse : BaseDon
     {
+        public override int Icone { get { return 21020; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage gagne 3 points de vie supplémentaires.<br>"+
+"Spécial. Ce don peut être pris plusieurs fois. Ses effets sont cumulatifs.";
+            }
+        }
         public DonRobustesse()
             : base(DonEnum.Robustesse, "Robustesse", false)
         {

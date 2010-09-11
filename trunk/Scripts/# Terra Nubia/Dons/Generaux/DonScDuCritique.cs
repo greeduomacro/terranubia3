@@ -10,6 +10,18 @@ namespace Server.Mobiles.Dons
 {
     public class DonScDuCritiqueBaton : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>"+
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>"+
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>"+
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueBaton()
             : base(DonEnum.ScienceDuCritiqueBaton, "Science du critique: Baton", false)
@@ -24,6 +36,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueMasse : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueMasse()
             : base(DonEnum.ScienceDuCritiqueMasse, "Science du critique: Masse", false)
@@ -38,6 +62,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueEpee : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueEpee()
             : base(DonEnum.ScienceDuCritiqueEpee, "Science du critique: Epée", false)
@@ -52,6 +88,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueHache : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueHache()
             : base(DonEnum.ScienceDuCritiqueHache, "Science du critique: Hache", false)
@@ -66,6 +114,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueLance : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueLance()
             : base(DonEnum.ScienceDuCritiqueLance, "Science du critique: Lance", false)
@@ -80,6 +140,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueHast : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueHast()
             : base(DonEnum.ScienceDuCritiqueHast, "Science du critique: Hast", false)
@@ -94,6 +166,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueDague : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueDague()
             : base(DonEnum.ScienceDuCritiqueDague, "Science du critique: Dague", false)
@@ -108,6 +192,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueArc : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueArc()
             : base(DonEnum.ScienceDuCritiqueArc, "Science du critique: Arc", false)
@@ -122,6 +218,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueArbalete : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueArbalete()
             : base(DonEnum.ScienceDuCritiqueArbalete, "Science du critique: Arbalète", false)
@@ -136,6 +244,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiqueJet : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiqueJet()
             : base(DonEnum.ScienceDuCritiqueJet, "Science du critique: Arme de jet", false)
@@ -150,6 +270,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonScDuCritiquePoing : BaseDon
     {
+        public override int Icone { get { return 20993; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +8.<br>" +
+"Avantage. La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Les effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affûtage).<br>" +
+"Un guerrier peut choisir Science du critique en tant que don supplémentaire.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonScDuCritiquePoing()
             : base(DonEnum.ScienceDuCritiquePoing, "Science du critique: Poings", false)

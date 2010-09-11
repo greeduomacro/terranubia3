@@ -107,7 +107,7 @@ namespace Server.Items
 			{
 
 
-                int rollGraine = from.Competences[CompType.Agriculture].pureRoll(1);
+                int rollGraine = from.Competences[CompType.Agriculture].intRoll();
 				if( rollGraine <= DD )
 				{
 					from.Emote("*Saccage la plante*");
@@ -130,7 +130,7 @@ namespace Server.Items
 			}
 			else if( m_State == EnumPlanteState.Mature )
 			{
-                int rollRecolte = from.Competences[CompType.Agriculture].pureRoll(1);
+                int rollRecolte = from.Competences[CompType.Agriculture].intRoll();
 				if( rollRecolte <= DD )
 				{
 					from.Emote("*Saccage la plante*");
@@ -175,7 +175,7 @@ namespace Server.Items
 			if( diff > 90 )
 				diff = 90;
 
-            int roll = comp.pureRoll(1);
+            int roll = comp.intRoll();
 
 			bool terrainOk = false;
 			if( Terrain == EnumPlanteTerrain.Ferme )

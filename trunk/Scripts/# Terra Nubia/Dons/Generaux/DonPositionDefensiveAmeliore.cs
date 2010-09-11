@@ -10,6 +10,14 @@ namespace Server.Mobiles.Dons
 {
     public class DonPositionDefensiveAmeliore : BaseDon
     {
+        public override int Icone { get { return 20741; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. A venir...";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonPositionDefensiveAmeliore()
             : base(DonEnum.PositionDefensiveAmelio, "Position défensive améliorée", false)

@@ -47,7 +47,7 @@ namespace Server.Gumps
                     line++;
                 }
             }*/
-            AddPage(0);
+          /*  AddPage(0);
             if ( mOwner.DonCredits.ContainsKey(cl) )
             {
                 if (cl != ClasseType.None)
@@ -144,7 +144,7 @@ namespace Server.Gumps
 
 
                 }
-            }
+            }*/
            
         }
         public override void OnResponse(Server.Network.NetState sender, RelayInfo info)
@@ -154,7 +154,7 @@ namespace Server.Gumps
             {
                 int id = info.ButtonID - 500;
                 Console.WriteLine(" ID = " + id);
-                if (id < list.Count)
+              /*  if (id < list.Count)
                 {
 
                     DonEnum don = (DonEnum)list[id];
@@ -172,7 +172,7 @@ namespace Server.Gumps
                     {
                         mOwner.DonCredits[cl]--;
                     }
-                }
+                }*/
             }
             mOwner.SendGump(new GumpFichePerso(mOwner, mOwner));
            

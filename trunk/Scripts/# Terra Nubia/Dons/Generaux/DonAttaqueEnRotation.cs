@@ -10,6 +10,17 @@ namespace Server.Mobiles.Dons
 {
     public class DonAttaqueEnRotation : BaseDon
     {
+        public override int Icone { get { return 21006; } }
+        public override string Description
+        {
+            get
+            {
+                return "Conditions. Int 13, Dex 13, Attaque éclair, Esquive, Expertise du combat, Souplesse du serpent, bonus de base à l’attaque de +4.<br>"+
+"Avantage. Lors d’une action d’attaque à outrance, le personnage peut sacrifier ses attaques normales pour porter à la place une attaque de corps à corps avec son bonus de base maximal à l’attaque contre chacun de ses adversaires dans sa zone de contrôle.<br>"+
+"Un personnage qui effectue une attaque en rotation sacrifie aussi toutes les attaques supplémentaires dont il bénéficie habituellement, quelle que soit leur origine (comme le don Enchaînement ou le sort rapidité).<br>" +
+"Spécial. Un guerrier peut choisir Attaque en rotation en tant que don supplémentaire.";
+            }
+        }
        // public override bool WarriorDon { get { return true; } }
         public DonAttaqueEnRotation()
             : base(DonEnum.AttaqueEnRotation, "Attaque en rotation", true)

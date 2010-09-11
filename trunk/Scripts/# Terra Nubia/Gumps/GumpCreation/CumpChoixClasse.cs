@@ -32,14 +32,15 @@ namespace Server.Gumps
 
             ClasseType possClasse = ClasseType.Maximum;
             bool canArtisan = true;
-
+            int countArtisan = 0;
             foreach (Classe c in m_owner.GetClasses())
             {
                 possClasse = c.CType;
                 if (c is ClasseArtisan)
-                    canArtisan = false;
+                    countArtisan ++;
             }
-           
+
+            canArtisan = countArtisan <= 2;
 
 
 

@@ -12,6 +12,7 @@ namespace Server.Items
 		[Constructable]
 		public Dague1() : base( 0x2BEF )
 		{
+            Name = "Dague assassine";
 			Weight = 1.0;
 		}
 

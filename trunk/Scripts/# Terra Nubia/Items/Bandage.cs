@@ -272,7 +272,7 @@ namespace Server.Items
                     return;
                 if (mBandage == null)
                     return;
-                if (mSoigneur.Competences[CompType.PremiersSecours].check(15, 0))
+                if (mSoigneur.Competences[CompType.PremiersSecours].roll(15))
                 {
                     mSoigneur.Emote("*Arrête l'hémoragie");
                     mVictime.StopSaignements();

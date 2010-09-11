@@ -111,7 +111,7 @@ namespace Server.Gumps
                     DD = (int)WorldData.FacialHairDefList[mID].skillReq;
                 }
 
-                if (mCoiffeur.Competences[CompType.Couture].check(DD, 0))
+                if (mCoiffeur.Competences[CompType.Couture].roll(DD))
                 {
                     mCoiffeur.Emote("*Termine la coupe de {0}*", mClient.Name);
                     if (mHair)

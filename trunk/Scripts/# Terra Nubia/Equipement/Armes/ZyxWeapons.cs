@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Server.Items
 {
-    public class ZWEpeeCourte3 : BaseSword
+   /* public class ZWEpeeCourte3 : BaseSword
     {
         public override WeaponAnimation DefAnimation { get { return WeaponAnimation.Slash1H; } }
 
@@ -591,5 +591,5 @@ namespace Server.Items
 			base.Deserialize( reader );
 			int version = reader.ReadInt();
 		}
-    }
+    }*/
 }

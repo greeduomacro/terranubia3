@@ -42,8 +42,8 @@ namespace Server.Gumps
 
         public static void Initialize()
         {
-            CommandSystem.Register("EnLigne", AccessLevel.Player, new CommandEventHandler(EnLigne_OnCommand));
-            CommandSystem.Register("Whom", AccessLevel.Player, new CommandEventHandler(EnLigne_OnCommand));
+          //  CommandSystem.Register("EnLigne", AccessLevel.Player, new CommandEventHandler(EnLigne_OnCommand));
+         //   CommandSystem.Register("Whom", AccessLevel.Player, new CommandEventHandler(EnLigne_OnCommand));
         }
 
         [Usage("EnLigne")]

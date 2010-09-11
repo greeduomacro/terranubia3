@@ -1451,6 +1451,7 @@
     <Compile Include="# Terra Nubia\Equipement\Armes\Knives\Dagger.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Equipement\Armes\Knives\Dague1.cs" />
     <Compile Include="# Terra Nubia\Equipement\Armes\Knives\SkinningKnife.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1499,6 +1500,21 @@
     <Compile Include="# Terra Nubia\Equipement\Armes\PoleArms\Scythe.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc1.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc10.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc11.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc12.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc13.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc14.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc15.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc2.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc3.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc4.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc5.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc6.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc7.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc8.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\Arc9.cs" />
     <Compile Include="# Terra Nubia\Equipement\Armes\Ranged\BaseRanged.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1550,6 +1566,10 @@
     <Compile Include="# Terra Nubia\Equipement\Armes\Staves\BaseStaff.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Equipement\Armes\Staves\Baton1.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Staves\Baton2.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Staves\Baton3.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Staves\Baton4.cs" />
     <Compile Include="# Terra Nubia\Equipement\Armes\Staves\BlackStaff.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1580,6 +1600,17 @@
     <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Cutlass.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee1.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee10.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee11.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee2.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee3.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee4.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee5.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee6.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee7.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee8.cs" />
+    <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Epee9.cs" />
     <Compile Include="# Terra Nubia\Equipement\Armes\Swords\Katana.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1695,6 +1726,7 @@
     <Compile Include="# Terra Nubia\Equipement\IArtefact.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Equipement\MunitionsPack.cs" />
     <Compile Include="# Terra Nubia\Equipement\NubiaArmor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1704,6 +1736,7 @@
     <Compile Include="# Terra Nubia\Equipement\NubiaWeapon.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Equipement\Vetements\TNPack01.cs" />
     <Compile Include="# Terra Nubia\Equipement\Vetements\ZyxCloth.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1713,6 +1746,8 @@
     <Compile Include="# Terra Nubia\Gumps\GumpBlessure.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Gumps\GumpChangeLayer.cs" />
+    <Compile Include="# Terra Nubia\Gumps\GumpCoiffeur.cs" />
     <Compile Include="# Terra Nubia\Gumps\GumpCompetences.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1749,7 +1784,9 @@
     <Compile Include="# Terra Nubia\Gumps\GumpDonChoix.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Gumps\GumpDons.cs" />
     <Compile Include="# Terra Nubia\Gumps\GumpFactions.cs" />
+    <Compile Include="# Terra Nubia\Gumps\GumpNewDonChoix.cs" />
     <Compile Include="# Terra Nubia\Gumps\GumpNubia.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1847,6 +1884,7 @@
     <Compile Include="# Terra Nubia\Items\NubiaCompItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="# Terra Nubia\Items\PackMonture.cs" />
     <Compile Include="# Terra Nubia\Items\Parchemin.cs">
       <SubType>Code</SubType>
     </Compile>

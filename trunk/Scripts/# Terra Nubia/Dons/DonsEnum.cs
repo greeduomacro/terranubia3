@@ -49,6 +49,21 @@ namespace Server.Mobiles
         AttaqueSournoise,
         RecherchePiege,
 
+        //RODEUR
+        EmpathieSauvage,
+
+        EnemiJureAberration,
+        EnemiJureGeant,
+        EnemiJureAnimal,
+        EnemiJureHumanoide,
+        EnemiJureCreatureArticifielle,
+        EnemiJureMagique,
+        EnemiJureDragon,
+        EnemiJureElementaire,
+        EnemiJureMortVivant,
+        EnemiJurePlante,
+        EnemiJureVermine,
+
         //Dons généraux
         AffiniteMagique = 1000,
         AmeliorationDesCreaturesConvoquees,
@@ -278,20 +293,7 @@ namespace Server.Mobiles
         VolonteDeFer,
         Voltigeur,
 
-        //RODEUR
-        EmpathieSauvage,
-
-        EnemiJureAberration,
-        EnemiJureGeant,
-        EnemiJureAnimal,
-        EnemiJureHumanoide,
-        EnemiJureCreatureArticifielle,
-        EnemiJureMagique,
-        EnemiJureDragon,
-        EnemiJureElementaire,
-        EnemiJureMortVivant,
-        EnemiJurePlante,
-        EnemiJureVermine,
+    
 
         Maximum
     }

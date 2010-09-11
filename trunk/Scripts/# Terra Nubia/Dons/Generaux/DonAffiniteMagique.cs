@@ -10,6 +10,9 @@ namespace Server.Mobiles.Dons
 {
     public class DonAffiniteMagique : BaseDon
     {
+        public override string Description { get { return "Avantage. Le personnage obtient un bonus de +2 sur tous ses tests d’Art de la magie et d’Utilisation des objets magiques."; } }
+        public override int Icone { get { return 2270; } }
+
         public DonAffiniteMagique()
             : base(DonEnum.AffiniteMagique, "Affinité Magique", false)
         {

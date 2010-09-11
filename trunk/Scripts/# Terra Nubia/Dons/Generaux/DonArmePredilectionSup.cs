@@ -10,6 +10,18 @@ namespace Server.Mobiles.Dons
 {
     public class DonArmePredilectionSupBaton : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupBaton()
             : base(DonEnum.ArmeDePredilectionSupBaton, "Arme de prédilection Sup: Baton", false)
@@ -24,6 +36,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupMasse : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupMasse()
             : base(DonEnum.ArmeDePredilectionSupMasse, "Arme de prédilection Sup: Masse", false)
@@ -38,6 +62,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupEpee : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupEpee()
             : base(DonEnum.ArmeDePredilectionSupEpee, "Arme de prédilection Sup: Epée", false)
@@ -52,6 +88,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupHache : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupHache()
             : base(DonEnum.ArmeDePredilectionSupHache, "Arme de prédilection Sup: Hache", false)
@@ -66,6 +114,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupLance : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupLance()
             : base(DonEnum.ArmeDePredilectionSupLance, "Arme de prédilection Sup: Lance", false)
@@ -80,6 +140,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupHast : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupHast()
             : base(DonEnum.ArmeDePredilectionSupHast, "Arme de prédilection Sup: Hast", false)
@@ -94,6 +166,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupDague : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupDague()
             : base(DonEnum.ArmeDePredilectionSupDague, "Arme de prédilection Sup: Dague", false)
@@ -108,6 +192,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupArc : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupArc()
             : base(DonEnum.ArmeDePredilectionSupArc, "Arme de prédilection Sup: Arc", false)
@@ -122,6 +218,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupArbalete : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupArbalete()
             : base(DonEnum.ArmeDePredilectionSupArbalete, "Arme de prédilection Sup: Arbalète", false)
@@ -136,6 +244,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupJet : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupJet()
             : base(DonEnum.ArmeDePredilectionSupJet, "Arme de prédilection Sup: Arme de jet", false)
@@ -150,6 +270,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionSupPoing : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.<br>" +
+"Conditions. Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionSupPoing()
             : base(DonEnum.ArmeDePredilectionSupPoing, "Arme de prédilection Sup: Poings", false)

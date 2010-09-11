@@ -155,7 +155,8 @@ namespace Server.Engines.Harvest
 			Type type = null;
 			//if ( skillBase >= resource.ReqSkill && from.CheckSkill( def.Skill, resource.MinSkill, resource.MaxSkill ) )
             NubiaMobile mob = from as NubiaMobile;
-            bool check = mob.Competences[def.Skill].check(resource.DD,0);
+            bool check = mob.Competences[def.Skill].roll(resource.DD);
+            mob.Competences.wait(1);
 
       //      Console.WriteLine("Harvest Base comp " + def.Skill.ToString() + " DD " + resource.DD + " success: " + check);
            if (check)

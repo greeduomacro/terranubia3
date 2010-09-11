@@ -11,7 +11,8 @@ namespace Server.Items
 
 		[Constructable]
 		public Epee9() : base( 0x3DD7 )
-		{
+        {
+            Name = "Epée";
 			Weight = 7.0;
 		}
 

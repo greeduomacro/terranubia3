@@ -11,6 +11,16 @@ namespace Server.Mobiles.Dons
 {
     public class DonPistage : BaseDon
     {
+        public override int Icone { get { return 20999; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage peu pister des créatures (humaine ou non) sur un jet de survie<br>"+
+                    "Spécial. Les rôdeurs bénéficient automatiquement de Pistage en tant que don supplémentaire. Ils n’ont pas besoin de le choisir.<br>"+
+"Ce don ne permet pas de trouver ou de suivre la piste d’un individu sous l’effet du sort passage sans trace.";
+            }
+        }
         public DonPistage()
             : base(DonEnum.Pistage, "Pistage", true)
         {

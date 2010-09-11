@@ -115,9 +115,11 @@ namespace Server.Gumps
             {
                 if (mOwner != null && mViewer != null && mBlessure != null)
                 {
-                    if (mViewer.Competences[CompType.Chirurgie].check(mBlessure.DD + malus))
+                    if (mViewer.Competences[CompType.Chirurgie].roll(mBlessure.DD + malus))
                     {
-                        int val = Utility.Random(20) + (int)DndHelper.GetCaracMod(mViewer, DndStat.Sagesse);
+                        int val = DndHelper.rollDe(De.vingt) + (int)DndHelper.GetCaracMod(mViewer, DndStat.Sagesse) 
+                            + (int)( DndHelper.GetCaracMod(mViewer, DndStat.Intelligence)/2)
+                            + (int)( DndHelper.GetCaracMod(mViewer, DndStat.Dexterite) /2);
                         mBlessure.SoinStatut += val;
                         mViewer.SendMessage("Vous soignez {0} avez succès", mOwner.Name);
                         if (mOwner != mViewer)

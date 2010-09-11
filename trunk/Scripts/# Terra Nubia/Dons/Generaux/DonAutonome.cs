@@ -10,6 +10,14 @@ namespace Server.Mobiles.Dons
 {
     public class DonAutonome : BaseDon
     {
+        public override int Icone { get { return 2241; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage obtient un bonus de +2 sur tous ses tests de Premiers secours et de Survie.";
+            }
+        }
         //public override bool WarriorDon { get { return true; } }
         public DonAutonome()
             : base(DonEnum.Autonome, "Autonome", false)

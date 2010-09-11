@@ -158,7 +158,7 @@ namespace Server.Mobiles
 							m_Thief.SendLocalizedMessage( 502723 ); // You fail to steal the item.
 						}
 
-						caught = m_Thief.Competences[CompType.Escamotage].check(1);
+						caught = m_Thief.Competences[CompType.Escamotage].roll(10);
 					}
 				}
 
@@ -201,7 +201,7 @@ namespace Server.Mobiles
 							if ( ns.Mobile != m_Thief )
                             {
                                 NubiaPlayer obs = ns.Mobile as NubiaPlayer;
-                                if( obs.Competences[CompType.Detection].check(10 + (int)obs.GetDistanceToSqrt(m_Thief) ) )
+                                if( obs.Competences[CompType.Detection].roll(10 + (int)obs.GetDistanceToSqrt(m_Thief), true ) )
 								    ns.Mobile.SendMessage( message );
                             }
 						}
@@ -291,9 +291,9 @@ namespace Server.Mobiles
                             {
                                 //Detection
                                 NubiaPlayer obs = ns.Mobile as NubiaPlayer;
-                                if (obs.Competences[CompType.Detection].pureRoll(0)
+                                if (obs.Competences[CompType.Detection].intRoll(true)
                                     >
-                                    from.Competences[CompType.Discretion].pureRoll(0) + from.GetDistanceToSqrt(obs))
+                                    from.Competences[CompType.Discretion].intRoll(true) + from.GetDistanceToSqrt(obs))
                                 {
                                     obs.SendMessage(message);
                                     from.PrivateOverheadMessage(MessageType.Emote, 0, false, "*fouille dans le sac de " + root.Name + "*", ns);
@@ -301,7 +301,7 @@ namespace Server.Mobiles
                             }
                         }
 
-                        if (from.Competences[CompType.Escamotage].check(10 + root.getBonusReflexe()))
+                        if (from.Competences[CompType.Escamotage].roll(10 + root.getBonusReflexe()))
                             canSnoop = true;
                       
                     }

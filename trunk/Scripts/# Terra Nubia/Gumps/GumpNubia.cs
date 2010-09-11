@@ -42,7 +42,7 @@ namespace Server.Gumps
 
         }
         public GumpNubia(string titre, int largeur, int hauteur, int colonne)
-            : base(RealXBase, RealYBase)
+            : base(20, 20)
         {
             m_Largeur = largeur;
             m_Hauteur = hauteur;

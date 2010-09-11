@@ -169,7 +169,7 @@ namespace Server.Items
                 NubiaPlayer player = m as NubiaPlayer;
                 if (mDD <= 20 || player.hasDon(DonEnum.RecherchePiege))
                 {
-                    if (player.Competences[CompType.Fouille].check(mDD,0,true))
+                    if (player.Competences[CompType.Fouille].roll(mDD,true))
                     {
                         player.PrivateOverheadMessage(MessageType.Regular, Utility.RandomRedHue(), true, "Piege proche !", player.NetState);
                         SendInfoTo(player.NetState);
@@ -204,7 +204,7 @@ namespace Server.Items
             if (m is NubiaMobile)
             {
                 NubiaMobile mob = m as NubiaMobile;
-                int roll = mob.Competences[CompType.DeplacementSilencieux].pureRoll(0);
+                int roll = mob.Competences[CompType.DeplacementSilencieux].intRoll();
                 if ( !mob.Hidden)
                     roll -= 5;
                 if (roll >= mDD)
@@ -291,7 +291,7 @@ namespace Server.Items
         }
         public virtual bool tryDesarmorcer(NubiaMobile m)
         {
-            if (m.Competences[CompType.Desamorcage].check(mDD))
+            if (m.Competences[CompType.Desamorcage].roll(mDD))
             {
                 return true;
             }

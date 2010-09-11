@@ -7,7 +7,7 @@ using Server.Items;
 using Server.Targeting;
 
 namespace Server.Mobiles.Dons
-{
+{/*
     public class DonMagieGuerre : BaseDon
     {
         public DonMagieGuerre()
@@ -18,9 +18,9 @@ namespace Server.Mobiles.Dons
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return true;
+            return false;
         }
 
-    }
+    }*/
 
 }

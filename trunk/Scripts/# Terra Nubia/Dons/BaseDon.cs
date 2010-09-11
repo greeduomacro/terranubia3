@@ -79,6 +79,14 @@ namespace Server.Mobiles
                 p.SendMessage("Utilisation: .don [nom brut du don]");
         }
 
+        public static BaseDon getDon(DonEnum don)
+        {
+            if (BaseDon.DonBank.ContainsKey(don.ToString().ToLower()))
+                return BaseDon.DonBank[don.ToString().ToLower()];
+            else
+                return null;
+        }
+
         public static string getDonName(DonEnum don)
         {
             string dname = "";
@@ -86,6 +94,9 @@ namespace Server.Mobiles
                 dname = BaseDon.DonBank[don.ToString().ToLower()].Name;
             else
                 dname = don.ToString();
+
+            if (don == DonEnum.DonSupClasse)
+                dname = "Don à choisir";
             return dname;
         }
         private DonEnum mDType = DonEnum.AffiniteMagique;
@@ -98,9 +109,13 @@ namespace Server.Mobiles
         public DonEnum DType { get { return mDType; } }
         public bool CanUse { get { return mCanUse; } }
         public bool LimiteDayUse { get { return mLimiteDayUse; } }
+        public int AchatMax { get { return mAchatMax; } }
 
         public virtual bool WarriorDon { get { return false; } }
-        
+
+        public virtual string Description { get { return "Description à venir"; } }
+
+        public virtual int Icone { get { return 21008; } }
 
         public BaseDon(DonEnum type, string name, bool canUse)
         {

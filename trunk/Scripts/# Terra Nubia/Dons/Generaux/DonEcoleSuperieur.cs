@@ -7,7 +7,7 @@ using Server.Items;
 using Server.Targeting;
 
 namespace Server.Mobiles.Dons
-{
+{/*
     public class DonEcoleSuperieurAbjuration : BaseDon
     {
         public DonEcoleSuperieurAbjuration()
@@ -16,9 +16,10 @@ namespace Server.Mobiles.Dons
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
+     
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EcoleRenforceAbjuration);
+            return false;
         }
     }
 
@@ -30,9 +31,10 @@ namespace Server.Mobiles.Dons
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
+       
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EcoleRenforceDivination);
+            return false;
         }
     }
     public class DonEcoleSuperieurEnchantement : BaseDon
@@ -43,9 +45,10 @@ namespace Server.Mobiles.Dons
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
+      
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EcoleRenforceEnchantement);
+            return false;
         }
     }
     public class DonEcoleSuperieurEvocation : BaseDon
@@ -58,7 +61,7 @@ namespace Server.Mobiles.Dons
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EcoleRenforceEvocation);
+            return false;
         }
     }
     public class DonEcoleSuperieurIllusion : BaseDon
@@ -71,7 +74,7 @@ namespace Server.Mobiles.Dons
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EcoleRenforceIllusion);
+            return false;
         }
     }
     public class DonEcoleSuperieurInvocation : BaseDon
@@ -84,7 +87,7 @@ namespace Server.Mobiles.Dons
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EcoleRenforceInvocation);
+            return false;
         }
     }
     public class DonEcoleSuperieurNecromancie : BaseDon
@@ -97,7 +100,7 @@ namespace Server.Mobiles.Dons
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EcoleRenforceNecromancie);
+            return false;
         }
     }
     public class DonEcoleSuperieurTransmutation : BaseDon
@@ -110,7 +113,7 @@ namespace Server.Mobiles.Dons
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EcoleRenforceTransmutation);
+            return false;
         }
-    }
+    }*/
 }
