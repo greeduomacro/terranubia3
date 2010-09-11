@@ -5,7 +5,7 @@ using Server.Gumps;
 using Server.Mobiles;
 using Server.Items;
 using Server.Spells;
-
+using Server.Targeting;
 
 namespace Server.Commands
 {
@@ -13,6 +13,12 @@ namespace Server.Commands
     {
         public static void Initialize()
         {
+            CommandSystem.Register("dons", AccessLevel.Player,
+           new CommandEventHandler(dons_OnCommand));
+
+            CommandSystem.Register("layer", AccessLevel.Player,
+              new CommandEventHandler(layer_OnCommand));
+
 
             CommandSystem.Register("tissage", AccessLevel.GameMaster,
               new CommandEventHandler(tissage_OnCommand));
@@ -44,6 +50,53 @@ namespace Server.Commands
             CommandSystem.Register("blessure", AccessLevel.Player,
                new CommandEventHandler(blessure_OnCommand));
         }
+        public static void dons_OnCommand(CommandEventArgs e)
+        {
+            NubiaPlayer p = e.Mobile as NubiaPlayer;
+            p.CloseGump(typeof(GumpDons));
+            p.SendGump(new GumpDons(p, null));
+        }
+
+        public static void layer_OnCommand(CommandEventArgs e)
+        {
+            NubiaPlayer p = e.Mobile as NubiaPlayer;
+            p.SendMessage("Visez l'item dont vous voulez modifier le layer");
+            p.Target = new LayerTarget();
+        }
+
+        public class LayerTarget : Target
+        {
+            public LayerTarget()
+                : base(1, false, TargetFlags.None)
+            {
+            }
+            protected override void OnTarget(Mobile from, object targeted)
+            {
+                base.OnTarget(from, targeted);
+                if (from == null || targeted == null)
+                    return;
+                if (targeted is Item)
+                {
+                    Item item = targeted as Item;
+                    if (item.Parent != from.Backpack && from.Backpack != null)
+                    {
+                        from.SendMessage("Vous devez avoir l'objet dans votre sac");
+                        return;
+                    }
+                    if (GumpChangeLayer.isLayerTorse(item.Layer) || !item.Movable || item is TNRaceSkin )
+                    {
+                        from.CloseGump(typeof(GumpChangeLayer));
+                        from.SendGump(new GumpChangeLayer(from as NubiaPlayer, item));
+                    }
+                    else
+                        from.SendMessage("Vous ne pouvez pas changer le layer de cela");
+                }
+                else
+                    from.SendMessage("visez un objet");
+            }
+        }
+
+
         public static void reputation_OnCommand(CommandEventArgs e)
         {
             NubiaPlayer p = e.Mobile as NubiaPlayer;
@@ -177,8 +230,8 @@ namespace Server.Commands
                     continue;
                 if (mob.CanSee(p))
                 {
-                    int mobPsy = mob.Competences[CompType.Psychologie].pureRoll(0) - NuitModus;
-                    int bluff = p.Competences[CompType.Bluff].pureRoll(0) + NuitModus;
+                    int mobPsy = mob.Competences[CompType.Psychologie].intRoll() - NuitModus;
+                    int bluff = p.Competences[CompType.Bluff].intRoll() + NuitModus;
                     if (mobPsy < bluff)
                     {
                         mob.SendMessage("Quelques choses vous attire l'oeil plus loin");
@@ -190,7 +243,7 @@ namespace Server.Commands
 
             if (mustBluff)
             {
-                if (p.Competences[CompType.Bluff].check(DDBluff,1))
+                if (p.Competences[CompType.Bluff].roll(DDBluff))
                 {
                     p.SendMessage("Vous réussissez à distraitre les observateurs pour vous cacher");
                 }
@@ -200,7 +253,8 @@ namespace Server.Commands
                     return;
                 }
             }
-            if (p.Competences[CompType.Discretion].check(DD,1))
+
+            if (p.Competences[CompType.Discretion].roll(DD))
             {
                 p.SendMessage("Vous vous dissimulez avec discretion");
                 p.Hidden = true;
@@ -209,6 +263,7 @@ namespace Server.Commands
             {
                 p.SendMessage("Vous n'arrivez pas a vous dissimuler");
             }
+            p.Competences.wait(1);
         }
         public static void acrobatie_OnCommand(CommandEventArgs e)
         {
@@ -222,7 +277,7 @@ namespace Server.Commands
                 return;
             }
 
-            bool can = p.Competences[CompType.Acrobaties].check(1);
+            bool can = p.Competences[CompType.Acrobaties].roll(15);
             if (can)
             {
                 p.Emote("*execute une acrobatie*");

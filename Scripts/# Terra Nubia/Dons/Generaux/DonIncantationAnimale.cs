@@ -18,7 +18,7 @@ namespace Server.Mobiles.Dons
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.Sag >= 13;
+            return false;
         }
 
     }

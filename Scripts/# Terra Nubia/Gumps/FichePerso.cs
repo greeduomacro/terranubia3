@@ -19,18 +19,17 @@ namespace Server.Gumps
         private Classe[] classes = new Classe[0];
         private bool canMultiClasse(NubiaMobile mob)
         {
+            if (classes.Length >= 3)
+                return false;
+
             bool ok = true;
-            int countArtisan = 0;
             for (int i = 0; i < classes.Length; i++)
             {
-                if (classes[i].Niveau < 4 && !(classes[i] is ClasseArtisan))
+                if (classes[i].Niveau < 4 )
                 {
-                    countArtisan++;
-
+                    ok = false;
                 }
             }
-            if (countArtisan >= 2)
-                ok = false;
             return ok;
         }
         private bool canUpClasse(NubiaMobile mob, Classe c)
@@ -54,7 +53,7 @@ namespace Server.Gumps
             return true;
         }
         public GumpFichePerso(NubiaPlayer _owner, NubiaPlayer _viewer)
-            : base("Fiche de personnage", 520, 400, 250)
+            : base("Fiche de personnage", 520, 420, 250)
         {
             Closable = true;
             mOwner = _owner;
@@ -147,7 +146,7 @@ namespace Server.Gumps
 
 
 
-            AddBackground(x - 5, y + line * scale + 20, 240, 180, 3000);
+            AddBackground(x - 5, y + line * scale + 20, 240, 160, 3000);
 
 
             line++;
@@ -254,6 +253,35 @@ namespace Server.Gumps
             line++;
 
 
+
+
+
+            /// LIENS
+       /*     AddSimpleButton(x, y + line * scale, 40, "Afficher les compétences");
+            line++;
+            AddSimpleButton(x, y + line * scale, 41, "Afficher les dons");
+            line++;
+            bool magie = false;
+
+            foreach (Classe c in mOwner.Classes.Values)
+            {
+                if (c.Mage == MageType.Hybrid || c.Mage == MageType.Pur)
+                    magie = true;
+            }
+
+            if (magie)
+            {
+                AddSimpleButton(x, y + line * scale, 42, "Afficher la magie");
+                line++;
+            }
+
+            AddSimpleButton(x, y + line * scale, 43, "Afficher les réputations");
+            line++;*/
+
+
+
+
+
             /**
              * 
              * 2ND COLONNE
@@ -273,11 +301,11 @@ namespace Server.Gumps
             int xprev = XCol;
             int xnext = XCol + 200;
             int yprevnext = y;
-            line = 1;
+            line = 0;
             // PAGE 1
-            AddPage(1);
+        /*    AddPage(1);
             AddButton(xprev, yprevnext, 4014, 4015, 5, GumpButtonType.Page, 1);
-            AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, 2);
+            AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, 2);*/
             AddLabel(XCol, y + line * scale, ColorTextYellow, "Bonus & Maitrises d'armes");
             line++;
 
@@ -345,6 +373,7 @@ namespace Server.Gumps
             // PAGE 2
 
 
+            /*
             int totalLines = 2; // DndHelper.getDonTotal(mOwner.Niveau);
             foreach (DonEnum don in mOwner.Dons.Dons)
             {
@@ -382,11 +411,7 @@ namespace Server.Gumps
 
                     AddLabel(XCol, y + line * scale, ColorTextYellow, "Dons du personnage");
                     line++;
-                    /*if (  )
-                    {
-                        AddSimpleButton(XCol, y + line * scale, 90, "Choisir un don ( " + donsDispo + " disponibles )", ColorTextGreen);
-                        line++;
-                    }*/
+                  
                     int dsup = 0;
                     for (int i = -1; i < (int)ClasseType.Maximum; i++)
                     {
@@ -434,15 +459,13 @@ namespace Server.Gumps
                     line++;
                 }
                 
-            }
+            }*/
+
+            /*
             page++;
             AddPage(page);
             line = 1;
             AddButton(xprev, yprevnext, 4014, 4015, 5, GumpButtonType.Page, page - 1);
-           /* if (page < totalPage)
-                AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, page + 1);
-            else
-                AddButton(xnext, yprevnext, 4005, 4006, 6, GumpButtonType.Page, page);*/
             AddLabel(XCol, y + line * scale, ColorTextYellow, "Magie");
             line++;
             line++;
@@ -451,7 +474,7 @@ namespace Server.Gumps
             AddLabel(XCol, y + line * scale, ColorText, "Points d'apprentissage: " + mOwner.getTotalPtsApprentissage());
             line++;
             AddLabel(XCol, y + line * scale, ColorText, "Points de creation: " + mOwner.getTotalPtsCreation());
-            line++;
+            line++;*/
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
@@ -459,7 +482,8 @@ namespace Server.Gumps
             Mobile f = sender.Mobile;
             NubiaPlayer from = f as NubiaPlayer;
 
-            if (info.ButtonID == 90) //Choix de don
+            //if( info.ButtonID == 40
+          /*  if (info.ButtonID == 90) //Choix de don
             {
                 bool can = false;
                 ClasseType cl = ClasseType.None;
@@ -478,7 +502,7 @@ namespace Server.Gumps
                 if( can )
                     from.SendGump(new GumpDonChoix(from, cl ));
             }
-            else if (info.ButtonID == 100) //Nouvelle classe
+            else*/ if (info.ButtonID == 100) //Nouvelle classe
             {
                 from.SendGump(new GumpChoixClasse(from, false));
             }

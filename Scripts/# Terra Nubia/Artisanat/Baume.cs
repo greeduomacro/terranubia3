@@ -36,10 +36,10 @@ namespace Server.Items
                     return;
                 if( mBandage == null )
                     return;
-                if (mSoigneur.Competences[CompType.PremiersSecours].check(15, 0))
+                if (mSoigneur.Competences[CompType.PremiersSecours].roll(15))
                 {
                     mSoigneur.Emote("*Soigne {0}*", mVictime.Name);
-                    mVictime.Heal( 5 + mSoigneur.Competences[CompType.PremiersSecours].pureRoll(0) );
+                    mVictime.Heal( 5 + mSoigneur.Competences[CompType.PremiersSecours].intRoll() );
 
                 }
                 else
@@ -112,7 +112,7 @@ namespace Server.Items
         [Constructable]
         public PotionBaume(): base(3854)
         {
-            Name = "Baume d'Althae";
+            Name = "Baume d'Althaea";
             Hue = 1928;
         }
 
@@ -139,6 +139,7 @@ namespace Server.Items
 
                     from.Backpack.AddItem(new BandageBaume());
                     b.Consume();
+                    Delete();
                 }
                 from.SendMessage("Vous devez avoir un bandage propre pour l'utiliser");
             }

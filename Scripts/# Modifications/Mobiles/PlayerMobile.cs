@@ -2833,7 +2833,7 @@ namespace Server.Mobiles
 
 			if( AccessLevel != AccessLevel.Player )
 				return true;
-
+/*
 			if( Hidden && DesignContext.Find( this ) == null )	//Hidden & NOT customizing a house
 			{
 				if( !Mounted && Skills.Stealth.Value >= 25.0 )
@@ -2854,7 +2854,7 @@ namespace Server.Mobiles
 				{
 					RevealingAction();
 				}
-			}
+			}*/
 
 			return true;
 		}

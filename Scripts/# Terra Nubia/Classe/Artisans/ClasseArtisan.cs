@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Server.Items;
 using Server.Mobiles;
@@ -29,6 +30,20 @@ namespace Server
                   
                 };
             }
+        }
+        public override DonEnum[] getCustomDon(NubiaPlayer p, int niveau)
+        {
+            List<DonEnum> list = new List<DonEnum>();
+            for (int d = (int)DonEnum.AffiniteMagique; d < (int)DonEnum.Maximum; d++)
+            {
+                if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString().ToLower()))
+                {
+                    BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString().ToLower()];
+                    if ( don.hasConditions(p) )
+                        list.Add(don.DType);
+                }
+            }
+            return list.ToArray();
         }
        /* public override CompType[] ClasseCompetences
         {

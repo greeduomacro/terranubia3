@@ -10,6 +10,18 @@ namespace Server.Mobiles.Dons
 {
     public class DonArmePredilectionBaton : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionBaton()
             : base(DonEnum.ArmeDePredilectionBaton, "Arme de prédilection: Baton", false)
@@ -24,6 +36,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionMasse : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionMasse()
             : base(DonEnum.ArmeDePredilectionMasse, "Arme de prédilection: Masse", false)
@@ -38,6 +62,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionEpee : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionEpee()
             : base(DonEnum.ArmeDePredilectionEpee, "Arme de prédilection: Epée", false)
@@ -52,6 +88,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionHache : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionHache()
             : base(DonEnum.ArmeDePredilectionHache, "Arme de prédilection: Hache", false)
@@ -66,6 +114,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionLance : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionLance()
             : base(DonEnum.ArmeDePredilectionLance, "Arme de prédilection: Lance", false)
@@ -80,6 +140,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionHast : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionHast()
             : base(DonEnum.ArmeDePredilectionHast, "Arme de prédilection: Hast", false)
@@ -94,6 +166,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionDague : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionDague()
             : base(DonEnum.ArmeDePredilectionDague, "Arme de prédilection: Dague", false)
@@ -108,6 +192,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionArc : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionArc()
             : base(DonEnum.ArmeDePredilectionArc, "Arme de prédilection: Arc", false)
@@ -122,6 +218,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionArbalete : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionArbalete()
             : base(DonEnum.ArmeDePredilectionArbalete, "Arme de prédilection: Arbalète", false)
@@ -136,6 +244,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionJet : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionJet()
             : base(DonEnum.ArmeDePredilectionJet, "Arme de prédilection: Arme de jet", false)
@@ -150,6 +270,18 @@ namespace Server.Mobiles.Dons
     }
     public class DonArmePredilectionPoing : BaseDon
     {
+        public override int Icone { get { return 21000; } }
+        public override string Description
+        {
+            get
+            {
+                return "Le personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.<br>" +
+"Conditions. Maniement de l’arme choisie, bonus de base à l’attaque de +1.<br>" +
+"Avantage. Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.<br>" +
+"Un guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.";
+            }
+        }
         public override bool WarriorDon { get { return true; } }
         public DonArmePredilectionPoing()
             : base(DonEnum.ArmeDePredilectionPoing, "Arme de prédilection: Poings", false)

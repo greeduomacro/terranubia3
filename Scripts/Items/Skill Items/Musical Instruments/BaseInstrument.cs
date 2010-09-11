@@ -530,7 +530,7 @@ namespace Server.Items
 
 
 
-				if ( from.Competences[CompType.Representation].check(1) )
+				if ( from.Competences[CompType.Representation].roll(10) )
 					PlayInstrumentWell( from );
 				else
 					PlayInstrumentBadly( from );
@@ -544,7 +544,7 @@ namespace Server.Items
 		public static bool CheckMusicianship( Mobile m )
 		{
             NubiaMobile from = m as NubiaMobile;
-            return (from.Competences[CompType.Representation].check(1));
+            return (from.Competences[CompType.Representation].roll(10));
 		}
 
 		public void PlayInstrumentWell( Mobile from )

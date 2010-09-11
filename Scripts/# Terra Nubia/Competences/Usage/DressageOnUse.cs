@@ -184,7 +184,7 @@ namespace Server.Mobiles
                         m_Paralyzed = true;
 
 
-                    if (alreadyOwned || m_Tamer.Competences[CompType.Dressage].check(m_Creature.DressageDD))
+                    if (alreadyOwned || m_Tamer.Competences[CompType.Dressage].roll(m_Creature.DressageDD))
                     {
 
                         if (alreadyOwned)

@@ -191,7 +191,8 @@ namespace Server.Engines
                     return;
             }
             
-            int rollResult = crafter.Competences[mComp].pureRoll(2);
+            int rollResult = crafter.Competences[mComp].intRoll();
+            //crafter.Competences.wait(1);
             if (rollResult > entry.Diff)
             {
                 
@@ -231,7 +232,7 @@ namespace Server.Engines
                     NubiaQualityEnum quality = NubiaQualityEnum.Normale;
 
                     int delta = rollResult - entry.Diff;
-                    if (delta < 0)
+                    if (delta < 5)
                         quality = NubiaQualityEnum.Mauvaise;
                     else if (delta >= 30)
                         quality = NubiaQualityEnum.Maitre;

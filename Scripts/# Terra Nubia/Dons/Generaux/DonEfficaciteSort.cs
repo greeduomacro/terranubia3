@@ -7,7 +7,7 @@ using Server.Items;
 using Server.Targeting;
 
 namespace Server.Mobiles.Dons
-{
+{/*
     public class DonEfficaciteSort : BaseDon
     {
         public DonEfficaciteSort()
@@ -15,6 +15,10 @@ namespace Server.Mobiles.Dons
         {
             mAchatMax = 1;
             mLimiteDayUse = false;
+        }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
         }
     }
     public class DonEfficaciteSortSuperieur : BaseDon
@@ -27,8 +31,8 @@ namespace Server.Mobiles.Dons
         }
         public override bool hasConditions(NubiaPlayer mob)
         {
-            return mob.hasDon(DonEnum.EfficaciteDesSortsAccrue);
+            return false;
         }
     }
-
+    */
 }

@@ -217,7 +217,8 @@ namespace Server.Items
                     return;
                 }
                 //fake
-                from.Competences[CompType.Concentration].check(0, 1);
+                from.Competences.wait(1);
+               // from.Competences[CompType.Concentration].check(0, 1);
 
                 doHarvestEffect(from, tool);
                 new HarvestTimer(this, tool, from).Start();
@@ -233,7 +234,7 @@ namespace Server.Items
             if (NubiaInfoRessource.GetRessourceType(Ressource) == NubiaRessourceType.Bois)
                 comp = CompType.Buchage;
 
-            bool check = from.Competences[comp].check(infos.Diff, 0);
+            bool check = from.Competences[comp].roll(infos.Diff);
 
             if (tool is IUsesRemaining)
             {
@@ -245,7 +246,7 @@ namespace Server.Items
 
             if (check)
             {
-                if (from.Competences[comp].check(infos.Diff - 5, 0))
+                if (from.Competences[comp].roll(infos.Diff - 5))
                 {
                     RessourceConsume();
                     from.SendMessage("Vous exploitez la ressource avec succès");
@@ -281,7 +282,7 @@ namespace Server.Items
             }
             else
             {
-                if (!from.Competences[comp].check(infos.Diff - 5, 0))
+                if (!from.Competences[comp].roll(infos.Diff - 5))
                 {
                     RessourceConsume();
                     from.SendMessage("Une partie de la ressource est saccagée");

@@ -10,6 +10,14 @@ namespace Server.Mobiles.Dons
 {
     public class DonFinLimier : BaseDon
     {
+        public override int Icone { get { return 21001; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage obtient un bonus de +2 sur tous ses tests de Fouille et de Renseignement.";
+            }
+        }
         public DonFinLimier()
             : base(DonEnum.FinLimier, "Fin limier", false)
         {

@@ -38,6 +38,83 @@ namespace Server.Engines
         {
             //EUROPE
             // épée longue
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee1),
+                                           8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee2),
+                                           8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee3),
+                                         8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee4),
+                                         8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee5),
+                                         8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee6),
+                                         8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee7),
+                                         8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee8),
+                                         8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee9),
+                                         8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                         new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee10),
+                                       8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                       new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+
+            AddEntry("Epée", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Epee11),
+                           8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                           new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 6 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+
+
+
+
+
+
+
             AddEntry("Epée longue", 0 /*Tranchant, voir liste dans GetCategorieList*/, typeof(Longsword),
                                             0 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
@@ -117,6 +194,13 @@ namespace Server.Engines
             AddEntry("Dague", 2 /*Perforant, voir liste dans GetCategorieList*/, typeof(Dagger),
                                             0 /*Min value pour crafter*/, 10 /*Difficulte*/,
                                             new RessourceNeed[]{
+											new RessourceNeed( typeof(BaseMetal), 2 ),
+											new RessourceNeed( typeof(BaseBois), 1 ),
+											new RessourceNeed( typeof(BaseCuir), 1)});
+
+            AddEntry("Dague Assassine", 2 /*Perforant, voir liste dans GetCategorieList*/, typeof(Dague1),
+                                          8 /*Min value pour crafter*/, 20 /*Difficulte*/,
+                                          new RessourceNeed[]{
 											new RessourceNeed( typeof(BaseMetal), 2 ),
 											new RessourceNeed( typeof(BaseBois), 1 ),
 											new RessourceNeed( typeof(BaseCuir), 1)});

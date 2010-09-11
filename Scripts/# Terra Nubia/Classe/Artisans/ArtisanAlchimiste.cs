@@ -33,7 +33,8 @@ namespace Server
             get
             {
                 return new CompType[]{
-                     CompType.Chimie
+                     CompType.Chimie,
+                     CompType.Erudition
                 };
             }
         }

@@ -342,7 +342,7 @@ namespace Server.Mobiles
                         case OrderType.Drop: orderDD = 15; break;
 
                     }
-                    if (master.Competences[CompType.Dressage].check(orderDD)/* && Utility.RandomDouble() > 0.05*/)
+                    if (master.Competences[CompType.Dressage].roll(orderDD)/* && Utility.RandomDouble() > 0.05*/)
                     {
                         PrivateOverheadMessage(Server.Network.MessageType.Emote, 0, false, "*Apprend l'ordre*", ControlMaster.NetState);
                         master.SendMessage("Votre créature à appris un nouvel ordre: " + order.ToString());

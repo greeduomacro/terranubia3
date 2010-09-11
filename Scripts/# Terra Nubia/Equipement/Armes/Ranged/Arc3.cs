@@ -16,6 +16,7 @@ namespace Server.Items
 		[Constructable]
 		public Arc3() : base( ArmeTemplate.Arc, 0x2C80 )
 		{
+            Name = "Arc";
 			Weight = 6.0;
 			Layer = Layer.TwoHanded;
 		}

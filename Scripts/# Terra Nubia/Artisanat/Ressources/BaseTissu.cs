@@ -151,7 +151,7 @@ namespace Server.Engines
 				protected override void OnTick()
 				{
 					//RollResult m_result = m_owner.RollCompetence(CompType.Couture, BaseTissu.GetDifficulty(m_metal.Tissu));
-					if( m_owner.Competences[CompType.Couture].check(0) ){
+					if( m_owner.Competences[CompType.Couture].roll(10) ){
 						m_owner.SendMessage("Vous tissez avec succès");
 						m_metal.isRaffine = true;
 					}

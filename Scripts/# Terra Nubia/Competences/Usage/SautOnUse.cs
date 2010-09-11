@@ -100,7 +100,7 @@ namespace Server.Mobiles
                     Point3D to = new Point3D(p);
                     m_Owner.Stam -= diff;
 
-                    if ( m_Owner.Competences[CompType.Saut].check(diff) )
+                    if ( m_Owner.Competences[CompType.Saut].roll(diff) )
                     {
                         m_Owner.Emote("*Saute*");
 

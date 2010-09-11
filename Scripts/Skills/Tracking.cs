@@ -24,11 +24,14 @@ namespace Server.SkillHandlers
                 {
                     m.SendMessage("Vous devez avoir le don de pistage pour cela");
                 }
-                m.SendLocalizedMessage(1011350); // What do you wish to track?
+                else
+                {
+                    m.SendLocalizedMessage(1011350); // What do you wish to track?
 
-                m.CloseGump(typeof(TrackWhatGump));
-                m.CloseGump(typeof(TrackWhoGump));
-                m.SendGump(new TrackWhatGump(m));
+                    m.CloseGump(typeof(TrackWhatGump));
+                    m.CloseGump(typeof(TrackWhoGump));
+                    m.SendGump(new TrackWhatGump(m));
+                }
 
             }
             else
@@ -97,7 +100,7 @@ namespace Server.SkillHandlers
 		{
 
 			m_From = from;
-            m_Success = ((NubiaPlayer)from).Competences[CompType.Survie].check(15, 0);
+            m_Success = ((NubiaPlayer)from).Competences[CompType.Survie].roll(15);
 
 			AddPage( 0 );
 
@@ -234,7 +237,7 @@ namespace Server.SkillHandlers
             if (cible.Hidden)
                 DD += (int)cible.Competences[CompType.Discretion].getMaitrise() / 2;
 
-            return player.Competences[CompType.Survie].check(DD, 0);
+            return player.Competences[CompType.Survie].roll(DD);
 
 			/*int tracking = from.Skills[SkillName.Tracking].Fixed;	
 			int detectHidden = from.Skills[SkillName.DetectHidden].Fixed;

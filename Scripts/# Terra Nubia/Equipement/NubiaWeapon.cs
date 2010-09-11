@@ -694,7 +694,7 @@ namespace Server.Items
             else if (DefMob.getActionCombat() == ActionCombat.DefenseTotale 
                 && DefMob.Competences[CompType.Acrobaties].getPureMaitrise() >= 5)
                 DD += 2;
-            else if (DefMob.Competences[CompType.Acrobaties].check(0))
+            else if (DefMob.Competences[CompType.Acrobaties].roll(15))
                 DD += 1;
 
             if (DefMob.Mount != null)
@@ -718,11 +718,11 @@ namespace Server.Items
             {
                 if (AttPlayer.hasDon(DonEnum.ScienceDeLaFeinte))
                 {
-                    int bluffDD = DefMob.Competences[CompType.Psychologie].pureRoll(0);
+                    int bluffDD = DefMob.Competences[CompType.Psychologie].intRoll();
                     bluffDD += DefMob.BonusAttaque[DefMob.GetAttackTurn()];
                     if (DefMob.CreatureType != MobileType.Humanoide)
                         bluffDD += 4;
-                    if (AttMob.Competences[CompType.Bluff].check(bluffDD))
+                    if (AttMob.Competences[CompType.Bluff].roll(bluffDD))
                     {
                         AttMob.Emote("*feinte*");
                         DD -= (DefMob.CA);

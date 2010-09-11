@@ -8,7 +8,8 @@ namespace Server.Items
 	{
 		[Constructable]
 		public Baton4() : base( 0x3DD6 )
-		{
+        {
+            Name = "Baton";
 			Weight = 6.0;
 		}
 

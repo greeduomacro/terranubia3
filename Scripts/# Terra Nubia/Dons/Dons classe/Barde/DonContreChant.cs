@@ -25,9 +25,9 @@ namespace Server.Mobiles.Dons
             IPooledEnumerable eable = p.GetMobilesInRange(8);
             foreach (NubiaMobile m in eable)
             {
-                if (m.Competences[CompType.Representation].pureRoll(0) < p.Competences[CompType.Representation].pureRoll(0))
+                if (m.Competences[CompType.Representation].intRoll(true) < p.Competences[CompType.Representation].intRoll())
                 {
-                    m.SendMessage("Oublie: Todo interrupt cast. Repportez l'oubli sur le forum");
+                    m.SendMessage("A venir, dans l'attente de la magie :)");
                   //  m.InterruptCast(p, ClasseType.Barde);
                 }
             }

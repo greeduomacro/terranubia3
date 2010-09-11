@@ -78,7 +78,7 @@ namespace Server
                     {
                         BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString().ToLower()];
                        // Console.WriteLine("Trouvé: "+don.ToString() );
-                        if (don.hasConditions(p))
+                      //  if (don.hasConditions(p))
                             list.Add(don.DType);
                     }
                 }
@@ -90,7 +90,7 @@ namespace Server
                     if (BaseDon.DonBank.ContainsKey(((DonEnum)d).ToString().ToLower()))
                     {
                         BaseDon don = BaseDon.DonBank[((DonEnum)d).ToString().ToLower()];
-                        if (don.hasConditions(p) && don.WarriorDon )
+                        if ( /*don.hasConditions(p) &&*/ don.WarriorDon )
                             list.Add(don.DType);
                     }
                 }

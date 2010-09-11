@@ -16,6 +16,10 @@ namespace Server.Mobiles.Dons
             mAchatMax = 1;
             mLimiteDayUse = false;
         }
+        public override bool hasConditions(NubiaPlayer mob)
+        {
+            return false;
+        }
     }
 
 }

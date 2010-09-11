@@ -26,6 +26,12 @@ namespace Server.Mobiles
                                 new Dictionary<CompType, NubiaCompetence>();
         private NullCompetence nullComp = null;
 
+        public void wait(int tour)
+        {
+            mOwner.NextSkillTime = DateTime.Now;
+            for (int t = 0; t < tour; t++)
+                mOwner.NextSkillTime += WorldData.TimeTour();
+        }
 
         public bool mustWait()
         {

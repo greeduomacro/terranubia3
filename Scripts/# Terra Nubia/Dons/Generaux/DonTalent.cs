@@ -10,6 +10,15 @@ namespace Server.Mobiles.Dons
 {
     public class DonTalentAcrobaties : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>"+
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentAcrobaties()
             : base(DonEnum.TalentAcrobaties, "Talent: Acrobaties", false)
         {
@@ -24,6 +33,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentArtMagie : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentArtMagie()
             : base(DonEnum.TalentArtMagie, "Talent: Art de la magie", false)
         {
@@ -38,6 +56,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentCouture : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentCouture()
             : base(DonEnum.TalentCouture, "Talent: Couture", false)
         {
@@ -52,6 +79,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentForge : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentForge()
             : base(DonEnum.TalentForge, "Talent: Forge", false)
         {
@@ -66,6 +102,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentIngenierie : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentIngenierie()
             : base(DonEnum.TalentIngenierie, "Talent: Ingénierie", false)
         {
@@ -80,6 +125,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentEbenisterie : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentEbenisterie()
             : base(DonEnum.TalentEbenisterie, "Talent: Ébénisterie", false)
         {
@@ -94,6 +148,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentChimie : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentChimie()
             : base(DonEnum.TalentChimie, "Talent: Chimie", false)
         {
@@ -108,6 +171,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentAgriculture : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentAgriculture()
             : base(DonEnum.TalentAgriculture, "Talent: Agriculture", false)
         {
@@ -122,6 +194,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentMinage : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentMinage()
             : base(DonEnum.TalentMinage, "Talent: Minage", false)
         {
@@ -136,6 +217,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentBuchage : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentBuchage()
             : base(DonEnum.TalentBuchage, "Talent: Buchage", false)
         {
@@ -150,6 +240,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentBluff : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentBluff()
             : base(DonEnum.TalentBluff, "Talent: Bluff", false)
         {
@@ -164,6 +263,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentConcentration : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentConcentration()
             : base(DonEnum.TalentConcentration, "Talent: Concentration", false)
         {
@@ -178,6 +286,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentErudition : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentErudition()
             : base(DonEnum.TalentErudition, "Talent: Érudition", false)
         {
@@ -192,6 +309,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentCrochetage : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentCrochetage()
             : base(DonEnum.TalentCrochetage, "Talent: Crochetage", false)
         {
@@ -206,6 +332,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentDeguisement : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentDeguisement()
             : base(DonEnum.TalentDeguisement, "Talent: Déguisement", false)
         {
@@ -220,6 +355,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentDeplacementSilentieux : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentDeplacementSilentieux()
             : base(DonEnum.TalentDeplacementSilentieux, "Talent: Déplacement silentieux", false)
         {
@@ -234,6 +378,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentDesamorcage : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentDesamorcage()
             : base(DonEnum.TalentDesamorcage, "Talent: Désamorçage", false)
         {
@@ -248,6 +401,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentDetection : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentDetection()
             : base(DonEnum.TalentDetection, "Talent: Détection", false)
         {
@@ -262,6 +424,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentDiplomatie : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentDiplomatie()
             : base(DonEnum.TalentDiplomatie, "Talent: Diplomatie", false)
         {
@@ -276,6 +447,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentDiscretion : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentDiscretion()
             : base(DonEnum.TalentDiscretion, "Talent: Discrétion", false)
         {
@@ -290,6 +470,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentDressage : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentDressage()
             : base(DonEnum.TalentDressage, "Talent: Dressage", false)
         {
@@ -304,6 +493,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentEquilibre : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentEquilibre()
             : base(DonEnum.TalentEquilibre, "Talent: Équilibre", false)
         {
@@ -318,6 +516,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentEquitation : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentEquitation()
             : base(DonEnum.TalentEquitation, "Talent: Équitation", false)
         {
@@ -332,6 +539,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentEscalade : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentEscalade()
             : base(DonEnum.TalentEscalade, "Talent: Escalade", false)
         {
@@ -346,6 +562,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentEscamotage : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentEscamotage()
             : base(DonEnum.TalentEscamotage, "Talent: Escamotage", false)
         {
@@ -360,6 +585,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentEstimation : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentEstimation()
             : base(DonEnum.TalentEstimation, "Talent: Estimation", false)
         {
@@ -374,6 +608,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentEvasion : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentEvasion()
             : base(DonEnum.TalentEvasion, "Talent: Évasion", false)
         {
@@ -388,6 +631,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentFouille : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentFouille()
             : base(DonEnum.TalentFouille, "Talent: Fouille", false)
         {
@@ -402,6 +654,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentIntimidation : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentIntimidation()
             : base(DonEnum.TalentIntimidation, "Talent: Intimidation", false)
         {
@@ -416,6 +677,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentVoleVoile : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentVoleVoile()
             : base(DonEnum.TalentVoleVoile, "Talent: VoleVoile", false) //<---- WTF !?
         {
@@ -430,6 +700,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentPerceptionAuditive : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentPerceptionAuditive()
             : base(DonEnum.TalentPerceptionAuditive, "Talent: Perception auditive", false)
         {
@@ -444,6 +723,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentPremiersSecours : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentPremiersSecours()
             : base(DonEnum.TalentPremiersSecours, "Talent: Premiers secours", false)
         {
@@ -458,6 +746,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentPsychologie : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentPsychologie()
             : base(DonEnum.TalentPsychologie, "Talent: Psychologie", false)
         {
@@ -472,6 +769,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentRenseignements : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentRenseignements()
             : base(DonEnum.TalentRenseignements, "Talent: Renseignements", false)
         {
@@ -486,6 +792,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentRepresentation : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentRepresentation()
             : base(DonEnum.TalentRepresentation, "Talent: Représentation", false)
         {
@@ -500,6 +815,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentSaut : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentSaut()
             : base(DonEnum.TalentSaut, "Talent: Saut", false)
         {
@@ -514,6 +838,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentSurvie : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentSurvie()
             : base(DonEnum.TalentSurvie, "Talent: Survie", false)
         {
@@ -528,6 +861,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentUtilisationObjetsMagiques : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentUtilisationObjetsMagiques()
             : base(DonEnum.TalentUtilisationObjetsMagiques, "Talent: Utilisation d'objets magiques", false)
         {
@@ -542,6 +884,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentCuisine : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentCuisine()
             : base(DonEnum.TalentCuisine, "Talent: Cuisine", false)
         {
@@ -570,6 +921,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentBrassage : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentBrassage()
             : base(DonEnum.TalentBrassage, "Talent: Brassage", false)
         {
@@ -584,6 +944,15 @@ namespace Server.Mobiles.Dons
 
     public class DonTalentChirurgie : BaseDon
     {
+        public override int Icone { get { return 20484; } }
+        public override string Description
+        {
+            get
+            {
+                return "Avantage. Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.<br>" +
+"Spécial. Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.";
+            }
+        }
         public DonTalentChirurgie()
             : base(DonEnum.TalentChirurgie, "Talent: Chirurgie", false)
         {

@@ -132,22 +132,15 @@ namespace Server.Gumps
               //  from.Backpack.AddItem(new HairDye());
 
                 
-                from.DonCredits.Clear();
-                from.DonCredits.Add(ClasseType.None, 1);
+            ///TODOOOOOOOOOOO!!!!
+              /*  from.DonCredits.Clear();
+                from.DonCredits.Add(ClasseType.None, 1);**/
 
                 from.Dons.Reset();
-                if (from.Race is RaceHumain)
-                    from.DonCredits[ClasseType.None] += 1;
+                /*if (from.Race is RaceHumain)
+                    from.DonCredits[ClasseType.None] += 1;*/
 
-                Classe classe = null;
-                foreach (Classe c in from.GetClasses())
-                {
-                    classe = c;
-                    break;
-                }
-                if( classe != null )
-                    from.Dons.LearnDonClasse(classe, 1);
-
+                    from.Dons.ComputeDons();
 
                 from.Frozen = false;
 
