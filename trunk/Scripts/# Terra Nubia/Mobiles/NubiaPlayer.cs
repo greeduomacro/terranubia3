@@ -97,7 +97,7 @@ namespace Server.Mobiles
         private MagieNubia m_Magie = null;
         private SortNubiaTransformation m_transfo = null;
         private int m_pointApprentissage = 0;
-		private int m_pointCreation = 0;
+        private int m_pointCreation = 0;
 
         public int pointApprentissage { get { return m_pointApprentissage; } set { m_pointApprentissage = value; } }
         public int pointCreation { get { return m_pointCreation; } set { m_pointCreation = value; } }
@@ -131,7 +131,7 @@ namespace Server.Mobiles
             int l = 0;
             foreach (Classe c in GetClasses())
             {
-                l = Math.Max( l , c.getLevelSort(c.Niveau) );
+                l = Math.Max(l, c.getLevelSort(c.Niveau));
             }
             return l;
         }
@@ -193,13 +193,13 @@ namespace Server.Mobiles
 
         private DateTime mLastParadeProjectile = DateTime.Now;
         private DateTime mLastBouscul = DateTime.Now;
-
+        /*
         private Dictionary<ClasseType, int> mDonCredits = new Dictionary<ClasseType, int>();
 
         public Dictionary<ClasseType, int> DonCredits
         {
             get { return mDonCredits; }
-        }
+        }*/
 
         public DateTime LastParadeProjectile { get { return mLastParadeProjectile; } set { mLastParadeProjectile = value; } }
 
@@ -207,17 +207,20 @@ namespace Server.Mobiles
         {
             if (shoved is NubiaMobile)
             {
+                if (shoved.AccessLevel > AccessLevel.Player && shoved.Hidden)
+                    return true;
                 NubiaMobile sho = shoved as NubiaMobile;
                 int myBonus = 0;
                 if (hasDon(DonEnum.ScienceDeLaBousculade))
                     myBonus += 4;
-                if ( mLastBouscul + TimeSpan.FromSeconds(6) < DateTime.Now && sho.Str + DndHelper.rollDe(De.vingt) <= Str + DndHelper.rollDe(De.vingt) + myBonus)
+                if (mLastBouscul + TimeSpan.FromSeconds(6) < DateTime.Now && sho.Str + DndHelper.rollDe(De.vingt) < Str + DndHelper.rollDe(De.vingt) + myBonus)
                 {
                     if (!(Hidden))
                     {
                         mLastBouscul = DateTime.Now;
+                        sho.RevealingAction();
                         sho.Emote("*Bousculé par {0}*", Name);
-                        sho.Damage(1, this);
+                        //sho.Damage(1, this);
                         if (!hasDon(DonEnum.ScienceDeLaBousculade))
                             ExposeToOpportunite();
                         return true;
@@ -229,7 +232,7 @@ namespace Server.Mobiles
                 {
                     //Emote("*Tente de bousculer {0}", sho.Name);
                     //SendMessage("Vous n'arrivez pas a le bousculer pour passer");
-                   // sho.SendMessage("Vous resistez à la bousculade de {0}", Name);
+                    // sho.SendMessage("Vous resistez à la bousculade de {0}", Name);
                     return false;
                 }
             }
@@ -371,7 +374,7 @@ namespace Server.Mobiles
                             bonii[i] += c.BonusAttaque[c.Niveau][i];
                     }
                 }
-              
+
 
                 return bonii;
             }
@@ -388,12 +391,12 @@ namespace Server.Mobiles
             if (hasDon(DonEnum.ReflexesSurhumains))
                 bonus += 2;
 
-                foreach (Classe c in GetClasses())
-                {
-                    bonus += c.BonusReflexe[c.Niveau];
-                }
-                return bonus;
-            
+            foreach (Classe c in GetClasses())
+            {
+                bonus += c.BonusReflexe[c.Niveau];
+            }
+            return bonus;
+
         }
         public override int getBonusVigueur()
         {
@@ -404,16 +407,16 @@ namespace Server.Mobiles
 
             int bonus = base.getBonusVigueur(ecole);
 
-                foreach (Classe c in GetClasses())
-                {
-                    bonus += c.BonusVigueur[c.Niveau];
-                }
-                if (ecole == SortEnergie.Mental && hasDon(DonEnum.Serenite))
-                    bonus += 2;
-                return bonus;
-            
+            foreach (Classe c in GetClasses())
+            {
+                bonus += c.BonusVigueur[c.Niveau];
+            }
+            if (ecole == SortEnergie.Mental && hasDon(DonEnum.Serenite))
+                bonus += 2;
+            return bonus;
+
         }
-        public override  int getBonusVolonte()
+        public override int getBonusVolonte()
         {
             return getBonusVolonte(SortEnergie.All);
         }
@@ -421,14 +424,14 @@ namespace Server.Mobiles
         {
             int bonus = base.getBonusVolonte(ecole);
 
-                foreach (Classe c in GetClasses())
-                {
-                    bonus += c.BonusVolonte[c.Niveau];
-                }
-                if (ecole == SortEnergie.Mental && hasDon(DonEnum.Serenite))
-                    bonus += 2;
-                return bonus;
-            
+            foreach (Classe c in GetClasses())
+            {
+                bonus += c.BonusVolonte[c.Niveau];
+            }
+            if (ecole == SortEnergie.Mental && hasDon(DonEnum.Serenite))
+                bonus += 2;
+            return bonus;
+
         }
 
         private Dictionary<Type, Classe> m_Classes = new Dictionary<Type, Classe>();
@@ -473,12 +476,12 @@ namespace Server.Mobiles
                     bouclierMod = getBouclier().CA;
 
                 NubiaArmor armor = DndHelper.GetBiggerArmor(this);
-                if (armor != null && hasDon(DonEnum.Esquive) )
+                if (armor != null && hasDon(DonEnum.Esquive))
                 {
                     if (armor.ModDexMaximum >= DndHelper.GetCaracMod(this, DndStat.Dexterite, true))
                         ca += 1;
                 }
-                if (getActionCombat() == ActionCombat.DefenseTotale && hasDon(DonEnum.PositionDefensiveAmelio) )
+                if (getActionCombat() == ActionCombat.DefenseTotale && hasDon(DonEnum.PositionDefensiveAmelio))
                 {
                     ca += 2;
                 }
@@ -521,7 +524,7 @@ namespace Server.Mobiles
             }
         }
 
-       
+
         public bool MakeClasse(Type type, int niveau)
         {
             if (type == null)
@@ -556,8 +559,9 @@ namespace Server.Mobiles
                             Competences.LearnCompetence(nca.CompToLearn[ctl]);
                         }
                     }
-                    Dons.LearnDonClasse(m_Classes[type], m_Classes[type].Niveau);
-                   // if (m_Classes[type].Mage != MageType.None)
+                    //    Dons.LearnDonClasse(m_Classes[type], m_Classes[type].Niveau);
+                    Dons.ComputeDons();
+                    // if (m_Classes[type].Mage != MageType.None)
                     //    getMagieOf(m_Classes[type].CType);
                 }
                 ok = true;
@@ -572,8 +576,9 @@ namespace Server.Mobiles
                     ok = true;
                     //SendMessage("(Changement de Classe)");
                     SendMessage(82, "Vous êtes maintenant " + m_Classes[type].CType.ToString() + " niveau " + m_Classes[type].Niveau);
-                    Dons.LearnDonClasse(m_Classes[type], m_Classes[type].Niveau);
-                 
+                    //                    Dons.LearnDonClasse(m_Classes[type], m_Classes[type].Niveau);
+                    Dons.ComputeDons();
+
                     //if (m_Classes[type].Mage != MageType.None)
                     //    getMagieOf(m_Classes[type].CType);
                 }
@@ -585,8 +590,8 @@ namespace Server.Mobiles
             }
             else
                 SendMessage("Vous ne pouvez pas multiclasser plus de deux fois !");
-         /*   if (ok)
-                AfterMakeClasse();*/
+            /*   if (ok)
+                   AfterMakeClasse();*/
             return ok;
         }
         public int getAchats()
@@ -657,7 +662,7 @@ namespace Server.Mobiles
             }
         }
 
-     
+
 
         public override bool getCanDoOpportunite()
         {
@@ -675,7 +680,7 @@ namespace Server.Mobiles
             }
 
             return mLastOpportuniteAction < DateTime.Now - time && !IsRenverse;
-            
+
 
         }
 
@@ -683,7 +688,7 @@ namespace Server.Mobiles
         {
             get
             {
-                int res =  base.ResistanceMagie;
+                int res = base.ResistanceMagie;
 
                 if (hasClasse(ClasseType.Moine) && hasDon(DonEnum.AmeDiamant))
                 {
@@ -703,37 +708,37 @@ namespace Server.Mobiles
 
         public override void OnDamage(int amount, Mobile from, bool willKill)
         {
-           /* if (NextSortCast > DateTime.Now)
-            {
-                int dd = 10 + amount;
-                if (hasDon(DonEnum.MagieDeGuerre))
-                    dd -= 4;
+            /* if (NextSortCast > DateTime.Now)
+             {
+                 int dd = 10 + amount;
+                 if (hasDon(DonEnum.MagieDeGuerre))
+                     dd -= 4;
 
-                if (!Competences[CompType.Concentration].check(dd, 0))
-                    InterruptCast(this, mLastSortClasse);
-            }
-            */
+                 if (!Competences[CompType.Concentration].check(dd, 0))
+                     InterruptCast(this, mLastSortClasse);
+             }
+             */
             if (hasDon(DonEnum.ReductionDegat))
             {
                 int reduc = getDonNiveau(DonEnum.ReductionDegat);
-                if( from is NubiaPlayer )
+                if (from is NubiaPlayer)
                 {
-                    if( ((NubiaPlayer)from).hasDon(DonEnum.FrappeKi) )
+                    if (((NubiaPlayer)from).hasDon(DonEnum.FrappeKi))
                     {
                         reduc -= ((NubiaPlayer)from).getDonNiveau(DonEnum.FrappeKi) * 2;
-                        if( reduc < 0 )
+                        if (reduc < 0)
                             reduc = 0;
                     }
                 }
                 amount -= reduc;
             }
-          
+
 
             if (amount > 0)
                 base.OnDamage(amount, from, willKill);
         }
 
-        
+
 
         #region Dons
         //Deluge de coup du moin
@@ -764,7 +769,7 @@ namespace Server.Mobiles
                 return false;
             return mDons.canUseDon(don);
         }
-       
+
         #endregion
 
         public override int getBonusRoll()
@@ -779,51 +784,52 @@ namespace Server.Mobiles
             return bonus;
         }
 
-        #region Magie ! 
+        #region Magie !
 
-     //   private Dictionary<ClasseType, MagieList> mMagieLists = new Dictionary<ClasseType, MagieList>();
-  //      public DateTime LastSortCast = DateTime.Now;
+        //   private Dictionary<ClasseType, MagieList> mMagieLists = new Dictionary<ClasseType, MagieList>();
+        //      public DateTime LastSortCast = DateTime.Now;
 
-  /*      private DateTime mNextMagieRestart = DateTime.Now;
+        /*      private DateTime mNextMagieRestart = DateTime.Now;
 
-        public DateTime NextMagieRestart
-        {
-            get { return mNextMagieRestart; }
-            set { mNextMagieRestart = value; }
-        }
+              public DateTime NextMagieRestart
+              {
+                  get { return mNextMagieRestart; }
+                  set { mNextMagieRestart = value; }
+              }
 
-        public void MagieRestart()
-        {
-            foreach (MagieList ml in mMagieLists.Values)
-            {
-                ml.Restart();
-            }
-        }
+              public void MagieRestart()
+              {
+                  foreach (MagieList ml in mMagieLists.Values)
+                  {
+                      ml.Restart();
+                  }
+              }
 
-        public MagieList getMagieOf(ClasseType type)
-        {
-            if (hasClasse(type))
-            {
-                if (mMagieLists.ContainsKey(type))
-                {
-                    return mMagieLists[type];
-                }
-                else
-                {
-                    Classe cl = getClasse(type);
-                    if (cl.Mage != MageType.None)
-                    {
-                        mMagieLists.Add(type, new MagieList(this, type));
-                    }
-                }
-            }
-            return null;
-        }*/
+              public MagieList getMagieOf(ClasseType type)
+              {
+                  if (hasClasse(type))
+                  {
+                      if (mMagieLists.ContainsKey(type))
+                      {
+                          return mMagieLists[type];
+                      }
+                      else
+                      {
+                          Classe cl = getClasse(type);
+                          if (cl.Mage != MageType.None)
+                          {
+                              mMagieLists.Add(type, new MagieList(this, type));
+                          }
+                      }
+                  }
+                  return null;
+              }*/
 
         #endregion
 
         #region Deguisement
         private DeguisementMod mDeguisementMod = null;
+        private string mNameSave = "noname";
 
         public void ApplyDeguisement(DeguisementMod deguisement)
         {
@@ -833,11 +839,12 @@ namespace Server.Mobiles
             }
             else
             {
+                mNameSave = Name;
                 mDeguisementMod = deguisement;
-                NameMod = mDeguisementMod.Name;
-                if( mDeguisementMod.Female != Female )
+                Name = mDeguisementMod.Name;
+                if (mDeguisementMod.Female != Female)
                     BodyMod = (mDeguisementMod.Female ? 401 : 400);
-                if( mDeguisementMod.Race != RaceManager.getRaceType( Race.GetType() ) )
+                if (mDeguisementMod.Race != RaceManager.getRaceType(Race.GetType()))
                     HueMod = RaceManager.getRace(mDeguisementMod.Race).HuePicker.Groups[0].Hues[0];
                 SendMessage("Vous vous déguisez");
             }
@@ -847,7 +854,7 @@ namespace Server.Mobiles
             if (mDeguisementMod != null)
             {
                 mDeguisementMod = null;
-                NameMod = String.Empty;
+                Name = mNameSave;
                 BodyMod = 0;
                 HueMod = 0;
                 SendMessage("Vous n'êtes plus déguisé");
@@ -861,7 +868,7 @@ namespace Server.Mobiles
         public void changeMoral(int mod)
         {
             Moral oldMoral = Moral.Normal;
-           
+
             oldMoral = this.CurrentMoral;
             moralValue += mod;
 
@@ -869,17 +876,18 @@ namespace Server.Mobiles
                 moralValue = 100;
             else if (moralValue < -100)
                 moralValue = -100;
-           
-          
+
+
             if (this.CurrentMoral != oldMoral)
             {
                 onChangeMoral(oldMoral);
             }
         }
 
-        private void onChangeMoral(Moral oldMoral){
+        private void onChangeMoral(Moral oldMoral)
+        {
             string old = getMoralString(Female, oldMoral);
-            SendMessage("Votre moral à changé vous étiez "+old+" et vous êtes "+MoralString);
+            SendMessage("Votre moral à changé vous étiez " + old + " et vous êtes " + MoralString);
         }
         public static string getMoralString(bool female, Moral moral)
         {
@@ -913,13 +921,13 @@ namespace Server.Mobiles
                     moral = Moral.Depression;
                 else if (moralValue < -50)
                     moral = Moral.Deprime;
-                else if( moralValue < -10 )
+                else if (moralValue < -10)
                     moral = Moral.Bas;
-                else if( moralValue < 50 )
+                else if (moralValue < 50)
                     moral = Moral.Normal;
-                else if( moralValue < 90 )
+                else if (moralValue < 90)
                     moral = Moral.BonneHumeur;
-                else if( moralValue <= 100 )
+                else if (moralValue <= 100)
                     moral = Moral.SuperHumeur;
                 return moral;
             }
@@ -950,17 +958,18 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public double Cote
         {
-            get {
+            get
+            {
 
-                return Math.Round( mCote, 2 );
+                return Math.Round(mCote, 2);
             }
         }
 
         public void doCotation(string gmAccount, int value)
         {
-            if ( (mCote >= 20 && value > 0) || (mCote <= 1 && value < 0) )
+            if ((mCote >= 20 && value > 0) || (mCote <= 1 && value < 0))
                 return;
-            if ( isCotable(gmAccount) )
+            if (isCotable(gmAccount))
             {
                 if (mCotationTimes.ContainsKey(gmAccount))
                     mCotationTimes[gmAccount] = DateTime.Now;
@@ -973,26 +982,26 @@ namespace Server.Mobiles
                 else if (mCote < 0)
                     mCote = 0;
 
-               // if (value > 0)
-               //     SendMessage("Vous avez reçu une cote possitive");
+                // if (value > 0)
+                //     SendMessage("Vous avez reçu une cote possitive");
             }
         }
 
         public bool isCotable(string gmAccount)
         {
             bool iscotable = false;
-            if ( !mCotationTimes.ContainsKey( gmAccount ))
+            if (!mCotationTimes.ContainsKey(gmAccount))
                 return true;
-            
+
             iscotable = (this.LastOnline + COTATION_OFFLINE_DELAY > DateTime.Now);
             if (iscotable)
             {
                 iscotable = mCotationTimes[gmAccount] + COTATION_DELAY < DateTime.Now;
             }
-            
+
             return iscotable;
         }
-       
+
         public void GiveXP(int Xp)
         {
             if (AccessLevel <= AccessLevel.Player)
@@ -1024,11 +1033,12 @@ namespace Server.Mobiles
 
                 if (Niveau % 3 == 0)
                 {
-                    SendMessage(59, "Vous avez gagnez un don supplémentaire");
-                    if (DonCredits.ContainsKey(ClasseType.None))
+                    //DANS DONSTACK
+                    //SendMessage(59, "Vous avez gagnez un don supplémentaire");
+                    /*if (DonCredits.ContainsKey(ClasseType.None))
                         DonCredits[ClasseType.None]++;
                     else
-                        DonCredits.Add(ClasseType.None, 1);
+                        DonCredits.Add(ClasseType.None, 1);*/
                 }
                 OnLevelChange();
             }
@@ -1057,7 +1067,7 @@ namespace Server.Mobiles
         {
             int t = 0;
             for (int i = 0; i < (int)ArmeTemplate.Maximum; i++)
-                if ( m_maitrises.ContainsKey((ArmeTemplate)i) )
+                if (m_maitrises.ContainsKey((ArmeTemplate)i))
                     t += m_maitrises[(ArmeTemplate)i];
             return t;
         }
@@ -1076,7 +1086,7 @@ namespace Server.Mobiles
         public bool isRunning = false;
         protected override bool OnMove(Direction d)
         {
-            
+
             if (AccessLevel != AccessLevel.Player)
                 return base.OnMove(d);
 
@@ -1094,7 +1104,7 @@ namespace Server.Mobiles
             if (SpeedContext.ComputeSpeed(this) == SpeedContext.SpeedState.Fast)
             {
                 Stam -= 2;
-                if( Stam <= 5 )
+                if (Stam <= 5)
                     SpeedContext.RemoveContext(this, "Course");
             }
 
@@ -1102,11 +1112,11 @@ namespace Server.Mobiles
 
             if (isRunning)
             {
-             /*   if (NextSortCast > DateTime.Now)
-                {
-                    if( !Competences[CompType.Concentration].check(15,0) )
-                        InterruptCast(this, mLastSortClasse);
-                }*/
+                /*   if (NextSortCast > DateTime.Now)
+                   {
+                       if( !Competences[CompType.Concentration].check(15,0) )
+                           InterruptCast(this, mLastSortClasse);
+                   }*/
                 Stam -= (int)((double)TotalWeight / 100.0);
                 if (AttaqueParTour != 1)
                 {
@@ -1117,14 +1127,14 @@ namespace Server.Mobiles
             }
             else
             {
-            /*    if (NextSortCast > DateTime.Now)
-                {
-                    if (!Competences[CompType.Concentration].check(10, 0))
+                /*    if (NextSortCast > DateTime.Now)
                     {
-                        PrivateOverheadMessage(Server.Network.MessageType.Regular, GumpNubia.ColorTextRed, false, "Vous perdez votre concentration", this.NetState);
-                        InterruptCast(this, mLastSortClasse);
-                    }
-                }*/
+                        if (!Competences[CompType.Concentration].check(10, 0))
+                        {
+                            PrivateOverheadMessage(Server.Network.MessageType.Regular, GumpNubia.ColorTextRed, false, "Vous perdez votre concentration", this.NetState);
+                            InterruptCast(this, mLastSortClasse);
+                        }
+                    }*/
             }
 
             if (Hidden /*&& DesignContext.Find( this ) == null */)	//Hidden & NOT customizing a house
@@ -1133,82 +1143,91 @@ namespace Server.Mobiles
 
                 if (!Mounted /*&& Skills.Stealth.Value >= 25.0*/ )
                 {
-                    ScruteAlentour();
-                    foreach (Mobile m in this.GetMobilesInRange(8))
+                    if (AllowedStealthSteps > 0)
                     {
-                        if (this != m && Hidden && m.AccessLevel == AccessLevel.Player)
+                        AllowedStealthSteps--;
+                    }
+                    else
+                    {
+                        AllowedStealthSteps = 2;
+                        ScruteAlentour();
+                        foreach (Mobile m in this.GetMobilesInRange(8))
                         {
-                            NubiaMobile observateur = m as NubiaMobile;
-                            //RollResult ReussiteObservateur = ((NubiaMobile)m).RollCompetence(CompType.Perception,70);
-                            //int difficulte = (60+(10*((int)ReussiteObservateur)));
-                            int NuitModus = 0;
-                            if (LightCycle.ComputeLevelFor(this) > this.LightLevel)
+                            if (this != m && Hidden && m.AccessLevel == AccessLevel.Player)
                             {
-                                if (LightCycle.ComputeLevelFor(this) > 10)
-                                    NuitModus -= 5;
-                                else if (LightCycle.ComputeLevelFor(this) < 10)
-                                    NuitModus += 5;
-                            }
-                            else
-                            {
-                                if (this.LightLevel > 10)
-                                    NuitModus -= 5;
-                                else if (this.LightLevel < 10)
-                                    NuitModus += 5;
-                            }
-
-                            int hideDD = observateur.Competences[CompType.PerceptionAuditive].pureRoll(0);
-                            if (isRunning)
-                                hideDD += 10;
-                            if (m is BaseBestiole)
-                                hideDD -= 20;
-                            if (m is BaseCreature)
-                                hideDD -= 5;
-                            bool reussite = Competences[CompType.DeplacementSilencieux].check(hideDD,0);
-                            SendMessage("Jet réussi: {0} DD={1}", reussite, hideDD);
-
-                            if (reussite)
-                            {
-                                if (observateur is NubiaPlayer)
+                                NubiaMobile observateur = m as NubiaMobile;
+                                //RollResult ReussiteObservateur = ((NubiaMobile)m).RollCompetence(CompType.Perception,70);
+                                //int difficulte = (60+(10*((int)ReussiteObservateur)));
+                                int NuitModus = 0;
+                                if (LightCycle.ComputeLevelFor(this) > this.LightLevel)
                                 {
-                                    observateur.SendMessage("Vous perdez de vue " + Name);
-                                    ((PlayerMobile)this).VisibilityList.Remove(observateur);
+                                    if (LightCycle.ComputeLevelFor(this) > 10)
+                                        NuitModus -= 5;
+                                    else if (LightCycle.ComputeLevelFor(this) < 10)
+                                        NuitModus += 5;
                                 }
-                            }
-                            else
-                            {
-                                if (m is NubiaCreature)
+                                else
                                 {
-                                    m.Emote("*Révèle {0}", Name);
-                                    ((NubiaMobile)this).ActionRevelation();
+                                    if (this.LightLevel > 10)
+                                        NuitModus -= 5;
+                                    else if (this.LightLevel < 10)
+                                        NuitModus += 5;
                                 }
-                                else if (m is NubiaPlayer)
+
+                                int hideDD = observateur.Competences[CompType.PerceptionAuditive].intRoll(true);
+                                if (isRunning)
+                                    hideDD += 10;
+                                if (m is BaseBestiole)
+                                    hideDD -= 50;
+                                if (m is BaseCreature)
+                                    hideDD -= 20;
+                                bool reussite = Competences[CompType.DeplacementSilencieux].roll(hideDD);
+                                //SendMessage("Jet réussi: {0} DD={1}", reussite, hideDD);
+
+                                if (reussite)
                                 {
-                                    List<Mobile> list = ((PlayerMobile)this).VisibilityList;
-                                    if (!(list.Contains(((PlayerMobile)m))))
+
+                                    if (observateur is NubiaPlayer)
                                     {
-                                        list.Add(((PlayerMobile)m));
-                                        m.SendMessage("Vous venez de repérer {0} cacher un peu plus loin.", this.Name);
-                                        if (Utility.InUpdateRange(m, this))
+                                        observateur.SendMessage("Vous perdez de vue " + Name);
+                                        ((PlayerMobile)this).VisibilityList.Remove(observateur);
+                                    }
+                                }
+                                else
+                                {
+                                    if (m is NubiaCreature && !(m is BaseBestiole))
+                                    {
+                                        m.Emote("*Révèle {0}", Name);
+                                        ((NubiaMobile)this).ActionRevelation();
+                                    }
+                                    else if (m is NubiaPlayer)
+                                    {
+                                        List<Mobile> list = ((PlayerMobile)this).VisibilityList;
+                                        if (!(list.Contains(((PlayerMobile)m))))
                                         {
-                                            if (m.CanSee(this))
+                                            list.Add(((PlayerMobile)m));
+                                            m.SendMessage("Vous venez de repérer {0} cacher un peu plus loin.", this.Name);
+                                            if (Utility.InUpdateRange(m, this))
                                             {
-                                                m.Send(new Network.MobileIncoming(m, this));
-
-                                                if (ObjectPropertyList.Enabled)
+                                                if (m.CanSee(this))
                                                 {
-                                                    m.Send(this.OPLPacket);
+                                                    m.Send(new Network.MobileIncoming(m, this));
 
-                                                    foreach (Item item in this.Items)
-                                                        m.Send(item.OPLPacket);
+                                                    if (ObjectPropertyList.Enabled)
+                                                    {
+                                                        m.Send(this.OPLPacket);
+
+                                                        foreach (Item item in this.Items)
+                                                            m.Send(item.OPLPacket);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
 
+                        }
                     }
                 }
                 else
@@ -1217,7 +1236,7 @@ namespace Server.Mobiles
                 }
             }
 
-            return base.OnMove(d); 
+            return base.OnMove(d);
 
         }
 
@@ -1367,44 +1386,48 @@ namespace Server.Mobiles
                 AutoXP /= 2;
                 if (this.Region != null)
                 {
-                    if (Region is BaseNubiaRegion )
+                    if (Region is BaseNubiaRegion)
                     {
                         BaseNubiaRegion nubiaRegion = this.Region as BaseNubiaRegion;
                         if (nubiaRegion.CanAutoXP)
                             AutoXP = WorldData.XpGain;
                     }
                 }
-                GiveXP( (int)AutoXP );
+                GiveXP((int)AutoXP);
                 SendMessage("Vous gagnez en expérience...");
             }
             if (Alive)
             {
-                
+
                 if (Turn % 20 == 0)
                 {
-                /*    if (mNextMagieRestart <= DateTime.Now)
-                    {
-                        mNextMagieRestart = DateTime.Now + WorldData.SpellDay();
-                        MagieRestart();
-                        SendMessage("Vous vous sentez reposez... c'est un nouveau jour qui commence");
-                    }*/
+                    /*    if (mNextMagieRestart <= DateTime.Now)
+                        {
+                            mNextMagieRestart = DateTime.Now + WorldData.SpellDay();
+                            MagieRestart();
+                            SendMessage("Vous vous sentez reposez... c'est un nouveau jour qui commence");
+                        }*/
                 }
                 if (Turn % 15 == 0 && mDeguisementMod != null)
                 {
-                    foreach (PlayerMobile player in GetMobilesInRange(8))
+                    foreach (Mobile p in GetMobilesInRange(8))
                     {
-                        if (mDeguisementMod.MobilesChecked.ContainsKey(player.Serial))
+                        if (p is NubiaPlayer && p != this)
                         {
-                            if (mDeguisementMod.MobilesChecked[player.Serial] + TimeSpan.FromMinutes(30) < DateTime.Now)
-                                mDeguisementMod.MobilesChecked.Remove(player.Serial);
-                        }
-                        if (!mDeguisementMod.MobilesChecked.ContainsKey(player.Serial))
-                        {
-                            mDeguisementMod.MobilesChecked.Add(player.Serial, DateTime.Now);
-                            if (player.Competences[CompType.Detection].check(mDeguisementMod.Reussite))
+                            NubiaPlayer player = p as NubiaPlayer;
+                            if (mDeguisementMod.MobilesChecked.ContainsKey(player.Serial))
                             {
-                                this.PrivateOverheadMessage(Server.Network.MessageType.Regular, 138, false, "*semble déguisé*", player.NetState);
-                                player.SendMessage(136, "Vous repérez que {0} est déguisé", NameMod);
+                                if (mDeguisementMod.MobilesChecked[player.Serial] + TimeSpan.FromMinutes(30) < DateTime.Now)
+                                    mDeguisementMod.MobilesChecked.Remove(player.Serial);
+                            }
+                            if (!mDeguisementMod.MobilesChecked.ContainsKey(player.Serial))
+                            {
+                                mDeguisementMod.MobilesChecked.Add(player.Serial, DateTime.Now);
+                                if (player.Competences[CompType.Detection].roll(mDeguisementMod.Reussite))
+                                {
+                                    this.PrivateOverheadMessage(Server.Network.MessageType.Regular, 138, false, "*semble déguisé*", player.NetState);
+                                    player.SendMessage(136, "Vous repérez que {0} est déguisé", NameMod);
+                                }
                             }
                         }
                     }
@@ -1448,9 +1471,9 @@ namespace Server.Mobiles
                 {
                     SendGump(new GumpBuff(this));
                 }
-            }            
+            }
 
-            
+
         }
 
         //### MORT ###
@@ -1463,8 +1486,8 @@ namespace Server.Mobiles
         {
             base.Resurrect();
 
-            
-           
+
+
             Hits = HitsMax / 10;
             Mana = Mana / 2;
             Stam = StamMax / 2;
@@ -1478,34 +1501,34 @@ namespace Server.Mobiles
             {
                 if (item != null)
                 {
-                 //   Console.WriteLine("Autoequip: " + item);
+                    //   Console.WriteLine("Autoequip: " + item);
                     EquipItem(item);
                 }
             }
             //Console.WriteLine("Corpse: " + m_lastCorpse);
             if (m_lastCorpse != null)
             {
-              //  itemToPack = m_lastCorpse.AcquireItems;
-               //if (m_lastCorpse.Items.Count < 1)
-             //   {
-                    foreach (Item it in m_lastCorpse.Items)
-                    {
-                        Console.WriteLine("AutoPackItem list :(0) " + it);
-                        itemToPack.Add(it);
-                    }
+                //  itemToPack = m_lastCorpse.AcquireItems;
+                //if (m_lastCorpse.Items.Count < 1)
+                //   {
+                foreach (Item it in m_lastCorpse.Items)
+                {
+                    Console.WriteLine("AutoPackItem list :(0) " + it);
+                    itemToPack.Add(it);
+                }
 
-                    foreach (Item iti in itemToPack)
+                foreach (Item iti in itemToPack)
+                {
+                    if (iti != null)
                     {
-                        if (iti != null)
-                        {
-                            Console.WriteLine("AutoPackItem pack: " + iti);
-                            if (Backpack != null)
-                                Backpack.DropItem(iti);
-                            else
-                                iti.MoveToWorld(Location, Map);
-                        }
+                        Console.WriteLine("AutoPackItem pack: " + iti);
+                        if (Backpack != null)
+                            Backpack.DropItem(iti);
+                        else
+                            iti.MoveToWorld(Location, Map);
                     }
-            //    }
+                }
+                //    }
 
                 m_lastCorpse.Delete();
             }
@@ -1514,7 +1537,7 @@ namespace Server.Mobiles
             m_lastDeath = DateTime.Now;
             m_deathTurn = -1;
 
-          //  Console.WriteLine("End Resurect");
+            //  Console.WriteLine("End Resurect");
 
         }
 
@@ -1546,7 +1569,7 @@ namespace Server.Mobiles
                 //kil.Combatant = null;
             }
             //new MortAssomage( this );
-           // changeMoral(-20);
+            // changeMoral(-20);
             m_deathTurn = Utility.RandomMinMax(2, 4);
             //m_lastDeath = DateTime.Now;
             Frozen = true;
@@ -1594,7 +1617,7 @@ namespace Server.Mobiles
                 {
                     skin.Delete();
                 }
-                else if( newrace != RaceType.Humain )
+                else if (newrace != RaceType.Humain)
                 {
                     //déséquip ?
                 }
@@ -1621,6 +1644,7 @@ namespace Server.Mobiles
             }
         }
 
+        [CommandProperty(AccessLevel.GameMaster)]
         public override int Hue
         {
             get
@@ -1673,7 +1697,7 @@ namespace Server.Mobiles
                 case Apparence.Elegant: return (isFemale ? "Elégante" : "Elégant"); break;
                 case Apparence.Seduisant: return (isFemale ? "Séduisante" : "Séduisant"); break;
                 case Apparence.Envoutant: return (isFemale ? "Envoutante" : "Envoutant"); break;
-                case Apparence.Eblouissant: return (isFemale ? "Ebouissante" : "Ebouissant"); break;
+                case Apparence.Eblouissant: return (isFemale ? "Eblouissante" : "Eblouissant"); break;
             }
             return "Inconnue";
         }
@@ -1700,7 +1724,7 @@ namespace Server.Mobiles
             BaseRace displayRace = Race;
             if (mDeguisementMod != null)
             {
-                if( mDeguisementMod.Race != RaceManager.getRaceType(Race.GetType() ) )
+                if (mDeguisementMod.Race != RaceManager.getRaceType(Race.GetType()))
                     displayRace = RaceManager.getRace(mDeguisementMod.Race);
             }
 
@@ -1731,7 +1755,7 @@ namespace Server.Mobiles
         }
         public override void OnSingleClick(Mobile from)
         {
-//            base.OnSingleClick(from);
+            //            base.OnSingleClick(from);
             this.PrivateOverheadMessage(Server.Network.MessageType.Regular, 195, false,
                 this.Name + ", " + (Female ? Race.NameF : Race.Name),
                 from.NetState);
@@ -1743,7 +1767,7 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)3);//version
+            writer.Write((int)7);//version
 
             writer.Write((int)m_beaute);
             writer.Write((int)m_race);
@@ -1771,15 +1795,16 @@ namespace Server.Mobiles
                 writer.Write((int)c.Niveau);
             }
 
-            int count = Dons.DonsEntrys.Values.Count;
+            int count = Dons.DonsEntrys.Count;
             writer.Write((int)count);
-            foreach (DonEntry entry in Dons.DonsEntrys.Values)
+            foreach (DonEntry entry in Dons.DonsEntrys)
             {
                 writer.Write((int)entry.Don);
                 writer.Write((int)entry.Classe);
                 writer.Write((int)entry.GiveAtLevel);
-                writer.Write((int)entry.UseThisDay);
-                writer.Write((int)entry.Value);
+                // writer.Write((int)entry.UseThisDay);
+                //  writer.Write((int)entry.Value);
+                writer.Write((bool)entry.Choosen);
             }
 
 
@@ -1790,12 +1815,12 @@ namespace Server.Mobiles
                 writer.Write((int)m_maitrises[t]);
             }
 
-            writer.Write(mDonCredits.Count);
-            foreach (ClasseType ct in mDonCredits.Keys)
-            {
-                writer.Write((int)ct);
-                writer.Write((int)mDonCredits[ct]);
-            }
+            /*     writer.Write(mDonCredits.Count);
+                 foreach (ClasseType ct in mDonCredits.Keys)
+                 {
+                     writer.Write((int)ct);
+                     writer.Write((int)mDonCredits[ct]);
+                 }*/
 
             /// VERSION 1
             /// 
@@ -1804,32 +1829,34 @@ namespace Server.Mobiles
             foreach (FactionEnum faction in ReputationStack.Reputations.Keys)
             {
 
-                    writer.Write((int)faction);
-                    writer.Write((int)ReputationStack.Reputations[faction]);
-                
+                writer.Write((int)faction);
+                writer.Write((int)ReputationStack.Reputations[faction]);
+
             }
 
             // VERSION 2
             writer.Write((bool)creationFinished);
-
-            // VERSION 3
+            //version 5
+            writer.Write((string)mNameSave);
+            // VERSION 6
             writer.Write((int)moralValue);
+            writer.Write((int)Hits);
         }
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
 
-          //  Console.WriteLine("*");
+            //  Console.WriteLine("*");
             m_beaute = (Apparence)reader.ReadInt();
             m_race = (RaceType)reader.ReadInt();
             m_deathTurn = reader.ReadInt();
 
-           // Console.WriteLine("*");
+            // Console.WriteLine("*");
             mXPJournalier = reader.ReadInt();
             mTimeXpDelock = reader.ReadDateTime();
 
-         //   Console.WriteLine("*");
+            //   Console.WriteLine("*");
             mCote = reader.ReadInt();
             int nbr = reader.ReadInt();
             mCotationTimes = new Dictionary<string, DateTime>();
@@ -1840,11 +1867,11 @@ namespace Server.Mobiles
                 mCotationTimes.Add(gm, time);
             }
 
-         //   Console.WriteLine("*");
+            //   Console.WriteLine("*");
             mXP = reader.ReadInt();
             m_lastClasse = (ClasseType)reader.ReadInt();
 
-        //    Console.WriteLine("*");
+            //    Console.WriteLine("*");
             int countCl = reader.ReadInt();
             for (int cl = 0; cl < countCl; cl++)
             {
@@ -1856,84 +1883,113 @@ namespace Server.Mobiles
             }
 
 
-        //    Console.WriteLine("*");
-                int donCount = reader.ReadInt();
-               // Console.WriteLine("donCount = " + donCount);
-                mDons = new DonStack(this);
-                for (int d = 0; d < donCount; d++)
+            //    Console.WriteLine("*");
+            int donCount = reader.ReadInt();
+            // Console.WriteLine("donCount = " + donCount);
+            mDons = new DonStack(this);
+            for (int d = 0; d < donCount; d++)
+            {
+                DonEnum don = (DonEnum)reader.ReadInt();
+                // Console.WriteLine("don = " + don);
+                ClasseType ctype = (ClasseType)reader.ReadInt();
+                // Console.WriteLine("ctype = " + ctype);
+
+                int giveatlevel = reader.ReadInt();
+                // Console.WriteLine("giveatlevel = " + giveatlevel);
+
+                bool choosen = false;
+                if (version < 3)
                 {
-                    DonEnum don = (DonEnum)reader.ReadInt();
-                   // Console.WriteLine("don = " + don);
-                    ClasseType ctype = (ClasseType)reader.ReadInt();
-                   // Console.WriteLine("ctype = " + ctype);
-                    int giveatlevel = reader.ReadInt();
-                   // Console.WriteLine("giveatlevel = " + giveatlevel);
                     int usethisday = reader.ReadInt();
-                  //  Console.WriteLine("usethisday = " + usethisday);
+                    //  Console.WriteLine("usethisday = " + usethisday);
                     int val = reader.ReadInt();
-                  //  Console.WriteLine("val = " + val);
-
-                    DonEntry entry = new DonEntry(don, ctype, giveatlevel);
-                    entry.Value = val;
-                    entry.UseThisDay = usethisday;
-                    Dons.DonsEntrys.Add(don, entry);
+                    //  Console.WriteLine("val = " + val);
                 }
+                else
+                    choosen = reader.ReadBool();
 
-                int maitriseCount = reader.ReadInt();
-                m_maitrises = new Dictionary<ArmeTemplate, int>();
-                for (int m = 0; m < maitriseCount; m++)
-                {
-                    ArmeTemplate t = (ArmeTemplate)reader.ReadInt();
-                    int vm = reader.ReadInt();
-                    m_maitrises.Add(t, vm);
-                }
+                DonEntry entry = new DonEntry(don, ctype, giveatlevel, choosen);
+                //  entry.Value = val;
+                //   entry.UseThisDay = usethisday;
+                if (version >= 3)
+                    Dons.DonsEntrys.Add(entry);
 
-                mDonCredits = new Dictionary<ClasseType, int>();
-                mDonCredits.Add(ClasseType.None, 0);
+            }
 
+            int maitriseCount = reader.ReadInt();
+            m_maitrises = new Dictionary<ArmeTemplate, int>();
+            for (int m = 0; m < maitriseCount; m++)
+            {
+                ArmeTemplate t = (ArmeTemplate)reader.ReadInt();
+                int vm = reader.ReadInt();
+                m_maitrises.Add(t, vm);
+            }
+
+            if (version < 3)
+            {
+
+                /*    mDonCredits = new Dictionary<ClasseType, int>();
+                    mDonCredits.Add(ClasseType.None, 0);
+                    */
                 int cred = reader.ReadInt();
 
                 for (int dc = 0; dc < cred; dc++)
                 {
                     ClasseType ct = (ClasseType)reader.ReadInt();
                     int val = reader.ReadInt();
-                    if (mDonCredits.ContainsKey(ct))
-                        mDonCredits[ct] = val;
-                    else
-                        mDonCredits.Add(ct, val);
+                    /*     if (mDonCredits.ContainsKey(ct))
+                             mDonCredits[ct] = val;
+                         else
+                             mDonCredits.Add(ct, val);*/
                 }
-
+            }
             //VERSION 1
-                if (version >= 1)
+            if (version >= 1)
+            {
+                int repCount = reader.ReadInt();
+
+                // Console.WriteLine("Nubia Player: "+this);
+                mReputationStack = new ReputationStack(this);
+                for (int r = 0; r < repCount; r++)
                 {
-                    int repCount = reader.ReadInt();
+                    FactionEnum fac = (FactionEnum)reader.ReadInt();
+                    int val = reader.ReadInt();
 
-                   // Console.WriteLine("Nubia Player: "+this);
-                    mReputationStack = new ReputationStack(this);
-                    for (int r = 0; r < repCount; r++)
-                    {
-                        FactionEnum fac = (FactionEnum)reader.ReadInt();
-                        int val = reader.ReadInt();
-                        
-                       // Console.WriteLine("Deserialize: "+fac+" /"+val.ToString());
-                        mReputationStack.Reputations.Add(fac, val);
-                    }
+                    // Console.WriteLine("Deserialize: "+fac+" /"+val.ToString());
+                    mReputationStack.Reputations.Add(fac, val);
                 }
+            }
 
-                if (version <= 1)
-                    creationFinished = true;
+            if (version <= 1)
+                creationFinished = true;
             //VERSION 2
-                if (version >= 2)
-                {
+            if (version >= 2)
+            {
 
-                    creationFinished = reader.ReadBool();
-                }
+                creationFinished = reader.ReadBool();
+            }
+            //VERSION 3 & 4
 
-            // VERSION 3
-                if (version >= 3)
-                {
-                    moralValue = reader.ReadInt();
-                }
-        }   
+            if (version < 4)
+            {
+                mDons.Reset();
+                mDons.ComputeDons();
+            }
+            //Version 5
+            if (version >= 5)
+            {
+                mNameSave = reader.ReadString();
+            }
+            //version 6
+            if (version >= 6)
+            {
+                moralValue = reader.ReadInt();
+            }
+            if (version >= 7)
+            {
+                Hits = reader.ReadInt();
+            }
+
+        }
     }
 }
