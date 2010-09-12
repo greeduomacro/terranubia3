@@ -42,7 +42,7 @@ namespace Server
         {
             get
             {
-                return new CompType[] { CompType.Agriculture };
+                return new CompType[] { CompType.Agriculture, CompType.Erudition };
             }
         }
 

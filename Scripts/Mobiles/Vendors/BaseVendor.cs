@@ -21,7 +21,7 @@ namespace Server.Mobiles
 		ThighBoots
 	}
 
-	public abstract class BaseVendor : BaseCreature, IVendor
+	public abstract class BaseVendor : NubiaCreature, IVendor
 	{
 		private const int MaxSell = 500;
 

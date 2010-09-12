@@ -91,9 +91,9 @@ namespace Server.Gumps
             for (int n = 0; n < mOwner.Niveau; n++)
                 XpTot += XPHelper.GetXpForLevel(n);
             int XpActuel = mOwner.XP - XpTot;
-            // Console.WriteLine("Experience : {0} / {1}", XpActuel, XPHelper.GetXpForLevel(mOwner.Niveau + 1));
+             Console.WriteLine("Experience : {0} / {1}", XpActuel, XPHelper.GetXpForLevel(mOwner.Niveau + 1));
             double ratio = ((double)XpActuel / (double)XPHelper.GetXpForLevel(mOwner.Niveau + 1));
-            // Console.WriteLine("Ratio: "+ratio);
+             Console.WriteLine("Ratio: "+ratio);
             int largeurXp = (int)(ratio * Width);
             AddImage(x + 70, y + (line * scale) + 5, 0x809);
             AddImageTiled(x + 70, y + (line * scale) + 5, largeurXp, 8, 0x808);
