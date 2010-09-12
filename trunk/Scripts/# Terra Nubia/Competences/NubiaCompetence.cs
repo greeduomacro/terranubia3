@@ -265,6 +265,12 @@ namespace Server.Mobiles
 
             int roll = intRoll(silent);
 
+            if (roll <= DD && mOwner is NubiaPlayer)
+            {
+                if (20 + getMaitrise() <= DD)
+                    mOwner.SendMessage("Réussite impossible (test de {0})", Name);
+            }
+            
             return roll > DD;
         }
 
@@ -286,9 +292,15 @@ namespace Server.Mobiles
             int roll = DndHelper.rollDe(De.vingt);
             //Bonus Malus
             roll += mOwner.getBonusRoll();
+            //Maitrise de la comp
+            roll += (int)getMaitrise();
 
-            if( mOwner is NubiaPlayer )
+            if (mOwner is NubiaPlayer)
+            {
+
                 ((NubiaPlayer)mOwner).GiveXP(roll);
+
+            }
 
             return roll;
         }

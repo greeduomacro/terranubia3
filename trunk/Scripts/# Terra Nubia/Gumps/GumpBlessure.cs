@@ -131,7 +131,7 @@ namespace Server.Gumps
                     {
                         if (Utility.Random(20) + (int)DndHelper.GetCaracMod(mOwner, DndStat.Constitution) < mBlessure.DD)
                         {
-                            int degat = DndHelper.rollDe(De.dix) + (int)mBlessure.BGravite;
+                            int degat = DndHelper.rollDe(De.quatre) + (int)mBlessure.BGravite;
                             if (mBlessure.SoinStatut > 5)
                                 mBlessure.SoinStatut -= 5;
                             mOwner.SendMessage("Les soins vous font affreusement souffrir!");
