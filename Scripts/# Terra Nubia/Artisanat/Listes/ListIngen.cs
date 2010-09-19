@@ -25,6 +25,7 @@ namespace Server.Engines
                     "Batons", //4
                     "Arcs & Arbalètes", //5 
                     "Munitions", //6
+                    "Livres" //7
                 };
             }
         }
@@ -185,10 +186,6 @@ namespace Server.Engines
                     new RessourceNeed(typeof(BaseBois), 2),
                     new RessourceNeed(typeof(BaseMetal), 1) });
 
-            AddEntry("Ciseaux", 0, typeof(Scissors), 5, 10,
-               new RessourceNeed[]{ 
-                    new RessourceNeed(typeof(BaseMetal), 2) });
-
             AddEntry("Mortier & Pilon", 0, typeof(MortarPestle), 5, 10,
                new RessourceNeed[]{ 
                     new RessourceNeed(typeof(BaseMetal), 3) });
@@ -215,6 +212,10 @@ namespace Server.Engines
             AddEntry("Chandelle", 1, typeof(Candle), 5, 10,
                 new RessourceNeed[]{
                     new RessourceNeed(typeof(BaseMetal), 2)});
+
+           AddEntry("Torche", 1, typeof(Torch), 6, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 5)});
 
             // J E U X
             AddEntry("Jeu de backgammon", 2, typeof(Backgammon), 3, 10,
@@ -266,6 +267,86 @@ namespace Server.Engines
                     new RessourceNeed(typeof(BaseCuir), 20),
                     new RessourceNeed(typeof(BaseMetal), 4)
              });
+
+            AddEntry("Livre (20 pages)", 7, typeof(BlueBook20), 5, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 3)
+                });
+
+            AddEntry("Livre (20 pages)", 7, typeof(BrownBook20), 5, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 3)
+                });
+
+            AddEntry("Livre (20 pages)", 7, typeof(RedBook20), 5, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 3)
+                });
+
+            AddEntry("Livre (20 pages)", 7, typeof(TanBook20), 5, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 3)
+                });
+
+            AddEntry("Livre (50 pages)", 7, typeof(BlueBook50), 7, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 5)
+                });
+
+            AddEntry("Livre (50 pages)", 7, typeof(BrownBook50), 7, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 5)
+                });
+
+            AddEntry("Livre (50 pages)", 7, typeof(RedBook50), 7, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 5)
+                });
+
+            AddEntry("Livre (50 pages)", 7, typeof(TanBook50), 7, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 5)
+                });
+
+            AddEntry("Livre (100 pages)", 7, typeof(BlueBook100), 9, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 8)
+                });
+
+            AddEntry("Livre (100 pages)", 7, typeof(BrownBook100), 9, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 8)
+                });
+
+            AddEntry("Livre (100 pages)", 7, typeof(RedBook100), 9, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 8)
+                });
+
+            AddEntry("Livre (100 pages)", 7, typeof(TanBook100), 9, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 8)
+                });
+
+            AddEntry("Livre (200 pages)", 7, typeof(BlueBook200), 11, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 14)
+                });
+
+            AddEntry("Livre (200 pages)", 7, typeof(BrownBook200), 11, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 14)
+                });
+
+            AddEntry("Livre (200 pages)", 7, typeof(RedBook200), 11, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 14)
+                });
+
+            AddEntry("Livre (200 pages)", 7, typeof(TanBook200), 11, 10,
+                new RessourceNeed[]{
+                    new RessourceNeed(typeof(BaseBois), 14)
+                });
            
 
         }
